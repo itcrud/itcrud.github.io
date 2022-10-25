@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2020-12-18
+                    2020-12-五 13:29:00
                 </div>
                 
 
@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    796
+                    805
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>Docker环境的命令不是很熟悉，很多时候遇到要用的时候就要花费很多时间问度娘，还是自己在博客里面记录一下，方便后面查看。（本篇文章是基于Centos7编写，其他版本可能有所不同）</p>
-<h3 id="启动和停止Docker"><a href="#启动和停止Docker" class="headerlink" title="启动和停止Docker"></a>启动和停止Docker</h3><p>启动和停止Docker容器的两种方式：</p>
+<h2 id="1-启动和停止Docker"><a href="#1-启动和停止Docker" class="headerlink" title="1. 启动和停止Docker"></a>1. 启动和停止Docker</h2><p>启动和停止Docker容器的两种方式：</p>
 <ul>
 <li>使用<code>systemctl</code>命令启动和停止</li>
 </ul>
@@ -359,17 +359,17 @@ systemctl stop <span class="token function">docker</span> <span class="token com
 systemctl <span class="token builtin class-name">enable</span> <span class="token function">docker</span>
 <span class="token function">chkconfig</span> <span class="token function">docker</span> on<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="查看Docker运行状态"><a href="#查看Docker运行状态" class="headerlink" title="查看Docker运行状态"></a>查看Docker运行状态</h3><p>查看Docker是否正常运行使用下面命令：</p>
+<h2 id="2-查看Docker运行状态"><a href="#2-查看Docker运行状态" class="headerlink" title="2. 查看Docker运行状态"></a>2. 查看Docker运行状态</h2><p>查看Docker是否正常运行使用下面命令：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl status <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="加载已有镜像"><a href="#加载已有镜像" class="headerlink" title="加载已有镜像"></a>加载已有镜像</h3><p>加载已有的镜像到Docker中：</p>
+<h2 id="3-加载已有镜像"><a href="#3-加载已有镜像" class="headerlink" title="3. 加载已有镜像"></a>3. 加载已有镜像</h2><p>加载已有的镜像到Docker中：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> load <span class="token operator">&lt;</span> xxx.tar <span class="token comment"># xxx.tar表示镜像文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="查看Docker内的镜像列表"><a href="#查看Docker内的镜像列表" class="headerlink" title="查看Docker内的镜像列表"></a>查看Docker内的镜像列表</h3><p>可以通过以下两个命令实现：</p>
+<h2 id="4-查看Docker内的镜像列表"><a href="#4-查看Docker内的镜像列表" class="headerlink" title="4. 查看Docker内的镜像列表"></a>4. 查看Docker内的镜像列表</h2><p>可以通过以下两个命令实现：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> image list
 <span class="token function">docker</span> images<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h3 id="启动Docker镜像生成容器"><a href="#启动Docker镜像生成容器" class="headerlink" title="启动Docker镜像生成容器"></a>启动Docker镜像生成容器</h3><p>生成容器的命令根据实际使用确定，下面是我常用的命令：</p>
+<h2 id="5-启动Docker镜像生成容器"><a href="#5-启动Docker镜像生成容器" class="headerlink" title="5. 启动Docker镜像生成容器"></a>5. 启动Docker镜像生成容器</h2><p>生成容器的命令根据实际使用确定，下面是我常用的命令：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-dit</span> <span class="token parameter variable">--name</span> <span class="token punctuation">[</span>容器名称<span class="token punctuation">]</span> <span class="token parameter variable">-v</span> <span class="token punctuation">[</span>容器目录<span class="token punctuation">]</span>:<span class="token punctuation">[</span>宿主挂载目录<span class="token punctuation">]</span> <span class="token parameter variable">-p</span> <span class="token punctuation">[</span>IP:端口:端口<span class="token punctuation">]</span> <span class="token punctuation">[</span>镜像ID<span class="token punctuation">]</span> /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><strong>说明：</strong></p>
@@ -382,15 +382,15 @@ systemctl <span class="token builtin class-name">enable</span> <span class="toke
 <p><strong>示例：</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-dit</span> <span class="token parameter variable">--name</span> my_container_name <span class="token parameter variable">-v</span> /home/my/:/home/my/ <span class="token parameter variable">-p</span> <span class="token number">0.0</span>.0.0:8080:8080 <span class="token parameter variable">-p</span> <span class="token number">0.0</span>.0.0:9090:9090 edf312c432d232 /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="查看容器列表"><a href="#查看容器列表" class="headerlink" title="查看容器列表"></a>查看容器列表</h3><p>查看容器列表有几个不同的命令，我只是用一个如下：</p>
+<h2 id="6-查看容器列表"><a href="#6-查看容器列表" class="headerlink" title="6. 查看容器列表"></a>6. 查看容器列表</h2><p>查看容器列表有几个不同的命令，我只是用一个如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h3><p>容器启动后，需要进入容器做相关的操作，这个时候就需要进入到容器内部。</p>
+<h2 id="7-进入容器"><a href="#7-进入容器" class="headerlink" title="7. 进入容器"></a>7. 进入容器</h2><p>容器启动后，需要进入容器做相关的操作，这个时候就需要进入到容器内部。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 容器ID可以通过查看容器列表获得</span>
 <span class="token function">docker</span> attach <span class="token punctuation">[</span>容器ID<span class="token punctuation">]</span> <span class="token comment"># 这种方式个人最常用</span>
 <span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> <span class="token punctuation">[</span>容器ID<span class="token punctuation">]</span> /bin/bash <span class="token comment"># 这种方式也是可以的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="删除镜像和容器"><a href="#删除镜像和容器" class="headerlink" title="删除镜像和容器"></a>删除镜像和容器</h3><ul>
+<h2 id="8-删除镜像和容器"><a href="#8-删除镜像和容器" class="headerlink" title="8. 删除镜像和容器"></a>8. 删除镜像和容器</h2><ul>
 <li>删除镜像</li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> rmi <span class="token punctuation">[</span>镜像ID<span class="token punctuation">]</span> <span class="token comment"># 如果镜像有关联容器，将执行失败</span>
@@ -402,7 +402,7 @@ systemctl <span class="token builtin class-name">enable</span> <span class="toke
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">rm</span> <span class="token punctuation">[</span>容器ID<span class="token punctuation">]</span> <span class="token comment"># 删除容器，如果容器在运行貌似也是删不掉的</span>
 <span class="token function">docker</span> <span class="token function">rm</span> <span class="token parameter variable">-f</span> <span class="token punctuation">[</span>容器ID<span class="token punctuation">]</span> <span class="token comment"># 强制删除</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h3 id="不进入容器情况下在容器内执行命令☆☆☆☆☆"><a href="#不进入容器情况下在容器内执行命令☆☆☆☆☆" class="headerlink" title="不进入容器情况下在容器内执行命令☆☆☆☆☆"></a>不进入容器情况下在容器内执行命令☆☆☆☆☆</h3><p>这个很重要，而且经常遇到，比如启动容器内的tomcat，进入容器执行是可以的，但是在外部执行方便。执行命令如下：</p>
+<h2 id="9-不进入容器情况下在容器内执行命令☆☆☆☆☆"><a href="#9-不进入容器情况下在容器内执行命令☆☆☆☆☆" class="headerlink" title="9. 不进入容器情况下在容器内执行命令☆☆☆☆☆"></a>9. 不进入容器情况下在容器内执行命令☆☆☆☆☆</h2><p>这个很重要，而且经常遇到，比如启动容器内的tomcat，进入容器执行是可以的，但是在外部执行方便。执行命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-d</span> <span class="token punctuation">[</span>容器名称<span class="token punctuation">]</span> /bin/bash <span class="token parameter variable">-c</span> <span class="token punctuation">[</span>需要执行的命令<span class="token punctuation">]</span> <span class="token parameter variable">-g</span> <span class="token string">"daemon off;"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>示例：</p>
@@ -550,7 +550,7 @@ systemctl <span class="token builtin class-name">enable</span> <span class="toke
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2020-12-18T08-00-00',
+        id: '2020-12-18T13-29-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -861,7 +861,7 @@ systemctl <span class="token builtin class-name">enable</span> <span class="toke
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

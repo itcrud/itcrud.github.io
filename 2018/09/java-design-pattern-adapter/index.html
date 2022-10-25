@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-09-17
+                    2018-09-一 08:12:00
                 </div>
                 
 
@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    844
+                    850
                 </div>
                 
 
@@ -339,14 +339,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>适配器模式：将一个类的接口转换成客户希望的另外一个接口，使得之前由于接口不兼容不能一起工作的那些类可以一起工作。</p>
+                <h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h2><p>适配器模式：将一个类的接口转换成客户希望的另外一个接口，使得之前由于接口不兼容不能一起工作的那些类可以一起工作。</p>
 <p>解释：干货的概念很难理解，那就举个栗子吧。</p>
 <p>现在小明需要到世界各国去访问，但是现在有一个问题需要解决，小明只会中文，英语、法语啥的都不懂，这个时候就需要请翻译官，每个翻译官对应一种语言。然后小明用中文告诉翻译官所要说的内容，翻译官将中文转换成对应的另一方语言，告诉接待小明的异国朋友。这样就相当于一个适配器模式，客户小明不管站在对面的是什么人，说的什么语言，我只要有翻译官，就一切搞定。</p>
 <p>看图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/68105D7156BF413FB55E895975E8ACAC.png"></p>
 <p>图中的Client就相当于是小明，Server是翻译公司，ServerAdapter就是翻译官，ThirdServer就是会见的各个国家朋友。</p>
-<h3 id="Demo-Code"><a href="#Demo-Code" class="headerlink" title="Demo Code"></a>Demo Code</h3><p>上面说了概念和流程图，基本的设计思路都清楚了，现在需要看怎么去实现。</p>
-<h5 id="客户端类"><a href="#客户端类" class="headerlink" title="客户端类"></a>客户端类</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//客户端类</span>
+<h2 id="2-示例代码"><a href="#2-示例代码" class="headerlink" title="2. 示例代码"></a>2. 示例代码</h2><p>上面说了概念和流程图，基本的设计思路都清楚了，现在需要看怎么去实现。</p>
+<h3 id="2-1-客户端类"><a href="#2-1-客户端类" class="headerlink" title="2.1 客户端类"></a>2.1 客户端类</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//客户端类</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
 
     <span class="token comment">//小明将要说的话告诉翻译官</span>
@@ -368,7 +368,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="翻译公司和翻译人员"><a href="#翻译公司和翻译人员" class="headerlink" title="翻译公司和翻译人员"></a>翻译公司和翻译人员</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//翻译公司</span>
+<h3 id="2-2-翻译公司和翻译人员"><a href="#2-2-翻译公司和翻译人员" class="headerlink" title="2.2 翻译公司和翻译人员"></a>2.2 翻译公司和翻译人员</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//翻译公司</span>
 <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Translator</span><span class="token punctuation">{</span>
     <span class="token comment">//接收中文内容接口</span>
     <span class="token keyword">void</span> <span class="token function">translate</span><span class="token punctuation">(</span><span class="token class-name">String</span> content<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -394,7 +394,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="对应国家的朋友"><a href="#对应国家的朋友" class="headerlink" title="对应国家的朋友"></a>对应国家的朋友</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//英国朋友</span>
+<h3 id="2-3-对应国家的朋友"><a href="#2-3-对应国家的朋友" class="headerlink" title="2.3 对应国家的朋友"></a>2.3 对应国家的朋友</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//英国朋友</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnglishFriend</span> <span class="token punctuation">{</span>
 
     <span class="token comment">//听的功能，并且只接受英文内容</span>
@@ -411,7 +411,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainTest</span> <span class="token punctuation">{</span>
+<h3 id="2-4-测试过程"><a href="#2-4-测试过程" class="headerlink" title="2.4 测试过程"></a>2.4 测试过程</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainTest</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token class-name">Client</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -425,8 +425,7 @@
 <p>启动<code>main</code>方法后，直接的结果是法国朋友的<code>doListen</code>输出一个笑的动作，英国朋友输出一个哭的动作。如果现在还有其他国家的朋友，小明所说的话完全不用变，只要将内容告诉翻译人员，异国朋友就能做出相应的动作。</p>
 <p>上面映射到实际开发环境中，业务如小明，调用的接口方法完全不用变，即使对接的第三方组件有变化，他也完全不用理会，调用接口后，由适配器完成就好。</p>
 <p>再看看想想之前写的mybatis日志模块设计，就是巧妙的使用了适配器模式，让mybatis业务代码完全不变的去适配各种不同的日志组件，不失为一种最佳实践参考模板。<a href="/2018/09/orm-mybatis-source-logging">ORM框架之Mybatis：logging源码实现分析</a></p>
-<h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><p>大话设计模式 程杰 著</p>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>Github：<a target="_blank" rel="noopener" href="https://github.com/itcrud/design-pattern">https://github.com/itcrud/design-pattern</a></p>
+<h2 id="3-源代码"><a href="#3-源代码" class="headerlink" title="3. 源代码"></a>3. 源代码</h2><p>Github：<a target="_blank" rel="noopener" href="https://github.com/itcrud/design-pattern">https://github.com/itcrud/design-pattern</a></p>
 
                 
             </div>
@@ -570,7 +569,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-09-17T08-00-00',
+        id: '2018-09-17T08-12-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -881,7 +880,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

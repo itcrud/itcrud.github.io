@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringBoot项目本地调试代码热部署, 程序猿洞晓">
+    <meta name="keywords" content="Spring Boot项目本地调试代码热部署, 程序猿洞晓">
     <meta name="description" content="开发过程中，一边写代码一边调试，如果项目没有设置热部署功能，则每次需要对项目重启，这样过于麻烦和浪费时间，在各编辑器上都是带有自动编译的功能，下面看一下常用的开发工具IDEA是如何设置的，Eclipse也会说到，相对于两种编辑器，Eclipse配置会简单很多。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SpringBoot项目本地调试代码热部署 | 程序猿洞晓</title>
+    <title>Spring Boot项目本地调试代码热部署 | 程序猿洞晓</title>
     <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
     
 
@@ -251,12 +251,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SpringBoot项目本地调试代码热部署</h1>
+                    <h1 class="description center-align post-title">Spring Boot项目本地调试代码热部署</h1>
                 </div>
             </div>
         </div>
@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2020-04-29
+                    2020-04-三 12:35:00
                 </div>
                 
 
@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    636
+                    639
                 </div>
                 
 
@@ -341,7 +341,7 @@
             <div id="articleContent">
                 <p>去年年初，也可以说是前年年底，又回归玩起了游戏，也不知道是第多少次回归了，断断续续玩了十年，曾今很火的游戏，现在已经很少有小鲜肉入坑啦。回忆起开始玩这款游戏，已经是10年前的一个假期……</p>
 <p>开发过程中，一边写代码一边调试，如果项目没有设置热部署功能，则每次需要对项目重启，这样过于麻烦和浪费时间，在各编辑器上都是带有自动编译的功能，下面看一下常用的开发工具IDEA是如何设置的，Eclipse也会说到，相对于两种编辑器，Eclipse配置会简单很多。</p>
-<h2 id="引入SpringBoot热部署组件"><a href="#引入SpringBoot热部署组件" class="headerlink" title="引入SpringBoot热部署组件"></a>引入SpringBoot热部署组件</h2><p>引入依赖<code>spring-boot-devtools</code>，版本继承spring-boot的版本。</p>
+<h2 id="1-引入SpringBoot热部署组件"><a href="#1-引入SpringBoot热部署组件" class="headerlink" title="1. 引入SpringBoot热部署组件"></a>1. 引入SpringBoot热部署组件</h2><p>引入依赖<code>spring-boot-devtools</code>，版本继承spring-boot的版本。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-devtools<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
@@ -359,12 +359,12 @@
 <p>如果在项目中使用到thymeleaf模板，那么就需要在application.properties文件中配置thymeleaf模板缓存机制为false。</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.thymeleaf.cache</span><span class="token punctuation">=</span><span class="token value attr-value">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="IDEA相关设置"><a href="#IDEA相关设置" class="headerlink" title="IDEA相关设置"></a>IDEA相关设置</h2><p>第一步：找到IDEA的settings，找到Build,Execution,Deployment下的Compiler，然后将Build project automatically选项选中。</p>
+<h2 id="2-IDEA相关设置"><a href="#2-IDEA相关设置" class="headerlink" title="2. IDEA相关设置"></a>2. IDEA相关设置</h2><p>第一步：找到IDEA的settings，找到Build,Execution,Deployment下的Compiler，然后将Build project automatically选项选中。</p>
 <p>第一步完成后如果不需要每次保存自动编译，就使用手动的方式编译，快捷键是：<code>ctrl+shift+f9</code>，反之则需要以下步骤配置。</p>
 <p>使用快捷键<code>ctrl+shift+alt+/</code>会弹出一个窗口，点击<code>registry</code>，在里面找到<code>compiler.automake.allow.when.app.running</code>，勾线这个选项即可。</p>
 <p>这是实际是采用了两种方式，一种是<strong>手动模式</strong>，一种是<strong>自动模式</strong>。在使用自动模式时，需要保存后才会编译(注意点)，反之是不会。</p>
 <p>综合两种方式，一般采用手动的比较多。为什么呢？因为在写代码的时候，不可能写一行编译一次，这样编译太频繁，而且没有意义（在实际开发过程中肯定是写完一段逻辑后才会去调试一次）。所以需要重新编译调试的时候再去编译是比较好的选择，也是比较合理的做法。</p>
-<h2 id="Eclipse的操作"><a href="#Eclipse的操作" class="headerlink" title="Eclipse的操作"></a>Eclipse的操作</h2><p>如果使用的是Eclipse那就没有IDEA相关设置的过程，引入依赖，做好配置文件修改即可。</p>
+<h2 id="3-Eclipse的操作"><a href="#3-Eclipse的操作" class="headerlink" title="3. Eclipse的操作"></a>3. Eclipse的操作</h2><p>如果使用的是Eclipse那就没有IDEA相关设置的过程，引入依赖，做好配置文件修改即可。</p>
 
                 
             </div>
@@ -508,7 +508,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2020-04-29T08-00-00',
+        id: '2020-04-29T12-35-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -823,7 +823,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

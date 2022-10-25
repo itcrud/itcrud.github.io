@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-07-02
+                    2018-07-一 21:42:00
                 </div>
                 
 
@@ -347,12 +347,12 @@
 <p>本博客是根据以下两篇博客整合。如需转载，请带上原文链接。<br><a target="_blank" rel="noopener" href="http://nobodyiam.com/2016/06/25/dive-into-eureka/">Dive into Eureka</a><br><a target="_blank" rel="noopener" href="http://blog.didispace.com/springcloud-sourcecode-eureka/">Spring Cloud源码分析（一）Eureka</a></p>
 </blockquote>
 <p>现在很多公司都在使用Spring Boot和Spring Cloud构建微服务，目前来说这些技术在国内虽然应用很多，但是相关的中文版资料不是很多，关于内部原理分析的文章也是少之又少。现在团队开始准备使用Spring Cloud，最近也在研究相关的知识点，参考了很多博客，写了这篇文章，让我们一起来探讨Spring Cloud的组件Eureka的实现原理。</p>
-<h3 id="What-is-Eureka？"><a href="#What-is-Eureka？" class="headerlink" title="What is Eureka？"></a>What is Eureka？</h3><p>官方文档定义：</p>
+<h2 id="1-What-is-Eureka？"><a href="#1-What-is-Eureka？" class="headerlink" title="1. What is Eureka？"></a>1. What is Eureka？</h2><p>官方文档定义：</p>
 <blockquote>
 <p>Eureka is a REST (Representational State Transfer) based service that is primarily used in the AWS cloud for locating services for the purpose of load balancing and failover of middle-tier servers. We call this service, the Eureka Server. Eureka also comes with a Java-based client component,the Eureka Client, which makes interactions with the service much easier. The client also has a built-in load balancer that does basic round-robin load balancing.</p>
 </blockquote>
 <p>简单来说Eureka就是Netflix开源的一款提供服务注册和服务发现的产品，并且提供了相应的Java客户端。</p>
-<h3 id="Why-Eureka？"><a href="#Why-Eureka？" class="headerlink" title="Why Eureka？"></a>Why Eureka？</h3><p>使用Eureka的理由：</p>
+<h2 id="2-Why-Eureka？"><a href="#2-Why-Eureka？" class="headerlink" title="2. Why Eureka？"></a>2. Why Eureka？</h2><p>使用Eureka的理由：</p>
 <ul>
 <li><p>大家都在用<br>一项技术出来后，从受欢迎的程度和使用的程度就可以看出来这项技术的优势和前景。</p>
 </li>
@@ -361,21 +361,21 @@
 <li><p>和Spring Cloud无缝集成<br>Spring Cloud有一套非常完善的开源代码来整合Eureka，所以使用起来非常方便。另外，Eureka还支持在我们应用自身的容器中启动，也就是说我们的应用启动完之后，既充当了Eureka的角色，同时也是服务的提供者和消费者。这样就极大的提高了服务的可用性。</p>
 </li>
 <li><p>Open Source(开源)<br>最后一点是开源，由于代码是开源的，所以非常便于我们了解它的实现原理和排查问题。</p>
-<h3 id="Eureka实现俯瞰"><a href="#Eureka实现俯瞰" class="headerlink" title="Eureka实现俯瞰"></a>Eureka实现俯瞰</h3><p>####基础架构<br><img src="http://nobodyiam.com/images/2016-06-25/architecture-overview.png"><br>上图简要描述了Eureka的基本架构，由3个角色组成：</p>
+<h2 id="3-Eureka实现俯瞰"><a href="#3-Eureka实现俯瞰" class="headerlink" title="3. Eureka实现俯瞰"></a>3. Eureka实现俯瞰</h2><h3 id="3-1-基础架构"><a href="#3-1-基础架构" class="headerlink" title="3.1 基础架构"></a>3.1 基础架构</h3><p><img src="http://nobodyiam.com/images/2016-06-25/architecture-overview.png"><br>上图简要描述了Eureka的基本架构，由3个角色组成：</p>
 </li>
 <li><p>Eureka Server :提供服务注册和发现</p>
 </li>
 <li><p>Service Provider:服务提供方,将自身服务注册到Eureka，从而使服务消费方能够找到</p>
 </li>
 <li><p>Service Consumer:服务消费方,从Eureka获取注册服务列表，从而能够消费服务<br>需要注意的是，上图中的3个角色都是逻辑角色。在实际运行中，这几个角色甚至可以是同一个实例，比如在Eureka Provider同时也可以是Eureka Consumer，也可以是Eureka Server。</p>
-<h4 id="实现细节图"><a href="#实现细节图" class="headerlink" title="实现细节图"></a>实现细节图</h4><p><img src="http://nobodyiam.com/images/2016-06-25/architecture-detail.png"><br>上图更进一步的展示了3个角色之间的交互。</p>
+<h3 id="3-2-实现细节图"><a href="#3-2-实现细节图" class="headerlink" title="3.2 实现细节图"></a>3.2 实现细节图</h3><p><img src="http://nobodyiam.com/images/2016-06-25/architecture-detail.png"><br>上图更进一步的展示了3个角色之间的交互。</p>
 </li>
 <li><p>Service Provider会向Eureka Server做Register（服务注册）、Renew（服务续约）、Cancel（服务下线）等操作。</p>
 </li>
 <li><p>Eureka Server之间会做注册服务的同步(replicate)，从而保证状态一致</p>
 </li>
 <li><p>Service Consumer会向Eureka Server获取注册服务列表，并消费服务</p>
-<h4 id="说说源码"><a href="#说说源码" class="headerlink" title="说说源码"></a>说说源码</h4><p>在将服务注册到Eureka服务注册中心是所需要加的注解和配置</p>
+<h3 id="3-3-说说源码"><a href="#3-3-说说源码" class="headerlink" title="3.3 说说源码"></a>3.3 说说源码</h3><p>在将服务注册到Eureka服务注册中心是所需要加的注解和配置</p>
 </li>
 <li><p>在应用主类中配置了<code>@EnableDiscoveryClient</code>注解</p>
 </li>
@@ -425,7 +425,7 @@ Eureka Client还需要配置一个Eureka Server的URL列表。<span aria-hidden=
 	……
     <span class="token keyword">return</span> orderedUrls<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="Region、Zone"><a href="#Region、Zone" class="headerlink" title="Region、Zone"></a>Region、Zone</h5><p>在上面的函数中，我们可以发现客户端依次加载了两个内容，第一个是Region，第二个是Zone，从其加载逻上我们可以判断他们之间的关系：</p>
+<h3 id="3-4-Region、Zone"><a href="#3-4-Region、Zone" class="headerlink" title="3.4 Region、Zone"></a>3.4 Region、Zone</h3><p>在上面的函数中，我们可以发现客户端依次加载了两个内容，第一个是Region，第二个是Zone，从其加载逻上我们可以判断他们之间的关系：</p>
 <ul>
 <li>通过<code>getRegion</code>函数，我们可以看到它从配置中读取了一个Region返回，所以一个微服务应用只可以属于一个Region，如果不特别配置，就默认为”default”。若我们要自己设置，可以通过<code>eureka.client.region</code>属性来定义。</li>
 </ul>
@@ -448,7 +448,7 @@ Eureka Client还需要配置一个Eureka Server的URL列表。<span aria-hidden=
 	<span class="token keyword">return</span> value<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="ServiceUrls"><a href="#ServiceUrls" class="headerlink" title="ServiceUrls"></a>ServiceUrls</h5><p>在获取了Region和Zone信息之后，才开始真正加载Eureka Server的具体地址。它根据传入的参数按一定算法确定加载位于哪一个Zone配置的serviceUrls。</p>
+<h3 id="3-5-ServiceUrls"><a href="#3-5-ServiceUrls" class="headerlink" title="3.5 ServiceUrls"></a>3.5 ServiceUrls</h3><p>在获取了Region和Zone信息之后，才开始真正加载Eureka Server的具体地址。它根据传入的参数按一定算法确定加载位于哪一个Zone配置的serviceUrls。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> myZoneOffset <span class="token operator">=</span> <span class="token function">getZoneOffset</span><span class="token punctuation">(</span>instanceZone<span class="token punctuation">,</span> preferSameZone<span class="token punctuation">,</span> availZones<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">String</span> zone <span class="token operator">=</span> availZones<span class="token punctuation">[</span>myZoneOffset<span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> serviceUrls <span class="token operator">=</span> clientConfig<span class="token punctuation">.</span><span class="token function">getEurekaServerServiceUrls</span><span class="token punctuation">(</span>zone<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -472,7 +472,7 @@ Eureka Client还需要配置一个Eureka Server的URL列表。<span aria-hidden=
 	<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>当客户端在服务列表中选择实例进行访问时，对于Zone和Region遵循这样的规则：优先访问同自己一个Zone中的实例，其次才访问其他Zone中的实例。通过Region和Zone的两层级别定义，配合实际部署的物理结构，我们就可以有效的设计出区域性故障的容错集群。</p>
-<h5 id="服务注册"><a href="#服务注册" class="headerlink" title="服务注册"></a>服务注册</h5><p>在理解了多个服务注册中心信息的加载后，我们再回头看看<code>DiscoveryClient</code>类是如何实现“服务注册”行为的，通过查看它的构造类，可以找到它调用了下面这个函数：</p>
+<h3 id="3-6-服务注册"><a href="#3-6-服务注册" class="headerlink" title="3.6 服务注册"></a>3.6 服务注册</h3><p>在理解了多个服务注册中心信息的加载后，我们再回头看看<code>DiscoveryClient</code>类是如何实现“服务注册”行为的，通过查看它的构造类，可以找到它调用了下面这个函数：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">initScheduledTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>clientConfig<span class="token punctuation">.</span><span class="token function">shouldRegisterWithEureka</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -521,7 +521,7 @@ Eureka Client还需要配置一个Eureka Server的URL列表。<span aria-hidden=
     <span class="token keyword">return</span> httpResponse<span class="token punctuation">.</span><span class="token function">getStatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">204</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>通过属性命名，大家基本也能猜出来，注册操作也是通过REST请求的方式进行的。同时，这里我们也能看到发起注册请求的时候，传入了一个<code>com.netflix.appinfo.InstanceInfo</code>对象，该对象就是注册时候客户端给服务端的服务的元数据。</p>
-<h5 id="服务获取与服务续约"><a href="#服务获取与服务续约" class="headerlink" title="服务获取与服务续约"></a>服务获取与服务续约</h5><p>顺着上面的思路，我们继续来看<code>DiscoveryClient</code>的<code>initScheduledTasks</code>函数，不难发现在其中还有两个定时任务，分别是“服务获取”和“服务续约”：</p>
+<h3 id="3-7-服务获取与服务续约"><a href="#3-7-服务获取与服务续约" class="headerlink" title="3.7 服务获取与服务续约"></a>3.7 服务获取与服务续约</h3><p>顺着上面的思路，我们继续来看<code>DiscoveryClient</code>的<code>initScheduledTasks</code>函数，不难发现在其中还有两个定时任务，分别是“服务获取”和“服务续约”：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">initScheduledTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>clientConfig<span class="token punctuation">.</span><span class="token function">shouldFetchRegistry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token comment">// registry cache refresh timer</span>
@@ -581,7 +581,7 @@ eureka<span class="token punctuation">.</span>instance<span class="token punctua
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>而“服务获取”则相对复杂一些，会根据是否第一次获取发起不同的REST请求和相应的处理，具体的实现逻辑还是跟之前类似，有兴趣的读者可以继续查看服务客户端的其他具体内容，了解更多细节。</p>
-<h5 id="服务注册中心处理"><a href="#服务注册中心处理" class="headerlink" title="服务注册中心处理"></a>服务注册中心处理</h5><p>通过上面的源码分析，可以看到所有的交互都是通过REST的请求来发起的。下面我们来看看服务注册中心对这些请求的处理。Eureka Server对于各类REST请求的定义都位于：<code>com.netflix.eureka.resources</code>包下。<br>以“服务注册”请求为例：</p>
+<h3 id="3-8-服务注册中心处理"><a href="#3-8-服务注册中心处理" class="headerlink" title="3.8 服务注册中心处理"></a>3.8 服务注册中心处理</h3><p>通过上面的源码分析，可以看到所有的交互都是通过REST的请求来发起的。下面我们来看看服务注册中心对这些请求的处理。Eureka Server对于各类REST请求的定义都位于：<code>com.netflix.eureka.resources</code>包下。<br>以“服务注册”请求为例：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@POST</span>
 <span class="token annotation punctuation">@Consumes</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"application/json"</span><span class="token punctuation">,</span> <span class="token string">"application/xml"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token class-name">Response</span> <span class="token function">addInstance</span><span class="token punctuation">(</span><span class="token class-name">InstanceInfo</span> info<span class="token punctuation">,</span>
@@ -632,8 +632,8 @@ eureka<span class="token punctuation">.</span>instance<span class="token punctua
 <p>在注册函数中，先调用<code>publishEvent</code>函数，将该新服务注册的事件传播出去，然后调用<code>com.netflix.eureka.registry.AbstractInstanceRegistry</code>父类中的注册实现，将<code>InstanceInfo</code>中的元数据信息存储在一个<code>ConcurrentHashMap&lt;String, Map&lt;String, Lease&lt;InstanceInfo&gt;&gt;&gt;</code>对象中，它是一个两层Map结构，第一层的key存储服务名：<code>InstanceInfo</code>中的<code>appName</code>属性，第二层的key存储实例名：<code>InstanceInfo</code>中的<code>instanceId</code>属性。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Lease</span><span class="token punctuation">&lt;</span><span class="token class-name">InstanceInfo</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> registry <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Lease</span><span class="token punctuation">&lt;</span><span class="token class-name">InstanceInfo</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>到这里服务注册、服务获取、服务续约都已经很清晰了，可以再理一下。<br>1、服务注册，在服务注册的时候，会将本项目提供的服务都封装到对应的Map集合中，这是封装模式和Spring MVC对提供的接口封装有点类似；<br>2、服务获取，是消费者从Eureka中获取服务的列表，而且这种服务列表是根据定时任务定时更新；<br>3、服务续约，服务的提供者把服务注册在服务注册中心，需要定时的去和服务注册中心保持心跳，证明自己还有提供服务的能力，同时在提供的服务发生变化的时候也会做相应的同步更新。服务续约是服务提供者主动发出。</p>
-<h4 id="其他关键点"><a href="#其他关键点" class="headerlink" title="其他关键点"></a>其他关键点</h4><h5 id="eviction-失效服务剔除"><a href="#eviction-失效服务剔除" class="headerlink" title="eviction-失效服务剔除"></a>eviction-失效服务剔除</h5><p>Eviction（失效服务剔除）用来定期在Eureka Server检测失效的服务，检测标准就是超过一定时间没有Renew的服务。默认失效时间为90秒，也就是如果有服务超过90秒没有向Eureka Server发起Renew请求的话，就会被当做失效服务剔除掉。<br>失效时间可以通过<code>eureka.instance.leaseExpirationDurationInSeconds</code>进行配置，定期扫描时间可以通过<code>eureka.server.evictionIntervalTimerInMs</code>进行配置。</p>
-<h5 id="cancel-服务下线"><a href="#cancel-服务下线" class="headerlink" title="cancel-服务下线"></a>cancel-服务下线</h5><p>Cancel（服务下线）一般在Service Provider shut down的时候调用，用来把自身的服务从Eureka Server中删除，以防客户端调用不存在的服务。</p>
+<h3 id="3-9-其他关键点"><a href="#3-9-其他关键点" class="headerlink" title="3.9 其他关键点"></a>3.9 其他关键点</h3><h4 id="3-9-1-eviction-失效服务剔除"><a href="#3-9-1-eviction-失效服务剔除" class="headerlink" title="3.9.1 eviction-失效服务剔除"></a>3.9.1 eviction-失效服务剔除</h4><p>Eviction（失效服务剔除）用来定期在Eureka Server检测失效的服务，检测标准就是超过一定时间没有Renew的服务。默认失效时间为90秒，也就是如果有服务超过90秒没有向Eureka Server发起Renew请求的话，就会被当做失效服务剔除掉。<br>失效时间可以通过<code>eureka.instance.leaseExpirationDurationInSeconds</code>进行配置，定期扫描时间可以通过<code>eureka.server.evictionIntervalTimerInMs</code>进行配置。</p>
+<h4 id="3-9-2-cancel-服务下线"><a href="#3-9-2-cancel-服务下线" class="headerlink" title="3.9.2 cancel-服务下线"></a>3.9.2 cancel-服务下线</h4><p>Cancel（服务下线）一般在Service Provider shut down的时候调用，用来把自身的服务从Eureka Server中删除，以防客户端调用不存在的服务。</p>
 
                 
             </div>
@@ -781,7 +781,7 @@ eureka<span class="token punctuation">.</span>instance<span class="token punctua
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-07-02T21-00-00',
+        id: '2018-07-02T21-42-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1096,7 +1096,7 @@ eureka<span class="token punctuation">.</span>instance<span class="token punctua
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

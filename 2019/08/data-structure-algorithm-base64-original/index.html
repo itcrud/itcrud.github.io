@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-08-12
+                    2019-08-一 19:23:22
                 </div>
                 
 
@@ -346,20 +346,20 @@
 <p>参照”程序员小灰”公众号关于Base64讲解的文章</p>
 <p>地址：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jZJVSt8SSZvFzSkAoTILvw">漫画：什么是Base64算法？</a></p>
 </blockquote>
-<h2 id="ASCII码的原理"><a href="#ASCII码的原理" class="headerlink" title="ASCII码的原理"></a>ASCII码的原理</h2><p>为什么要说ASCII码呢，因为出现Base64和这个是有所关联。</p>
+<h2 id="1-ASCII码的原理"><a href="#1-ASCII码的原理" class="headerlink" title="1. ASCII码的原理"></a>1. ASCII码的原理</h2><p>为什么要说ASCII码呢，因为出现Base64和这个是有所关联。</p>
 <p>ASCII的范围是0<del>127，总共是128个字符，其中0</del>31和127这33个字符属于控制字符，剩下的32~126这95个字符属于可打印字符，包含数字、大小写字母和常用符号。</p>
 <p>在早期的一些传输协议，例如传输邮件的SMTP协议，只能传输可打印的ASCII字符。导致原本8Bit字节码（0~255）超出了可用的范围。比如邮件传输图片资源的时候，有一个Byte值是10111011B，对应十进制是187不属于ASCII码的范围，因此无法被传输。</p>
 <p>这时候，Base64编码就应运而生啦。具体Base64是如何解决的呢？</p>
-<h2 id="Base64概述"><a href="#Base64概述" class="headerlink" title="Base64概述"></a>Base64概述</h2><p>Base64是一种编码算法，为什么叫Base64呢？因为这种算法只支持64个可打印字符。分别是26个大写字符、26个小写字母、10个数字以及<code>+</code>和<code>/</code>两个字符。</p>
+<h2 id="2-Base64概述"><a href="#2-Base64概述" class="headerlink" title="2. Base64概述"></a>2. Base64概述</h2><p>Base64是一种编码算法，为什么叫Base64呢？因为这种算法只支持64个可打印字符。分别是26个大写字符、26个小写字母、10个数字以及<code>+</code>和<code>/</code>两个字符。</p>
 <p>Base64巧妙的使用6Bit字符表示原本的8Bit字符，这样可以将字符控制在可打印的范围内，可以囊括原本ASCII码中所有的字符。甚至可以将ASCII码之外的字符都转换成可打印的6Bit字符。</p>
 <p>那到底是怎么将原本字节码是8Bit转换成成6Bit的呢？</p>
-<h2 id="Base64转换原理"><a href="#Base64转换原理" class="headerlink" title="Base64转换原理"></a>Base64转换原理</h2><p>Base64转换到底是怎么完成的呢？我们都知道8和6的最小公倍数是24，这样就可以使用4个Base64字符来表示3个传统的8Bit字符。这样有点抽象，且看下面的图片：</p>
+<h2 id="3-Base64转换原理"><a href="#3-Base64转换原理" class="headerlink" title="3. Base64转换原理"></a>3. Base64转换原理</h2><p>Base64转换到底是怎么完成的呢？我们都知道8和6的最小公倍数是24，这样就可以使用4个Base64字符来表示3个传统的8Bit字符。这样有点抽象，且看下面的图片：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/F7D7671C924541E1B95B174FBB0C5E61.jpg"></p>
 <p>从图中可以知道，将原来的数据按照8Bit排列，然后用6Bit来截取，将截取的数据转换成10进制，这样就可以在Base64表中找到对应的字符。</p>
 <p>这个例子是理想状态，如果原字符个数不是3个，而是4个，这个时候对应的8Bit位数就是32，不是最小公倍数的倍数，此时就需要使用0进行补位，补位后的位数必须是24的倍数，32加上8不能满足要求，只能是加上16，这样就可以啦，但是对应后两位都是0，这个时候就用<code>=</code>来替代，如下图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/9CA7D8942128450D9D7BFFAE55404D0F.png"></p>
 <p>通过这一个操作就可以看出来，为什么Base64加密后经常在编码后的字符串后面出现<code>=</code>啦。</p>
-<h4 id="Base64表"><a href="#Base64表" class="headerlink" title="Base64表"></a>Base64表</h4><p>Base64对照表和ASCII的对照表不一样，这里需要注意一下，Base64对照表如下：</p>
+<h2 id="4-Base64表"><a href="#4-Base64表" class="headerlink" title="4. Base64表"></a>4. Base64表</h2><p>Base64对照表和ASCII的对照表不一样，这里需要注意一下，Base64对照表如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/4234FBFA21564A518CFA9B0866D3F6A4.png"></p>
 
                 
@@ -504,7 +504,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-08-12T08-00-00',
+        id: '2019-08-12T19-23-22',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -815,7 +815,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

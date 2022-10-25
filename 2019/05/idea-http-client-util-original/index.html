@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-05-13
+                    2019-05-一 17:54:05
                 </div>
                 
 
@@ -344,9 +344,9 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>平时都是用postman来调接口，有时候也会用到swagger。用swagger还可以，直接在浏览器上开个页面即可，但是postman就不行了，需要单独的运行，个人感觉postman还是比较占内存的。最近和一个其他组同事联调，发现他们使用的是idea自带的HTTP Client工具，感觉挺好用的，调接口不需要切浏览器，切应用。直接在idea中可以完成。挺酷(zhuang)炫(bi)的，所以准备学习一下，在网上也找到了这方面的很多文章，在研究的时候都有借鉴，多谢各位爱分享的博友们。</p>
-<h3 id="界面化调试"><a href="#界面化调试" class="headerlink" title="界面化调试"></a>界面化调试</h3><p>界面化操作很简单，都是类似postman等其他发送请求的客户端工具，这里就不具体介绍使用规则啦。</p>
+<h2 id="1-界面化调试"><a href="#1-界面化调试" class="headerlink" title="1. 界面化调试"></a>1. 界面化调试</h2><p>界面化操作很简单，都是类似postman等其他发送请求的客户端工具，这里就不具体介绍使用规则啦。</p>
 <p>打开入口：<code>工具栏(idea顶上的一行工具里面)-&gt;Tools-&gt;HTTP Client</code></p>
-<h3 id="文件形式调试"><a href="#文件形式调试" class="headerlink" title="文件形式调试"></a>文件形式调试</h3><p>在文件里面编写请求所需要的地址、参数、请求头等信息，还可以通过全局变量来设置共用的信息。既然是使用idea，可以使用快捷键是必须滴。下面来一一的介绍。</p>
+<h2 id="2-文件形式调试"><a href="#2-文件形式调试" class="headerlink" title="2. 文件形式调试"></a>2. 文件形式调试</h2><p>在文件里面编写请求所需要的地址、参数、请求头等信息，还可以通过全局变量来设置共用的信息。既然是使用idea，可以使用快捷键是必须滴。下面来一一的介绍。</p>
 <p>首先需要创建一个编写http请求信息的文件，可以在<code>resources</code>目录下建一个目录<code>http</code>，<strong>右击http-&gt;New-&gt;HTTP Request</strong>，输入文件名称即可创建文件。具体这个文件放在什么地方没有特殊的要求，但是个人习惯方在<code>resources</code>目录下，再有个<code>http</code>目录便于管理，下面也基于这个目录来说。建好的文件名是<code>httpClient.http</code>。</p>
 <p>创建文件成功后，文件上面会有几行注释，这几行注释不多做解释，自己翻译一下即可。里面有快捷键的说明，下面我会再具体使用的时候说明。</p>
 <p>附文件初始注释说明信息：</p>
@@ -357,7 +357,7 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="POST请求之JSON数据"><a href="#POST请求之JSON数据" class="headerlink" title="POST请求之JSON数据"></a>POST请求之JSON数据</h5><ul>
+<h3 id="2-1-POST请求之JSON数据"><a href="#2-1-POST请求之JSON数据" class="headerlink" title="2.1 POST请求之JSON数据"></a>2.1 POST请求之JSON数据</h3><ul>
 <li>接口代码：</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"addArticle"</span><span class="token punctuation">)</span>
@@ -385,7 +385,7 @@ POST http://localhost:8282/api/addArticle
 
 <p>书写是很简单的，<code>httpClient.http</code>编写也不难，细节注意点就可以。</p>
 <p>快捷键<code>ptr</code>，输入会有提示，直接回车即可。</p>
-<h5 id="POST请求之FORM表单"><a href="#POST请求之FORM表单" class="headerlink" title="POST请求之FORM表单"></a>POST请求之FORM表单</h5><ul>
+<h3 id="2-2-POST请求之FORM表单"><a href="#2-2-POST请求之FORM表单" class="headerlink" title="2.2 POST请求之FORM表单"></a>2.2 POST请求之FORM表单</h3><ul>
 <li>接口代码：</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"updateArticle_form"</span><span class="token punctuation">,</span> produces <span class="token operator">=</span> <span class="token class-name">MediaType</span><span class="token punctuation">.</span><span class="token constant">APPLICATION_FORM_URLENCODED_VALUE</span><span class="token punctuation">)</span> <span class="token comment">//指定请求数据格式是form表单</span>
@@ -406,7 +406,7 @@ id=1&amp;title=文章标题&amp;abst=文章摘要&amp;categoryId=1&amp;authorNam
 
 <p>这个具体的说明就没写了，基本都是相同的格式，参考上一个示例，但是这里需要注意的是字段名和字段值不能加引号。如<code>"id"=1&amp;"title"="文章标题"</code>，这样会报错的。生成此结构使用快捷键<code>ptrp</code>。</p>
 <p><strong>另外一个注意点：</strong> 每个请求后面都要加<code>###</code>结束，换句话说，就是两个请求之间用<code>###</code>分隔，否则会直接报错。</p>
-<h5 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h5><ul>
+<h3 id="2-3-GET请求"><a href="#2-3-GET请求" class="headerlink" title="2.3 GET请求"></a>2.3 GET请求</h3><ul>
 <li>接口代码：</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"getList"</span><span class="token punctuation">)</span>
@@ -435,7 +435,7 @@ GET http://localhost:8282/api/getList?keywords=标题&amp;categoryId=1
 <span class="token header"><span class="token header-name keyword">Accept</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>GET请求和POST请求一样，也是有两个快捷键，分别是<code>gtr</code>和<code>gtrp</code>，第一个是生成无参数的模板，第二个是生成有参数。区别就是第二种会在请求地址后面加上<code>?id=xx</code>这种参数。</p>
-<h3 id="全局变量配置"><a href="#全局变量配置" class="headerlink" title="全局变量配置"></a>全局变量配置</h3><p>常用的几种请求方式上面已经清楚啦，下面来看一下全局变量配置。这个全局的变量和spring的配置文件是完全分开的，没有关联。</p>
+<h2 id="3-全局变量配置"><a href="#3-全局变量配置" class="headerlink" title="3. 全局变量配置"></a>3. 全局变量配置</h2><p>常用的几种请求方式上面已经清楚啦，下面来看一下全局变量配置。这个全局的变量和spring的配置文件是完全分开的，没有关联。</p>
 <p>配置文件的名称和内容格式都有特殊要求，名称必须是<code>rest-client.env.json</code>或者<code>http-client.env.json</code>。</p>
 <p>配置文件格式：</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
@@ -460,10 +460,10 @@ GET {{host}}/api/getList?keywords=标题&amp;categoryId=1
 
 <p><code>httpClient.http</code>文件中每个请求前面都有个绿色的三角形（运行按钮），可以直接点击运行，点击后会提示你选择哪个环境的配置运行。如图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/DE8E51BBD20148C5B2D6C8239A9D8F09.png"></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>整体基本写完啦，但是细心的可能会注意到还有两个快捷键没有介绍，那就是<code>mptr</code>和<code>fptr</code>，都是文件上传的快捷键，具体待研究，尝试了一次没有弄好，请求是通的，但是接口接受文件的对象是空。(<strong>研究完后期会在这篇文章里面更新</strong>)</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>整体基本写完啦，但是细心的可能会注意到还有两个快捷键没有介绍，那就是<code>mptr</code>和<code>fptr</code>，都是文件上传的快捷键，具体待研究，尝试了一次没有弄好，请求是通的，但是接口接受文件的对象是空。(<strong>研究完后期会在这篇文章里面更新</strong>)</p>
 <p>另外还有一个挺酷的功能，可以自己写脚本，对执行的结果进行处理，如响应是500，控制台应该显示什么信息；还可以根据响应的值给予特殊的处理等。自动义脚本功能感觉用不上，就没有多去研究，脚本看起来并不是很难，如果你很感兴趣可以研究一下官方文档。</p>
 <p>官方文档：<a target="_blank" rel="noopener" href="https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html">https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html</a></p>
-<h3 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h3><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-2">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-2</a></p>
+<h2 id="5-源码"><a href="#5-源码" class="headerlink" title="5. 源码"></a>5. 源码</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-2">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-2</a></p>
 
                 
             </div>
@@ -611,7 +611,7 @@ GET {{host}}/api/getList?keywords=标题&amp;categoryId=1
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-05-13T08-00-00',
+        id: '2019-05-13T17-54-05',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -926,7 +926,7 @@ GET {{host}}/api/getList?keywords=标题&amp;categoryId=1
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

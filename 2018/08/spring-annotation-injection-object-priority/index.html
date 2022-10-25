@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-08-07
+                    2018-08-二 22:16:00
                 </div>
                 
 
@@ -344,7 +344,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>使用注解的方式注入bean实例，在两年前的开发中，还经常看到<code>@Resource</code>注解，这个注解是基于JSR250标准的，现在基本很少看到使用了，取而代之的是<code>@Autowired</code>注解，也是官方推荐的。随着spring boot的出现，很多开发小伙伴喜欢通过config配置类加载一些bean，在加载这些bean会依赖到其他的一些bean实例，这个时候又慢慢的开始有比较多的使用<code>@Qualifier</code>注解和<code>@Autowired</code>配合使用，但是从版本来看<code>@Qualifier</code>注解早在spring2.5版本就已经存在了。当然注入的注解并不止这两种，<code>@Primary</code>和<code>@Inject</code>都会说到。在使用过程中不同的注解对bean注入有着不同的优先级，下面就一起来了解一下。</p>
-<h3 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h3><p>实体类Monkey，用于被注入的一个bean。</p>
+<h2 id="1-代码部分"><a href="#1-代码部分" class="headerlink" title="1. 代码部分"></a>1. 代码部分</h2><p>实体类Monkey，用于被注入的一个bean。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Monkey</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">public</span> <span class="token keyword">int</span> age <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
@@ -404,11 +404,11 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>代码部分就是如上，后面来开始依次来说这些注解的优先级。</p>
-<h3 id="Autowried"><a href="#Autowried" class="headerlink" title="@Autowried"></a>@Autowried</h3><p>只用<code>@Autowired</code>注解的时候，这个就很简单了，首先会去IOC容器中找beanName为monkey的bean，如果找到直接注入，如果找不到就会报错。运行一下测试结果。</p>
+<h2 id="2-Autowried"><a href="#2-Autowried" class="headerlink" title="2. @Autowried"></a>2. @Autowried</h2><p>只用<code>@Autowired</code>注解的时候，这个就很简单了，首先会去IOC容器中找beanName为monkey的bean，如果找到直接注入，如果找不到就会报错。运行一下测试结果。</p>
 <pre class="line-numbers language-none"><code class="language-none">==&gt;Monkey{age=20}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>很好理解，不多做解释。</p>
-<h3 id="Qualifier"><a href="#Qualifier" class="headerlink" title="@Qualifier"></a>@Qualifier</h3><p>这个注解需要注意的是，注解类里面只有一个字段name，这个name如果不给定一个值得话，会报错的，错误里面就是说这个name值为空，而且<code>@AutoWired</code>注解的required字段为true。也就是这个Monkey注入是必须的，但是找不到对应的bean。</p>
+<h2 id="3-Qualifier"><a href="#3-Qualifier" class="headerlink" title="3. @Qualifier"></a>3. @Qualifier</h2><p>这个注解需要注意的是，注解类里面只有一个字段name，这个name如果不给定一个值得话，会报错的，错误里面就是说这个name值为空，而且<code>@AutoWired</code>注解的required字段为true。也就是这个Monkey注入是必须的，但是找不到对应的bean。</p>
 <p>因此在这里使用的时候要注意给<code>@Qualifier</code>的name字段要赋值。并且要将<code>@Autowird</code>注解的required字段设置为false，防止没有对应的bean导致报错。使用需谨慎。</p>
 <p>这里的使用方式就是将原来注入的方式改为如下：</p>
 <pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">@Autowired(required=false)
@@ -419,7 +419,7 @@ private Monkey monkey;<span aria-hidden="true" class="line-numbers-rows"><span><
 <pre class="line-numbers language-none"><code class="language-none">==&gt;Monkey{age=30}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>可以看的出来加上这个注解以后，不会去找beanName为monkey的实例，而是monkey2，这里还是要注意加上这个注解后，只会去找monkey2，没有备选。</p>
-<h3 id="Primary"><a href="#Primary" class="headerlink" title="@Primary"></a>@Primary</h3><p>这个注解不是用在注入的时候，而是用在创建bean的使用，需要在创建的bean的方法上加上这个注解。在congfig配置类中新加入下面这段代码：</p>
+<h2 id="4-Primary"><a href="#4-Primary" class="headerlink" title="4. @Primary"></a>4. @Primary</h2><p>这个注解不是用在注入的时候，而是用在创建bean的使用，需要在创建的bean的方法上加上这个注解。在congfig配置类中新加入下面这段代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
 <span class="token annotation punctuation">@Primary</span>
 <span class="token keyword">public</span> <span class="token class-name">Monkey</span> <span class="token function">monkey3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -434,7 +434,7 @@ private Monkey monkey;<span aria-hidden="true" class="line-numbers-rows"><span><
 <pre class="line-numbers language-none"><code class="language-none">==&gt;Monkey{age=40}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>这里可以知道，当存在同一类型的bean，其中有一个bean创建的时候加上了<code>@Primary</code>注解后，在注入bean的时候，会优先选择这个被<code>@Primary</code>修饰的bean。</p>
-<h3 id="Resource、-Inject"><a href="#Resource、-Inject" class="headerlink" title="@Resource、@Inject"></a>@Resource、@Inject</h3><p>这两个注解分别是基于JSR250标准和JSR330标准的，都可以用于注入bean实例，这里不做多的解释。但是<code>@Inject</code>注解在使用的需要引入<code>javax.inject</code>依赖如下：</p>
+<h2 id="5-Resource、-Inject"><a href="#5-Resource、-Inject" class="headerlink" title="5. @Resource、@Inject"></a>5. @Resource、@Inject</h2><p>这两个注解分别是基于JSR250标准和JSR330标准的，都可以用于注入bean实例，这里不做多的解释。但是<code>@Inject</code>注解在使用的需要引入<code>javax.inject</code>依赖如下：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>javax.inject<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>javax.inject<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
@@ -442,7 +442,7 @@ private Monkey monkey;<span aria-hidden="true" class="line-numbers-rows"><span><
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>每个注解的基本使用都已经说过了，但是在多个注解组合使用的时候会出现什么情况呢，下面来说一个例子(只说一个，因为组合的方式有点多，都说没有太大的意义，后面会做总结)。</p>
-<h3 id="Autowired、-Qualifier、-Primary注解同时存在"><a href="#Autowired、-Qualifier、-Primary注解同时存在" class="headerlink" title="@Autowired、@Qualifier、@Primary注解同时存在"></a>@Autowired、@Qualifier、@Primary注解同时存在</h3><p>需要将配置类中的代码改成如下：</p>
+<h2 id="6-Autowired、-Qualifier、-Primary注解同时存在"><a href="#6-Autowired、-Qualifier、-Primary注解同时存在" class="headerlink" title="6. @Autowired、@Qualifier、@Primary注解同时存在"></a>6. @Autowired、@Qualifier、@Primary注解同时存在</h2><p>需要将配置类中的代码改成如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
 <span class="token keyword">public</span> <span class="token class-name">Monkey</span> <span class="token function">monkey</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Monkey</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -466,7 +466,7 @@ private Monkey monkey;<span aria-hidden="true" class="line-numbers-rows"><span><
 <pre class="line-numbers language-none"><code class="language-none">==&gt;Monkey{age=30}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>这个结果可以看出来<code>@Qualifier</code>的优先级很高，<code>@Primary</code>注解也暗淡失色了。其实从日常生活中也可以很容易的理解，条件越苛刻，往往就会优先级更高一点。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个注解有很多的组合方式，感兴趣的可以去尝试一下，下面做一个总结啦。</p>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><p>这个注解有很多的组合方式，感兴趣的可以去尝试一下，下面做一个总结啦。</p>
 <ul>
 <li>当单独使用<code>@Autowired</code>首先会根据注入bean的名字去IOC容器中找，如果找不到，会根据当前注入类的类型去找，当找到一个的时候，很简单，直接注入，如果有多个，那就会出现报错。因为他也不知选谁。</li>
 <li>当<code>@Autowired</code>和<code>@Qualifier(name="demo")</code>组合使用的时候，只会到IOC容器中找beanName为demo的bean，找不到就注入null，如果这个时候<code>@Autowired</code>的required字段为true那么悲催了，报错。</li>
@@ -626,7 +626,7 @@ private Monkey monkey;<span aria-hidden="true" class="line-numbers-rows"><span><
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-08-07T08-00-00',
+        id: '2018-08-07T22-16-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -945,7 +945,7 @@ private Monkey monkey;<span aria-hidden="true" class="line-numbers-rows"><span><
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

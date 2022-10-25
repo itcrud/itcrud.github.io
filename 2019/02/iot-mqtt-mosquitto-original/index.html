@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-02-11
+                    2019-02-一 19:11:22
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>大数据、人工智能、物联网，这些都是互联网将来重点发展的规划方向。大数据分析你的行为，如在淘宝、京东上经常看或者搜一类产品，他就会在首页智能的向你推这类的丰富产品，在新闻、百度广告位等都是有应用的（所以自己的手机不要随意给别人看，通过一些你常用的APP就可以看出来你的一些个人隐私信息，隐私啊！）。人工智能让生活更有趣，但是人工智能目前更多的是一个噱头，发展还是有待走向成熟化的。至于物联网，现在很多公司都是有雏形产品的，一些巨头公司已经提供了对应的处理方案，如阿里的IoT平台、华为的IoT平台、小米的物联网相关产品等。至于物联网是做什么的呢。下面来说说我的理解。</p>
-<h2 id="物联网的理解"><a href="#物联网的理解" class="headerlink" title="物联网的理解"></a>物联网的理解</h2><p><strong>声明：</strong>下面所说为个人理解，大白话，不喜勿喷！</p>
+<h2 id="1-物联网的理解"><a href="#1-物联网的理解" class="headerlink" title="1. 物联网的理解"></a>1. 物联网的理解</h2><p><strong>声明：</strong>下面所说为个人理解，大白话，不喜勿喷！</p>
 <p>首先大概知道一下物联网的概念。物联网是身边的事物和人之间通过网络的关联，程序的计算，达到物的智能化和可操控便捷性。能组织出来这句话不容易，三年后我再看，估计我都不知道在说什么，下面用例子来说明。</p>
 <p>如家里有空调、热水器、冰箱等设备，上班出门后发现空调或者热水器没有关，这个时候除了回家关没有其他的办法。如果使用物联网技术，将家里的空调、热水器等设备连到网络上，在手机上可以用APP看到家里电器的运行情况，然后通过APP来操作这些设备的启停。这个利用的范围是比较广的。如APP操作汽车的启停，冬天或者夏天在上车前先调好车内的温度（目前很多品牌的汽车都已经实现）；如智能窗门，下暴雨的时候可以通过APP将窗户关上，防止家里进水；再比如在外忙了一天，在地铁上将家里的空调热水器调好，回家洗个热水澡，吹着空调岂不爽歪歪。</p>
 <p>至于这种技术怎么实现，目前在车上面是需要购买流量，变相的说就会在车上安装一个网络，APP通过网络请求来控制汽车的部分功能。对于家里的家电也是同样，家电通过无线网或者其他局域网，最终连接到网络中，APP通过发送指令来控制家电的动作。</p>
@@ -348,7 +348,7 @@
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/2073772AC85545EC891C40C8F254D8F0.png"></p>
 <p>物联网大概是干什么的已经知道了，以本人表达能力只能这样了，凑合着看吧！</p>
 <p>这篇文章的主题是说MQTT交互的协议以及MQTT的代理（MQTT broker）的内容，说上面的内容就是为了让我们更好的理解MQTT从中起到的作用。下面进入正题。</p>
-<h2 id="MQTT协议"><a href="#MQTT协议" class="headerlink" title="MQTT协议"></a>MQTT协议</h2><p>概念：**MQTT(消息队列遥测传输)**是ISO 标准(ISO/IEC PRF 20922)下基于发布/订阅范式的消息协议。它工作在 TCP/IP协议族上，是为硬件性能低下的远程设备以及网络状况糟糕的情况下而设计的发布/订阅型消息协议，为此，它需要一个消息中间件。（来自百度百科）</p>
+<h2 id="2-MQTT协议"><a href="#2-MQTT协议" class="headerlink" title="2. MQTT协议"></a>2. MQTT协议</h2><p>概念：**MQTT(消息队列遥测传输)**是ISO 标准(ISO/IEC PRF 20922)下基于发布/订阅范式的消息协议。它工作在 TCP/IP协议族上，是为硬件性能低下的远程设备以及网络状况糟糕的情况下而设计的发布/订阅型消息协议，为此，它需要一个消息中间件。（来自百度百科）</p>
 <p>MQTT是一个通讯协议，和http是属于同一类，只是协议的定义不一样和具体的通讯机制有所不同。MQTT是基于消息队列的机制，需要使用MQTT代理。如果用过rabbitMQ的会知道，他们使用的是AMQP协议。只是了解MQTT概念还是不够的。</p>
 <p><strong>特性：</strong></p>
 <ul>
@@ -373,7 +373,7 @@
 <li>Topic（主题），可以理解为消息的类型，订阅者订阅（Subscribe）后，就会收到该主题的消息内容（payload）</li>
 <li>payload（负载），可以理解为消息的内容，是指订阅者具体要使用的内容。</li>
 </ul>
-<h2 id="MQTT代理-MQTT-broker-mosquitto的安装"><a href="#MQTT代理-MQTT-broker-mosquitto的安装" class="headerlink" title="MQTT代理(MQTT broker)mosquitto的安装"></a>MQTT代理(MQTT broker)mosquitto的安装</h2><p>MQTT的代理有很多，有不同语言写的，用的比较多的是mosquitto，这里也就以这个为例来写Demo。下面依次进行。</p>
+<h2 id="4-MQTT代理-MQTT-broker-mosquitto的安装"><a href="#4-MQTT代理-MQTT-broker-mosquitto的安装" class="headerlink" title="4. MQTT代理(MQTT broker)mosquitto的安装"></a>4. MQTT代理(MQTT broker)mosquitto的安装</h2><p>MQTT的代理有很多，有不同语言写的，用的比较多的是mosquitto，这里也就以这个为例来写Demo。下面依次进行。</p>
 <ul>
 <li><p>下载、解压</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> http://mosquitto.org/files/source/mosquitto-1.5.tar.gz
@@ -398,7 +398,7 @@ mosquitto <span class="token parameter variable">-c</span> /etc/mosquitto/mosqui
 <span class="token function">nohup</span> mosquitto <span class="token parameter variable">-c</span> /etc/mosquitto/mosquitto.conf <span class="token operator">&gt;</span> /usr/local/mos/mos_log.log <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>下面就要讨论一下业务代码如何连接mosquitto，将业务链串联起来，应用到实际业务场景。</p>
-<h2 id="Java连接mosquitto发布和订阅消息"><a href="#Java连接mosquitto发布和订阅消息" class="headerlink" title="Java连接mosquitto发布和订阅消息"></a>Java连接mosquitto发布和订阅消息</h2><p>这一步写一下思想，不具体写太多东西，因为连接第三方服务基本都是一样，IP、端口、请求出参入参等等。后续会在示例代码中具体写出对应的代码实现。</p>
+<h2 id="5-Java连接mosquitto发布和订阅消息"><a href="#5-Java连接mosquitto发布和订阅消息" class="headerlink" title="5. Java连接mosquitto发布和订阅消息"></a>5. Java连接mosquitto发布和订阅消息</h2><p>这一步写一下思想，不具体写太多东西，因为连接第三方服务基本都是一样，IP、端口、请求出参入参等等。后续会在示例代码中具体写出对应的代码实现。</p>
 <ul>
 <li>首先是在配置文件中配置对应的ip、端口等信息；</li>
 <li>在业务系统启动的时候自动初始化MqttClient客户端实例，在初始化的时候就已经和mosquitto建立了连接关系；</li>
@@ -406,7 +406,7 @@ mosquitto <span class="token parameter variable">-c</span> /etc/mosquitto/mosqui
 <li>在建立连接的时候会涉及到一个callback类，这个是回调使用，包括连接丢失回调、消息送达回调、消息接收回调方法，这里面做具体的业务逻辑处理。</li>
 </ul>
 <p>主要的类有两个，分别是<code>IotMqttClient</code>和<code>MqttClientCallBack</code>。分别用来发送请求和接收请求回调或者订阅的消息。具体不多说。代码见文末。</p>
-<h2 id="命令方式发布和订阅消息"><a href="#命令方式发布和订阅消息" class="headerlink" title="命令方式发布和订阅消息"></a>命令方式发布和订阅消息</h2><p>上面是代码的方式连接mosquitto，系统初始化订阅消息，然后通过接口的调用发布消息，实现消息发布和订阅的流程测试操作，如果是安装好mosquitto后想试试服务是否已经完备，可以使用命令的方式直接操作。（启动mosquitto就不说了）</p>
+<h2 id="6-命令方式发布和订阅消息"><a href="#6-命令方式发布和订阅消息" class="headerlink" title="6. 命令方式发布和订阅消息"></a>6. 命令方式发布和订阅消息</h2><p>上面是代码的方式连接mosquitto，系统初始化订阅消息，然后通过接口的调用发布消息，实现消息发布和订阅的流程测试操作，如果是安装好mosquitto后想试试服务是否已经完备，可以使用命令的方式直接操作。（启动mosquitto就不说了）</p>
 <ul>
 <li><p>首先要打开两个窗口（连接linux机器的两个终端窗口），一个窗口用来订阅主题，一个窗口用来发布消息；</p>
 </li>
@@ -419,7 +419,7 @@ mosquitto_pub <span class="token parameter variable">-t</span> <span class="toke
 <li><p>上面两步操作结束后，订阅消息的界面会打印出发布命令中的消息内容<code>blog.itcrud.com test mosquitto</code>。</p>
 </li>
 </ul>
-<h2 id="mosquitto的用户控制"><a href="#mosquitto的用户控制" class="headerlink" title="mosquitto的用户控制"></a>mosquitto的用户控制</h2><p>上面说的都是直接连就可以，不需要任何鉴权信息，这样很不安全，作为测试用用还可以，在生产环境就不行啦。很容易被攻击。</p>
+<h2 id="7-mosquitto的用户控制"><a href="#7-mosquitto的用户控制" class="headerlink" title="7. mosquitto的用户控制"></a>7. mosquitto的用户控制</h2><p>上面说的都是直接连就可以，不需要任何鉴权信息，这样很不安全，作为测试用用还可以，在生产环境就不行啦。很容易被攻击。</p>
 <ul>
 <li><p>配置文件<code>mosquitto.conf</code>修改第一个位置是根据<code>allow_anonymous</code>查找，然后修改为<code>allow_anonymous false</code>，表示关闭匿名登录</p>
 </li>
@@ -445,7 +445,7 @@ mosquitto_passwd <span class="token parameter variable">-D</span> /etc/mosquitto
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mosquitto_sub <span class="token parameter variable">-t</span> <span class="token string">'itcrud'</span> <span class="token parameter variable">-u</span> itcrud <span class="token parameter variable">-P</span> <span class="token number">123456</span>
 mosquitto_pub <span class="token parameter variable">-t</span> <span class="token string">'itcrud'</span> <span class="token parameter variable">-m</span> <span class="token string">'blog.itcrud.com test mosquitto'</span> <span class="token parameter variable">-u</span> itcrud <span class="token parameter variable">-P</span> <span class="token number">123456</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h2 id="mosquitto的权限控制"><a href="#mosquitto的权限控制" class="headerlink" title="mosquitto的权限控制"></a>mosquitto的权限控制</h2><p>用户可以创建，而且可以创建很多用户，那么此时就需要控制这些用户的权限，那些可以发布消息，那些只能订阅不能发布等。</p>
+<h2 id="8-mosquitto的权限控制"><a href="#8-mosquitto的权限控制" class="headerlink" title="8. mosquitto的权限控制"></a>8. mosquitto的权限控制</h2><p>用户可以创建，而且可以创建很多用户，那么此时就需要控制这些用户的权限，那些可以发布消息，那些只能订阅不能发布等。</p>
 <p>配置信息的格式如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">user <span class="token punctuation">[</span>用户名<span class="token punctuation">]</span>
 topic <span class="token operator">&lt;</span>write,read<span class="token operator">&gt;</span> <span class="token punctuation">[</span>topic名称<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -466,7 +466,7 @@ user admin
 topic /topic/<span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最后就是把<code>aclfile.conf</code>文件配置到<code>mosquitto.conf</code>配置文件中。在<code>mosquitto.conf</code>文件中找到<code>acl_file</code>，然后修改为<code>acl_file /etc/mosquitto/aclfile.conf</code>。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<h2 id="9-总结"><a href="#9-总结" class="headerlink" title="9. 总结"></a>9. 总结</h2><ul>
 <li>首先了解一下物联网的基本概念，以及个人对物联网的理解</li>
 <li>第二说说物联网中常用的协议MQTT的概念</li>
 <li>第三说说MQTT中使用的代理，并详细介绍了常用的代理mosquitto的安装</li>
@@ -475,7 +475,7 @@ topic /topic/<span class="token comment">#</span><span aria-hidden="true" class=
 <li>第五说说mosquitto对用户权限控制，如何配置用户发布、订阅的权限</li>
 </ul>
 <p>思路还算清晰，不能保证文章里面没有错误存在或者表达不详细的部分，如果发现欢迎留言指正。</p>
-<h2 id="示例源码"><a href="#示例源码" class="headerlink" title="示例源码"></a>示例源码</h2><p>GitHub：<a target="_blank" rel="noopener" href="https://github.com/IT-CRUD/iot-mqtt">https://github.com/IT-CRUD/iot-mqtt</a></p>
+<h2 id="10-源码"><a href="#10-源码" class="headerlink" title="10. 源码"></a>10. 源码</h2><p>GitHub：<a target="_blank" rel="noopener" href="https://github.com/itcrud/iot-mqtt">https://github.com/itcrud/iot-mqtt</a></p>
 
                 
             </div>
@@ -619,7 +619,7 @@ topic /topic/<span class="token comment">#</span><span aria-hidden="true" class=
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-02-11T08-00-00',
+        id: '2019-02-11T19-11-22',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -930,7 +930,7 @@ topic /topic/<span class="token comment">#</span><span aria-hidden="true" class=
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

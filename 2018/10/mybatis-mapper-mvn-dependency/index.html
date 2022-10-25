@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-10-13
+                    2018-10-六 17:51:00
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>又到一期挖坑填坑的时候啦，前段时间在开发一个新的项目，项目的框架逃不过三大件:Spring+Mybatis+Spring Boot。现在Spring Boot可谓是很有热度，如果是新开的项目基本都会是这个框架结构，用Spring MVC的已经很少(如果你说你们自己还在用，反驳我的说法，那我只能喊你一声杠精大哥啦)。之所以介绍一下这个基本架构，其实其中一个坑就出现在这内部。</p>
-<h3 id="Mybatis映射关系问题"><a href="#Mybatis映射关系问题" class="headerlink" title="Mybatis映射关系问题"></a>Mybatis映射关系问题</h3><p>在写<code>mapper</code>类和<code>mapper.xml</code>关联关系的时候，会在<code>mapper</code>里面的接口参数上加<code>@Param</code>注解来说明这个字段的名称，这个是没有问题的。<br>在业务代码中我们有时候会遇到一个数据表(A表)会关联另一个数据表(B表)的id，这个关联关系是在业务代码的时候，先插入B表的数据，然后拿到插入后的id，再设置到实体类中，插入到A表中，完成关联，这个时候就需要在插入B表的时候，将自增的id返回并赋值到B的实体类中。说的有点虚，那就不多废话，代码来说话。</p>
+<h2 id="1-Mybatis映射关系问题"><a href="#1-Mybatis映射关系问题" class="headerlink" title="1. Mybatis映射关系问题"></a>1. Mybatis映射关系问题</h2><p>在写<code>mapper</code>类和<code>mapper.xml</code>关联关系的时候，会在<code>mapper</code>里面的接口参数上加<code>@Param</code>注解来说明这个字段的名称，这个是没有问题的。<br>在业务代码中我们有时候会遇到一个数据表(A表)会关联另一个数据表(B表)的id，这个关联关系是在业务代码的时候，先插入B表的数据，然后拿到插入后的id，再设置到实体类中，插入到A表中，完成关联，这个时候就需要在插入B表的时候，将自增的id返回并赋值到B的实体类中。说的有点虚，那就不多废话，代码来说话。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//A表实体类</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AModel</span><span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token class-name">Integer</span> id<span class="token punctuation">;</span>
@@ -364,7 +364,7 @@ values
 (#{model.address},#{model.city});
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在insert语句上面加上useGeneratedKeys表示自增主键，keyProperty指定主键名称。这个看起来没有任何问题，但是运行起来就出现了异常问题。报出的错误日志也不是很明确，小伙伴很着急，定位不到问题位置。网上搜索也没有介绍过这种情况。(这里还是要吐槽一下一些博客，互相抄袭的情况真的很严重，能连续找到几篇文章是相同，而且是原创，还能是一字不差，错别字都是一样的。)<br>回到问题本身，其实这里就是对应关系的问题。在BMapper接口中，我们指定了实体类的名称是model，在插入数据的时候也是用<code>model.属性</code>的方式取值，但是却在keyProperty设置字段名时没有加<code>model.</code>。<br><strong>解决方案</strong><br>方式一：最简单的方式就是不要用<code>@Param</code>设置别名，因为这里就一个参数，无所谓别名的设置，将sql语句中的<code>model.</code>去掉即可。<br>方式二：在keyProperty属性中将<code>id</code>改为<code>model.id</code>即可。<br>往往解决方案很简单，坑却很深，希望这个坑的解决方案能对被此坑坑过的小伙伴。</p>
-<h3 id="Maven依赖问题"><a href="#Maven依赖问题" class="headerlink" title="Maven依赖问题"></a>Maven依赖问题</h3><p>一个项目下来是分很多模块，模块之间互相是有依赖的。前几天在公司同事写的项目上开发新的功能，项目拉下来以后，启动一直报错。提示信息是方法找不到，最后和同事讨论后和网上找解决方案。最终确定是jar包引入的问题。下面来说一下场景。</p>
+<h2 id="2-Maven依赖问题"><a href="#2-Maven依赖问题" class="headerlink" title="2. Maven依赖问题"></a>2. Maven依赖问题</h2><p>一个项目下来是分很多模块，模块之间互相是有依赖的。前几天在公司同事写的项目上开发新的功能，项目拉下来以后，启动一直报错。提示信息是方法找不到，最后和同事讨论后和网上找解决方案。最终确定是jar包引入的问题。下面来说一下场景。</p>
 <p>有ModuleA、ModuleB、ModuleC，在ModuleC引入了依赖jar包如下：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>com.alibaba<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
@@ -538,7 +538,7 @@ values
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-10-13T08-00-00',
+        id: '2018-10-13T17-51-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -857,7 +857,7 @@ values
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

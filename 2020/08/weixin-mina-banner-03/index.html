@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2020-08-20
+                    2020-08-四 08:00:00
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>轮播图不论是在小程序，还是web页面、APP里面，都是常用的一个组件，在微信小程序里面就提供了这个好用的组件，我这个小白，表示很快就能上手。下面来看一下我是怎么写的吧！</p>
-<h2 id="轮播图基本构建"><a href="#轮播图基本构建" class="headerlink" title="轮播图基本构建"></a>轮播图基本构建</h2><p>先不管它太多的动态功能，先将图片放上去，能正常的滑动。</p>
+<h2 id="1-轮播图基本构建"><a href="#1-轮播图基本构建" class="headerlink" title="1. 轮播图基本构建"></a>1. 轮播图基本构建</h2><p>先不管它太多的动态功能，先将图片放上去，能正常的滑动。</p>
 <ul>
 <li>wxml中的代码</li>
 </ul>
@@ -370,7 +370,7 @@ swiper的高度是<span class="token number">100</span>%，也可写成100vw
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>到这里就可以完成一个轮播图，可以手动的去滑动，但是存在几个问题，那就是不能自动轮播，轮播图上没有圆点标识等。</p>
-<h2 id="轮播图优化"><a href="#轮播图优化" class="headerlink" title="轮播图优化"></a>轮播图优化</h2><p>先来看看<code>swiper</code>还有哪些重要的属性。</p>
+<h2 id="2-轮播图优化"><a href="#2-轮播图优化" class="headerlink" title="2. 轮播图优化"></a>2. 轮播图优化</h2><p>先来看看<code>swiper</code>还有哪些重要的属性。</p>
 <table>
 <thead>
 <tr>
@@ -425,7 +425,7 @@ swiper的高度是<span class="token number">100</span>%，也可写成100vw
 <li>interval：这个属性是配合autoplay使用的，表示轮播过程中，切换的间隔时间，不写默认是5000ms</li>
 <li>circular：以前经常会遇到轮播图滑到最后一个再往后滑就滑不动的问题，还有就是上面的自动轮播，轮播到最后一个切换到第一个时出现的效果很不好，加上这个属性就可以完美解决这两个问题</li>
 </ul>
-<h2 id="最终代码"><a href="#最终代码" class="headerlink" title="最终代码"></a>最终代码</h2><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 没有加上指示点，感觉不好看，现在很多app或者小程序，这些指示点也就不加了 --&gt;</span>
+<h2 id="3-最终代码"><a href="#3-最终代码" class="headerlink" title="3. 最终代码"></a>3. 最终代码</h2><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 没有加上指示点，感觉不好看，现在很多app或者小程序，这些指示点也就不加了 --&gt;</span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>swiper</span> <span class="token attr-name">autoplay</span> <span class="token attr-name">circular</span> <span class="token attr-name">interval</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3000<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>swiper-item</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>image</span>  <span class="token attr-name">mode</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>widthFix<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>../../styles/banner/1.jpg<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>image</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>swiper-item</span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>swiper-item</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>image</span>  <span class="token attr-name">mode</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>widthFix<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>../../styles/banner/2.jpg<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>image</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>swiper-item</span><span class="token punctuation">&gt;</span></span>
@@ -899,7 +899,7 @@ swiper的高度是<span class="token number">100</span>%，也可写成100vw
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

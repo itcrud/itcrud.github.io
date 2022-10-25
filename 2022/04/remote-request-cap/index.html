@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2022-04-03
+                    2022-04-日 15:18:16
                 </div>
                 
 
@@ -339,8 +339,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="分布式系统的远程调用"><a href="#分布式系统的远程调用" class="headerlink" title="分布式系统的远程调用"></a>分布式系统的远程调用</h2><p>在微服务架构中，通常存在多个服务之间的远程调用的需求。远程调用通常包含两个部分：序列化和通信协议。常见的序列化协议包括json、xml、hession、protobuf、thrift、text、bytes等，目前主流的远程调用技术有基于HTTP的RESTful接口以及基于TCP的RPC协议。</p>
-<h3 id="RestFul接口"><a href="#RestFul接口" class="headerlink" title="RestFul接口"></a>RestFul接口</h3><p>REST，即Representational State Transfer的缩写，如果一个架构符合REST原则，就称它为RESTful架构。</p>
+                <h2 id="1-分布式系统的远程调用"><a href="#1-分布式系统的远程调用" class="headerlink" title="1. 分布式系统的远程调用"></a>1. 分布式系统的远程调用</h2><p>在微服务架构中，通常存在多个服务之间的远程调用的需求。远程调用通常包含两个部分：序列化和通信协议。常见的序列化协议包括json、xml、hession、protobuf、thrift、text、bytes等，目前主流的远程调用技术有基于HTTP的RESTful接口以及基于TCP的RPC协议。</p>
+<h3 id="1-1-RestFul接口"><a href="#1-1-RestFul接口" class="headerlink" title="1.1 RestFul接口"></a>1.1 RestFul接口</h3><p>REST，即Representational State Transfer的缩写，如果一个架构符合REST原则，就称它为RESTful架构。</p>
 <ul>
 <li>资源（Resource）：所谓”资源”，就是网络上的一个实体，或者说是网络上的一个具体信息。它可以是一段文本、一张图片、一首歌曲、一种服务，总之就是一个具体的实在。你可以用一个URI（统一资源定位符）指向它，每种资源对应一个特定的URI。要获取这个资源，访问它的URI就可以，因此URI就成了每一个资源的地址或独一无二的识别符。REST的名称”表现层状态转化”中，省略了主语。”表现层”其实指的是”资源”（Resources）的”表现层”。</li>
 <li>表现层（Representation）：”资源”是一种信息实体，它可以有多种外在表现形式。我们把”资源”具体呈现出来的形式，叫做它的”表现层”（Representation）。比如，文本可以用txt格式表现，也可以用HTML格式、XML格式、JSON格式表现，甚至可以采用二进制格式；图片可以用JPG格式表现，也可以用PNG格式表现。URI只代表资源的实体，不代表它的形式。严格地说，有些网址最后的”.html”后缀名是不必要的，因为这个后缀名表示格式，属于”表现层”范畴，而URI应该只代表”资源”的位置。</li>
@@ -352,7 +352,7 @@
 <li>客户端和服务器之间，传递这种资源的某种表现层；</li>
 <li>客户端通过四个HTTP动词，对服务器端资源进行操作，实现”表现层状态转化”。</li>
 </ul>
-<h3 id="RPC协议"><a href="#RPC协议" class="headerlink" title="RPC协议"></a>RPC协议</h3><p>RPC（Remote Procedure Call ） 一种进程间通信方式。允许像调用本地服务一样调用远程服务。RPC框架的主要目标就是让远程服务调用更简单、透明。RPC框架负责屏蔽底层的传输方式（TCP或者UDP）、序列化方式（XML/JSON/二进制）和通信细节。开发人员在使用的时候只需要了解谁在什么位置提供了什么样的远程服务接口即可，并不需要关心底层通信细节和调用过程。RPC实现细节图如下：</p>
+<h3 id="1-2-RPC协议"><a href="#1-2-RPC协议" class="headerlink" title="1.2 RPC协议"></a>1.2 RPC协议</h3><p>RPC（Remote Procedure Call ） 一种进程间通信方式。允许像调用本地服务一样调用远程服务。RPC框架的主要目标就是让远程服务调用更简单、透明。RPC框架负责屏蔽底层的传输方式（TCP或者UDP）、序列化方式（XML/JSON/二进制）和通信细节。开发人员在使用的时候只需要了解谁在什么位置提供了什么样的远程服务接口即可，并不需要关心底层通信细节和调用过程。RPC实现细节图如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/2a96ac267ccc4bc1b88572badc02fa2b.png" alt="在这里插入图片描述"></p>
 <ol>
 <li>客户端（client）以本地调用方式（即以接口的方式）调用服务；</li>
@@ -367,7 +367,7 @@
 <li>客户端（client）得到最终结果。</li>
 </ol>
 <p>RPC的目标是要把2、3、4、7、8、9这些步骤都封装起来。<br><strong>注意：</strong>无论是何种类型的数据，最终都需要转换成二进制流在网络上进行传输，数据的发送方需要将对象转换为二进制流，而数据的接收方则需要把二进制流再恢复为对象。</p>
-<h3 id="RestFul和RPC的区别"><a href="#RestFul和RPC的区别" class="headerlink" title="RestFul和RPC的区别"></a>RestFul和RPC的区别</h3><table>
+<h3 id="1-3-RestFul和RPC的区别"><a href="#1-3-RestFul和RPC的区别" class="headerlink" title="1.3 RestFul和RPC的区别"></a>1.3 RestFul和RPC的区别</h3><table>
 <thead>
 <tr>
 <th>比较项</th>
@@ -400,7 +400,7 @@
 <li>HTTP相对更规范，更标准，更通用，无论哪种语言都支持http协议。如果你是对外开放API，例如开放平台，外部的编程语言多种多样，你无法拒绝对每种语言的支持，现在开源中间件，基本最先支持的几个协议都包含RESTful。</li>
 <li>RPC 框架作为架构微服务化的基础组件，它能大大降低架构微服务化的成本，提高调用方与服务提供方的研发效率，屏蔽跨进程调用函数（服务）的各类复杂细节。让调用方感觉就像调用本地函数一样调用远端函数、让服务提供方感觉就像实现一个本地函数一样来实现服务。</li>
 </ol>
-<h2 id="分布式系统的CAP原理"><a href="#分布式系统的CAP原理" class="headerlink" title="分布式系统的CAP原理"></a>分布式系统的CAP原理</h2><p>现如今，对于多数大型互联网应用，分布式系统（distributed system）正变得越来越重要。分布式系统的最大难点，就是各个节点的状态如何同步。CAP 定理是这方面的基本定理，也是理解分布式系统的起点。</p>
+<h2 id="2-分布式系统的CAP原理"><a href="#2-分布式系统的CAP原理" class="headerlink" title="2. 分布式系统的CAP原理"></a>2. 分布式系统的CAP原理</h2><p>现如今，对于多数大型互联网应用，分布式系统（distributed system）正变得越来越重要。分布式系统的最大难点，就是各个节点的状态如何同步。CAP 定理是这方面的基本定理，也是理解分布式系统的起点。</p>
 <p>CAP理论由 Eric Brewer 在ACM研讨会上提出，而后CAP被奉为分布式领域的重要理论。分布式系统的CAP理论，首先把分布式系统中的三个特性进行了如下归纳：<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/8d57279f67a244d3bed8dcf8ca057e37.png" alt="在这里插入图片描述"></p>
 <ul>
 <li><strong>Consistency（一致性）</strong>：数据一致更新，所有数据的变化都是同步的；</li>
@@ -883,7 +883,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

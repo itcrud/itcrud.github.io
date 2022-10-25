@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-01-09
+                    2019-01-三 17:26:00
                 </div>
                 
 
@@ -340,10 +340,10 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>之前写的关于nginx的内容都是http的，现在轮到https上场了。其实https和http的不同是在于端口、证书和秘钥，其他基础配置都是相同的，这一篇我们来看看如何生成https证书和私钥、https实现的流程和相关的使用注意事项。当然这个证书和私钥是我们自己生成的，没有通过权威机构认证，在浏览器请求显示的时候会有提醒。要是想要正式的证书和秘钥，可以到相关机构去购买，有点耗银子。有兴趣的可以去找找。</p>
-<h3 id="https实现过程"><a href="#https实现过程" class="headerlink" title="https实现过程"></a>https实现过程</h3><p>https在请求的时候会从nginx端下载https证书，然后根据证书内的公钥来对请求的内容进行加密，加密完成后请求到nginx，nginx根据私钥来解密，将解密后的内容通过http请求发到对应tomcat应用(当然是不仅限于tomcat)。具体流程看下面的图示：</p>
+<h2 id="1-https实现过程"><a href="#1-https实现过程" class="headerlink" title="1. https实现过程"></a>1. https实现过程</h2><p>https在请求的时候会从nginx端下载https证书，然后根据证书内的公钥来对请求的内容进行加密，加密完成后请求到nginx，nginx根据私钥来解密，将解密后的内容通过http请求发到对应tomcat应用(当然是不仅限于tomcat)。具体流程看下面的图示：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/8594DA6D5B9F4FF78566B5B4A4C972B3.png"></p>
 <p>看了这张图后，发现以前我对https的理解是不对的。使用公钥加密的内容并不是请求的数据信息，而是一个随机的秘钥。然后根据秘钥对称加密请求数据，nginx通过秘钥来进行对称解密得到请求数据，最终以http的方式转发到对应的服务。</p>
-<h3 id="https证书、私钥生成"><a href="#https证书、私钥生成" class="headerlink" title="https证书、私钥生成"></a>https证书、私钥生成</h3><p>这种生成方式只能说自己玩玩可以，公司内的产品上线一般都不会这么用。我记得在12306没有改版之前使用的https就是自己生成的，导致请求不会直接进入官网首页，而是给出警告页面，需要进行一步信任操作才能进入。12306敢在线上使用那是因为它NB（有本事你就别用）。如果换一个初创的公司这样做，估计坟头上的草已经三丈高啦。</p>
+<h2 id="2-https证书、私钥生成"><a href="#2-https证书、私钥生成" class="headerlink" title="2. https证书、私钥生成"></a>2. https证书、私钥生成</h2><p>这种生成方式只能说自己玩玩可以，公司内的产品上线一般都不会这么用。我记得在12306没有改版之前使用的https就是自己生成的，导致请求不会直接进入官网首页，而是给出警告页面，需要进行一步信任操作才能进入。12306敢在线上使用那是因为它NB（有本事你就别用）。如果换一个初创的公司这样做，估计坟头上的草已经三丈高啦。</p>
 <p>生成过程：</p>
 <ul>
 <li><p>创建服务器私钥</p>
@@ -378,7 +378,7 @@ TLS SNI support enabled
 configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>看<code>configure arguments</code>信息，包含<code>--with-http_ssl_module</code>即为安装了https模块，如果没有需要对nginx重新配置、编译、安装，这个就不多说了，具体怎么做可以参考下面推荐文章的第一篇。</p>
-<h3 id="nginx-conf内https的配置"><a href="#nginx-conf内https的配置" class="headerlink" title="nginx.conf内https的配置"></a>nginx.conf内https的配置</h3><p>其实配置很简单，除了加上端口变化、证书和私钥的信息，其他都是和http配置相同的。配置如下：</p>
+<h2 id="3-nginx-conf内https的配置"><a href="#3-nginx-conf内https的配置" class="headerlink" title="3. nginx.conf内https的配置"></a>3. nginx.conf内https的配置</h2><p>其实配置很简单，除了加上端口变化、证书和私钥的信息，其他都是和http配置相同的。配置如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server <span class="token punctuation">{</span>
     listen <span class="token number">443</span> ssl<span class="token punctuation">;</span>
     server_name blog.itcrud.com<span class="token punctuation">;</span>
@@ -392,7 +392,7 @@ configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module --
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>端口由之前的<code>80</code>换成<code>443 ssl</code>，然后加上<code>ssl_certificate</code>和<code>ssl_certificate_key</code>指定证书和私钥的存储位置。</p>
-<h3 id="http跳转https"><a href="#http跳转https" class="headerlink" title="http跳转https"></a>http跳转https</h3><p>如果你们平时使用百度细心的话会发现，当输入<code>http://www.baidu.com</code>的时候，浏览器上的地址会自动变换成<code>https://www.baidu.com</code>。通过浏览器的控制台可以看到当请求http的百度时会返回一个状态码<code>307 Internal Redirect</code>，然后响应头里面的location对应的地址是https的百度地址，接着浏览器会根据这个https地址重新请求打开百度首页。这是就是在nginx内动了手脚。配置如下：</p>
+<h2 id="4-http跳转https"><a href="#4-http跳转https" class="headerlink" title="4. http跳转https"></a>4. http跳转https</h2><p>如果你们平时使用百度细心的话会发现，当输入<code>http://www.baidu.com</code>的时候，浏览器上的地址会自动变换成<code>https://www.baidu.com</code>。通过浏览器的控制台可以看到当请求http的百度时会返回一个状态码<code>307 Internal Redirect</code>，然后响应头里面的location对应的地址是https的百度地址，接着浏览器会根据这个https地址重新请求打开百度首页。这是就是在nginx内动了手脚。配置如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">server <span class="token punctuation">{</span>
     listen <span class="token number">80</span><span class="token punctuation">;</span>
     server_name blog.itcrud.com<span class="token punctuation">;</span>
@@ -400,7 +400,7 @@ configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module --
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>是不是很简单。</p>
-<h3 id="http和https的混用问题"><a href="#http和https的混用问题" class="headerlink" title="http和https的混用问题"></a>http和https的混用问题</h3><p>在微服务里面，有很多子模块，每个子模块都是独立的，域名也是独立的。有时候在展示一个页面的内容，需要发送多个<code>ajax</code>请求到多个子模块中获取数据，然后渲染到页面上。但是这里存在一个问题就是http和https混用。</p>
+<h2 id="5-http和https的混用问题"><a href="#5-http和https的混用问题" class="headerlink" title="5. http和https的混用问题"></a>5. http和https的混用问题</h2><p>在微服务里面，有很多子模块，每个子模块都是独立的，域名也是独立的。有时候在展示一个页面的内容，需要发送多个<code>ajax</code>请求到多个子模块中获取数据，然后渲染到页面上。但是这里存在一个问题就是http和https混用。</p>
 <p>有以下两种情况：</p>
 <ul>
 <li>当主页面是使用的http请求，但是请求子模块是用的https，这样会导致请求子模块失败，因为这样是不支持的。建议在使用https的时候做好规划，不要盲目，有可能会导致项目的bug，解决方案就是把所有子模块都改成使用https。</li>
@@ -550,7 +550,7 @@ configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module --
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-01-09T08-00-00',
+        id: '2019-01-09T17-26-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -861,7 +861,7 @@ configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module --
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

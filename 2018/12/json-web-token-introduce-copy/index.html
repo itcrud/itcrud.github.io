@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="JWT学习(一)：什么是JWT？- JSON WEB TOKEN, 程序猿洞晓">
-    <meta name="description" content="JWT是什么？Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一">
+    <meta name="description" content="1. JWT是什么？Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-12-25
+                    2018-12-二 08:00:00
                 </div>
                 
 
@@ -339,16 +339,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="JWT是什么？"><a href="#JWT是什么？" class="headerlink" title="JWT是什么？"></a>JWT是什么？</h3><p>Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://tools.ietf.org/html/rfc7519">(RFC 7519</a>).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。</p>
-<h3 id="JWT起源"><a href="#JWT起源" class="headerlink" title="JWT起源"></a>JWT起源</h3><p>说起JWT，我们应该来谈一谈基于token的认证和传统的session认证的区别。</p>
-<h5 id="传统的session认证"><a href="#传统的session认证" class="headerlink" title="传统的session认证"></a>传统的session认证</h5><p>我们知道，http协议本身是一种无状态的协议，而这就意味着如果用户向我们的应用提供了用户名和密码来进行用户认证，那么下一次请求时，用户还要再一次进行用户认证才行，因为根据http协议，我们并不能知道是哪个用户发出的请求，所以为了让我们的应用能识别是哪个用户发出的请求，我们只能在服务器存储一份用户登录的信息，这份登录信息会在响应时传递给浏览器，告诉其保存为cookie,以便下次请求时发送给我们的应用，这样我们的应用就能识别请求来自哪个用户了,这就是传统的基于session认证。</p>
+                <h2 id="1-JWT是什么？"><a href="#1-JWT是什么？" class="headerlink" title="1. JWT是什么？"></a>1. JWT是什么？</h2><p>Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://tools.ietf.org/html/rfc7519">(RFC 7519</a>).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。</p>
+<h2 id="2-JWT起源"><a href="#2-JWT起源" class="headerlink" title="2. JWT起源"></a>2. JWT起源</h2><p>说起JWT，我们应该来谈一谈基于token的认证和传统的session认证的区别。</p>
+<h3 id="2-1-传统的session认证"><a href="#2-1-传统的session认证" class="headerlink" title="2.1 传统的session认证"></a>2.1 传统的session认证</h3><p>我们知道，http协议本身是一种无状态的协议，而这就意味着如果用户向我们的应用提供了用户名和密码来进行用户认证，那么下一次请求时，用户还要再一次进行用户认证才行，因为根据http协议，我们并不能知道是哪个用户发出的请求，所以为了让我们的应用能识别是哪个用户发出的请求，我们只能在服务器存储一份用户登录的信息，这份登录信息会在响应时传递给浏览器，告诉其保存为cookie,以便下次请求时发送给我们的应用，这样我们的应用就能识别请求来自哪个用户了,这就是传统的基于session认证。</p>
 <p>但是这种基于session的认证使应用本身很难得到扩展，随着不同客户端用户的增加，独立的服务器已无法承载更多的用户，而这时候基于session认证应用的问题就会暴露出来。</p>
-<h5 id="基于session认证所显露的问题"><a href="#基于session认证所显露的问题" class="headerlink" title="基于session认证所显露的问题"></a>基于session认证所显露的问题</h5><ul>
+<h3 id="2-2-基于session认证所显露的问题"><a href="#2-2-基于session认证所显露的问题" class="headerlink" title="2.2 基于session认证所显露的问题"></a>2.2 基于session认证所显露的问题</h3><ul>
 <li><strong>Session:</strong> 每个用户经过我们的应用认证之后，我们的应用都要在服务端做一次记录，以方便用户下次请求的鉴别，通常而言session都是保存在内存中，而随着认证用户的增多，服务端的开销会明显增大。</li>
 <li><strong>扩展性:</strong> 用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在这台服务器上,这样才能拿到授权的资源，这样在分布式的应用上，相应的限制了负载均衡器的能力。这也意味着限制了应用的扩展能力。</li>
 <li><strong>CS</strong>RF: 因为是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到跨站请求伪造的攻击。</li>
 </ul>
-<h3 id="基于token的鉴权机制"><a href="#基于token的鉴权机制" class="headerlink" title="基于token的鉴权机制"></a>基于token的鉴权机制</h3><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
+<h2 id="3-基于token的鉴权机制"><a href="#3-基于token的鉴权机制" class="headerlink" title="3. 基于token的鉴权机制"></a>3. 基于token的鉴权机制</h2><p>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
 <p>流程上是这样的：</p>
 <ul>
 <li>用户使用用户名密码来请求服务器</li>
@@ -359,11 +359,11 @@
 </ul>
 <p>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持<code>CORS(跨来源资源共享)</code>策略，一般我们在服务端这么做就可以了<code>Access-Control-Allow-Origin: *</code>。</p>
 <p>那么我们现在回到JWT的主题上。</p>
-<h3 id="JWT长什么样？"><a href="#JWT长什么样？" class="headerlink" title="JWT长什么样？"></a>JWT长什么样？</h3><p>JWT是由三段信息构成的，将这三段信息文本用.链接一起就构成了Jwt字符串。就像这样:</p>
+<h2 id="4-JWT长什么样？"><a href="#4-JWT长什么样？" class="headerlink" title="4. JWT长什么样？"></a>4. JWT长什么样？</h2><p>JWT是由三段信息构成的，将这三段信息文本用.链接一起就构成了Jwt字符串。就像这样:</p>
 <pre class="line-numbers language-none"><code class="language-none">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h5 id="JWT的构成"><a href="#JWT的构成" class="headerlink" title="JWT的构成"></a>JWT的构成</h5><p>JWT是一段被base64url编码过的字符序列（去除了尾部的“=”），并用点号分隔。它由三部分组成，头部(Header)、载荷(Payload)与签名(Signature)。</p>
-<h5 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h5><p>Header 包含了一些元数据，至少会表明 token 类型以及签名方法。</p>
+<h3 id="4-1-JWT的构成"><a href="#4-1-JWT的构成" class="headerlink" title="4.1 JWT的构成"></a>4.1 JWT的构成</h3><p>JWT是一段被base64url编码过的字符序列（去除了尾部的“=”），并用点号分隔。它由三部分组成，头部(Header)、载荷(Payload)与签名(Signature)。</p>
+<h3 id="4-2-Header"><a href="#4-2-Header" class="headerlink" title="4.2 Header"></a>4.2 Header</h3><p>Header 包含了一些元数据，至少会表明 token 类型以及签名方法。</p>
 <ul>
 <li>声明类型，这里是jwt</li>
 <li>声明加密的算法 通常直接使用 HMAC SHA256</li>
@@ -377,7 +377,7 @@
 <p>然后将头部进行base64加密（该加密是可以对称解密的)，构成了第一部分。</p>
 <pre class="line-numbers language-none"><code class="language-none">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h5 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h5><p>Payload部分包含了一些跟这个 token 有关的重要信息。这些有效信息包含三个部分</p>
+<h3 id="4-3-payload"><a href="#4-3-payload" class="headerlink" title="4.3 payload"></a>4.3 payload</h3><p>Payload部分包含了一些跟这个 token 有关的重要信息。这些有效信息包含三个部分</p>
 <ul>
 <li>标准中注册的声明</li>
 <li>公共的声明</li>
@@ -407,7 +407,7 @@
 <p>然后将其进行base64加密，得到Jwt的第二部分。</p>
 <pre class="line-numbers language-none"><code class="language-none">eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h5 id="Signature"><a href="#Signature" class="headerlink" title="Signature"></a>Signature</h5><p>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
+<h3 id="4-4-Signature"><a href="#4-4-Signature" class="headerlink" title="4.4 Signature"></a>4.4 Signature</h3><p>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
 <ul>
 <li>header (base64后的)</li>
 <li>payload (base64后的)</li>
@@ -423,7 +423,7 @@
 
 <p>注意：secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
 <p>可以使用&nbsp;<a target="_blank" rel="noopener" href="http://jwt.io/">http://jwt.io</a>&nbsp; 来调试。</p>
-<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-4"><strong>https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-4</strong></a></p>
+<h2 id="5-源代码"><a href="#5-源代码" class="headerlink" title="5. 源代码"></a>5. 源代码</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-4"><strong>https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-4</strong></a></p>
 
                 
             </div>
@@ -882,7 +882,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

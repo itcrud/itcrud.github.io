@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-08-16
+                    2019-08-五 22:47:00
                 </div>
                 
 
@@ -340,14 +340,14 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>Redis客户端和服务端交互是通过tcp协议，在通讯的报文格式使用的是RESP协议规范，也就是意味只要和Redis服务端建立Scoket连接，通过RESP报文格式传输数据就可以实现Redis客户端和服务端的交互。看起来是很简单的，但是实际上的确是这么简单，RESP报文格式的可读性也是很高的。</p>
-<h2 id="RESP协议介绍"><a href="#RESP协议介绍" class="headerlink" title="RESP协议介绍"></a>RESP协议介绍</h2><h4 id="RESP协议特点"><a href="#RESP协议特点" class="headerlink" title="RESP协议特点"></a>RESP协议特点</h4><p>RESP是Redis通讯的协议规范，有以下几种特点：</p>
+<h2 id="1-RESP协议介绍"><a href="#1-RESP协议介绍" class="headerlink" title="1. RESP协议介绍"></a>1. RESP协议介绍</h2><h3 id="1-1-RESP协议特点"><a href="#1-1-RESP协议特点" class="headerlink" title="1.1 RESP协议特点"></a>1.1 RESP协议特点</h3><p>RESP是Redis通讯的协议规范，有以下几种特点：</p>
 <ul>
 <li>简单的实现，人工也就可以写的出来</li>
 <li>快速的被计算机解析</li>
 <li>简单的可以被人工解析</li>
 <li>基于网络层，Redis在tcp端口6379（默认）上监听到来的连接（本质是Socket），客户端连接到来时，Redis服务器为此建立一个tcp连接。</li>
 </ul>
-<h4 id="RESP格式规范"><a href="#RESP格式规范" class="headerlink" title="RESP格式规范"></a>RESP格式规范</h4><p>RESP中涉及到主要的两个符号，分别是<code>*</code>和<code>$</code>，其中<code>*</code>表示此报文里面有几个<code>$</code>符，准确的说是几组。<code>$</code>表示本组数据所占的字符数。文字干巴巴，直接看例子：</p>
+<h3 id="1-2-RESP格式规范"><a href="#1-2-RESP格式规范" class="headerlink" title="1.2 RESP格式规范"></a>1.2 RESP格式规范</h3><p>RESP中涉及到主要的两个符号，分别是<code>*</code>和<code>$</code>，其中<code>*</code>表示此报文里面有几个<code>$</code>符，准确的说是几组。<code>$</code>表示本组数据所占的字符数。文字干巴巴，直接看例子：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">*3
 <span class="token variable">$3</span>
 SET
@@ -365,7 +365,7 @@ joker<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 
 <p>注意压缩成字符串后末尾也是需要<code>\r\n</code>的。（Redis的AOF持久化文件中也是这样保存的）</p>
 <p>了解RESP协议规范的通讯以及报文格式，接下来就可以根据这些知识来写一个属于自己的Redis客户端啦。</p>
-<h2 id="手写Redis客户端"><a href="#手写Redis客户端" class="headerlink" title="手写Redis客户端"></a>手写Redis客户端</h2><h4 id="Jedis源码是怎么实现的"><a href="#Jedis源码是怎么实现的" class="headerlink" title="Jedis源码是怎么实现的"></a>Jedis源码是怎么实现的</h4><p>手写客户端代码其实不是自创的，在Jedis中就有的，先看一下Jedis内部的实现源码：</p>
+<h2 id="2-手写Redis客户端"><a href="#2-手写Redis客户端" class="headerlink" title="2. 手写Redis客户端"></a>2. 手写Redis客户端</h2><h3 id="2-1-Jedis源码是怎么实现的"><a href="#2-1-Jedis源码是怎么实现的" class="headerlink" title="2.1 Jedis源码是怎么实现的"></a>2.1 Jedis源码是怎么实现的</h3><p>手写客户端代码其实不是自创的，在Jedis中就有的，先看一下Jedis内部的实现源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Connection</span> <span class="token function">sendCommand</span><span class="token punctuation">(</span><span class="token class-name">Protocol<span class="token punctuation">.</span>Command</span> cmd<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">try</span> <span class="token punctuation">{</span>
         <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//建立Socket连接</span>
@@ -388,7 +388,7 @@ joker<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 
 <p>这段源码并不难找，使用Jedis的set方法，然后一直跟进去就可以。最终方法的位置是<code>redis.clients.jedis.Connection.sebdCommand()</code>。</p>
 <p>从这个方法的内部实现就可以看出来其实就是通过Socket建立tcp连接，然后将命令和数据转换成RESP协议规范的报文格式，最后通过Socket将数据传入过去。知道这些对于自己写一个Jedis客户端是不是就有思路啦。</p>
-<h4 id="自己实现一个"><a href="#自己实现一个" class="headerlink" title="自己实现一个"></a>自己实现一个</h4><p>基于对源码的借鉴，简易的Jedis实现如下：</p>
+<h3 id="2-2-自己实现一个"><a href="#2-2-自己实现一个" class="headerlink" title="2.2 自己实现一个"></a>2.2 自己实现一个</h3><p>基于对源码的借鉴，简易的Jedis实现如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomJedis</span> <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span> <span class="token punctuation">{</span>
         <span class="token comment">//建立socket连接</span>
@@ -583,7 +583,7 @@ joker<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-08-16T08-00-00',
+        id: '2019-08-16T22-47-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -894,7 +894,7 @@ joker<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

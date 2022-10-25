@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-06-01
+                    2018-06-五 21:22:04
                 </div>
                 
 
@@ -345,7 +345,7 @@
 <li>位运算更接近计算机的习惯，执行的效率会更高</li>
 <li>装逼利器，在项目中使用位运算，体现逼格</li>
 </ul>
-<h3 id="N种基本的位运算"><a href="#N种基本的位运算" class="headerlink" title="N种基本的位运算"></a>N种基本的位运算</h3><h4 id="位运算-–-与运算符-amp"><a href="#位运算-–-与运算符-amp" class="headerlink" title="位运算 – 与运算符(&amp;)"></a>位运算 – 与运算符(&amp;)</h4><p>运算规则：</p>
+<h2 id="1-N种基本的位运算"><a href="#1-N种基本的位运算" class="headerlink" title="1. N种基本的位运算"></a>1. N种基本的位运算</h2><h3 id="1-1-位运算-–-与运算符-amp"><a href="#1-1-位运算-–-与运算符-amp" class="headerlink" title="1.1 位运算 – 与运算符(&amp;)"></a>1.1 位运算 – 与运算符(&amp;)</h3><p>运算规则：</p>
 <table>
 <thead>
 <tr>
@@ -374,7 +374,7 @@
 <p>规则总结：只有两个操作数都是1的时候运算结果才为1，其他都是0。换句话说就是只要包含0就是0。</p>
 <p>运算如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/696DC1C6DA7341D5AC9048D6CC72F175.jpg"></p>
-<h4 id="位运算-–-或运算符"><a href="#位运算-–-或运算符" class="headerlink" title="位运算 – 或运算符(|)"></a>位运算 – 或运算符(|)</h4><p>运算规则：</p>
+<h3 id="1-2-位运算-–-或运算符"><a href="#1-2-位运算-–-或运算符" class="headerlink" title="1.2 位运算 – 或运算符(|)"></a>1.2 位运算 – 或运算符(|)</h3><p>运算规则：</p>
 <table>
 <thead>
 <tr>
@@ -403,7 +403,7 @@
 <p>规则总结：只有两个操作数都是0的时候运算结果才为0，其他都是1。换句话说就是只要包含1就是1。</p>
 <p>运算如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/BAD8A1BD81E949989A1F6ACF08B247D0.jpg"></p>
-<h4 id="位运算-–-非运算符"><a href="#位运算-–-非运算符" class="headerlink" title="位运算 – 非运算符(~)"></a>位运算 – 非运算符(~)</h4><p>运算规则：</p>
+<h3 id="1-3-位运算-–-非运算符"><a href="#1-3-位运算-–-非运算符" class="headerlink" title="1.3 位运算 – 非运算符(~)"></a>1.3 位运算 – 非运算符(~)</h3><p>运算规则：</p>
 <table>
 <thead>
 <tr>
@@ -419,7 +419,7 @@
 </tr>
 </tbody></table>
 <p>规则总结：取反操作，1变0，0变1。</p>
-<h4 id="位运算-–-异或运算符"><a href="#位运算-–-异或运算符" class="headerlink" title="位运算 – 异或运算符(^)"></a>位运算 – 异或运算符(^)</h4><p>运算规则：</p>
+<h3 id="1-4-位运算-–-异或运算符"><a href="#1-4-位运算-–-异或运算符" class="headerlink" title="1.4 位运算 – 异或运算符(^)"></a>1.4 位运算 – 异或运算符(^)</h3><p>运算规则：</p>
 <table>
 <thead>
 <tr>
@@ -446,24 +446,27 @@
 </tr>
 </tbody></table>
 <p>规则总结：操作数相同，运算结果就是0，反之操作数不同就为1。<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/346CB1569E694CDE9A166AD23D64E952.jpg"></p>
-<h4 id="位运算-–-有符号位移运算符-gt-gt-lt-lt"><a href="#位运算-–-有符号位移运算符-gt-gt-lt-lt" class="headerlink" title="位运算 – 有符号位移运算符(>>,<<)"></a>位运算 – 有符号位移运算符(&gt;&gt;,&lt;&lt;)</h4><p>在二进制里面总共有32位，0-31，第31位是表示当前数值的正负，当时0的时候表示这个数值是正数，当是1表示这个数值是负数。</p>
-<h5 id="正数左移-lt-lt"><a href="#正数左移-lt-lt" class="headerlink" title="正数左移(<<)"></a>正数左移(&lt;&lt;)</h5><p>以2&lt;&lt;2为例。<br>2：00000000 00000000 00000000 00000010<br>向左移动两位，右侧会空出来两个位置，两个位置用0补位得到的结果如下：<br>8：00000000 00000000 00000000 00001000<br>转换成十进制对应的数值为8。因此可以得到2&lt;&lt;2的结果是8。</p>
-<h5 id="负数左移-lt-lt"><a href="#负数左移-lt-lt" class="headerlink" title="负数左移(<<)"></a>负数左移(&lt;&lt;)</h5><p>以-2&lt;&lt;2为例。<br>-2：11111111 11111111 11111111 11111110<br>向左移动两位，右侧空出的两个位置用0补位，到这里还没有结束，要是想计算出它的值，还要做补位，那就是将当前移位得到的结果(11111111 11111111 11111111 11111000)减一后再取反码，得的结果就是补码的结果。<br>减一操作：<br>11111111 11111111 11111111 11110111<br>取反码的结果：<br>00000000 00000000 00000000 00001000<br>这个对应的值是8，因为是负值，那么得到的结果就是-8，因此-2&lt;&lt;2的结果是-8。</p>
-<h5 id="左移总结"><a href="#左移总结" class="headerlink" title="左移总结"></a>左移总结</h5><p>这里可以看出来，在左移的时候，不论这个目标值(2或-2)是正数还是负数，结果都符合一个规律，即表达式：$m*2^n$。m表示目标值，n表示的是移位的位数。<br>-2&lt;&lt;2 = -8，2&lt;&lt;2 = 8，同理可以得到2&lt;&lt;4 = 2x2^4 = 32,-2&lt;&lt;4 = -2x2^4 = -32。</p>
-<h5 id="正数右移-gt-gt"><a href="#正数右移-gt-gt" class="headerlink" title="正数右移(>>)"></a>正数右移(&gt;&gt;)</h5><p>以10&gt;&gt;2为例。<br>10：00000000 00000000 00000000 00001010<br>右移两位，右侧的10就会被舍弃，左侧会空出两个空位，空位用符号位补齐，前面说过正数的符号位是0，也就是用0补齐，得到的结果如下：<br>2：00000000 00000000 00000000 00000010<br>得到的十进制结果是2，结论就是10&gt;&gt;2=2。</p>
-<h4 id="负数右移-gt-gt"><a href="#负数右移-gt-gt" class="headerlink" title="负数右移(>>)"></a>负数右移(&gt;&gt;)</h4><p>以-10&gt;&gt;2为例。<br>-10：11111111 11111111 11111111 11110110<br>同样是右移，溢出的部分舍弃，空位的部分用符号位补齐，得到的结果如下：<br>11111111 11111111 11111111 11111101<br>减一操作后结果：<br>11111111 11111111 11111111 11111100<br>取反码后的结果：<br>00000000 00000000 00000000 00000011<br>对应的十进制结果是3，因为是负数，那么结果就是-3。结论是-10&gt;&gt;2。</p>
-<h5 id="有符号位移总结"><a href="#有符号位移总结" class="headerlink" title="有符号位移总结"></a>有符号位移总结</h5><p>整体的总结来看，正数的左移和右移没有什么问题，但是负数存在一个补码的问题，比较麻烦。补码记住一个口诀就可以，<strong>移位、补码、减一、取反码</strong>，得到正数结果加个负号。这样就可以得到正确结果。</p>
-<h4 id="位运算-–-无符号位移运算符-gt-gt-gt"><a href="#位运算-–-无符号位移运算符-gt-gt-gt" class="headerlink" title="位运算 – 无符号位移运算符(>>>)"></a>位运算 – 无符号位移运算符(&gt;&gt;&gt;)</h4><p>Java中没有无符号左移的说法，这里只说右移。同样也是分正数和负数来讲。</p>
-<h5 id="正数右移-gt-gt-gt"><a href="#正数右移-gt-gt-gt" class="headerlink" title="正数右移(>>>)"></a>正数右移(&gt;&gt;&gt;)</h5><p>以10&gt;&gt;&gt;2为例。<br>10：00000000 00000000 00000000 00001010<br>右移后，左侧空出的位置用0补齐，但是这里需要注意的是这个0并不是指符号位，只是一个普通的补位。得到的结果如下：<br>2：00000000 00000000 00000000 00000010<br>得到的十进制结果是2，结论就是10&gt;&gt;2=2。这个和有符号位移是得到相同的结果。</p>
-<h5 id="负数右移-gt-gt-gt"><a href="#负数右移-gt-gt-gt" class="headerlink" title="负数右移(>>>)"></a>负数右移(&gt;&gt;&gt;)</h5><p>以-10&gt;&gt;&gt;2为例。<br>-10：11111111 11111111 11111111 11110110<br>右移后，左侧空位用0补，注意不是用1补，后面说原因。<br>00111111 11111111 11111111 11111101<br>这个结果就很大了，结果是1073741821，负数变成了这么大的负数，不要怀疑自己的眼神，这个结果是正确的。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>所谓的无符号右移，就是将原有的二进制值直接右移得到结果，不论是负数还是正数，没有补码的操作，补位都统一使用0，而不是对应的符号位1或0。<br>到这里N种基本的位运算已经说明结束，接下来看几个例子，和在代码中常用的一些技巧。</p>
-<h4 id="常用位运算使用"><a href="#常用位运算使用" class="headerlink" title="常用位运算使用"></a>常用位运算使用</h4><ul>
-<li>判断一个数是奇数还是偶数。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// true表示为奇数，false表示为偶数</span>
+<h3 id="1-5-位运算-–-有符号位移运算符-gt-gt-lt-lt"><a href="#1-5-位运算-–-有符号位移运算符-gt-gt-lt-lt" class="headerlink" title="1.5 位运算 – 有符号位移运算符(>>,<<)"></a>1.5 位运算 – 有符号位移运算符(&gt;&gt;,&lt;&lt;)</h3><p>在二进制里面总共有32位，0-31，第31位是表示当前数值的正负，当时0的时候表示这个数值是正数，当是1表示这个数值是负数。</p>
+<h3 id="1-6-正数左移-lt-lt"><a href="#1-6-正数左移-lt-lt" class="headerlink" title="1.6 正数左移(<<)"></a>1.6 正数左移(&lt;&lt;)</h3><p>以2&lt;&lt;2为例。<br>2：00000000 00000000 00000000 00000010<br>向左移动两位，右侧会空出来两个位置，两个位置用0补位得到的结果如下：<br>8：00000000 00000000 00000000 00001000<br>转换成十进制对应的数值为8。因此可以得到2&lt;&lt;2的结果是8。</p>
+<h3 id="1-7-负数左移-lt-lt"><a href="#1-7-负数左移-lt-lt" class="headerlink" title="1.7 负数左移(<<)"></a>1.7 负数左移(&lt;&lt;)</h3><p>以-2&lt;&lt;2为例。<br>-2：11111111 11111111 11111111 11111110<br>向左移动两位，右侧空出的两个位置用0补位，到这里还没有结束，要是想计算出它的值，还要做补位，那就是将当前移位得到的结果(11111111 11111111 11111111 11111000)减一后再取反码，得的结果就是补码的结果。<br>减一操作：<br>11111111 11111111 11111111 11110111<br>取反码的结果：<br>00000000 00000000 00000000 00001000<br>这个对应的值是8，因为是负值，那么得到的结果就是-8，因此-2&lt;&lt;2的结果是-8。</p>
+<h3 id="1-8-左移总结"><a href="#1-8-左移总结" class="headerlink" title="1.8 左移总结"></a>1.8 左移总结</h3><p>这里可以看出来，在左移的时候，不论这个目标值(2或-2)是正数还是负数，结果都符合一个规律，即表达式：$m*2^n$。m表示目标值，n表示的是移位的位数。<br>-2&lt;&lt;2 = -8，2&lt;&lt;2 = 8，同理可以得到2&lt;&lt;4 = 2x2^4 = 32,-2&lt;&lt;4 = -2x2^4 = -32。</p>
+<h3 id="1-9-正数右移-gt-gt"><a href="#1-9-正数右移-gt-gt" class="headerlink" title="1.9 正数右移(>>)"></a>1.9 正数右移(&gt;&gt;)</h3><p>以10&gt;&gt;2为例。<br>10：00000000 00000000 00000000 00001010<br>右移两位，右侧的10就会被舍弃，左侧会空出两个空位，空位用符号位补齐，前面说过正数的符号位是0，也就是用0补齐，得到的结果如下：<br>2：00000000 00000000 00000000 00000010<br>得到的十进制结果是2，结论就是10&gt;&gt;2=2。</p>
+<h3 id="1-10-负数右移-gt-gt"><a href="#1-10-负数右移-gt-gt" class="headerlink" title="1.10 负数右移(>>)"></a>1.10 负数右移(&gt;&gt;)</h3><p>以-10&gt;&gt;2为例。<br>-10：11111111 11111111 11111111 11110110<br>同样是右移，溢出的部分舍弃，空位的部分用符号位补齐，得到的结果如下：<br>11111111 11111111 11111111 11111101<br>减一操作后结果：<br>11111111 11111111 11111111 11111100<br>取反码后的结果：<br>00000000 00000000 00000000 00000011<br>对应的十进制结果是3，因为是负数，那么结果就是-3。结论是-10&gt;&gt;2。</p>
+<h3 id="1-11-有符号位移总结"><a href="#1-11-有符号位移总结" class="headerlink" title="1.11 有符号位移总结"></a>1.11 有符号位移总结</h3><p>整体的总结来看，正数的左移和右移没有什么问题，但是负数存在一个补码的问题，比较麻烦。补码记住一个口诀就可以，<strong>移位、补码、减一、取反码</strong>，得到正数结果加个负号。这样就可以得到正确结果。</p>
+<h3 id="1-12-位运算-–-无符号位移运算符-gt-gt-gt"><a href="#1-12-位运算-–-无符号位移运算符-gt-gt-gt" class="headerlink" title="1.12 位运算 – 无符号位移运算符(>>>)"></a>1.12 位运算 – 无符号位移运算符(&gt;&gt;&gt;)</h3><p>Java中没有无符号左移的说法，这里只说右移。同样也是分正数和负数来讲。</p>
+<h3 id="1-13-正数右移-gt-gt-gt"><a href="#1-13-正数右移-gt-gt-gt" class="headerlink" title="1.13 正数右移(>>>)"></a>1.13 正数右移(&gt;&gt;&gt;)</h3><p>以10&gt;&gt;&gt;2为例。<br>10：00000000 00000000 00000000 00001010<br>右移后，左侧空出的位置用0补齐，但是这里需要注意的是这个0并不是指符号位，只是一个普通的补位。得到的结果如下：<br>2：00000000 00000000 00000000 00000010<br>得到的十进制结果是2，结论就是10&gt;&gt;2=2。这个和有符号位移是得到相同的结果。</p>
+<h3 id="1-14-负数右移-gt-gt-gt"><a href="#1-14-负数右移-gt-gt-gt" class="headerlink" title="1.14 负数右移(>>>)"></a>1.14 负数右移(&gt;&gt;&gt;)</h3><p>以-10&gt;&gt;&gt;2为例。<br>-10：11111111 11111111 11111111 11110110<br>右移后，左侧空位用0补，注意不是用1补，后面说原因。<br>00111111 11111111 11111111 11111101<br>这个结果就很大了，结果是1073741821，负数变成了这么大的负数，不要怀疑自己的眼神，这个结果是正确的。</p>
+<h2 id="2-总结"><a href="#2-总结" class="headerlink" title="2. 总结"></a>2. 总结</h2><p>所谓的无符号右移，就是将原有的二进制值直接右移得到结果，不论是负数还是正数，没有补码的操作，补位都统一使用0，而不是对应的符号位1或0。<br>到这里N种基本的位运算已经说明结束，接下来看几个例子，和在代码中常用的一些技巧。</p>
+<h2 id="3-常用位运算使用"><a href="#3-常用位运算使用" class="headerlink" title="3. 常用位运算使用"></a>3. 常用位运算使用</h2><ul>
+<li><p>判断一个数是奇数还是偶数。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// true表示为奇数，false表示为偶数</span>
 <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">checkNum</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span><span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token punctuation">(</span>num<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-1的二进制是00000000 00000000 00000000 00000001，&amp;运算的规则是只有都是1，结果才是1，很明显，不管是什么数，和1进行&amp;运算，前31位都是0，只有最后一位可能得出不同的结果。偶数最后一位肯定是0，奇数肯定是1，那么结果就显而易见了。</li>
-<li>不用中间变量，交换两个数值(面试常见)<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 传入的a=3，b=5</span>
+<p>1的二进制是00000000 00000000 00000000 00000001，&amp;运算的规则是只有都是1，结果才是1，很明显，不管是什么数，和1进行&amp;运算，前31位都是0，只有最后一位可能得出不同的结果。偶数最后一位肯定是0，奇数肯定是1，那么结果就显而易见了。</p>
+</li>
+<li><p>不用中间变量，交换两个数值(面试常见)</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 传入的a=3，b=5</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">{</span>
     a <span class="token operator">^=</span> b<span class="token punctuation">;</span><span class="token comment">// a = a^b;</span>
     b <span class="token operator">^=</span> a<span class="token punctuation">;</span><span class="token comment">// b = b^a;</span>
@@ -476,13 +479,16 @@
 a=5
 b=3
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-这个灵活的用到了异或来实现。下面做个简单的说明。<br>a = 3：00000011<br>b = 5：00000101<br>a异或b得到的结果是：00000110，这个结果赋值给a；<br>b异或a得到的结果是：00000011，这个结果赋值给b;<br>a异或b得到的结果是：00000101，这个结果赋值给a；<br>所以最终得到的结果是：<br>a = 5：00000101<br>b = 3：00000011</li>
-<li>取绝对值<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getAbs</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">{</span>
+<p>这个灵活的用到了异或来实现。下面做个简单的说明。<br>a = 3：00000011<br>b = 5：00000101<br>a异或b得到的结果是：00000110，这个结果赋值给a；<br>b异或a得到的结果是：00000011，这个结果赋值给b;<br>a异或b得到的结果是：00000101，这个结果赋值给a；<br>所以最终得到的结果是：<br>a = 5：00000101<br>b = 3：00000011</p>
+</li>
+<li><p>取绝对值</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getAbs</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token punctuation">(</span>n <span class="token operator">^</span> <span class="token punctuation">(</span>n <span class="token operator">&gt;&gt;</span> <span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token punctuation">(</span>n <span class="token operator">&gt;&gt;</span> <span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-具体不说，可以自己尝试着写一下。(因为涉及到正数、负数的举例，然后负数又有补码操作，要写的内容太多，本博主就傲娇一下，不写啦！)<br>其实这里的例子很多，就不都去说了，有兴趣的可以度娘一下相关的博客，有很多文章。</li>
+<p>具体不说，可以自己尝试着写一下。(因为涉及到正数、负数的举例，然后负数又有补码操作，要写的内容太多，本博主就傲娇一下，不写啦！)<br>其实这里的例子很多，就不都去说了，有兴趣的可以度娘一下相关的博客，有很多文章。</p>
+</li>
 </ul>
-<h3 id="实际项目经验操作"><a href="#实际项目经验操作" class="headerlink" title="实际项目经验操作"></a>实际项目经验操作</h3><p>涉及到公司的东西，这里不会写的很具体，给思路。</p>
+<h2 id="4-实际项目经验操作"><a href="#4-实际项目经验操作" class="headerlink" title="4. 实际项目经验操作"></a>4. 实际项目经验操作</h2><p>涉及到公司的东西，这里不会写的很具体，给思路。</p>
 <p>现在有一个订单，订单可以进行很多操作，如：创建、修改、退单、接单、终止、派单、提交完成等操作。同时订单也有很多状态，如：待接单、进行中、已终止、已完成等状态。现在的场景就是不同的状态对应的操作是不一样的，前端需要根据不同的状态显示不同的操作控件。</p>
 <p>思路一：</p>
 <p>最简单也是最麻烦的，用N个flag字段表示可进行的操作，返回数据的时候对每个flag字段赋值true、false，表示是否能够进行此操作。但是这样存在一个巨大的问题，当后期有一个操作去掉了或者添加了几种新的操作，这个时候就涉及到字段的删除和新增，改动较大，可维护性差，不够灵活。</p>
@@ -637,7 +643,7 @@ b=3
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-06-01T21-00-00',
+        id: '2018-06-01T21-22-04',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -956,7 +962,7 @@ b=3
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

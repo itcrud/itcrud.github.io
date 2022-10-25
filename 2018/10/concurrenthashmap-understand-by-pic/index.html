@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-10-18
+                    2018-10-四 15:23:56
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>关于说ConcurrentHashMap的文章很多，本博客也有转载这样的文章，但是总体觉得都是过于偏重源码的说明。没有很明确的结构图来让我们从整体上理解源码的实现过程。毕竟人都是偏向于懒，博客中源码过于太多，理解起来困难，再加上这种源码分析的篇幅很长，因此能真正看完理解的确不多(个人理解)。所以这篇文章里面将不贴出源码，完全通过图来理解ConcurrentHashMap的理解(更直观)。</p>
-<h3 id="ConcurrentHashMap存储结构"><a href="#ConcurrentHashMap存储结构" class="headerlink" title="ConcurrentHashMap存储结构"></a>ConcurrentHashMap存储结构</h3><p>ConcurrentHashMap的存储结构在JDK7和JDK8两个版本是有很大区别的。</p>
+<h2 id="1-ConcurrentHashMap存储结构"><a href="#1-ConcurrentHashMap存储结构" class="headerlink" title="1. ConcurrentHashMap存储结构"></a>1. ConcurrentHashMap存储结构</h2><p>ConcurrentHashMap的存储结构在JDK7和JDK8两个版本是有很大区别的。</p>
 <p>在JDK7中采用的是数组+链表结构。数组结构包含外层的Segment和Segment下的第一层HashEntry。链表则是HashEntry三层及以后的采用的。这里的分层是我自己理解上的划分，可能看起来比较抽象，上图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/39BB95A5F0F94A5E980B5C3426DDE85E.png"></p>
 <p>从图上可以看的出来，第一列是最外层的Segment，在ConcurrentHashMap中，默认的初始长度是16，Segment数组的长度也自然是16。如果按照我之前的理解，第二列应该只会出现单个HashEntry，然后依次的排下去，成为一个链表结构。但是事实并非如此。在第二列中HashEntry也会形成一个数组的结构，然后才会从这个数组结构延伸出去，这样的好处就是让整个链表的长度不会很长，在获取元素的时候行程路径更短，速度更快。</p>
@@ -350,13 +350,13 @@
 <p>在存储结构中使用了数组+链表+红黑树，但是这里需要注意的是，红黑树不一定会出现，这是为什么呢？</p>
 <p>首先创建的是一个初始长度的数组，这个和JDK7一样，默认长度都是16，然后用链表结构实现在节点上向后添加元素，这里需要注意的是红黑树不一定会出现，因为只有当后端的链表长度达到8以后才会将原来的链表结构变成红黑树结构。对数据结构有了解的都知道，从一个树上获取一个元素比在一个链表上获取元素的速度要快，具体原理这里不说，有兴趣的可以去了解一下。</p>
 <p>在说JDK7的时候说到只要在数组节点上添加元素，就必然会触发锁，这一点会和JDK8形成对比呢。这里就涉及到JDK8的一个改进。就是采用了CAS和原子操作。如果这个节点上添加的是第一个元素的时候，就会出现不会触发锁的问题。具体看下面putValue方法实现流程的说明。</p>
-<h3 id="ConcurrentHashMap的put方法实现逻辑"><a href="#ConcurrentHashMap的put方法实现逻辑" class="headerlink" title="ConcurrentHashMap的put方法实现逻辑"></a>ConcurrentHashMap的put方法实现逻辑</h3><p>不管是ConcurrentHashMap还是HashMap都会涉及到CRUD操作，这里单独的将putValue方法拿出来说一下。看下面的图：</p>
+<h2 id="2-ConcurrentHashMap的put方法实现逻辑"><a href="#2-ConcurrentHashMap的put方法实现逻辑" class="headerlink" title="2. ConcurrentHashMap的put方法实现逻辑"></a>2. ConcurrentHashMap的put方法实现逻辑</h2><p>不管是ConcurrentHashMap还是HashMap都会涉及到CRUD操作，这里单独的将putValue方法拿出来说一下。看下面的图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/BA4AD93428C94B59A729207844FF07ED.png"></p>
 <p>在设置值的开始就是一个for循环(死循环，又称为自旋)，在循环的过程中会有一个判断的过程。</p>
 <p>首先是判断是不是第一次插入值，如果是的话就要对数组结构进行初始化，当初始化结束后，会再次进入循环，然后就会走到第二个条件判断，在第二判断中检查当前分配的插槽是不是已经有值了，如果没有值就会直接调用原子方法，向插槽中放值，由于到这一步还没有加锁，有可能会被其他线程提供可乘之机，所以会有一个插入失败的处理。如果成功就直接结束循环，如果失败就会进入下一个循环，进入最终的处理逻辑。在这个逻辑中就会对当前插槽位置的元素加锁。最终执行结束会跳出for循环。这个自旋的过程可以减少加锁的次数(至少16次)。性能上也有所提高。</p>
 <p>另外要说的是，就以数组长度为16来说，它的最大并发量是16，但是不是很准确，可以作为一个参考，因为在创建ConcurrentHashMap的时候是可以设置这个初始长度的。</p>
 <p>这个put的整体实现过程并不是很难理解，希望能让大家对这个整体过程有个了解。如果看了这里，你再去看那些纯源码分析的文章你会发现理解起来就会更容易。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>不管在面试还是在实际开发中，到底是选Hashtable、HashMap、ConcurrentHashMap都是有一套说辞的，下面大概比较一下。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>不管在面试还是在实际开发中，到底是选Hashtable、HashMap、ConcurrentHashMap都是有一套说辞的，下面大概比较一下。</p>
 <ul>
 <li>Hashtable是线程安全的，在所有的方法上都加上了synchronized锁，也就是并发量是1，每个瞬态只能有一个线程访问，在保证线程安全的同时，也是将性能大大的降低了。</li>
 <li>HashMap是没有锁的概念，并发量也是没有限制的，所以效率很高，但是同时带来的问题也很明显，就是存在数据安全问题。</li>
@@ -506,7 +506,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-10-18T08-00-00',
+        id: '2018-10-18T15-23-56',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -825,7 +825,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

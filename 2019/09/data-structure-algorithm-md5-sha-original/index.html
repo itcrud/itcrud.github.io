@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-09-03
+                    2019-09-二 20:11:13
                 </div>
                 
 
@@ -350,9 +350,9 @@
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/k-ToL356asWtS_PN30Z17w">漫画：什么是MD5算法？</a></p>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RIZuU8gmM_-HyK5DBr4pmw">漫画：什么是SHA系列算法？</a></p>
 </blockquote>
-<h2 id="摘要算法之MD5"><a href="#摘要算法之MD5" class="headerlink" title="摘要算法之MD5"></a>摘要算法之MD5</h2><p>MD5加密算法从使用上是很简单的，JDK有MD5的加密类，但是使用起来比较麻烦，其加密方法返回的是长度为16二进制数组，需要将二进制数组转换成16进制，然后转换成对应的字符串。</p>
+<h2 id="1-摘要算法之MD5"><a href="#1-摘要算法之MD5" class="headerlink" title="1. 摘要算法之MD5"></a>1. 摘要算法之MD5</h2><p>MD5加密算法从使用上是很简单的，JDK有MD5的加密类，但是使用起来比较麻烦，其加密方法返回的是长度为16二进制数组，需要将二进制数组转换成16进制，然后转换成对应的字符串。</p>
 <p>另外Spring对MD5也有封装，其实就是对JDK中MD5加密类进行封装，执行上面提到的转换步骤。下面来了解一下自己实现转换和直接使用Spring封装的转换方法。</p>
-<h4 id="JDK自带MD5加密类转换工具类"><a href="#JDK自带MD5加密类转换工具类" class="headerlink" title="JDK自带MD5加密类转换工具类"></a>JDK自带MD5加密类转换工具类</h4><p>代码如下：</p>
+<h3 id="1-1-JDK自带MD5加密类转换工具类"><a href="#1-1-JDK自带MD5加密类转换工具类" class="headerlink" title="1.1 JDK自带MD5加密类转换工具类"></a>1.1 JDK自带MD5加密类转换工具类</h3><p>代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Md5Utils</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">MessageDigest</span> <span class="token constant">MD5_DIGEST</span><span class="token punctuation">;</span>
@@ -389,7 +389,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在不同的公司，有的习惯使用小写字母加密串，有的则用大写字母，所以上面提供两种方法。其实加密结果基本一样，大写字母加密串就是将小写字母加密结果执行一下<code>toUpperCase()</code>方法。</p>
-<h4 id="Spring封装后的MD5加密工具类"><a href="#Spring封装后的MD5加密工具类" class="headerlink" title="Spring封装后的MD5加密工具类"></a>Spring封装后的MD5加密工具类</h4><p>这里看一下其内部的实现源码。使用是调用<code>DigestUtils</code>的<code>md5DigestAsHex</code>方法，那就以这个方法为入口看源码。</p>
+<h3 id="1-2-Spring封装后的MD5加密工具类"><a href="#1-2-Spring封装后的MD5加密工具类" class="headerlink" title="1.2 Spring封装后的MD5加密工具类"></a>1.2 Spring封装后的MD5加密工具类</h3><p>这里看一下其内部的实现源码。使用是调用<code>DigestUtils</code>的<code>md5DigestAsHex</code>方法，那就以这个方法为入口看源码。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">md5DigestAsHex</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//MD5_ALGORITHM_NAME是常量，对应的值是"MD5"</span>
     <span class="token keyword">return</span> <span class="token function">digestAsHexString</span><span class="token punctuation">(</span><span class="token constant">MD5_ALGORITHM_NAME</span><span class="token punctuation">,</span> bytes<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//进入digestAsHexString方法</span>
@@ -425,9 +425,9 @@
 
 <p>从这段源码，然后对照上面对JDK中MD5加密类的封装，两者基本都是同样的逻辑，主要的转换逻辑都是一样的。所以就不难理解啦。唯一的不同就是Spring没有做大小写字母的特殊封装，默认就是小写字母。</p>
 <p>加密出来的二进制数组长度是16，在处理的过程中，经过两次不同的位运算，得到两个字符，最终形成32位的字符串。</p>
-<h4 id="关于MD5的破解"><a href="#关于MD5的破解" class="headerlink" title="关于MD5的破解"></a>关于MD5的破解</h4><p>MD5是单向加密，是不可逆向解密，但是为什么网上有那么多的MD5解密工具呢？不知道大家有没有注意，这些解密工具都不能立即给出解密结果或者在很短时间内给出（除非常用的MD5加密串，有对应的记录）。因为这些解密工具都是通过碰撞方式来破解，也就是暴力破解。通过排列组合各种字符，然后转换成MD5，将这个MD5值和我们提供的MD5值进行比对，对了就给出结果，不对接着尝试。</p>
+<h3 id="1-3-关于MD5的破解"><a href="#1-3-关于MD5的破解" class="headerlink" title="1.3 关于MD5的破解"></a>1.3 关于MD5的破解</h3><p>MD5是单向加密，是不可逆向解密，但是为什么网上有那么多的MD5解密工具呢？不知道大家有没有注意，这些解密工具都不能立即给出解密结果或者在很短时间内给出（除非常用的MD5加密串，有对应的记录）。因为这些解密工具都是通过碰撞方式来破解，也就是暴力破解。通过排列组合各种字符，然后转换成MD5，将这个MD5值和我们提供的MD5值进行比对，对了就给出结果，不对接着尝试。</p>
 <p>其实这种方式根本不是所谓的破解之法。在我个人的理解范围内，MD5破解依然是不可能的。（如果真的有对应的破解之法，网络上肯定有破解的代码，MD5也不会继续被使用，而被淘汰）</p>
-<h2 id="摘要算法之SHA"><a href="#摘要算法之SHA" class="headerlink" title="摘要算法之SHA"></a>摘要算法之SHA</h2><p>摘要算法SHA同MD5也是单向加密，是不可逆向解密，SHA算法有很多版本，大的版本有SHA-1、SHA-2，在SHA-2中又包含SHA-256、SHA-224、SHA-384、SHA-512，其中SHA-224、SHA-384分别是SHA-256、SHA-512的阉割版。分别是在于生成长度的不同。</p>
+<h2 id="2-摘要算法之SHA"><a href="#2-摘要算法之SHA" class="headerlink" title="2. 摘要算法之SHA"></a>2. 摘要算法之SHA</h2><p>摘要算法SHA同MD5也是单向加密，是不可逆向解密，SHA算法有很多版本，大的版本有SHA-1、SHA-2，在SHA-2中又包含SHA-256、SHA-224、SHA-384、SHA-512，其中SHA-224、SHA-384分别是SHA-256、SHA-512的阉割版。分别是在于生成长度的不同。</p>
 <p>SHA-1在早期已经被破解，现在已经被淘汰，Chrome随后推出了SHA-2版本。目前使用SHA算法，都是SHA-2下的子版本，用的最多的应该就是SHA-256。下面来一起了解一下SHA算法。</p>
 <p>在JDK里面其实是同样支持SHA加密，其使用方法和MD5基本相同，不同的是在<code>getInstance</code>方法中传入的参数，分别是MD5或SHA-256(SHA-224等)。下面简单的写一下加密的操作。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token constant">LOWER_CHARS</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token char">'0'</span><span class="token punctuation">,</span> <span class="token char">'1'</span><span class="token punctuation">,</span> <span class="token char">'2'</span><span class="token punctuation">,</span> <span class="token char">'3'</span><span class="token punctuation">,</span> <span class="token char">'4'</span><span class="token punctuation">,</span> <span class="token char">'5'</span><span class="token punctuation">,</span> <span class="token char">'6'</span><span class="token punctuation">,</span> <span class="token char">'7'</span><span class="token punctuation">,</span> <span class="token char">'8'</span><span class="token punctuation">,</span> <span class="token char">'9'</span><span class="token punctuation">,</span> <span class="token char">'a'</span><span class="token punctuation">,</span> <span class="token char">'b'</span><span class="token punctuation">,</span> <span class="token char">'c'</span><span class="token punctuation">,</span> <span class="token char">'d'</span><span class="token punctuation">,</span> <span class="token char">'e'</span><span class="token punctuation">,</span> <span class="token char">'f'</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
@@ -445,9 +445,9 @@
     <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>sb<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//输出长度为64的字符串</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="更安全的写法"><a href="#更安全的写法" class="headerlink" title="更安全的写法"></a>更安全的写法</h2><p>不管是MD5还是SHA算法，都是可以通过暴力破解的方式完成，只不过付出的代码很大。如果加密的内容很简单就存在泄露的风险。那又要怎么去防范呢？</p>
+<h2 id="3-更安全的写法"><a href="#3-更安全的写法" class="headerlink" title="3. 更安全的写法"></a>3. 更安全的写法</h2><p>不管是MD5还是SHA算法，都是可以通过暴力破解的方式完成，只不过付出的代码很大。如果加密的内容很简单就存在泄露的风险。那又要怎么去防范呢？</p>
 <p>为了追求更安全，有一种方式基本是没办法破解，那就是将MD5和SHA组合。将一段明文用MD5和SHA分别加密，得到两个密文串，然后从MD5中切分一部分，再从SHA中切分一部分，将切出的部分组合，形成最终密文串。即使使用暴力破解的方式碰巧比对成功，最终得到的结果也是和原明文不同。即使这里知道密文是MD5和SHA的组合产物，具体切分组合规则也是无法知道的，更别提如何去破解。</p>
-<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-6">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-6</a></p>
+<h2 id="4-源码"><a href="#4-源码" class="headerlink" title="4. 源码"></a>4. 源码</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-6">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-6</a></p>
 
                 
             </div>
@@ -595,7 +595,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-09-03T08-00-00',
+        id: '2019-09-03T20-11-13',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -906,7 +906,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

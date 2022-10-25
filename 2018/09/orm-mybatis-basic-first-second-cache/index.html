@@ -313,7 +313,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-09-07
+                    2018-09-五 20:44:00
                 </div>
                 
 
@@ -348,16 +348,16 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>Mybatis本身提供了两个级别的缓存分别是一级缓存的二级缓存，两个缓存的实现原理都是相同的，不同的是两种缓存的作用域不同，一级缓存作用域是一个SqlSession的生命周期，SqLSession发生了<code>flush</code>或者<code>close</code>，缓存就会被清空，而二级缓存的作用域是命名空间（namespace）级别，一个命名空间下的<code>select</code>查询都会存在同一个二级缓存中，即使多个SqlSession都是可以共用的。另外如果作用域内进行了CUD操作，都会将缓存中的数据清理掉，这个是两个级别缓存相同的。</p>
-<h3 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h3><p>一级缓存的生命周期是基于单个SqlSession的，也可以理解为是单个线程的，因为在SqlSession使用完以后，都会关闭释放，一级缓存也会随之被清除。</p>
-<h5 id="一级缓存示意图"><a href="#一级缓存示意图" class="headerlink" title="一级缓存示意图"></a>一级缓存示意图</h5><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/87E14C4E0C7D4AA0AD548D3A1C904DB3.png"></p>
+<h2 id="1-一级缓存"><a href="#1-一级缓存" class="headerlink" title="1. 一级缓存"></a>1. 一级缓存</h2><p>一级缓存的生命周期是基于单个SqlSession的，也可以理解为是单个线程的，因为在SqlSession使用完以后，都会关闭释放，一级缓存也会随之被清除。</p>
+<h3 id="1-1-一级缓存示意图"><a href="#1-1-一级缓存示意图" class="headerlink" title="1.1 一级缓存示意图"></a>1.1 一级缓存示意图</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/87E14C4E0C7D4AA0AD548D3A1C904DB3.png"></p>
 <p>一级缓存是不分命名空间的，同一个SqlSession，在A空间里面执行查询后缓存到一级缓存中，在B空间里面执行也是会首先从一级缓存中尝试获取缓存数据，获取不到再到数据库中查询。</p>
 <p>缓存刷新的时机是在执行CUD操作，这里不会检查你CUD的数据是否和缓存中的数据有关，缓存一定会被清理。</p>
-<h5 id="一级缓存开关"><a href="#一级缓存开关" class="headerlink" title="一级缓存开关"></a>一级缓存开关</h5><p>Mybatis的一级缓存是默认开启的，无需特意去开启，但是关闭时需要在标签上设置<code>flushCache</code>属性的值为<code>true</code>，表示刷新缓存。</p>
+<h3 id="1-2-一级缓存开关"><a href="#1-2-一级缓存开关" class="headerlink" title="1.2 一级缓存开关"></a>1.2 一级缓存开关</h3><p>Mybatis的一级缓存是默认开启的，无需特意去开启，但是关闭时需要在标签上设置<code>flushCache</code>属性的值为<code>true</code>，表示刷新缓存。</p>
 <p>在<code>insert、</code>update、<code>delete</code>标签上，这个属性默认就是<code>true</code>，而在<code>select</code>标签上，默认值是<code>false</code>。因此设置<code>flushCache</code>只要在<code>select</code>标签上即可。</p>
-<h3 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h3><p>二级缓存是基于单个命名空间<code>namespace</code>，不同的SqlSession请求同一个命名空间，都可以尝试从同一个二级缓存中获取数据。</p>
-<h5 id="缓存示意图"><a href="#缓存示意图" class="headerlink" title="缓存示意图"></a>缓存示意图</h5><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/BFE219E34F2244C78DFB5500C99542C4.png"></p>
+<h2 id="2-二级缓存"><a href="#2-二级缓存" class="headerlink" title="2. 二级缓存"></a>2. 二级缓存</h2><p>二级缓存是基于单个命名空间<code>namespace</code>，不同的SqlSession请求同一个命名空间，都可以尝试从同一个二级缓存中获取数据。</p>
+<h3 id="2-1-缓存示意图"><a href="#2-1-缓存示意图" class="headerlink" title="2.1 缓存示意图"></a>2.1 缓存示意图</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/BFE219E34F2244C78DFB5500C99542C4.png"></p>
 <p>二级缓存开启后会存在于一级缓存之前，在查询数据的时候，首先从当前命名空间的二级缓存中获取数据，如果二级换缓存中没有再到一级缓存中查找，当都没有，就会从数据库中查询，并将查询的结果保存在一级和二级缓存中。从上面的图可以看的出来一级缓存是基于SqlSession的，二级缓存是基于namespace的。</p>
-<h5 id="缓存开关"><a href="#缓存开关" class="headerlink" title="缓存开关"></a>缓存开关</h5><p>首先是打开总开关，总开关配置的位置是mybatis的核心配置文件<code>mybatis-config.xml</code>中：</p>
+<h3 id="2-2-缓存开关"><a href="#2-2-缓存开关" class="headerlink" title="2.2 缓存开关"></a>2.2 缓存开关</h3><p>首先是打开总开关，总开关配置的位置是mybatis的核心配置文件<code>mybatis-config.xml</code>中：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>settings</span><span class="token punctuation">&gt;</span></span>
     <span class="token comment">&lt;!-- 开启二级缓存的总开关，默认值就是true --&gt;</span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>setting</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cacheEnabled<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
@@ -380,7 +380,7 @@
 <li>type属性用来指定当前底层缓存实现类，默认是PerpetualCache，如果我们想使用自定义的Cache，则可以通过该属性来指定，对应的值是我们自定义的Cache的全路径名称。</li>
 <li>blocking属性默认为false，当指定为true时将采用BlockingCache进行封装，blocking，阻塞的意思，使用BlockingCache会在查询缓存时锁住对应的Key，如果缓存命中了则会释放对应的锁，否则会在查询数据库以后再释放锁，这样可以阻止并发情况下多个线程同时查询数据，详情可参考BlockingCache的源码。</li>
 </ul>
-<h5 id="缓存缺点"><a href="#缓存缺点" class="headerlink" title="缓存缺点"></a>缓存缺点</h5><p>二级缓存使用的很少，但是面试的时候问的多，这个可以做一个谈资，好好解释一波为什么。</p>
+<h3 id="2-3-缓存缺点"><a href="#2-3-缓存缺点" class="headerlink" title="2.3 缓存缺点"></a>2.3 缓存缺点</h3><p>二级缓存使用的很少，但是面试的时候问的多，这个可以做一个谈资，好好解释一波为什么。</p>
 <p>二级缓存是基于namespace的，但是这种会存在很大的问题就是脏读，比如现在SqlSession1在xxMapper命名空间下查询了A数据，并将数据缓存在xxMapper命名空间缓存区中，SqlSeesion1执行结束后，A数据还是在缓存中，不会被清理，现在SqlSession2在ooMapper命名空间里对A数据进行了修改，这里需要注意的是，跨了命名空间，xxMapper命名空间里缓存的A数据并不会被清理掉，依然是之前缓存的数据。然后SqlSession3在xxMapper命名空间下查询A数据，A数据依然是之前SqlSession1留下的历史缓存数据，但是在数据库中，这个历史缓存数据已经被改了，这样就会导致SqlSession3读取的数据是错误的。造成数据的脏读。</p>
 <p>因此总结来说，二级缓存基本没用的，但是这里还是花大篇幅来说，不是因为其重要，而是因为它是面(zhuang)试(bi)的资本。</p>
 
@@ -534,7 +534,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-09-07T08-00-00',
+        id: '2018-09-07T20-44-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -845,7 +845,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

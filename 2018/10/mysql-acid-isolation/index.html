@@ -313,7 +313,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-10-06
+                    2018-10-六 13:49:00
                 </div>
                 
 
@@ -347,7 +347,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="事务的ACID特性"><a href="#事务的ACID特性" class="headerlink" title="事务的ACID特性"></a>事务的ACID特性</h3><p>事务的特性主要有四种，简称为ACID。分别如下：</p>
+                <h2 id="1-事务的ACID特性"><a href="#1-事务的ACID特性" class="headerlink" title="1. 事务的ACID特性"></a>1. 事务的ACID特性</h2><p>事务的特性主要有四种，简称为ACID。分别如下：</p>
 <ul>
 <li>原子性(atomicity)：一个事务内是一个最小的操作单元，在此单元里操作成功或者失败都是同步的，不会存在部分成功部分失败的问题。</li>
 <li>隔离性(isolation)：多个事务之间是隔离开的，事务之间对数据的操作是不会互相影响的。但是对于数据库来说有不同的隔离级别，事务之间的影响也是不同的。</li>
@@ -355,8 +355,8 @@
 <li>持久性(durability)：事务执行结束后，数据所做的修改都会被持久化到数据库中。</li>
 </ul>
 <p>事务的原子性、一致性和持久性比较容易理解。但是隔离性是因具体的隔离级别的不同而不同的。按照官方的说法就是一个事务所做的修改在最终提交以前，对其他事务是不可见的。如上所说，这种说法准确性是受隔离级别的影响的。</p>
-<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>事务的隔离性是事务的四大特性之一，在隔离性上，又被分为四个不同的等级，分别表示对事务的控制程度。从数据的安全性的级别也是依次上升的。</p>
-<h5 id="事务数据存在问题"><a href="#事务数据存在问题" class="headerlink" title="事务数据存在问题"></a>事务数据存在问题</h5><p>在说事务隔离级别前需要先看一下事务在各种隔离级别中可能存在的问题。</p>
+<h2 id="2-事务隔离级别"><a href="#2-事务隔离级别" class="headerlink" title="2. 事务隔离级别"></a>2. 事务隔离级别</h2><p>事务的隔离性是事务的四大特性之一，在隔离性上，又被分为四个不同的等级，分别表示对事务的控制程度。从数据的安全性的级别也是依次上升的。</p>
+<h3 id="2-1-事务数据存在问题"><a href="#2-1-事务数据存在问题" class="headerlink" title="2.1 事务数据存在问题"></a>2.1 事务数据存在问题</h3><p>在说事务隔离级别前需要先看一下事务在各种隔离级别中可能存在的问题。</p>
 <ul>
 <li>脏读：就是在一个事务中执行的操作还未提交，其他事务就会读到这些未提交的数据。脏读又可称为读未提交。</li>
 <li>不可重复读：在A事务中执行了update、delete操作提交后，导致其他事务在A事务前后读取的数据不一致。</li>
@@ -366,7 +366,7 @@
 <p>再加上图来理解：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/74F073E5067A4AFC872C72A3A75CF60C.png"></p>
 <p>此图是幻读的流程图，读已提交和这张图类似，就是讲Joker的insert操作变为update、delete操作即可。至于脏读很好理解，这里就不多做描述啦。</p>
-<h5 id="事务的四种隔离级别"><a href="#事务的四种隔离级别" class="headerlink" title="事务的四种隔离级别"></a>事务的四种隔离级别</h5><p>上面说了事务的数据存在的问题，下面就结合上面的问题说明一下事务的四种隔离级别。</p>
+<h3 id="2-2-事务的四种隔离级别"><a href="#2-2-事务的四种隔离级别" class="headerlink" title="2.2 事务的四种隔离级别"></a>2.2 事务的四种隔离级别</h3><p>上面说了事务的数据存在的问题，下面就结合上面的问题说明一下事务的四种隔离级别。</p>
 <ul>
 <li>未提交读(read uncommit)：就是脏读，同时也有幻读和不可重复读的问题。</li>
 <li>已提交读(read commit)：这个隔离级别是Oracle数据库的默认隔离级别。解决了脏读问题，但是存在不可重复读和幻读的问题。</li>
@@ -564,7 +564,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-10-06T08-00-00',
+        id: '2018-10-06T13-49-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -887,7 +887,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

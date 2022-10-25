@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-11-05
+                    2018-11-一 08:00:00
                 </div>
                 
 
@@ -340,18 +340,16 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>Spring data JPA是一个好东西，但是对于很多习惯于写SQL，直接怼数据库的人来说，这个真的用不习惯，还被一致认为是一个不易于程序员发展的技术。因为JPA提供了标准的封装，在操作数据库的时候，不需要写SQL，完全通过操作对象即可完成。久而久之，SQL就会被慢慢的遗忘，生疏，等以后面试的时候，也许这就是上升的一个短板。现在各大公司对JPA用的都很少，除非是这个公司的系统涉及到几种数据库，随时有可能出现数据库之间的迁移，为了SQL的兼容性使用JPA。这也是JPA的一个最大优点，不是之一。至少我是这么认为的。在这篇博文里面，我们就来聊聊，不要通过写任何SQL来实现对数据库的基本操作。</p>
-<h3 id="核心Repository"><a href="#核心Repository" class="headerlink" title="核心Repository"></a>核心Repository</h3><p>Spring Data库的核心接口是<code>Repository</code>，使用domain类去管理，domain类中的id类型作为类型参数，这个接口主要作为一个标记接口，依靠具体的类型运作并帮助发现接口。其直接集成接口为<code>CrudRepository</code>，提供了丰富的CRUD功能去管理实体类。</p>
+<h2 id="1-核心Repository"><a href="#1-核心Repository" class="headerlink" title="1. 核心Repository"></a>1. 核心Repository</h2><p>Spring Data库的核心接口是<code>Repository</code>，使用domain类去管理，domain类中的id类型作为类型参数，这个接口主要作为一个标记接口，依靠具体的类型运作并帮助发现接口。其直接集成接口为<code>CrudRepository</code>，提供了丰富的CRUD功能去管理实体类。</p>
 <p>然后就是用于分页排序的<code>PagingAndSortRepository</code>接口类，它继承于<code>CrudRepository</code>接口。提供了丰富的分页和排序的功能API。说丰富其实就两个功能，不过对付基本的排序功能还是能够完成使用的。</p>
 <p>最后就是<code>JpaRepository</code>，这个类中也有封装基本的方法。这个类是继承了<code>PagingAndSortRepository</code>接口，同时也继承了<code>QueryByExampleExecutor</code>执行器接口。</p>
-<h3 id="JPA的上手使用"><a href="#JPA的上手使用" class="headerlink" title="JPA的上手使用"></a>JPA的上手使用</h3><h5 id="JPA的依赖"><a href="#JPA的依赖" class="headerlink" title="JPA的依赖"></a>JPA的依赖</h5><p>这里只基于整合Spring boot方式的JPA依赖引入，如果使用Spring MVC的可以到网上找一下需要哪些依赖。</p>
+<h2 id="2-JPA的上手使用"><a href="#2-JPA的上手使用" class="headerlink" title="2. JPA的上手使用"></a>2. JPA的上手使用</h2><h3 id="2-1-JPA的依赖"><a href="#2-1-JPA的依赖" class="headerlink" title="2.1 JPA的依赖"></a>2.1 JPA的依赖</h3><p>这里只基于整合Spring boot方式的JPA依赖引入，如果使用Spring MVC的可以到网上找一下需要哪些依赖。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-starter-data-jpa<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
-<h5 id="JPA的配置"><a href="#JPA的配置" class="headerlink" title="JPA的配置"></a>JPA的配置</h5><p>不管是JPA还是Mybatis都是需要提前完成一些配置，对于JPA来说比较简单，进行一下配置即可。</p>
+<h3 id="2-2-JPA的配置"><a href="#2-2-JPA的配置" class="headerlink" title="2.2 JPA的配置"></a>2.2 JPA的配置</h3><p>不管是JPA还是Mybatis都是需要提前完成一些配置，对于JPA来说比较简单，进行一下配置即可。</p>
 <p>在基于Spring boot的配置：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@EnableJpaRepositories</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JpaConfig</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -372,7 +370,7 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd<span class="token 
 <p>这里基于XML配置的方式，实话说我是没有用过的，不过大概可以看的出来类似于配置Spring的<code>@ComponentScan</code>配置类扫描的基础路径。在<code>@EnableJpaRepositories</code>中也是有<code>basePackages</code>属性的。</p>
 <p>之所以这里基于XML方式的配置不多说，是因为现在着手开发的项目都是基于Spring boot，另外Spring boot是将来发展的一个趋势，不，不是将来，现在就有绝大部分项目(新启动的项目)都会使用Spring boot。所以基于XML方式的，用到才具体研究吧，上面的配置是摘抄于Spring data JPA官方文档。</p>
 <p>另外还有一些JPA的配置信息和数据库的配置信息在第一篇文章里面有体现，这里不赘述。</p>
-<h5 id="创建Entity实体类"><a href="#创建Entity实体类" class="headerlink" title="创建Entity实体类"></a>创建Entity实体类</h5><p>通过Entity实体类指定对应的数据表，和表的字段形成映射关系。简单的写法如下：</p>
+<h3 id="2-3-创建Entity实体类"><a href="#2-3-创建Entity实体类" class="headerlink" title="2.3 创建Entity实体类"></a>2.3 创建Entity实体类</h3><p>通过Entity实体类指定对应的数据表，和表的字段形成映射关系。简单的写法如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Entity</span>
 <span class="token annotation punctuation">@Table</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"t_user"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
@@ -389,14 +387,14 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd<span class="token 
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这种提供注解的方式指定数据表和表字段的映射关系，在本系列的第一篇文章说过了，这里就不详细说拉。</p>
-<h5 id="创建Repository接口"><a href="#创建Repository接口" class="headerlink" title="创建Repository接口"></a>创建Repository接口</h5><p>这里在创建对应的<code>UserRepository</code>接口类的时候必须继承<code>Repository</code>接口或者其子类接口。这个需要看需求，如果不需要使用本身提供的CRUD方法、分页、排序等功能的话，直接继承<code>Repository</code>接口即可。但是对于正常来说，原生提供的API多少是会用上一点的，即使用不上，自己拥有也不是一件坏事，所以在项目开发中都是直接继承<code>JpaRepository</code>接口。在泛型里面执行对应的实体类Entity和主键的类型。这两个参数很重要，不可少。</p>
+<h3 id="2-4-创建Repository接口"><a href="#2-4-创建Repository接口" class="headerlink" title="2.4 创建Repository接口"></a>2.4 创建Repository接口</h3><p>这里在创建对应的<code>UserRepository</code>接口类的时候必须继承<code>Repository</code>接口或者其子类接口。这个需要看需求，如果不需要使用本身提供的CRUD方法、分页、排序等功能的话，直接继承<code>Repository</code>接口即可。但是对于正常来说，原生提供的API多少是会用上一点的，即使用不上，自己拥有也不是一件坏事，所以在项目开发中都是直接继承<code>JpaRepository</code>接口。在泛型里面执行对应的实体类Entity和主键的类型。这两个参数很重要，不可少。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserRepository</span> <span class="token keyword">extends</span> <span class="token class-name">JpaRepository</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">,</span><span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>
     <span class="token comment">//……</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>到这里整个JPA的信息都构建结束，需要使用什么操作，就在<code>UserRepository</code>接口里面加入相应的方法即可。</p>
-<h3 id="基于方法的骚操作"><a href="#基于方法的骚操作" class="headerlink" title="基于方法的骚操作"></a>基于方法的骚操作</h3><p>这部分内容是这篇文章的重点，就是通过不同方法名的组合来实现SQL自动的生成，不需要自己写一行SQL代码。接下来说几种常用的情况来引入一下。</p>
-<h5 id="find…By…"><a href="#find…By…" class="headerlink" title="find…By…"></a>find…By…</h5><p>在查询语句的时候，可能会不带条件，可能会带条件，这里在看看<code>find…By…</code>的基本用法。</p>
+<h2 id="3-基于方法的骚操作"><a href="#3-基于方法的骚操作" class="headerlink" title="3. 基于方法的骚操作"></a>3. 基于方法的骚操作</h2><p>这部分内容是这篇文章的重点，就是通过不同方法名的组合来实现SQL自动的生成，不需要自己写一行SQL代码。接下来说几种常用的情况来引入一下。</p>
+<h3 id="3-1-find…By…"><a href="#3-1-find…By…" class="headerlink" title="3.1 find…By…"></a>3.1 find…By…</h3><p>在查询语句的时候，可能会不带条件，可能会带条件，这里在看看<code>find…By…</code>的基本用法。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">User</span> <span class="token function">findById</span><span class="token punctuation">(</span><span class="token class-name">Long</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//1</span>
 <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> <span class="token function">findTop10ByAge</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> age<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//2</span>
 <span class="token class-name">User</span> <span class="token function">findByUserNameAndPhone</span><span class="token punctuation">(</span><span class="token class-name">String</span> userName<span class="token punctuation">,</span><span class="token class-name">String</span> phone<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -409,11 +407,11 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd<span class="token 
 </ul>
 <p>这三句已经大概可以了解find…By…的使用，当然这里可以使用的情况很多。可以通过debug日志看具体生成的SQL语句是什么样的，这里就不去展示了。</p>
 <p><strong>注意：这里的参数匹配是通过参数的位置来自动匹配的，如By后面有三个条件，那么对应的就是三个参数，且按照顺序匹配，不需要使用<code>@Param</code>注解指定参数的名称。(具体可看最后总结的分析)</strong></p>
-<h3 id="OrderBy"><a href="#OrderBy" class="headerlink" title="OrderBy"></a>OrderBy</h3><p>排序在查询的时候经常会用到，使用起来也不是很难，可以支持多个字段的排序，并指定正序和倒序排列。</p>
+<h2 id="4-OrderBy"><a href="#4-OrderBy" class="headerlink" title="4. OrderBy"></a>4. OrderBy</h2><p>排序在查询的时候经常会用到，使用起来也不是很难，可以支持多个字段的排序，并指定正序和倒序排列。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> <span class="token function">findAllOrderByAgeDescAndIdAsc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>通过这一个方法就可以了解OrderBy的写法，首先指定按照age倒序排序，如果age相同使用id正序排序。这个不难理解，多个条件会写，单个条件也不在话下了。</p>
-<h5 id="Like、NotLike、StartingWith、EndingWith和Containing"><a href="#Like、NotLike、StartingWith、EndingWith和Containing" class="headerlink" title="Like、NotLike、StartingWith、EndingWith和Containing"></a>Like、NotLike、StartingWith、EndingWith和Containing</h5><p>模糊查询，肯定会用到的，直接看实现的代码示例：</p>
+<h3 id="4-1-Like、NotLike、StartingWith、EndingWith和Containing"><a href="#4-1-Like、NotLike、StartingWith、EndingWith和Containing" class="headerlink" title="4.1 Like、NotLike、StartingWith、EndingWith和Containing"></a>4.1 Like、NotLike、StartingWith、EndingWith和Containing</h3><p>模糊查询，肯定会用到的，直接看实现的代码示例：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> <span class="token function">findByUserNameLike</span><span class="token punctuation">(</span><span class="token class-name">String</span> userName<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//1</span>
 <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> <span class="token function">findByUserNameNotLike</span><span class="token punctuation">(</span><span class="token class-name">String</span> userName<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//2</span>
 <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> <span class="token function">findByUserNameStartingWith</span><span class="token punctuation">(</span><span class="token class-name">String</span> userName<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//3</span>
@@ -427,7 +425,7 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd<span class="token 
 <li>4：和第三句差不多，差别就是占位符<code>%</code>放置的位置调整，放在了字段值的后面；</li>
 <li>5：相当于第三句和第四句的综合，会在字段值的前后加上占位符<code>%</code>。</li>
 </ul>
-<h5 id="下面的列表喜欢吗"><a href="#下面的列表喜欢吗" class="headerlink" title="下面的列表喜欢吗"></a>下面的列表喜欢吗</h5><p>上面随机列举了几个经常使用用的查询方式，实际上还是有很多的，另外除了find开头的方式，还可以用get开头。看下面面的列表：</p>
+<h2 id="5-下面的列表喜欢吗"><a href="#5-下面的列表喜欢吗" class="headerlink" title="5. 下面的列表喜欢吗"></a>5. 下面的列表喜欢吗</h2><p>上面随机列举了几个经常使用用的查询方式，实际上还是有很多的，另外除了find开头的方式，还可以用get开头。看下面面的列表：</p>
 <table>
 <thead>
 <tr>
@@ -554,9 +552,9 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd<span class="token 
 </tbody></table>
 <p>get开头的方法就不单独写了，如果习惯使用get开头，替换掉find即可。</p>
 <p>看到这里就知道，这些自动生成的SQL都是只支持查询，且是单表、非复杂SQL语句的实现。如果涉及到条件太多，很可能一个方法名能够占一行。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>整个JPA的基于方法名使用就这么多了，至于怎么去融汇贯通就看自己的造诣了。其实并不难。下面以一个例子结束这篇博客。</p>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p>整个JPA的基于方法名使用就这么多了，至于怎么去融汇贯通就看自己的造诣了。其实并不难。下面以一个例子结束这篇博客。</p>
 <p>示例代码：</p>
-<h5 id="SQL语句"><a href="#SQL语句" class="headerlink" title="SQL语句"></a>SQL语句</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> 
+<h3 id="6-1-SQL语句"><a href="#6-1-SQL语句" class="headerlink" title="6.1 SQL语句"></a>6.1 SQL语句</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> 
 <span class="token keyword">from</span> t_user 
 <span class="token keyword">where</span> 
 user_name <span class="token operator">like</span> <span class="token string">'%er'</span> 
@@ -564,7 +562,7 @@ user_name <span class="token operator">like</span> <span class="token string">'%
 <span class="token operator">and</span> <span class="token punctuation">(</span>age <span class="token operator">between</span> <span class="token number">20</span> <span class="token operator">and</span> <span class="token number">35</span><span class="token punctuation">)</span>  
 <span class="token keyword">order</span> <span class="token keyword">by</span> age <span class="token keyword">DESC</span><span class="token punctuation">,</span>id <span class="token keyword">ASC</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="方法定义"><a href="#方法定义" class="headerlink" title="方法定义"></a>方法定义</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> <span class="token function">findByUserNameLikeAndIdGreaterThanEqualAndAgeBetweenOrderByAgeDescAndIdAsc</span><span class="token punctuation">(</span><span class="token class-name">String</span> userName<span class="token punctuation">,</span><span class="token class-name">Long</span> id<span class="token punctuation">,</span><span class="token class-name">Integer</span> startAge<span class="token punctuation">,</span><span class="token class-name">Integer</span> endAge<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="6-2-方法定义"><a href="#6-2-方法定义" class="headerlink" title="6.2 方法定义"></a>6.2 方法定义</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> <span class="token function">findByUserNameLikeAndIdGreaterThanEqualAndAgeBetweenOrderByAgeDescAndIdAsc</span><span class="token punctuation">(</span><span class="token class-name">String</span> userName<span class="token punctuation">,</span><span class="token class-name">Long</span> id<span class="token punctuation">,</span><span class="token class-name">Integer</span> startAge<span class="token punctuation">,</span><span class="token class-name">Integer</span> endAge<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>说明：userName、id分别匹配前面两个参数，由于age是between范围查询，是在两个值之间，需要对应到两个参数。所以做种的参数是四个，且位置要按照顺序传入，不能错位。</p>
 <p>方法名是不是巨长、巨牛，想要更长，就看你的脑洞啦！</p>
@@ -1022,7 +1020,7 @@ user_name <span class="token operator">like</span> <span class="token string">'%
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

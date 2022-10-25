@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-08-20
+                    2019-08-二 21:34:00
                 </div>
                 
 
@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    980
+                    983
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>消息的发布和订阅，第一想到的是Kafka、RabbitMQ、ActiveMQ等，但是实际上Redis也是有这个功能，这个功能在Redis中实现很简单，也比较粗暴。没有存储，没有各种订阅模式。只要订阅同一个渠道的订阅者就都可以收到发布到该渠道的信息。如果没有订阅者，消息也不会缓存起来，而是直接丢弃。在简单的功能、能够接受这种模式并且有补偿机制的业务中是可以考虑使用的。下面看一下这个到底是怎么玩的。</p>
-<h2 id="订阅者-subscribe"><a href="#订阅者-subscribe" class="headerlink" title="订阅者(subscribe)"></a>订阅者(subscribe)</h2><p>客户端订阅，直接使用Jedis的API即可，没有复杂花哨的内容。看一下代码实现：</p>
+<h2 id="1-订阅者-subscribe"><a href="#1-订阅者-subscribe" class="headerlink" title="1. 订阅者(subscribe)"></a>1. 订阅者(subscribe)</h2><p>客户端订阅，直接使用Jedis的API即可，没有复杂花哨的内容。看一下代码实现：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Jedis</span> resource <span class="token operator">=</span> jedisPool<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 resource<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">JedisPubSub</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//订阅</span>
     <span class="token annotation punctuation">@Override</span>
@@ -355,7 +355,7 @@ resource<span class="token punctuation">.</span><span class="token function">sub
 <li>第二个参数是可变数组，可以同时订阅多个channel，如上代码是订阅了两个channel</li>
 </ul>
 <p><strong>注意：这里的回调方法是阻塞的，如果内部实现逻辑复杂，使用异步处理更好，上面的代码使用的是线程池。另外如果是多台服务器，注意加上Redis分布锁的控制，防止多台机器重复消费。</strong></p>
-<h2 id="发布者-publish"><a href="#发布者-publish" class="headerlink" title="发布者(publish)"></a>发布者(publish)</h2><p>发布逻辑相对于订阅逻辑就简单很多，不多做解释。看代码实现：</p>
+<h2 id="2-发布者-publish"><a href="#2-发布者-publish" class="headerlink" title="2. 发布者(publish)"></a>2. 发布者(publish)</h2><p>发布逻辑相对于订阅逻辑就简单很多，不多做解释。看代码实现：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">(</span><span class="token class-name">Jedis</span> resource <span class="token operator">=</span> jedisPool<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//获取jedis，这种写法jdk7及以上特性，会自动释放资源</span>
     resource<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span><span class="token string">"MESSAGE_SYNC_TOPIC_1"</span><span class="token punctuation">,</span> <span class="token string">"message_content"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//发布</span>
 <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -363,7 +363,7 @@ resource<span class="token punctuation">.</span><span class="token function">sub
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>代码逻辑很简单，这种处理一般都是异步处理，需要对发布消息逻辑做<code>try……catch</code>处理，防止异常导致原逻辑的回滚。特别是页面数据数据较多，本身业务逻辑处理很复杂，回滚后会对本身的功能有较大的影响。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Redis的这种发布订阅方式没有什么难点，只要了解其特性，然后对存在的坑做一下规避即可，具体有哪些特性，我总结了下面几种，如果不全或者存在问题，希望得到您的指正。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>Redis的这种发布订阅方式没有什么难点，只要了解其特性，然后对存在的坑做一下规避即可，具体有哪些特性，我总结了下面几种，如果不全或者存在问题，希望得到您的指正。</p>
 <ul>
 <li>Jedis客户端回调方法是阻塞的。数据量大，逻辑处理复杂，会导致本地堆集过多的消息，异步处理避坑</li>
 <li>Jedis订阅方法<code>subscribe</code>本身也是阻塞的，如果你是在系统启动的时候去加载订阅者，注意异步避坑，防止阻塞，系统一直停在这个位置，不能完全启动</li>
@@ -534,7 +534,7 @@ resource<span class="token punctuation">.</span><span class="token function">sub
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-08-20T08-00-00',
+        id: '2019-08-20T21-34-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -845,7 +845,7 @@ resource<span class="token punctuation">.</span><span class="token function">sub
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

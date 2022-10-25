@@ -313,7 +313,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-06-15
+                    2018-06-五 21:00:00
                 </div>
                 
 
@@ -347,9 +347,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="AOP是什么？"><a href="#AOP是什么？" class="headerlink" title="AOP是什么？"></a>AOP是什么？</h3><p>AOP（Aspect Orient Programming），我们一般称为面向方面（切面）编程，作为面向对象的一种补充，用于处理系统中分布于各个模块的横切关注点，比如事务管理、日志、缓存等等。AOP实现的关键在于AOP框架自动创建的AOP代理，AOP代理主要分为静态代理和动态代理，静态代理的代表为AspectJ；而动态代理则以Spring AOP为代表。本文会分别对AspectJ和Spring AOP的实现进行分析和介绍。</p>
-<h3 id="Spring-AOP如何实现的？"><a href="#Spring-AOP如何实现的？" class="headerlink" title="Spring AOP如何实现的？"></a>Spring AOP如何实现的？</h3><p>Spring AOP中的动态代理主要有两种方式，JDK动态代理和CGLIB动态代理。JDK动态代理通过反射来接收被代理的类，并且要求被代理的类必须实现一个接口。JDK动态代理的核心是<code>InvocationHandler</code>接口和<code>Proxy</code>类。<br>如果目标类没有实现接口，那么Spring AOP会选择使用CGLIB来动态代理目标类。CGLIB（Code Generation Library），是一个代码生成的类库，可以在运行时动态的生成某个类的子类，注意，CGLIB是通过继承的方式做的动态代理，因此如果某个类被标记为final，那么它是无法使用CGLIB做动态代理的。</p>
-<h3 id="JDK动态代理"><a href="#JDK动态代理" class="headerlink" title="JDK动态代理"></a>JDK动态代理</h3><h5 id="定义一个接口类"><a href="#定义一个接口类" class="headerlink" title="定义一个接口类"></a>定义一个接口类</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>java<span class="token punctuation">.</span>base<span class="token punctuation">.</span>springaop</span><span class="token punctuation">;</span>
+                <h2 id="1-AOP是什么？"><a href="#1-AOP是什么？" class="headerlink" title="1. AOP是什么？"></a>1. AOP是什么？</h2><p>AOP（Aspect Orient Programming），我们一般称为面向方面（切面）编程，作为面向对象的一种补充，用于处理系统中分布于各个模块的横切关注点，比如事务管理、日志、缓存等等。AOP实现的关键在于AOP框架自动创建的AOP代理，AOP代理主要分为静态代理和动态代理，静态代理的代表为AspectJ；而动态代理则以Spring AOP为代表。本文会分别对AspectJ和Spring AOP的实现进行分析和介绍。</p>
+<h2 id="2-Spring-AOP如何实现的？"><a href="#2-Spring-AOP如何实现的？" class="headerlink" title="2. Spring AOP如何实现的？"></a>2. Spring AOP如何实现的？</h2><p>Spring AOP中的动态代理主要有两种方式，JDK动态代理和CGLIB动态代理。JDK动态代理通过反射来接收被代理的类，并且要求被代理的类必须实现一个接口。JDK动态代理的核心是<code>InvocationHandler</code>接口和<code>Proxy</code>类。<br>如果目标类没有实现接口，那么Spring AOP会选择使用CGLIB来动态代理目标类。CGLIB（Code Generation Library），是一个代码生成的类库，可以在运行时动态的生成某个类的子类，注意，CGLIB是通过继承的方式做的动态代理，因此如果某个类被标记为final，那么它是无法使用CGLIB做动态代理的。</p>
+<h2 id="3-JDK动态代理"><a href="#3-JDK动态代理" class="headerlink" title="3. JDK动态代理"></a>3. JDK动态代理</h2><h3 id="3-1-定义一个接口类"><a href="#3-1-定义一个接口类" class="headerlink" title="3.1 定义一个接口类"></a>3.1 定义一个接口类</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>java<span class="token punctuation">.</span>base<span class="token punctuation">.</span>springaop</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Service</span> <span class="token punctuation">{</span>
 	 <span class="token comment">/**
 	 * add方法
@@ -361,7 +361,7 @@
 	 */</span>
 	 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="实现一个接口类"><a href="#实现一个接口类" class="headerlink" title="实现一个接口类"></a>实现一个接口类</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>java<span class="token punctuation">.</span>base<span class="token punctuation">.</span>springaop</span><span class="token punctuation">;</span>
+<h3 id="3-2-实现一个接口类"><a href="#3-2-实现一个接口类" class="headerlink" title="3.2 实现一个接口类"></a>3.2 实现一个接口类</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>java<span class="token punctuation">.</span>base<span class="token punctuation">.</span>springaop</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">Service</span> <span class="token punctuation">{</span>
  
 	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -416,7 +416,7 @@
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>执行后的结果：可以看到，在目标类ServiceImpl的add和update方法前后已经加入了自定义的切面逻辑，AOP拦截机制生效了。</p>
-<h3 id="CGLIB动态代理"><a href="#CGLIB动态代理" class="headerlink" title="CGLIB动态代理"></a>CGLIB动态代理</h3><p>目标类，cglib不需要定义目标类的统一接口</p>
+<h2 id="4-CGLIB动态代理"><a href="#4-CGLIB动态代理" class="headerlink" title="4. CGLIB动态代理"></a>4. CGLIB动态代理</h2><p>目标类，cglib不需要定义目标类的统一接口</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>java<span class="token punctuation">.</span>base<span class="token punctuation">.</span>springaop</span><span class="token punctuation">;</span>
 
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">{</span>
@@ -484,7 +484,7 @@
 add-------------
 after-------------<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>可以看到，在目标类Base的add方法前后已经加入了自定义的切面逻辑，AOP拦截机制生效了。</p>
-<h3 id="关于动态代理和CGLIB这两种方式的简要总结"><a href="#关于动态代理和CGLIB这两种方式的简要总结" class="headerlink" title="关于动态代理和CGLIB这两种方式的简要总结"></a>关于动态代理和CGLIB这两种方式的简要总结</h3><ul>
+<h2 id="5-关于动态代理和CGLIB这两种方式的简要总结"><a href="#5-关于动态代理和CGLIB这两种方式的简要总结" class="headerlink" title="5. 关于动态代理和CGLIB这两种方式的简要总结"></a>5. 关于动态代理和CGLIB这两种方式的简要总结</h2><ul>
 <li><p>JDK动态代理(Dynamic Proxy)<br>基于标准JDK的动态代理功能<br>只针对实现了接口的业务对象</p>
 </li>
 <li><p>CGLIB<br>通过动态地对目标对象进行子类化来实现AOP代理<br>需要指定<code>@EnableAspectJAutoProxy(proxyTargetClass = true)</code>来强制使用<br>当业务对象没有实现任何接口的时候默认会选择CGLIB</p>
@@ -960,7 +960,7 @@ after-------------<span aria-hidden="true" class="line-numbers-rows"><span></spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

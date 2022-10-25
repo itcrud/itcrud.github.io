@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2020-12-14
+                    2020-12-一 19:17:42
                 </div>
                 
 
@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    938
+                    941
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>最近遇到一个问题，我自己个人有一个码云的代码托管仓库，平时我自己的电脑直接配置账号拉取代码即可，但是现在需要用自己的电脑，开发公司的项目，这个时候就需要在电脑上使用不同的git账户，在度娘上找了很多解决方案，没有遇到完整可用的，经过使用总结和调试，得出以下配置方式，适用于第一拉代码和第一次提交代码。</p>
-<h2 id="生成秘钥"><a href="#生成秘钥" class="headerlink" title="生成秘钥"></a>生成秘钥</h2><p>我自己本身就有一个git账户，账户的私钥公钥都是按照默认方式生成的，不做赘述。接下来为生成第二个账号公私钥的操作方法。</p>
+<h2 id="1-生成秘钥"><a href="#1-生成秘钥" class="headerlink" title="1. 生成秘钥"></a>1. 生成秘钥</h2><p>我自己本身就有一个git账户，账户的私钥公钥都是按照默认方式生成的，不做赘述。接下来为生成第二个账号公私钥的操作方法。</p>
 <ol>
 <li>首先生成一个git账户对应的公钥和私钥</li>
 </ol>
@@ -372,7 +372,7 @@ Host hostName2 <span class="token comment">#可以理解为别名</span>
 ssh-add ~/.ssh/id_rsa_test<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><strong>到这里两个git账号就配置完成啦！配置很简单，但是使用需要注意，在度娘上找的教程都卡着这一步走不下去，教程没有细说这一块内容。</strong></p>
-<h2 id="第一次拉取代码"><a href="#第一次拉取代码" class="headerlink" title="第一次拉取代码"></a>第一次拉取代码</h2><p>进入你要下载代码的目录，执行<code>git clone</code>命令拉取代码，但是这里git地址需要做稍微的改动。</p>
+<h2 id="2-第一次拉取代码"><a href="#2-第一次拉取代码" class="headerlink" title="2. 第一次拉取代码"></a>2. 第一次拉取代码</h2><p>进入你要下载代码的目录，执行<code>git clone</code>命令拉取代码，但是这里git地址需要做稍微的改动。</p>
 <ul>
 <li>正常拉取代码方式：</li>
 </ul>
@@ -385,7 +385,7 @@ ssh-add ~/.ssh/id_rsa_test<span aria-hidden="true" class="line-numbers-rows"><sp
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone git@hostName2:username/testproject.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><strong>说明：</strong>修改的区别是将原来的<code>gitee.com</code>，改成<code>config</code>配置文件中定义的别名，也就是<code>hostName2</code>。</p>
-<h2 id="第一次提交代码"><a href="#第一次提交代码" class="headerlink" title="第一次提交代码"></a>第一次提交代码</h2><p>上面的步骤适用于第一次拉取代码，但是如果是第一次提交代码如何弄呢，看下面的步骤。</p>
+<h2 id="3-第一次提交代码"><a href="#3-第一次提交代码" class="headerlink" title="3. 第一次提交代码"></a>3. 第一次提交代码</h2><p>上面的步骤适用于第一次拉取代码，但是如果是第一次提交代码如何弄呢，看下面的步骤。</p>
 <p>进入项目目录，按照如下顺序执行命令即可。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> init
 <span class="token function">git</span> remote <span class="token function">add</span> origin git@hostName2:username/testproject.git <span class="token comment"># 注意这里需要将原来gitee.com用别名替换</span>
@@ -538,7 +538,7 @@ ssh-add ~/.ssh/id_rsa_test<span aria-hidden="true" class="line-numbers-rows"><sp
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2020-12-14T08-00-00',
+        id: '2020-12-14T19-17-42',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -853,7 +853,7 @@ ssh-add ~/.ssh/id_rsa_test<span aria-hidden="true" class="line-numbers-rows"><sp
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

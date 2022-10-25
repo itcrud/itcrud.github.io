@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-07-12
+                    2018-07-四 21:33:00
                 </div>
                 
 
@@ -318,7 +318,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4k
+                    4.1k
                 </div>
                 
 
@@ -343,13 +343,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="为什么使用线程池"><a href="#为什么使用线程池" class="headerlink" title="为什么使用线程池"></a>为什么使用线程池</h3><p>线程池是作为程序员必备的技能，合理的使用线程池也是必须的，但是在实际开发过程中，使用线程池的参数都是复制粘贴来的，也不会去考察线程池设计是否符合实际使用场景，是否合理，这篇文章不会深入去说线程池的原理，但是基本的配置参数说明还是有的，希望能对大家开发有用。<br>为什么要使用线程池：</p>
+                <h2 id="1-为什么使用线程池"><a href="#1-为什么使用线程池" class="headerlink" title="1. 为什么使用线程池"></a>1. 为什么使用线程池</h2><p>线程池是作为程序员必备的技能，合理的使用线程池也是必须的，但是在实际开发过程中，使用线程池的参数都是复制粘贴来的，也不会去考察线程池设计是否符合实际使用场景，是否合理，这篇文章不会深入去说线程池的原理，但是基本的配置参数说明还是有的，希望能对大家开发有用。<br>为什么要使用线程池：</p>
 <ul>
 <li>降低资源的消耗，降低线程创建和销毁时对资源的消耗；</li>
 <li>提高响应时间（需要一个新线程执行任务，基本都是创建、执行、销毁，对应的时间分别是：T1、T2、T3，如果每次都是这样操作，是很浪费时间和对计算机资源的浪费，使用线程池后就可以免去T1和T3的时间，大大提高了效率；</li>
 <li>提高线程的可管理性。</li>
 </ul>
-<h3 id="线程的基本参数分析"><a href="#线程的基本参数分析" class="headerlink" title="线程的基本参数分析"></a>线程的基本参数分析</h3><p>先看一下<code>ThreadPoolExecutor</code>线程池的基础类，构造方法如下：</p>
+<h2 id="2-线程的基本参数分析"><a href="#2-线程的基本参数分析" class="headerlink" title="2. 线程的基本参数分析"></a>2. 线程的基本参数分析</h2><p>先看一下<code>ThreadPoolExecutor</code>线程池的基础类，构造方法如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Creates a new {@code ThreadPoolExecutor} with the given initial
  * parameters.
@@ -402,13 +402,13 @@
     <span class="token keyword">this</span><span class="token punctuation">.</span>handler <span class="token operator">=</span> handler<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>ThreadPoolExecutor</code>类中有多个构造方法，但是都会在内部调用此构造方法，也就是最终的构造方法，这里就看它了。这个构造方法的参数有<code>corePoolSize</code>、<code>maximumPoolSize</code>、<code>keepAliveTime</code>、<code>unit</code>、<code>workQueue</code>、<code>threadFactory</code>、<code>handler</code>，下面就依次看一下这些参数的含义和用法。</p>
-<h4 id="corePoolSize-核心线程数"><a href="#corePoolSize-核心线程数" class="headerlink" title="corePoolSize(核心线程数)"></a>corePoolSize(核心线程数)</h4><p>表示线程池的核心线程数量，当线程池中的线程数量小于这个值得时候，再有新任务进来时，会直接创建新的线程去执行，当线程数量达到corePoolSize时，就会将溢出的任务放到workQueue中，等待执行。<br>这里需要注意的是，很多小伙伴都认为设置这个参数后，线程池启动就会创建corePoolSize数量的线程，并放在线程池中，等待使用，但事实并非如此，而是有任务进来的时候才会创建线程，初始的线程池是空的，如果需要线程池拥有corePoolSize数量的线程被创建，那就在初始化的时候调用<code>prestartAllCoreThreads()</code>方法。</p>
-<h4 id="maximumPoolSize-最大线程数"><a href="#maximumPoolSize-最大线程数" class="headerlink" title="maximumPoolSize(最大线程数)"></a>maximumPoolSize(最大线程数)</h4><p>表示允许最大线程数，上一个参数中说多余的任务会放到workQueue中，当workQueue也满了以后，就会判断当前线程池中线程数量是不是小于maximumPoolSize，如果小于，那就接着创建线程，执行任务。</p>
-<h4 id="keepAliveTime-最大存活时间"><a href="#keepAliveTime-最大存活时间" class="headerlink" title="keepAliveTime(最大存活时间)"></a>keepAliveTime(最大存活时间)</h4><p>线程空闲下来后存活的时间，这个存活时间只对线程池中线程数量超过corePoolSize的时候才会生效。也就是说，当线程池中的线程数量小于corePoolSize，空闲的线程是不会根据这个时间销毁，而是一直存在于线程池中。</p>
-<h4 id="unit-时间单位"><a href="#unit-时间单位" class="headerlink" title="unit(时间单位)"></a>unit(时间单位)</h4><p>很简单，就是指定keepAliveTime的时间单位。</p>
-<h4 id="workQueue-工作缓存队列"><a href="#workQueue-工作缓存队列" class="headerlink" title="workQueue(工作缓存队列)"></a>workQueue(工作缓存队列)</h4><p>保存任务的阻塞队列，是在线程数达到corePoolSize后，新进来的任务会被保存到workQueue中，这里使用的是有界的队列(<code>BlockingQueue&lt;Runnable&gt; workQueue</code>)。</p>
-<h4 id="threadFactory-线程制造工厂"><a href="#threadFactory-线程制造工厂" class="headerlink" title="threadFactory(线程制造工厂)"></a>threadFactory(线程制造工厂)</h4><p>采用工厂模式，用于创建线程的工厂，并给线程设定线程名。</p>
-<h4 id="handler-饱和策略"><a href="#handler-饱和策略" class="headerlink" title="handler(饱和策略)"></a>handler(饱和策略)</h4><p>JDK中给出的RejectedExecutionHandler实现类有四个。</p>
+<h3 id="2-1-corePoolSize-核心线程数"><a href="#2-1-corePoolSize-核心线程数" class="headerlink" title="2.1 corePoolSize(核心线程数)"></a>2.1 corePoolSize(核心线程数)</h3><p>表示线程池的核心线程数量，当线程池中的线程数量小于这个值得时候，再有新任务进来时，会直接创建新的线程去执行，当线程数量达到corePoolSize时，就会将溢出的任务放到workQueue中，等待执行。<br>这里需要注意的是，很多小伙伴都认为设置这个参数后，线程池启动就会创建corePoolSize数量的线程，并放在线程池中，等待使用，但事实并非如此，而是有任务进来的时候才会创建线程，初始的线程池是空的，如果需要线程池拥有corePoolSize数量的线程被创建，那就在初始化的时候调用<code>prestartAllCoreThreads()</code>方法。</p>
+<h3 id="2-2-maximumPoolSize-最大线程数"><a href="#2-2-maximumPoolSize-最大线程数" class="headerlink" title="2.2 maximumPoolSize(最大线程数)"></a>2.2 maximumPoolSize(最大线程数)</h3><p>表示允许最大线程数，上一个参数中说多余的任务会放到workQueue中，当workQueue也满了以后，就会判断当前线程池中线程数量是不是小于maximumPoolSize，如果小于，那就接着创建线程，执行任务。</p>
+<h3 id="2-3-keepAliveTime-最大存活时间"><a href="#2-3-keepAliveTime-最大存活时间" class="headerlink" title="2.3 keepAliveTime(最大存活时间)"></a>2.3 keepAliveTime(最大存活时间)</h3><p>线程空闲下来后存活的时间，这个存活时间只对线程池中线程数量超过corePoolSize的时候才会生效。也就是说，当线程池中的线程数量小于corePoolSize，空闲的线程是不会根据这个时间销毁，而是一直存在于线程池中。</p>
+<h3 id="2-4-unit-时间单位"><a href="#2-4-unit-时间单位" class="headerlink" title="2.4 unit(时间单位)"></a>2.4 unit(时间单位)</h3><p>很简单，就是指定keepAliveTime的时间单位。</p>
+<h3 id="2-5-workQueue-工作缓存队列"><a href="#2-5-workQueue-工作缓存队列" class="headerlink" title="2.5 workQueue(工作缓存队列)"></a>2.5 workQueue(工作缓存队列)</h3><p>保存任务的阻塞队列，是在线程数达到corePoolSize后，新进来的任务会被保存到workQueue中，这里使用的是有界的队列(<code>BlockingQueue&lt;Runnable&gt; workQueue</code>)。</p>
+<h3 id="2-6-threadFactory-线程制造工厂"><a href="#2-6-threadFactory-线程制造工厂" class="headerlink" title="2.6 threadFactory(线程制造工厂)"></a>2.6 threadFactory(线程制造工厂)</h3><p>采用工厂模式，用于创建线程的工厂，并给线程设定线程名。</p>
+<h3 id="2-7-handler-饱和策略"><a href="#2-7-handler-饱和策略" class="headerlink" title="2.7 handler(饱和策略)"></a>2.7 handler(饱和策略)</h3><p>JDK中给出的RejectedExecutionHandler实现类有四个。</p>
 <ul>
 <li>AbortPolicy：直接抛出异常（默认）</li>
 <li>CallerRunsPolicy：用调用者所在的线程来执行任务</li>
@@ -419,13 +419,13 @@
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">RejectedExecutionHandler</span> <span class="token punctuation">{</span>
     <span class="token keyword">void</span> <span class="token function">rejectedExecution</span><span class="token punctuation">(</span><span class="token class-name">Runnable</span> r<span class="token punctuation">,</span> <span class="token class-name">ThreadPoolExecutor</span> executor<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="线程池的使用"><a href="#线程池的使用" class="headerlink" title="线程池的使用"></a>线程池的使用</h3><p>线程池的使用也就是线程池的创建和任务的提交等。线程池的创建这里就不去说了，只要知道参数的含义，也就很容易创建一个线程池出来。</p>
-<h4 id="提交线程任务"><a href="#提交线程任务" class="headerlink" title="提交线程任务"></a>提交线程任务</h4><p>主要的两种提交任务的方式有两种，一种是有返回值，一种是无返回值的。</p>
+<h2 id="3-线程池的使用"><a href="#3-线程池的使用" class="headerlink" title="3. 线程池的使用"></a>3. 线程池的使用</h2><p>线程池的使用也就是线程池的创建和任务的提交等。线程池的创建这里就不去说了，只要知道参数的含义，也就很容易创建一个线程池出来。</p>
+<h3 id="3-1-提交线程任务"><a href="#3-1-提交线程任务" class="headerlink" title="3.1 提交线程任务"></a>3.1 提交线程任务</h3><p>主要的两种提交任务的方式有两种，一种是有返回值，一种是无返回值的。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">execute</span><span class="token punctuation">(</span><span class="token class-name">Runnable</span> command<span class="token punctuation">)</span> 不需要返回<span class="token punctuation">(</span>源码<span class="token punctuation">)</span>
 <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token function">submit</span><span class="token punctuation">(</span><span class="token class-name">Callable</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> task<span class="token punctuation">)</span>需要返回<span class="token punctuation">(</span>源码<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>execute方法是在ThreadPoolExecutor中实现的，只支持Runnable实现的任务，submit是在ThreadPoolExecutor父类<code>AbstractExecutorService</code>中实现的，可以支持Callable实现方式也支持Runnable实现方式。</p>
-<h4 id="关闭线程池"><a href="#关闭线程池" class="headerlink" title="关闭线程池"></a>关闭线程池</h4><p>shutdown()：设置线程池的关闭状态，并关闭未执行的任务线程<br>shutdownNow()：设置线程池的关闭状态，并关闭正在执行或者暂停的任务线程</p>
-<h4 id="执行线程池过程分析"><a href="#执行线程池过程分析" class="headerlink" title="执行线程池过程分析"></a>执行线程池过程分析</h4><h5 id="execute"><a href="#execute" class="headerlink" title="execute()"></a>execute()</h5><p>看一下execute方法的源代码：</p>
+<h3 id="3-2-关闭线程池"><a href="#3-2-关闭线程池" class="headerlink" title="3.2 关闭线程池"></a>3.2 关闭线程池</h3><p>shutdown()：设置线程池的关闭状态，并关闭未执行的任务线程<br>shutdownNow()：设置线程池的关闭状态，并关闭正在执行或者暂停的任务线程</p>
+<h3 id="3-3-执行线程池过程分析"><a href="#3-3-执行线程池过程分析" class="headerlink" title="3.3 执行线程池过程分析"></a>3.3 执行线程池过程分析</h3><h4 id="3-3-1-execute"><a href="#3-3-1-execute" class="headerlink" title="3.3.1 execute()"></a>3.3.1 execute()</h4><p>看一下execute方法的源代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">execute</span><span class="token punctuation">(</span><span class="token class-name">Runnable</span> command<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>command <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
         <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -466,7 +466,7 @@
         <span class="token function">reject</span><span class="token punctuation">(</span>command<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//执行饱和策略</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从上面的源代码可以看的出来当使用execute方法加入任务后的一系列操作。在这个方法上面也给出了对应的解释、代码中也给出了关键位置的注释，这里就不多说。 </p>
-<h5 id="submit"><a href="#submit" class="headerlink" title="submit()"></a>submit()</h5><p>看一下submit的源代码：</p>
+<h4 id="3-3-2-submit"><a href="#3-3-2-submit" class="headerlink" title="3.3.2 submit()"></a>3.3.2 submit()</h4><p>看一下submit的源代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/*----submit方法 Runnable实现方式----*/</span>
 <span class="token keyword">public</span> <span class="token class-name">Future</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> <span class="token function">submit</span><span class="token punctuation">(</span><span class="token class-name">Runnable</span> task<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>task <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -492,31 +492,32 @@
 <span class="token keyword">protected</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">RunnableFuture</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token function">newTaskFor</span><span class="token punctuation">(</span><span class="token class-name">Callable</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> callable<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">FutureTask</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>callable<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="线程池工作队列"><a href="#线程池工作队列" class="headerlink" title="线程池工作队列"></a>线程池工作队列</h3><h4 id="ArrayBlockingQueue"><a href="#ArrayBlockingQueue" class="headerlink" title="ArrayBlockingQueue"></a>ArrayBlockingQueue</h4><p>有界队列策略，可以在创建队列的时候指定队列长度，创建时会根据队列长度开辟一段连续的内存，容量设置需谨慎，过大浪费空间，过小易添加失败。</p>
-<h4 id="LinkedBlockingQueue"><a href="#LinkedBlockingQueue" class="headerlink" title="LinkedBlockingQueue"></a>LinkedBlockingQueue</h4><p>有界队列策略，可以在创建队列的时候指定队列长度，队列创建时不会开辟大量内存空间，根据节点增加动态的拓展，存储空间非连续。</p>
-<h4 id="DelayQueue"><a href="#DelayQueue" class="headerlink" title="DelayQueue"></a>DelayQueue</h4><p>无界队列策略，元素都有一个过期时间，队列内部也是根据过期时间进行排序，从小到大排列，只有过期的元素才会被取出并执行。</p>
-<h4 id="SynchronousQueue"><a href="#SynchronousQueue" class="headerlink" title="SynchronousQueue"></a>SynchronousQueue</h4><p>直接提交策略，工作队列本身是不存储元素，相当于通道，插入的数据立即就会被移除并处理，处理速度很快，但是存在数据过多导致线程创建过多问题。</p>
-<h4 id="PriorityBlockingQueue"><a href="#PriorityBlockingQueue" class="headerlink" title="PriorityBlockingQueue"></a>PriorityBlockingQueue</h4><p>优先级策略，无边界队列，添加元素根据优先级排序，优先执行级别高的元素。</p>
-<h3 id="JDK给出的几种线程池实现"><a href="#JDK给出的几种线程池实现" class="headerlink" title="JDK给出的几种线程池实现"></a>JDK给出的几种线程池实现</h3><h4 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h4><p>一般的线程池构建类，所有相关的参数都是可以自定义的，一般都是直接使用默认即可。</p>
+<h2 id="4-线程池工作队列"><a href="#4-线程池工作队列" class="headerlink" title="4. 线程池工作队列"></a>4. 线程池工作队列</h2><h3 id="4-1-ArrayBlockingQueue"><a href="#4-1-ArrayBlockingQueue" class="headerlink" title="4.1 ArrayBlockingQueue"></a>4.1 ArrayBlockingQueue</h3><p>有界队列策略，可以在创建队列的时候指定队列长度，创建时会根据队列长度开辟一段连续的内存，容量设置需谨慎，过大浪费空间，过小易添加失败。</p>
+<h3 id="4-2-LinkedBlockingQueue"><a href="#4-2-LinkedBlockingQueue" class="headerlink" title="4.2 LinkedBlockingQueue"></a>4.2 LinkedBlockingQueue</h3><p>有界队列策略，可以在创建队列的时候指定队列长度，队列创建时不会开辟大量内存空间，根据节点增加动态的拓展，存储空间非连续。</p>
+<h3 id="4-3-DelayQueue"><a href="#4-3-DelayQueue" class="headerlink" title="4.3 DelayQueue"></a>4.3 DelayQueue</h3><p>无界队列策略，元素都有一个过期时间，队列内部也是根据过期时间进行排序，从小到大排列，只有过期的元素才会被取出并执行。</p>
+<h3 id="4-4-SynchronousQueue"><a href="#4-4-SynchronousQueue" class="headerlink" title="4.4 SynchronousQueue"></a>4.4 SynchronousQueue</h3><p>直接提交策略，工作队列本身是不存储元素，相当于通道，插入的数据立即就会被移除并处理，处理速度很快，但是存在数据过多导致线程创建过多问题。</p>
+<h3 id="4-5-PriorityBlockingQueue"><a href="#4-5-PriorityBlockingQueue" class="headerlink" title="4.5 PriorityBlockingQueue"></a>4.5 PriorityBlockingQueue</h3><p>优先级策略，无边界队列，添加元素根据优先级排序，优先执行级别高的元素。</p>
+<h2 id="5-JDK给出的几种线程池实现"><a href="#5-JDK给出的几种线程池实现" class="headerlink" title="5. JDK给出的几种线程池实现"></a>5. JDK给出的几种线程池实现</h2><h3 id="5-1-ThreadPoolExecutor"><a href="#5-1-ThreadPoolExecutor" class="headerlink" title="5.1 ThreadPoolExecutor"></a>5.1 ThreadPoolExecutor</h3><p>一般的线程池构建类，所有相关的参数都是可以自定义的，一般都是直接使用默认即可。</p>
 <p>其执行流程图如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/4B0E84E92A6A4851A69A8DCF078EF12B.png"></p>
-<h4 id="FixedThreadPoolExecutor"><a href="#FixedThreadPoolExecutor" class="headerlink" title="FixedThreadPoolExecutor"></a>FixedThreadPoolExecutor</h4><p>创建固定线程数量的线程池（corePoolSize、maximumPoolSize值相同），适用于负载较重的服务器。使用了无界队列<code>LinkedBlockingQueue</code>。</p>
+<h3 id="5-2-FixedThreadPoolExecutor"><a href="#5-2-FixedThreadPoolExecutor" class="headerlink" title="5.2 FixedThreadPoolExecutor"></a>5.2 FixedThreadPoolExecutor</h3><p>创建固定线程数量的线程池（corePoolSize、maximumPoolSize值相同），适用于负载较重的服务器。使用了无界队列<code>LinkedBlockingQueue</code>。</p>
 <p>其执行流程图如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/C2B6B24C48864607A011080F3E30B38F.png"></p>
-<h4 id="SingleThreadPoolExecutor"><a href="#SingleThreadPoolExecutor" class="headerlink" title="SingleThreadPoolExecutor"></a>SingleThreadPoolExecutor</h4><p>创建单个线程，适用需要保证顺序执行任务，不会有多个线程活动。这个流程图就比较简单啦，流程图省略。</p>
-<h4 id="CachedThreadPoolExecutor"><a href="#CachedThreadPoolExecutor" class="headerlink" title="CachedThreadPoolExecutor"></a>CachedThreadPoolExecutor</h4><p>会根据需要来创建新线程的，适用于执行很多短周期的任务，短时间可能创建线程量很大，消耗大量资源。使用的是无界队列<code>SynchronousQueue</code>。</p>
+<h3 id="5-3-SingleThreadPoolExecutor"><a href="#5-3-SingleThreadPoolExecutor" class="headerlink" title="5.3 SingleThreadPoolExecutor"></a>5.3 SingleThreadPoolExecutor</h3><p>创建单个线程，适用需要保证顺序执行任务，不会有多个线程活动。这个流程图就比较简单啦，流程图省略。</p>
+<h3 id="5-4-CachedThreadPoolExecutor"><a href="#5-4-CachedThreadPoolExecutor" class="headerlink" title="5.4 CachedThreadPoolExecutor"></a>5.4 CachedThreadPoolExecutor</h3><p>会根据需要来创建新线程的，适用于执行很多短周期的任务，短时间可能创建线程量很大，消耗大量资源。使用的是无界队列<code>SynchronousQueue</code>。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/B02D606BDD254265A9965B5198DF8A18.png"></p>
-<h4 id="WorkStealingPool（JDK7）"><a href="#WorkStealingPool（JDK7）" class="headerlink" title="WorkStealingPool（JDK7）"></a>WorkStealingPool（JDK7）</h4><p>基于ForkJoin实现</p>
-<h4 id="ScheduledThreadPoolExecutor"><a href="#ScheduledThreadPoolExecutor" class="headerlink" title="ScheduledThreadPoolExecutor"></a>ScheduledThreadPoolExecutor</h4><p>需要定期执行周期任务。都是使用无界队列<code>DelayQueue</code>。<br><code>newScheduledThreadPoolExecutor</code>：可以包含多个线程，线程执行周期任务，适度控制后台线程数量。<br><code>newSingleScheduledThreadPoolExecutor</code>：只包含单个线程，值需要到单个线程执行周期任务，保证顺序的执行各个任务。</p>
+<h3 id="5-5-WorkStealingPool（JDK7）"><a href="#5-5-WorkStealingPool（JDK7）" class="headerlink" title="5.5 WorkStealingPool（JDK7）"></a>5.5 WorkStealingPool（JDK7）</h3><p>基于ForkJoin实现</p>
+<h3 id="5-6-ScheduledThreadPoolExecutor"><a href="#5-6-ScheduledThreadPoolExecutor" class="headerlink" title="5.6 ScheduledThreadPoolExecutor"></a>5.6 ScheduledThreadPoolExecutor</h3><p>需要定期执行周期任务。都是使用无界队列<code>DelayQueue</code>。<br><code>newScheduledThreadPoolExecutor</code>：可以包含多个线程，线程执行周期任务，适度控制后台线程数量。<br><code>newSingleScheduledThreadPoolExecutor</code>：只包含单个线程，值需要到单个线程执行周期任务，保证顺序的执行各个任务。</p>
 <p>看一下<code>ScheduledThreadPoolExecutor</code>执行流程图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/71174348E1D74E08B9980327203608CC.png"></p>
-<h5 id="主要执行方法"><a href="#主要执行方法" class="headerlink" title="主要执行方法"></a>主要执行方法</h5><ul>
+<p><strong>主要执行方法</strong></p>
+<ul>
 <li>schedule()：只执行一次，任务可以延时执行。</li>
 <li>scheduleAtFixedRate：提交固定时间间隔（上一个任务和下一个任务开始的头之间的时间间隔）</li>
-<li>scheduleAtFixedDelay：提交固定时间延迟间隔执行（上一个任务执行结束到下个任务执行开始之间的时间间隔）<br>注意：(可以自己试验一下，下面的如有错误，欢迎指正)<br>1、scheduleAtFixedRate出现超时后，后一个任务会根据情况是否立即执行。<br>如设定了时间间隔是60秒，如果第一个任务执行了80秒，后一个任务就不会在60秒的时候执行，而是80秒的时候执行。如果第二个任务执行了20秒，那么第三个任务的执行就是在80秒的基础上加60秒，那就是140秒的时候执行。这里只要理解间隔时间60秒是指下一个任务的开始和上一个任务的开始时间间隔是60秒就可以理解了。<br>2、当任务中出现异常的时候，需要将异常捕捉，否则任务无法进行下去，会影响后面的任务执行。因为这个时候任务会被阻塞。<h3 id="线程池异常处理"><a href="#线程池异常处理" class="headerlink" title="线程池异常处理"></a>线程池异常处理</h3></li>
+<li>scheduleAtFixedDelay：提交固定时间延迟间隔执行（上一个任务执行结束到下个任务执行开始之间的时间间隔）<br>注意：(可以自己试验一下，下面的如有错误，欢迎指正)<br>1、scheduleAtFixedRate出现超时后，后一个任务会根据情况是否立即执行。<br>如设定了时间间隔是60秒，如果第一个任务执行了80秒，后一个任务就不会在60秒的时候执行，而是80秒的时候执行。如果第二个任务执行了20秒，那么第三个任务的执行就是在80秒的基础上加60秒，那就是140秒的时候执行。这里只要理解间隔时间60秒是指下一个任务的开始和上一个任务的开始时间间隔是60秒就可以理解了。<br>2、当任务中出现异常的时候，需要将异常捕捉，否则任务无法进行下去，会影响后面的任务执行。因为这个时候任务会被阻塞。<h2 id="6-线程池异常处理"><a href="#6-线程池异常处理" class="headerlink" title="6. 线程池异常处理"></a>6. 线程池异常处理</h2></li>
 </ul>
 <p>异步操作使用线程池，当异步操作出现异常的时候是不会抛出给主线程的，那应该怎么处理，看一下下面几种解决方案。</p>
-<h4 id="直接在异步处理逻辑中添加try……catch捕获"><a href="#直接在异步处理逻辑中添加try……catch捕获" class="headerlink" title="直接在异步处理逻辑中添加try……catch捕获"></a>直接在异步处理逻辑中添加<code>try……catch</code>捕获</h4><p>最为简单，也是最为常用的方式，由异步逻辑本身来捕获异常并加上处理逻辑。</p>
+<h3 id="6-1-直接在异步处理逻辑中添加try……catch捕获"><a href="#6-1-直接在异步处理逻辑中添加try……catch捕获" class="headerlink" title="6.1 直接在异步处理逻辑中添加try……catch捕获"></a>6.1 直接在异步处理逻辑中添加<code>try……catch</code>捕获</h3><p>最为简单，也是最为常用的方式，由异步逻辑本身来捕获异常并加上处理逻辑。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//创建线程池</span>
     <span class="token class-name">ThreadPoolExecutor</span> executor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>
@@ -536,7 +537,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>如果主线程依赖子线程的处理结果，这样就不行啦，需要使用下面这种方式。</p>
-<h4 id="使用submit提交异步操作，根据Future返回获取异常"><a href="#使用submit提交异步操作，根据Future返回获取异常" class="headerlink" title="使用submit提交异步操作，根据Future返回获取异常"></a>使用submit提交异步操作，根据Future返回获取异常</h4><p>这种方式有一个问题是Future的get方式是阻塞的，这样主线程会一直等待子线程执行完成，如果只是为了获取异常信息，且业务逻辑不是强要求获取子线程执行情况的不建议使用。因为这样阻塞就失去了本身多线程并发处理的初衷。</p>
+<h3 id="6-2-使用submit提交异步操作，根据Future返回获取异常"><a href="#6-2-使用submit提交异步操作，根据Future返回获取异常" class="headerlink" title="6.2 使用submit提交异步操作，根据Future返回获取异常"></a>6.2 使用submit提交异步操作，根据Future返回获取异常</h3><p>这种方式有一个问题是Future的get方式是阻塞的，这样主线程会一直等待子线程执行完成，如果只是为了获取异常信息，且业务逻辑不是强要求获取子线程执行情况的不建议使用。因为这样阻塞就失去了本身多线程并发处理的初衷。</p>
 <p>代码示例：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//创建线程池</span>
@@ -562,7 +563,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="线程设置uncaughtExceptionHandler"><a href="#线程设置uncaughtExceptionHandler" class="headerlink" title="线程设置uncaughtExceptionHandler"></a>线程设置uncaughtExceptionHandler</h4><p>在ThreadFactory里面将创建的新线程时设置uncaughtExceptionHandler参数，此时就不可以使用原有默认DefaultThreadFactory，需要自定义，自定义代码可以直接使用DefaultThreadFactory内的逻辑，加上对uncaughtExceptionHandler的设值即可。</p>
+<h3 id="6-3-线程设置uncaughtExceptionHandler"><a href="#6-3-线程设置uncaughtExceptionHandler" class="headerlink" title="6.3 线程设置uncaughtExceptionHandler"></a>6.3 线程设置uncaughtExceptionHandler</h3><p>在ThreadFactory里面将创建的新线程时设置uncaughtExceptionHandler参数，此时就不可以使用原有默认DefaultThreadFactory，需要自定义，自定义代码可以直接使用DefaultThreadFactory内的逻辑，加上对uncaughtExceptionHandler的设值即可。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadPoolConfig</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -618,7 +619,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="重写ThreadPoolExecutor中的afterExecute方法"><a href="#重写ThreadPoolExecutor中的afterExecute方法" class="headerlink" title="重写ThreadPoolExecutor中的afterExecute方法"></a>重写ThreadPoolExecutor中的afterExecute方法</h4><p>ThreadPoolExecutor本身自带的afterExecute方法是没有任何实现逻辑的，需要继承ThreadPoolExecutor并且重写afterExecute方法来实现异常的处理动作。</p>
+<h3 id="6-4-重写ThreadPoolExecutor中的afterExecute方法"><a href="#6-4-重写ThreadPoolExecutor中的afterExecute方法" class="headerlink" title="6.4 重写ThreadPoolExecutor中的afterExecute方法"></a>6.4 重写ThreadPoolExecutor中的afterExecute方法</h3><p>ThreadPoolExecutor本身自带的afterExecute方法是没有任何实现逻辑的，需要继承ThreadPoolExecutor并且重写afterExecute方法来实现异常的处理动作。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//重写ThreadPoolExecutor中的afterExecute方法</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomThreadPoolExecutor</span> <span class="token keyword">extends</span> <span class="token class-name">ThreadPoolExecutor</span> <span class="token punctuation">{</span>
 
@@ -644,16 +645,16 @@
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="合理配置线程池"><a href="#合理配置线程池" class="headerlink" title="合理配置线程池"></a>合理配置线程池</h3><h4 id="任务的性质"><a href="#任务的性质" class="headerlink" title="任务的性质"></a>任务的性质</h4><ul>
+<h2 id="7-合理配置线程池"><a href="#7-合理配置线程池" class="headerlink" title="7. 合理配置线程池"></a>7. 合理配置线程池</h2><h3 id="7-1-任务的性质"><a href="#7-1-任务的性质" class="headerlink" title="7.1 任务的性质"></a>7.1 任务的性质</h3><ul>
 <li>计算密集型：加密，大数据分析等</li>
 <li>IO密集型：读取文件，数据库连接，网络通讯等</li>
 <li>混合型：计算型密集型和IO密集型的混合</li>
 </ul>
-<h4 id="线程池配置"><a href="#线程池配置" class="headerlink" title="线程池配置"></a>线程池配置</h4><p>对于计算密集型：<br>最大推荐线程数适当小一点，推荐为机器的CPU核心数+1，这里如何获取机器的CPU核心数，可以使用下面的方法：</p>
+<h3 id="7-2-线程池配置"><a href="#7-2-线程池配置" class="headerlink" title="7.2 线程池配置"></a>7.2 线程池配置</h3><p>对于计算密集型：<br>最大推荐线程数适当小一点，推荐为机器的CPU核心数+1，这里如何获取机器的CPU核心数，可以使用下面的方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Runtime</span><span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">availableProcessors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>对于IO密集型：<br>最大推荐线程数适当大一点，机器CPU核心数*2</p>
 <p>对于混合型：<br>尽量拆分出计算密集型和IO密集型，特别是IO密集型约等于计算机密集型，拆分后效率会更高。如果是IO密集型远大于计算密集型，拆分意义不大。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在实际项目中，很少有用到JDK给出的几种线程池，因为他们大多都使用了无界的任务队列，这样会存在一个很大的安全隐患，当阻塞的任务过多的时候，就会导致内存溢出。<br>更适用的是ThreadPoolExecutor，可以直接配置对应的参数，也可以指定需要的饱和策略，是整个线程是的更利于掌控，更符合实际的需求。</p>
+<h2 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a>8. 总结</h2><p>在实际项目中，很少有用到JDK给出的几种线程池，因为他们大多都使用了无界的任务队列，这样会存在一个很大的安全隐患，当阻塞的任务过多的时候，就会导致内存溢出。<br>更适用的是ThreadPoolExecutor，可以直接配置对应的参数，也可以指定需要的饱和策略，是整个线程是的更利于掌控，更符合实际的需求。</p>
 
                 
             </div>
@@ -801,7 +802,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-07-12T21-00-00',
+        id: '2018-07-12T21-33-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1116,7 +1117,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

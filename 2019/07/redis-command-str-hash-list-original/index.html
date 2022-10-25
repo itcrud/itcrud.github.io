@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-07-13
+                    2019-07-六 23:08:00
                 </div>
                 
 
@@ -341,14 +341,14 @@
             <div id="articleContent">
                 <p>redis是日常开发中最常的非关系型数据库，可以说只要是个项目基本都会使用到。常用来做数据缓存、分布式锁等等。redis的基本安装内容就不说了（在之前的博客搭建系列里面有提到redis的安装使用，如果不会的可以看一下），后面更新会说一下其配置文件中主要的配置信息。</p>
 <p>redis常用的数据类型str、hash、list、set、zset，但是最常用的应该就是前三种，这篇文章里面就是用来记录和说明这前三种数据类型常使用的命令。虽然在实际开发过程中很少使用这些命令，但是了解这些命令，会更有利于对redis相关API的理解和使用。</p>
-<h2 id="redis为什么快"><a href="#redis为什么快" class="headerlink" title="redis为什么快"></a>redis为什么快</h2><p>redis为什么速度这么快，这是面试常见的面试题，更是项目中使用它的原因。</p>
+<h2 id="1-redis为什么快"><a href="#1-redis为什么快" class="headerlink" title="1. redis为什么快"></a>1. redis为什么快</h2><p>redis为什么速度这么快，这是面试常见的面试题，更是项目中使用它的原因。</p>
 <ul>
 <li>redis是使用C语言编写，更接近底层的编程语言</li>
 <li>redis是基于内存存储数据，获取和存储数据都是在内存中</li>
 <li>redis是单线程处理，没有锁的竞争，减少了性能消耗，虽然是单线程，处理速度上并不慢，因为其是基于内存做处理，没有和磁盘间繁琐的读写IO过程（具体redis单线程原理，后期会再更新博客详细说明）</li>
 </ul>
-<h2 id="redis数据类型之str"><a href="#redis数据类型之str" class="headerlink" title="redis数据类型之str"></a>redis数据类型之str</h2><p>字符串类型是最常用的，可能很多简单小型项目用来缓存数据都只会用到这一种数据类型。</p>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><ul>
+<h2 id="2-redis数据类型之str"><a href="#2-redis数据类型之str" class="headerlink" title="2. redis数据类型之str"></a>2. redis数据类型之str</h2><p>字符串类型是最常用的，可能很多简单小型项目用来缓存数据都只会用到这一种数据类型。</p>
+<ul>
 <li><p><code>set key value [ex seconds] [px milliseconds] [nx|xx]</code>：存储数据，key是键唯一，值是字符串类型，用来存储真正的数据信息，ex和px表示设置其有效时间，对应的单位分别是秒和毫秒，nx和xx表示存储数据是否可以被覆盖，如果key已经存在，返回为0，表示没有设置成功，如果key不存在返回为1，表示设置成功，xx是set命令默认的存储方式，可覆盖</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">### 直接存储数据</span>
 <span class="token builtin class-name">set</span> name joker
@@ -387,10 +387,10 @@ mset name joker age <span class="token number">30</span> blog blog.itcurd.com<sp
 <span class="token builtin class-name">set</span> name itcrud
 getrange name <span class="token number">0</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h2 id="redis数据类型之hash"><a href="#redis数据类型之hash" class="headerlink" title="redis数据类型之hash"></a>redis数据类型之hash</h2><p>hash结构的如图所示：</p>
+<h2 id="3-redis数据类型之hash"><a href="#3-redis数据类型之hash" class="headerlink" title="3. redis数据类型之hash"></a>3. redis数据类型之hash</h2><p>hash结构的如图所示：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/120E885D0F354C96967C2B75723E5407.png"></p>
 <p>hash类型很适合存储一些对象信息。把field变为字段名，把字段值变为filed对应的value值，其中数据的唯一标识放在key上面。</p>
-<h4 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h4><ul>
+<ul>
 <li><p><code>hset key field value</code>：设置值</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hset user:1 name joker<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p><code>hmset key fields values</code>：批量设置值</p>
@@ -416,9 +416,9 @@ getrange name <span class="token number">0</span> <span class="token number">1</
 <li><p><code>hincrbyfloat key field increment</code>：对key的field对应value值做增加的操作，增加的值为increment指定的值，可以是整数或者浮点数</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hincrbyfloat user1 score <span class="token number">1.1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
-<h2 id="redis数据类型之list"><a href="#redis数据类型之list" class="headerlink" title="redis数据类型之list"></a>redis数据类型之list</h2><p>list最常见的是被用为队列，一个key下面可以存储一个有序的字符串队列，单个队列可以存储2的32次方减1个元素。基本的数据结构图如下：</p>
+<h2 id="4-redis数据类型之list"><a href="#4-redis数据类型之list" class="headerlink" title="4. redis数据类型之list"></a>4. redis数据类型之list</h2><p>list最常见的是被用为队列，一个key下面可以存储一个有序的字符串队列，单个队列可以存储2的32次方减1个元素。基本的数据结构图如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/4E653ACFAB5D435EA745B35446FFA8FA.png"></p>
-<h4 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h4><ul>
+<ul>
 <li><p><code>rpush key values</code>：从右侧推入元素，可以同时推入多个</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 从右侧依次推入a、b、c三个元素</span>
 rpush itcrud a b c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
@@ -442,8 +442,9 @@ linsert itcrud before b m<span aria-hidden="true" class="line-numbers-rows"><spa
 </ul>
 <p>说明：关于list的index还是需要说一下，当index计数是从左到右，就是从0开始。但是index计数是从右到左，就是从-1开始。如下图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/A48A700F27444EE3A4F947EAD1166641.png"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>三种数据类型都已经说完了，但是这里还需要补充一个内容，是平时我们项目中使用redis的习惯，以及其他主要的使用习惯的对比。</p>
-<h4 id="三种方案实现用户信息存储"><a href="#三种方案实现用户信息存储" class="headerlink" title="三种方案实现用户信息存储"></a>三种方案实现用户信息存储</h4><ul>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>三种数据类型都已经说完了，但是这里还需要补充一个内容，是平时我们项目中使用redis的习惯，以及其他主要的使用习惯的对比。</p>
+<p><strong>三种方案实现用户信息存储</strong></p>
+<ul>
 <li><p>直接用字符串的方式存储（分散存储），存储方式如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">set</span> user:1:name joker
 <span class="token builtin class-name">set</span> user:1:age <span class="token number">30</span>
@@ -611,7 +612,7 @@ linsert itcrud before b m<span aria-hidden="true" class="line-numbers-rows"><spa
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-07-13T08-00-00',
+        id: '2019-07-13T23-08-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -930,7 +931,7 @@ linsert itcrud before b m<span aria-hidden="true" class="line-numbers-rows"><spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

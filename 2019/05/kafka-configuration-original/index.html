@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-05-28
+                    2019-05-二 12:33:00
                 </div>
                 
 
@@ -344,26 +344,26 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>上一篇了解了Kafka的基本概念，主要是日志、主题、分区、生产者、消费者、消费者群组、偏移量、消息和批次以及Broker和集群。这些基本概念了解以后就是上手自己下载Kafka，安装起来。安装Kafka很简单，就是将下载的压缩包解压出来，首先启动zookeeper，然后再启动Kafka服务。启动zookeeper、Kafka的时候都需要指定配置文件，zookeeper不是本系列文章的主要内容，就不多说，使用默认的zookeeper配置就可以。同样Kafka启动使用默认配置也可以，但是为了学习Kafka，还是需要了解配置文件中各项内容的含义以及在服务中起到的作用。</p>
-<h2 id="服务启动"><a href="#服务启动" class="headerlink" title="服务启动"></a>服务启动</h2><p>服务启动很简单，下载解压不多说。下面直接看命令。</p>
-<h4 id="zookeeper启动"><a href="#zookeeper启动" class="headerlink" title="zookeeper启动"></a>zookeeper启动</h4><ul>
+<h2 id="1-服务启动"><a href="#1-服务启动" class="headerlink" title="1. 服务启动"></a>1. 服务启动</h2><p>服务启动很简单，下载解压不多说。下面直接看命令。</p>
+<h3 id="1-1-zookeeper启动"><a href="#1-1-zookeeper启动" class="headerlink" title="1.1 zookeeper启动"></a>1.1 zookeeper启动</h3><ul>
 <li><p>windows系统</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">zookeeper-server-start.bat <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/config/zookeeper.properties<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p>Linux系统</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">zookeeper-server-start.sh <span class="token punctuation">..</span>/config/zookeeper.properties<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
-<h4 id="Kafka启动"><a href="#Kafka启动" class="headerlink" title="Kafka启动"></a>Kafka启动</h4><ul>
+<h3 id="1-2-Kafka启动"><a href="#1-2-Kafka启动" class="headerlink" title="1.2 Kafka启动"></a>1.2 Kafka启动</h3><ul>
 <li><p>windows系统</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kafka-server-start.bat <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/config/server.properties<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p>Linux系统</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kafka-server-start.sh <span class="token punctuation">..</span>/config/server.properties<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
-<h2 id="配置文件server-properties"><a href="#配置文件server-properties" class="headerlink" title="配置文件server.properties"></a>配置文件server.properties</h2><p>从上面的命令就可以看出来Kafka配置文件所在的位置。接下来依次来说一下Kafka配置文件细节。</p>
-<h4 id="borker-id"><a href="#borker-id" class="headerlink" title="borker.id"></a>borker.id</h4><p>原配置文件中的说明：</p>
+<h2 id="2-配置文件server-properties"><a href="#2-配置文件server-properties" class="headerlink" title="2. 配置文件server.properties"></a>2. 配置文件server.properties</h2><p>从上面的命令就可以看出来Kafka配置文件所在的位置。接下来依次来说一下Kafka配置文件细节。</p>
+<h3 id="2-1-borker-id"><a href="#2-1-borker-id" class="headerlink" title="2.1 borker.id"></a>2.1 borker.id</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># The id of the broker. This must be set to a unique integer for each broker.</span>
 <span class="token key attr-name">broker.id</span><span class="token punctuation">=</span><span class="token value attr-value">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>这个是Broker的Id，必须在每个Broker内保证唯一。其实在单机的情况下<code>broker.id</code>是不用设置的，采用默认即可。如果在集群中，每台机器都需要设置，且要保证唯一。这里说取值是<code>integer</code>，但是需要注意的是大于等于0的整数。</p>
-<h4 id="listeners"><a href="#listeners" class="headerlink" title="listeners"></a>listeners</h4><p>原配置文件中的说明：</p>
+<h3 id="2-2-listeners"><a href="#2-2-listeners" class="headerlink" title="2.2 listeners"></a>2.2 listeners</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># The address the socket server listens on. It will get the value returned from </span>
 <span class="token comment"># java.net.InetAddress.getCanonicalHostName() if not configured.</span>
 <span class="token comment">#   FORMAT:</span>
@@ -373,36 +373,36 @@
 <span class="token key attr-name">listeners</span><span class="token punctuation">=</span><span class="token value attr-value">PLAINTEXT://:9092</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>FORMAT</code>说明了格式，<code>EXAMPLE</code>给出了示例。在配置文件中<code>listeners=PLAINTEXT://:9092</code>默认是被注释的。因为在不配置的时候，这个就是对应的默认值。即使多台机器部署成集群，也不需要做修改。但是如果某台服务器上部署了两个Kafka服务的话，就需要对这个配置进行修改，只要修改端口号，保证唯一即可。</p>
-<h4 id="log-dirs"><a href="#log-dirs" class="headerlink" title="log.dirs"></a>log.dirs</h4><p>原配置文件中的说明：</p>
+<h3 id="2-3-log-dirs"><a href="#2-3-log-dirs" class="headerlink" title="2.3 log.dirs"></a>2.3 log.dirs</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># A comma seperated list of directories under which to store log files</span>
 <span class="token key attr-name">log.dirs</span><span class="token punctuation">=</span><span class="token value attr-value">/tmp/kafka-logs</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>指定存储log文件的位置，这个log并不是我们平时理解的日志文件，而是请求数据，log地址可以同时配置多个，用逗号隔开。这个参数非常重要。上一篇博客里面写到的分区，就是放在这个日志目录下的。每一个分区都会创建一个目录放在日志目录下。</p>
-<h4 id="num-partitions"><a href="#num-partitions" class="headerlink" title="num.partitions"></a>num.partitions</h4><p>原配置文件中的说明：</p>
+<h3 id="2-4-num-partitions"><a href="#2-4-num-partitions" class="headerlink" title="2.4 num.partitions"></a>2.4 num.partitions</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># The default number of log partitions per topic. More partitions allow greater</span>
 <span class="token comment"># parallelism for consumption, but this will also result in more files across</span>
 <span class="token comment"># the brokers.</span>
 <span class="token key attr-name">num.partitions</span><span class="token punctuation">=</span><span class="token value attr-value">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这个用来指定分区的数量的，用在默认创建主题的时候，因为在手动使用命令创建主题的时候是需要指定分区个数的。如果Kafka服务是单机的，毋庸置疑，分区都建在这个服务中的<code>log.dirs</code>目录下。如果Kafka是集群，每个主题的多个分区会均匀的分配到集群中的每个机器上。</p>
-<h4 id="num-recovery-threads-per-data-dir"><a href="#num-recovery-threads-per-data-dir" class="headerlink" title="num.recovery.threads.per.data.dir"></a>num.recovery.threads.per.data.dir</h4><p>原配置文件中的说明：</p>
+<h3 id="2-5-num-recovery-threads-per-data-dir"><a href="#2-5-num-recovery-threads-per-data-dir" class="headerlink" title="2.5 num.recovery.threads.per.data.dir"></a>2.5 num.recovery.threads.per.data.dir</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.</span>
 <span class="token comment"># This value is recommended to be increased for installations with data dirs located in RAID array.</span>
 <span class="token key attr-name">num.recovery.threads.per.data.dir</span><span class="token punctuation">=</span><span class="token value attr-value">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>Kafka是基于磁盘的服务，但是并不是所有的数据都是放在磁盘中的，生产者数据提交到Kafka，数据会在内存中有一份，在消费者消费的时候优先从内存中读取，这样就需要在Kafka关闭的时候把内存中数据刷入到磁盘中、开启的时候把磁盘中的数据读取到内存中，此参数就是用来指定刷入和读取单个log目录的线程数，如果<code>log.dirs</code>配置了4个目录，此参数配置了3，那么对应的线程数总量就是<code>3*4=12</code>个。</p>
-<h4 id="log-retention-hours"><a href="#log-retention-hours" class="headerlink" title="log.retention.hours"></a>log.retention.hours</h4><p>原配置文件中的说明：</p>
+<h3 id="2-6-log-retention-hours"><a href="#2-6-log-retention-hours" class="headerlink" title="2.6 log.retention.hours"></a>2.6 log.retention.hours</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># The minimum age of a log file to be eligible for deletion</span>
 <span class="token key attr-name">log.retention.hours</span><span class="token punctuation">=</span><span class="token value attr-value">168</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>表示Kafka数据在磁盘中保存的时间，超过这个时间就会被清理，默认是7天，需要注意的是这个时间是作用在已经闭合和文件上（什么时候闭合，参考下面的<code>log.segment.bytes</code>参数说明）。此参数还可以使用分钟和毫秒为单位，对应的参数名分别是：<code>log.retention.minutes</code>和<code>log.rentention.ms</code>。</p>
-<h4 id="log-retention-bytes"><a href="#log-retention-bytes" class="headerlink" title="log.retention.bytes"></a>log.retention.bytes</h4><p>原配置文件中的说明：</p>
+<h3 id="2-7-log-retention-bytes"><a href="#2-7-log-retention-bytes" class="headerlink" title="2.7 log.retention.bytes"></a>2.7 log.retention.bytes</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># A size-based retention policy for logs. Segments are pruned from the log as long as the remaining</span>
 <span class="token comment"># segments don't drop below log.retention.bytes.</span>
 <span class="token key attr-name">log.retention.bytes</span><span class="token punctuation">=</span><span class="token value attr-value">1073741824</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>表示Kafka删除log数据的文件上限大小，当log文件达到指定的大小，就会被删除。如果这个参数和<code>log.retention.hours</code>同时配置，以谁先达到条件先执行谁的策略。</p>
-<h4 id="log-segment-bytes"><a href="#log-segment-bytes" class="headerlink" title="log.segment.bytes"></a>log.segment.bytes</h4><p>原配置文件中的说明：</p>
+<h3 id="2-8-log-segment-bytes"><a href="#2-8-log-segment-bytes" class="headerlink" title="2.8 log.segment.bytes"></a>2.8 log.segment.bytes</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># The maximum size of a log segment file. When this size is reached a new log segment will be created.</span>
 <span class="token key attr-name">log.segment.bytes</span><span class="token punctuation">=</span><span class="token value attr-value">1073741824</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -411,7 +411,7 @@
 <p><strong>这里引发一个思考，如果<code>log.retention.bytes</code>配置的值比<code>log.segment.bytes</code>小，这就会导致log文件永远不会出现闭合，因为在闭合之前就会被删掉。又或者说非闭合的log文件即使达到<code>log.retention.bytes</code>也不会被删除，必须等到其闭合才会执行<code>log.retention.bytes</code>指定的删除策略。不管是上面的那一种情况，<code>log.retention.hours</code>即使配置了也是没有作用的。</strong></p>
 <p><strong>这个后续在学习中测试一下，先打个标记在此！</strong></p>
 </blockquote>
-<h4 id="zookeeper-connect"><a href="#zookeeper-connect" class="headerlink" title="zookeeper.connect"></a>zookeeper.connect</h4><p>原配置文件中的说明：</p>
+<h3 id="2-9-zookeeper-connect"><a href="#2-9-zookeeper-connect" class="headerlink" title="2.9 zookeeper.connect"></a>2.9 zookeeper.connect</h3><p>原配置文件中的说明：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># Zookeeper connection string (see zookeeper docs for details).</span>
 <span class="token comment"># This is a comma separated host:port pairs, each corresponding to a zk</span>
 <span class="token comment"># server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".</span>
@@ -420,13 +420,8 @@
 <span class="token key attr-name">zookeeper.connect</span><span class="token punctuation">=</span><span class="token value attr-value">localhost:2181</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这个没有什么多说的，Kafka是依赖zookeeper的，所有需要在配置文件中指定zookeeper的连接地址，如果zookeeper是集群，需要将多台机器都写上，用逗号隔开即可。</p>
-<h4 id="auto-create-topics-enable"><a href="#auto-create-topics-enable" class="headerlink" title="auto.create.topics.enable"></a>auto.create.topics.enable</h4><p>这个参数在配置文件中没有体现，但是其是实际存在。用来指定是否允许自动创建主题，缺省值就是<code>true</code>，如向Kafka中推数据的时候对应<code>topic</code>没有提前创建，Kafka会自动创建。</p>
-<h4 id="message-max-bytes"><a href="#message-max-bytes" class="headerlink" title="message.max.bytes"></a>message.max.bytes</h4><p>这个参数在配置文件中也是不存在的。其表示Kafka能够接收处理的单个消息最大字节数，注意这个值<code>producer</code>和<code>consumer</code>必须保持一致，且不要大于<code>fetch.message.max.bytes</code>属性的值，该值默认是1000000字节，大概900KB~1MB。</p>
-<h2 id="推荐文章"><a href="#推荐文章" class="headerlink" title="推荐文章"></a>推荐文章</h2><ul>
-<li><a href="/2019/05/kafka-basic-concept-original/"><strong>Kafka学习笔记(一)：Kafka基本概念理解</strong></a></li>
-<li><a href="/2019/06/kafka-hello-world-original/"><strong>Kafka学习笔记(三)：Kafka的第一个HelloWorld</strong></a></li>
-<li><a href="/2019/06/kafka-self-serializer-and-partition-original/"><strong>Kafka学习笔记(四)：自定义序列化器、反序列化器、分区器以及分区再均衡策略</strong></a></li>
-</ul>
+<h3 id="2-10-auto-create-topics-enable"><a href="#2-10-auto-create-topics-enable" class="headerlink" title="2.10 auto.create.topics.enable"></a>2.10 auto.create.topics.enable</h3><p>这个参数在配置文件中没有体现，但是其是实际存在。用来指定是否允许自动创建主题，缺省值就是<code>true</code>，如向Kafka中推数据的时候对应<code>topic</code>没有提前创建，Kafka会自动创建。</p>
+<h3 id="2-11-message-max-bytes"><a href="#2-11-message-max-bytes" class="headerlink" title="2.11 message.max.bytes"></a>2.11 message.max.bytes</h3><p>这个参数在配置文件中也是不存在的。其表示Kafka能够接收处理的单个消息最大字节数，注意这个值<code>producer</code>和<code>consumer</code>必须保持一致，且不要大于<code>fetch.message.max.bytes</code>属性的值，该值默认是1000000字节，大概900KB~1MB。</p>
 
                 
             </div>
@@ -574,7 +569,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-05-28T08-00-00',
+        id: '2019-05-28T12-33-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -893,7 +888,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

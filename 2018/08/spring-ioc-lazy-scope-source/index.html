@@ -313,7 +313,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-08-03
+                    2018-08-五 08:00:00
                 </div>
                 
 
@@ -348,8 +348,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>在之前的文章中说过lazy、scope对spring ioc容器的初始化影响(<a href="/2018/06/spring-ioc-lazy-scope/">Spring中Lazy、Scope注解对IOC容器Bean初始化的影响分析</a>)，但是没有具体深入的说，而是通过表面数据判断。另外就是之前也写过spring ioc容器初始化的源码分析(<a href="/2018/07/spring-ioc-base-init-first">Spring IOC容器初始化基础过程源码了解</a>)，这里算是前两篇文章的续集，也是对其补充和做一个总结性的结论。</p>
-<h3 id="情景简介"><a href="#情景简介" class="headerlink" title="情景简介"></a>情景简介</h3><p>这里就直接进入主题，分别使用<code>@Lazy</code>和<code>@Scope("prototype")</code>来修饰两个bean，不会再去做其他的解释，如果这些有不太清晰的，之前博客有写过(<a href="/2018/06/spring-ioc-lazy-scope/">点这里</a>)，文章内简称博客一。另外在说源码的时候，不会对内部代码全说且加注释，主在理解主干逻辑。这个源码分析会结合之前的博客一起(<a href="/2018/07/spring-ioc-base-init-first">点这里</a>)，文章内简称博客二。</p>
-<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><h5 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h5><p>配置类中创建bean的方法：</p>
+<h2 id="1-情景简介"><a href="#1-情景简介" class="headerlink" title="1. 情景简介"></a>1. 情景简介</h2><p>这里就直接进入主题，分别使用<code>@Lazy</code>和<code>@Scope("prototype")</code>来修饰两个bean，不会再去做其他的解释，如果这些有不太清晰的，之前博客有写过(<a href="/2018/06/spring-ioc-lazy-scope/">点这里</a>)，文章内简称博客一。另外在说源码的时候，不会对内部代码全说且加注释，主在理解主干逻辑。这个源码分析会结合之前的博客一起(<a href="/2018/07/spring-ioc-base-init-first">点这里</a>)，文章内简称博客二。</p>
+<h2 id="2-源码分析"><a href="#2-源码分析" class="headerlink" title="2. 源码分析"></a>2. 源码分析</h2><h3 id="2-1-实例代码"><a href="#2-1-实例代码" class="headerlink" title="2.1 实例代码"></a>2.1 实例代码</h3><p>配置类中创建bean的方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//配置类</span>
 <span class="token annotation punctuation">@Configuration</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AnnotationInit</span> <span class="token punctuation">{</span>
@@ -393,7 +393,7 @@
 <p><code>alreadyCreated</code>内创建完成的bean实例信息：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/A1EC8281C39F432B8AA96BC59B7352B1.jpg"></p>
 <p>这里只有单例的bean创建完成并加载进去了，另外的懒加载和非单例bean并没有初始化并加载进来。</p>
-<h4 id="getBean-源码"><a href="#getBean-源码" class="headerlink" title="getBean()源码"></a>getBean()源码</h4><p>这里getBean源码在博客二中都说过，这里直接进入内部的<code>doGetBean()</code>方法，在<code>AbstractBeanFactory</code>类中。</p>
+<h3 id="2-2-getBean-源码"><a href="#2-2-getBean-源码" class="headerlink" title="2.2 getBean()源码"></a>2.2 getBean()源码</h3><p>这里getBean源码在博客二中都说过，这里直接进入内部的<code>doGetBean()</code>方法，在<code>AbstractBeanFactory</code>类中。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">T</span> <span class="token function">doGetBean</span><span class="token punctuation">(</span>
         <span class="token keyword">final</span> <span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> requiredType<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">,</span> <span class="token keyword">boolean</span> typeCheckOnly<span class="token punctuation">)</span>
         <span class="token keyword">throws</span> <span class="token class-name">BeansException</span> <span class="token punctuation">{</span>
@@ -473,12 +473,12 @@
 <p>到这里<code>@Lazy</code>修饰的bean创建时机就很好理解啦。</p>
 <p>同样是上面的代码，<code>mbd.isPrototype()</code>做了是否为非单例的判断，如果判断是单例走的就是这一块代码，代码的内部就不去详细的说了，这里只是做bean的创建，然后将bean返回，并没有将bean存储到容器中。</p>
 <p>到这里<code>@Scope("prototype")</code>修饰的bean创建时机就很好理解啦。</p>
-<h3 id="最终总结"><a href="#最终总结" class="headerlink" title="最终总结"></a>最终总结</h3><h5 id="总结项"><a href="#总结项" class="headerlink" title="总结项"></a>总结项</h5><ul>
+<h2 id="3-最终总结"><a href="#3-最终总结" class="headerlink" title="3. 最终总结"></a>3. 最终总结</h2><h3 id="3-1-总结项"><a href="#3-1-总结项" class="headerlink" title="3.1 总结项"></a>3.1 总结项</h3><ul>
 <li>在<code>ApplictionContext</code>的构造方法中，通过<code>refresh()</code>方法，做IOC整体的初始化，另外将单例非懒加载bean的创建并加入到IOC容器中。</li>
 <li>在使用<code>getBean</code>方法获取单例懒加载bean的时候，和非懒加载bean的逻辑相同，最终创建好的bean也会被放到IOC容器中。</li>
 <li>在使用<code>getBean</code>方法获取非单例bean的时候，只会通过另外的逻辑创建bean，并将bean返回给调用方，最终创建好的bean是不会放到IOC容器中的，每次获取都是新创建的bean。</li>
 </ul>
-<h5 id="图文解释"><a href="#图文解释" class="headerlink" title="图文解释"></a>图文解释</h5><p>用图来解释一下，也许会更清晰一点。</p>
+<h3 id="3-2-图文解释"><a href="#3-2-图文解释" class="headerlink" title="3.2 图文解释"></a>3.2 图文解释</h3><p>用图来解释一下，也许会更清晰一点。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/5044B60099694987A3EDED106534A910.png"></p>
 <p>非单例是虚线部分，看出来，就是绕过了一个<code>getSingleton</code>方法的封装，而是直接调用<code>createBean</code>，为什么绕过，因为在<code>getSingleton</code>封装了向IOC容器里面加入bean的逻辑，而非单例，是每次创建都是最新的。</p>
 
@@ -947,7 +947,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

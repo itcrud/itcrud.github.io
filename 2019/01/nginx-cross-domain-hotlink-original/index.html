@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-01-07
+                    2019-01-一 11:32:00
                 </div>
                 
 
@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    924
+                    928
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>nginx除了三大主功能，还有很多其它实用的功能，系列文章的第五篇就让我们一起看看nginx的防盗链、跨域、缓存、压缩等功能。</p>
-<h3 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h3><p>概念：浏览器拒接执行其它域名下的<code>ajax</code>请求。</p>
+<h2 id="1-跨域"><a href="#1-跨域" class="headerlink" title="1. 跨域"></a>1. 跨域</h2><p>概念：浏览器拒接执行其它域名下的<code>ajax</code>请求。</p>
 <p>概念有点抽象。比如现在通过<code>blog.itcrud.com</code>访问本博客的网站，在返回的js脚本文件里面又发出了ajax请求获取文章列表，但是这个ajax请求的域名不是<code>blog.itcrud.com/list</code>，而是请求的<code>blog.xxx.com/list</code>，这个时候由于域名发生变化，浏览器会根据响应头中的信息来判断是否接受这个域名响应的数据。在没有做跨域配置或其他相关操作的情况下，浏览器都是会拒接接受。</p>
 <p>如何来解决呢？如果让前端和后端配合的话，用<code>jsonp</code>的方式比较多，但是这样貌似有点麻烦。还有一种方式就是通过nginx的配置来解决。这种解决方案称作<code>Cors</code>。</p>
 <p><code>Cors</code>解决方案配置：</p>
@@ -352,7 +352,7 @@
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>通过在响应头上添加<code>Access-Control-Allow-Origin</code>来指定允许跨域请求的域名。上面说浏览器会根据响应头信息判断，就是根据这个属性。</p>
-<h3 id="防盗链"><a href="#防盗链" class="headerlink" title="防盗链"></a>防盗链</h3><p>原创辛辛苦苦画的流程图，写的博客，或者共享的一些资源，被别人拿去直接用，还不标明资源的来源，这是对原创的不尊敬。为了防止这样的事情发生，很多网站都对自己的一些资源文件做了保护，避免被盗用。</p>
+<h2 id="2-防盗链"><a href="#2-防盗链" class="headerlink" title="2. 防盗链"></a>2. 防盗链</h2><p>原创辛辛苦苦画的流程图，写的博客，或者共享的一些资源，被别人拿去直接用，还不标明资源的来源，这是对原创的不尊敬。为了防止这样的事情发生，很多网站都对自己的一些资源文件做了保护，避免被盗用。</p>
 <p>防盗链的思想：</p>
 <ul>
 <li>让资源只能在指定的页面内显示</li>
@@ -367,14 +367,14 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>配置很简单，代码的内容就不多解释了。</p>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>这里的缓存并不是nginx本身的缓存，而是通知浏览器缓存，并给定缓存的时间。</p>
+<h2 id="3-缓存"><a href="#3-缓存" class="headerlink" title="3. 缓存"></a>3. 缓存</h2><p>这里的缓存并不是nginx本身的缓存，而是通知浏览器缓存，并给定缓存的时间。</p>
 <p>配置内容：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">location ~ /<span class="token punctuation">(</span>.*<span class="token punctuation">)</span><span class="token punctuation">\</span>.png$ <span class="token punctuation">{</span> <span class="token comment"># 让浏览器缓存png图片</span>
     expires 10s<span class="token punctuation">;</span> <span class="token comment"># 缓存时间为10秒(单位：s=秒，m=分钟，h=小时，d=天)</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>这个时候如果在同一个页面一直刷新，10秒内获取图片都是走的缓存，不会请求到服务器，节省服务器的带宽。</p>
-<h3 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h3><p>请求页面的时候会有很多如<code>css</code>、<code>js</code>、<code>html</code>等静态文件，这个时候就可以使用压缩的方式，对这些文件进行压缩，让响应出去的数据包更小，速度快，同时节省了带宽资源。</p>
+<h2 id="4-压缩"><a href="#4-压缩" class="headerlink" title="4. 压缩"></a>4. 压缩</h2><p>请求页面的时候会有很多如<code>css</code>、<code>js</code>、<code>html</code>等静态文件，这个时候就可以使用压缩的方式，对这些文件进行压缩，让响应出去的数据包更小，速度快，同时节省了带宽资源。</p>
 <p>配置如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">location ~ /<span class="token punctuation">(</span>.*<span class="token punctuation">)</span><span class="token punctuation">\</span>.<span class="token punctuation">(</span>html<span class="token operator">|</span>css<span class="token operator">|</span>js<span class="token operator">|</span>jpg<span class="token operator">|</span>jpeg<span class="token operator">|</span>gif<span class="token punctuation">)</span>$ <span class="token punctuation">{</span>
     <span class="token function">gzip</span> on<span class="token punctuation">;</span> <span class="token comment"># 开启gzip压缩，默认是off关闭。</span>
@@ -531,7 +531,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-01-07T08-00-00',
+        id: '2019-01-07T11-32-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -842,7 +842,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

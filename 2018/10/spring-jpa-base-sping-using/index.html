@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-10-31
+                    2018-10-三 16:17:00
                 </div>
                 
 
@@ -343,21 +343,21 @@
 <blockquote>
 <p>本次的spring data jpa系列文章都是以spring boot整合为基础的。</p>
 </blockquote>
-<h3 id="Spring-data-JPA和Spring-boot整合"><a href="#Spring-data-JPA和Spring-boot整合" class="headerlink" title="Spring data JPA和Spring boot整合"></a>Spring data JPA和Spring boot整合</h3><p>Spring data JPA的介绍不说了，网上的说明很多，建议可以看一下程序员DD关于JPA的文章：<a target="_blank" rel="noopener" href="http://blog.didispace.com/springbootdata2/">Spring Boot中使用Spring-data-jpa让数据访问更简单、更优雅</a>(为什么不直接转载，毕竟自己写出来的印象才会最深刻)。在整个篇幅中，也有很多内容是借鉴这篇文章的。</p>
-<h5 id="引入的依赖"><a href="#引入的依赖" class="headerlink" title="引入的依赖"></a>引入的依赖</h5><p>和Spring boot整合后的依赖很简单。⬇️</p>
+<h2 id="1-Spring-data-JPA和Spring-boot整合"><a href="#1-Spring-data-JPA和Spring-boot整合" class="headerlink" title="1. Spring data JPA和Spring boot整合"></a>1. Spring data JPA和Spring boot整合</h2><p>Spring data JPA的介绍不说了，网上的说明很多，建议可以看一下程序员DD关于JPA的文章：<a target="_blank" rel="noopener" href="http://blog.didispace.com/springbootdata2/">Spring Boot中使用Spring-data-jpa让数据访问更简单、更优雅</a>(为什么不直接转载，毕竟自己写出来的印象才会最深刻)。在整个篇幅中，也有很多内容是借鉴这篇文章的。</p>
+<h3 id="2-引入的依赖"><a href="#2-引入的依赖" class="headerlink" title="2. 引入的依赖"></a>2. 引入的依赖</h3><p>和Spring boot整合后的依赖很简单。⬇️</p>
 <pre class="line-numbers language-Xml" data-language="Xml"><code class="language-Xml">&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
     &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
 &lt;/dependency&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里没有指定版本号，用过Spring boot的都知道，在引入parent(<code>spring-boot-starter-parent</code>)依赖的时候已经指定了版本号，后续再引入spring boot下的依赖就不需要指定版本号啦。</p>
-<h5 id="数据库配置"><a href="#数据库配置" class="headerlink" title="数据库配置"></a>数据库配置</h5><p>这里写的配置就是最简单的连接方式，其他的细节配置不是本系列博客的讨论点，就不多说了。</p>
+<h3 id="3-数据库配置"><a href="#3-数据库配置" class="headerlink" title="3. 数据库配置"></a>3. 数据库配置</h3><p>这里写的配置就是最简单的连接方式，其他的细节配置不是本系列博客的讨论点，就不多说了。</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.datasource.url</span><span class="token punctuation">=</span><span class="token value attr-value">jdbc:mysql://localhost:3306/test</span>
 <span class="token key attr-name">spring.datasource.username</span><span class="token punctuation">=</span><span class="token value attr-value">root</span>
 <span class="token key attr-name">spring.datasource.password</span><span class="token punctuation">=</span><span class="token value attr-value">root</span>
 <span class="token key attr-name">spring.datasource.driver-class-name</span><span class="token punctuation">=</span><span class="token value attr-value">com.mysql.jdbc.Driver</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="Spring-data-JPA配置"><a href="#Spring-data-JPA配置" class="headerlink" title="Spring data JPA配置"></a>Spring data JPA配置</h5><p>JPA的配置是比较多的，但是大部分保持默认即可，主要的见下面的配置列表：</p>
+<h3 id="4-Spring-data-JPA配置"><a href="#4-Spring-data-JPA配置" class="headerlink" title="4. Spring data JPA配置"></a>4. Spring data JPA配置</h3><p>JPA的配置是比较多的，但是大部分保持默认即可，主要的见下面的配置列表：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.jpa.database</span> <span class="token punctuation">=</span> <span class="token value attr-value">MYSQL #指定数据库的类型</span>
 <span class="token key attr-name">spring.jpa.show-sql</span> <span class="token punctuation">=</span> <span class="token value attr-value">false #是否输出SQL</span>
 <span class="token key attr-name">spring.jpa.properties.hibernate.hbm2ddl.auto</span> <span class="token punctuation">=</span> <span class="token value attr-value">false</span>
@@ -373,7 +373,7 @@
 </ul>
 <p>在这里<code>spring.jpa.properties.hibernate.hbm2ddl.auto</code>使用的值是false，一开始使用的<code>create-drop</code>，但是每次运行都查不到结果，并且数据库里面的表也被删除了，好可怕。使用false直接关闭这个配置功能。</p>
 <p>至此整合已经完成了，没有很多复杂的内容，这就是使用了spring boot带来的便利性，如果是spring mvc的话，还要通过xml配置或者Configuration配置类来设置JPA的相关属性，过程要复杂的很多。</p>
-<h3 id="基本使用示例"><a href="#基本使用示例" class="headerlink" title="基本使用示例"></a>基本使用示例</h3><h5 id="实体类"><a href="#实体类" class="headerlink" title="实体类"></a>实体类</h5><p>在JPA中，指定数据表中的字段和实体类的字段映射关系是通过实体类中的注解实现的。</p>
+<h2 id="5-基本使用示例"><a href="#5-基本使用示例" class="headerlink" title="5. 基本使用示例"></a>5. 基本使用示例</h2><h3 id="5-1-实体类"><a href="#5-1-实体类" class="headerlink" title="5.1 实体类"></a>5.1 实体类</h3><p>在JPA中，指定数据表中的字段和实体类的字段映射关系是通过实体类中的注解实现的。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Entity</span>
 <span class="token annotation punctuation">@Table</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"t_user"</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@EntityListeners</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token class-name">AuditingEntityListener</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -400,7 +400,7 @@
 <li><code>@Column</code>指定当前字段映射到数据中表的字段名（**如果当前的这个字段是数据库的关键字需要在name值上加”[]”，如<code>@Column(name="[index]")</code>**）</li>
 </ul>
 <p>使用了<code>@Entity</code>注解后会默认映射到数据库的表，按照驼峰规则，如类名是<code>CustomerBaseInfo</code>，那么就会对应到表名为<code>customer_base_info</code>表，此时就不需要<code>@Table</code>注解来指定表名了。另外就是<code>@Column</code>注解，是指定字段的映射关系，同样的是可以通过驼峰规则自动匹配。</p>
-<h5 id="Repository接口类"><a href="#Repository接口类" class="headerlink" title="Repository接口类"></a>Repository接口类</h5><p>在Mybatis中是定义Mapper接口类，在JPA中使用的是Repository接口，实现的方式和Mybatis中有所不同。</p>
+<h3 id="5-2-Repository接口类"><a href="#5-2-Repository接口类" class="headerlink" title="5.2 Repository接口类"></a>5.2 Repository接口类</h3><p>在Mybatis中是定义Mapper接口类，在JPA中使用的是Repository接口，实现的方式和Mybatis中有所不同。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserRepository</span> <span class="token keyword">extends</span> <span class="token class-name">JpaRepository</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">,</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>
     
     <span class="token class-name">User</span> <span class="token function">findByUserName</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Param</span><span class="token punctuation">(</span><span class="token string">"userName"</span><span class="token punctuation">)</span><span class="token class-name">String</span> userName<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -419,7 +419,7 @@
 <li>第三个方法是修改表的记录，需要注意的是在修改的时候需要加上<code>@Modifying</code>注解，如果没有这个注解会报错的</li>
 </ul>
 <p>关于JPA的各种实现方式有很多，表达式的写法也有很多。后面更新文章将会细讲。</p>
-<h5 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">SpringJUnit4ClassRunner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<h3 id="5-3-单元测试"><a href="#5-3-单元测试" class="headerlink" title="5.3 单元测试"></a>5.3 单元测试</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">SpringJUnit4ClassRunner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@SpringBootTest</span><span class="token punctuation">(</span>classes <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token class-name">ItcrudJpaApplication</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JPATest</span> <span class="token punctuation">{</span>
 
@@ -594,7 +594,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-10-31T08-00-00',
+        id: '2018-10-31T16-17-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -909,7 +909,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

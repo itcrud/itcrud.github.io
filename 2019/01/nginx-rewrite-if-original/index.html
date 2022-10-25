@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-01-03
+                    2019-01-四 08:00:00
                 </div>
                 
 
@@ -340,8 +340,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>nginx的安装、启动关闭退出重启基本操作命令、<code>nginx.conf</code>配置文件了解、<code>location</code>的<code>root</code>、<code>alias</code>、<code>proxy</code>系列的数据都已经写过了，有兴趣了解的可以看看文末推荐文章。<code>location</code>里面的东西真的很多，也是非常重要的。可以说在配置nginx过程中90%都是在配置location。这一篇文章的目的是写<code>location</code>中的另一个重要部分<code>rewrite</code>，以及内部使用到的if判断语句。废话不多说，开干。</p>
-<h3 id="rewrite规则"><a href="#rewrite规则" class="headerlink" title="rewrite规则"></a>rewrite规则</h3><p><code>rewrite</code>通过正则表达式来匹配<code>location</code>命中的请求，然后根据重定向的<code>url</code>信息和<code>rewrite</code>的<code>flag</code>标识位属性，完成一次完整的重定向操作。</p>
-<h5 id="rewrite语法格式"><a href="#rewrite语法格式" class="headerlink" title="rewrite语法格式"></a>rewrite语法格式</h5><p><code>rewrite</code>语法格式如下：</p>
+<h2 id="1-rewrite规则"><a href="#1-rewrite规则" class="headerlink" title="1. rewrite规则"></a>1. rewrite规则</h2><p><code>rewrite</code>通过正则表达式来匹配<code>location</code>命中的请求，然后根据重定向的<code>url</code>信息和<code>rewrite</code>的<code>flag</code>标识位属性，完成一次完整的重定向操作。</p>
+<h3 id="1-1-rewrite语法格式"><a href="#1-1-rewrite语法格式" class="headerlink" title="1.1 rewrite语法格式"></a>1.1 rewrite语法格式</h3><p><code>rewrite</code>语法格式如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rewrite <span class="token operator">&lt;</span>regex<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>replacement<span class="token operator">&gt;</span> <span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
@@ -350,7 +350,7 @@
 <li><code>replacement</code>：必填，重定向的<code>url</code>信息</li>
 <li><code>flag</code>：非必填，其对应的值由4个，分别是<code>last</code>、<code>break</code>、<code>redirect</code>、<code>permanent</code>。</li>
 </ul>
-<h5 id="flag标志位"><a href="#flag标志位" class="headerlink" title="flag标志位"></a>flag标志位</h5><p><code>flag</code>标识有4个值，下面来一起认识认识这4个值的具体含义和作用。</p>
+<h3 id="1-2-flag标志位"><a href="#1-2-flag标志位" class="headerlink" title="1.2 flag标志位"></a>1.2 flag标志位</h3><p><code>flag</code>标识有4个值，下面来一起认识认识这4个值的具体含义和作用。</p>
 <ul>
 <li><p><code>last</code>：会引发<code>location</code>的重新匹配，这个重新匹配是根据<code>replacement</code>来实现的。存在一个致命的确定就是可能引起死循环，需要谨慎使用。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#1 使用last标志位实现重定向</span>
@@ -411,7 +411,7 @@ location /it <span class="token punctuation">{</span>
 <p><code>redirect</code>和<code>permanent</code>两种方式不会受<code>replacement</code>位置值末尾是否有<code>/</code>影响。</p>
 </li>
 </ul>
-<h3 id="if条件"><a href="#if条件" class="headerlink" title="if条件"></a>if条件</h3><p>nginx里面的<code>if</code>判断不是很复杂，就从格式来说。看基本格式：</p>
+<h2 id="2-if条件"><a href="#2-if条件" class="headerlink" title="2. if条件"></a>2. if条件</h2><p>nginx里面的<code>if</code>判断不是很复杂，就从格式来说。看基本格式：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#1 正则匹配</span>
 if<span class="token punctuation">(</span>变量  操作符  正则表达式<span class="token punctuation">)</span><span class="token punctuation">{</span>
     <span class="token comment"># 做对应的操作</span>
@@ -911,7 +911,7 @@ if<span class="token punctuation">(</span>操作符 变量<span class="token pun
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2022-10-10
+                    2022-10-一 16:33:41
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>对于从事java开发工作的同学来说，spring的事务肯定再熟悉不过了。在某些业务场景下，如果同时有多张表的写入操作，为了保证操作的原子性（要么同时成功，要么同时失败）避免数据不一致的情况，我们一般都会使用spring事务。没错，spring事务大多数情况下，可以满足我们的业务需求。但是今天我要告诉大家的是，它有很多坑，稍不注意事务就会失效。</p>
-<h2 id="1-错误的访问权限"><a href="#1-错误的访问权限" class="headerlink" title="1.错误的访问权限"></a>1.错误的访问权限</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<h2 id="1-错误的访问权限"><a href="#1-错误的访问权限" class="headerlink" title="1. 错误的访问权限"></a>1. 错误的访问权限</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
     <span class="token annotation punctuation">@Autowired</span>
@@ -389,7 +389,7 @@
 
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="2-方法被定义成final的"><a href="#2-方法被定义成final的" class="headerlink" title="2.方法被定义成final的"></a>2.方法被定义成final的</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<h2 id="2-方法被定义成final的"><a href="#2-方法被定义成final的" class="headerlink" title="2. 方法被定义成final的"></a>2. 方法被定义成final的</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
     <span class="token annotation punctuation">@Autowired</span>
@@ -401,7 +401,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>我们可以看到add方法被定义成了final的，这样会导致spring aop生成的代理对象不能复写该方法，而让事务失效。</p>
-<h2 id="3-方法内部调用"><a href="#3-方法内部调用" class="headerlink" title="3.方法内部调用"></a>3.方法内部调用</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<h2 id="3-方法内部调用"><a href="#3-方法内部调用" class="headerlink" title="3. 方法内部调用"></a>3. 方法内部调用</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
     <span class="token annotation punctuation">@Autowired</span>
@@ -419,7 +419,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>我们看到在事务方法add中，直接调用事务方法updateStatus。从前面介绍的内容可以知道，updateStatus方法拥有事务的能力是因为spring aop生成代理了对象，但是这种方法直接调用了this对象的方法，所以updateStatus方法不会生成事务。</p>
-<h2 id="4-当前实体没有被spring管理"><a href="#4-当前实体没有被spring管理" class="headerlink" title="4.当前实体没有被spring管理"></a>4.当前实体没有被spring管理</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//@Service</span>
+<h2 id="4-当前实体没有被spring管理"><a href="#4-当前实体没有被spring管理" class="headerlink" title="4. 当前实体没有被spring管理"></a>4. 当前实体没有被spring管理</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
     <span class="token annotation punctuation">@Autowired</span>
@@ -431,7 +431,7 @@
     <span class="token punctuation">}</span>    
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>我们可以看到UserService类没有定义@Service注解，即没有交给spring管理bean实例，所以它的add方法也不会生成事务。</p>
-<h2 id="5-错误的spring事务传播特性"><a href="#5-错误的spring事务传播特性" class="headerlink" title="5.错误的spring事务传播特性"></a>5.错误的spring事务传播特性</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<h2 id="5-错误的spring事务传播特性"><a href="#5-错误的spring事务传播特性" class="headerlink" title="5. 错误的spring事务传播特性"></a>5. 错误的spring事务传播特性</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
     <span class="token annotation punctuation">@Autowired</span>
@@ -443,8 +443,8 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>我们可以看到add方法的事务传播特性定义成了Propagation.NEVER，这种类型的传播特性不支持事务，如果有事务则会抛异常。只有这三种传播特性才会创建新事务：PROPAGATION_REQUIRED，PROPAGATION_REQUIRES_NEW，PROPAGATION_NESTED。</p>
-<h2 id="6-数据库不支持事务"><a href="#6-数据库不支持事务" class="headerlink" title="6.数据库不支持事务"></a>6.数据库不支持事务</h2><p>msql8以前的版本数据库引擎是支持myslam和innerdb的。我以前也用过，对应查多写少的单表操作，可能会把表的数据库引擎定义成myslam，这样可以提升查询效率。但是，要千万记得一件事情，myslam只支持表锁，并且不支持事务。所以，对这类表的写入操作事务会失效。</p>
-<h2 id="7-自己吞掉了异常"><a href="#7-自己吞掉了异常" class="headerlink" title="7.自己吞掉了异常"></a>7.自己吞掉了异常</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
+<h2 id="6-数据库不支持事务"><a href="#6-数据库不支持事务" class="headerlink" title="6. 数据库不支持事务"></a>6. 数据库不支持事务</h2><p>msql8以前的版本数据库引擎是支持myslam和innerdb的。我以前也用过，对应查多写少的单表操作，可能会把表的数据库引擎定义成myslam，这样可以提升查询效率。但是，要千万记得一件事情，myslam只支持表锁，并且不支持事务。所以，对这类表的写入操作事务会失效。</p>
+<h2 id="7-自己吞掉了异常"><a href="#7-自己吞掉了异常" class="headerlink" title="7. 自己吞掉了异常"></a>7. 自己吞掉了异常</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
 <span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
@@ -461,7 +461,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这种情况下事务不会回滚，因为开发者自己捕获了异常，又没有抛出。事务的AOP无法捕获异常，导致即使出现了异常，事务也不会回滚。</p>
-<h2 id="8-抛出的异常不正确"><a href="#8-抛出的异常不正确" class="headerlink" title="8.抛出的异常不正确"></a>8.抛出的异常不正确</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
+<h2 id="8-抛出的异常不正确"><a href="#8-抛出的异常不正确" class="headerlink" title="8. 抛出的异常不正确"></a>8. 抛出的异常不正确</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
 <span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
@@ -479,7 +479,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这种情况下，开发人员自己捕获了异常，又抛出了异常：Exception，事务也不会回滚。因为spring事务，默认情况下只会回滚RuntimeException（运行时异常）和Error（错误），不会回滚Exception。</p>
-<h2 id="9-多线程调用"><a href="#9-多线程调用" class="headerlink" title="9.多线程调用"></a>9.多线程调用</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
+<h2 id="9-多线程调用"><a href="#9-多线程调用" class="headerlink" title="9. 多线程调用"></a>9. 多线程调用</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
 <span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
@@ -509,7 +509,7 @@
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> resources <span class="token operator">=</span>
       <span class="token keyword">new</span> <span class="token class-name">NamedThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token string">"Transactional resources"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p> 我们说的同一个事务，其实是指同一个数据库连接，只有拥有同一个数据库连接才能同时提交和回滚。如果在不同的线程，拿到的数据库连接肯定是不一样的，所以是不同的事务。</p>
-<h2 id="10-嵌套事务多回滚了"><a href="#10-嵌套事务多回滚了" class="headerlink" title="10.嵌套事务多回滚了"></a>10.嵌套事务多回滚了</h2> <pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
+<h2 id="10-嵌套事务多回滚了"><a href="#10-嵌套事务多回滚了" class="headerlink" title="10. 嵌套事务多回滚了"></a>10. 嵌套事务多回滚了</h2> <pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
     <span class="token annotation punctuation">@Autowired</span>
     <span class="token keyword">private</span> <span class="token class-name">UserMapper</span> userMapper<span class="token punctuation">;</span>
@@ -1014,7 +1014,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

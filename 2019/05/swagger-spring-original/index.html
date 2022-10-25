@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-05-05
+                    2019-05-日 18:55:00
                 </div>
                 
 
@@ -350,7 +350,7 @@
 <li>随着时间推移，不断修改接口实现的时候都必须同步修改接口文档，而文档与代码又处于两个不同的媒介，除非有严格的管理机制，不然很容易导致不一致现象。</li>
 </ul>
 <p>为了解决上面这样的问题，本文将介绍RESTful API的重磅好伙伴Swagger2，它可以轻松的整合到Spring Boot中，并与Spring MVC程序配合组织出强大RESTful API文档。它既可以减少我们创建文档的工作量，同时说明内容又整合入实现代码中，让维护文档和修改代码整合为一体，可以让我们在修改代码逻辑的同时方便的修改文档说明。另外Swagger2也提供了强大的页面测试功能来调试每个RESTful API。</p>
-<h3 id="添加Swagger2依赖"><a href="#添加Swagger2依赖" class="headerlink" title="添加Swagger2依赖"></a>添加Swagger2依赖</h3><p>在<code>pom.xml</code>中加入Swagger2的依赖坐标</p>
+<h2 id="1-添加Swagger2依赖"><a href="#1-添加Swagger2依赖" class="headerlink" title="1. 添加Swagger2依赖"></a>1. 添加Swagger2依赖</h2><p>在<code>pom.xml</code>中加入Swagger2的依赖坐标</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>io.springfox<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>springfox-swagger2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
@@ -362,7 +362,7 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>2.2.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="建立Swagger2配置类"><a href="#建立Swagger2配置类" class="headerlink" title="建立Swagger2配置类"></a>建立Swagger2配置类</h3><p>注意这个配置类需要放到<code>Application.java</code>所在的<strong>同一目录或者子目录下</strong>。</p>
+<h2 id="2-建立Swagger2配置类"><a href="#2-建立Swagger2配置类" class="headerlink" title="2. 建立Swagger2配置类"></a>2. 建立Swagger2配置类</h2><p>注意这个配置类需要放到<code>Application.java</code>所在的<strong>同一目录或者子目录下</strong>。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootConfiguration</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Swagger2Config</span> <span class="token punctuation">{</span>
 
@@ -399,7 +399,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>通过<code>createRestApi</code>函数创建<code>Docket</code>的Bean之后，<code>apiInfo()</code>用来创建该Api的基本信息（这些基本信息会展现在文档页面中）。<code>select()</code>函数返回一个<code>ApiSelectorBuilder</code>实例用来控制哪些接口暴露给Swagger来展现，本例采用指定扫描的包路径来定义，Swagger会扫描该包下所有Controller定义的API，并产生文档内容（除了被<code>@ApiIgnore</code>指定的请求）。另外一般项目可能都会用到请求头信息，这里通过<code>ParameterBuilder</code>构建头信息部分，添加到全局选项参数<code>globalOperationParameters</code>中。</p>
-<h3 id="添加文档内容"><a href="#添加文档内容" class="headerlink" title="添加文档内容"></a>添加文档内容</h3><h5 id="常用注解"><a href="#常用注解" class="headerlink" title="常用注解"></a>常用注解</h5><p>在完成了上述配置后，其实已经可以生成文档内容，但是这样的文档主要针对请求本身，而描述主要来源于函数等命名产生，对用户并不友好，我们通常需要自己增加一些说明来丰富文档内容。需要介绍几个常用的注解。</p>
+<h2 id="3-添加文档内容"><a href="#3-添加文档内容" class="headerlink" title="3. 添加文档内容"></a>3. 添加文档内容</h2><h3 id="3-1-常用注解"><a href="#3-1-常用注解" class="headerlink" title="3.1 常用注解"></a>3.1 常用注解</h3><p>在完成了上述配置后，其实已经可以生成文档内容，但是这样的文档主要针对请求本身，而描述主要来源于函数等命名产生，对用户并不友好，我们通常需要自己增加一些说明来丰富文档内容。需要介绍几个常用的注解。</p>
 <ul>
 <li><code>@Api</code>：放在Controller类上面，对类做整体的介绍，主要使用<code>description</code>、<code>value</code>属性</li>
 <li><code>@ApiOperation</code>：放在接口方法上，用来描述方法的信息，常用属性是<code>value</code>和<code>notes</code></li>
@@ -408,7 +408,7 @@
 <li><code>@ApiImplicitParam</code>：放在接口方法上，用来描述参数信息，常用属性有<code>name</code>、<code>value</code>、<code>required</code>、<code>dataType</code>、<code>paramType</code>。<strong>（此注解不推荐用）</strong></li>
 <li><code>@ApiImplicitParams</code>：放在接口方法上，用来描述参数信息，描述多个字段信息，其内部属性就一个，是<code>@ApiImplicitParam</code>数组，所以常用属性也是<code>name</code>、<code>value</code>、<code>required</code>、<code>dataType</code>、<code>paramType</code>。<strong>（此注解不推荐用）</strong></li>
 </ul>
-<h5 id="Controller代码"><a href="#Controller代码" class="headerlink" title="Controller代码"></a>Controller代码</h5><p>这是个Controller类，里面包含了上面的所有注解。</p>
+<h3 id="3-2-Controller代码"><a href="#3-2-Controller代码" class="headerlink" title="3.2 Controller代码"></a>3.2 Controller代码</h3><p>这是个Controller类，里面包含了上面的所有注解。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Api</span><span class="token punctuation">(</span>description <span class="token operator">=</span> <span class="token string">"UserController"</span><span class="token punctuation">,</span> value <span class="token operator">=</span> <span class="token string">"用户服务接口"</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Controller</span>
 <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/user"</span><span class="token punctuation">)</span>
@@ -462,7 +462,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="涉及的实体类"><a href="#涉及的实体类" class="headerlink" title="涉及的实体类"></a>涉及的实体类</h5><p>实体类包含请求的参数类和响应的参数类。</p>
+<h3 id="3-3-涉及的实体类"><a href="#3-3-涉及的实体类" class="headerlink" title="3.3 涉及的实体类"></a>3.3 涉及的实体类</h3><p>实体类包含请求的参数类和响应的参数类。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
 <span class="token annotation punctuation">@ApiModel</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"用户详细信息"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
@@ -510,7 +510,7 @@
 <p>上面的图是整体页面的数据，再展示一下具体接口内部的细节图。</p>
 <p><img src="D:\itcode\itcrud-file\img/6207DFF47E044C04BA943A5A31B895D5.png"></p>
 <p>上面细节图中的描述信息、字段名称、说明文字等对应到注解上的属性可以对照看一下，不多解释啦。另外要解释一下上面说<code>@ApiImplicitParams</code>和<code>@ApiImplicitParam</code>不推荐用的原因。</p>
-<h5 id="不推荐使用-ApiImplicitParams、-ApiImplicitParam原因"><a href="#不推荐使用-ApiImplicitParams、-ApiImplicitParam原因" class="headerlink" title="不推荐使用@ApiImplicitParams、@ApiImplicitParam原因"></a>不推荐使用<code>@ApiImplicitParams</code>、<code>@ApiImplicitParam</code>原因</h5><ul>
+<h3 id="3-4-不推荐使用-ApiImplicitParams、-ApiImplicitParam原因"><a href="#3-4-不推荐使用-ApiImplicitParams、-ApiImplicitParam原因" class="headerlink" title="3.4 不推荐使用@ApiImplicitParams、@ApiImplicitParam原因"></a>3.4 不推荐使用<code>@ApiImplicitParams</code>、<code>@ApiImplicitParam</code>原因</h3><ul>
 <li>当我们接收参数是对象的时候，使用<code>@ApiImplicitParam</code>和参数对象类上的<code>@ApiModel</code>系列的注解有兼容性问题，会打乱swagger上的显示，如下两张对比图：</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/AEFC135B693D472FADAA088CE7361967.png"></p>
@@ -538,7 +538,7 @@
 <li><code>form</code>：form表单，不解释</li>
 </ol>
 <p>从上面的两个例子，加上对<code>@ApiImplicitParam</code>的巨坑参数<code>paramType</code>的理解，就可以知道为什么这个注解不推荐使用啦。但是在请求参数比较多，而且零散的时候可以考虑使用一下，但是需要注意避坑即可。</p>
-<h3 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h3><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-1">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-1</a></p>
+<h2 id="4-源代码"><a href="#4-源代码" class="headerlink" title="4. 源代码"></a>4. 源代码</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-1">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-1</a></p>
 
                 
             </div>
@@ -682,7 +682,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-05-05T08-00-00',
+        id: '2019-05-05T18-55-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -993,7 +993,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

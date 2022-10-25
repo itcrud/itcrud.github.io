@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-09-15
+                    2018-09-六 22:21:00
                 </div>
                 
 
@@ -341,11 +341,11 @@
             <div id="articleContent">
                 <p>建造者模式是Java基本设计模式的一种，是经常被使用到的。比如在开发过程中经常使用的lambok插件，在实体类上加上<code>@Builder</code>就可以使用建造者模式方式构建实体对象。这mybatis中同样也使用到了这种设计模式，但是不是使用的lambok插件。在读取配置文件的时候，需要读取各种类型的标签，让构造器和标签对应，可以将标签的属性及相关的值放到构建器中，然后由构建器构建一个对象，这个对象中封装了标签的信息，提供后续使用。</p>
 <p>其实里面还使用到装饰者模式，这篇文章先不说，后续出文再具体说装饰者模式。可以剧透一下，在二级缓存中，使用装饰器模式给二级缓存加各种功能。</p>
-<h3 id="mybatis读取配置"><a href="#mybatis读取配置" class="headerlink" title="mybatis读取配置"></a>mybatis读取配置</h3><p>涉及到mybatis的配置文件不多，主要就是<code>mybatis-config.xml</code>核心配置文件，然后就是<code>mapper.xml</code>映射文件。mybatis在读取配置文件的时候也是按照这个顺序，先读核心配置文件，将核心配置文件中的信息封装到核心配置类<code>Configuration</code>中。核心配置文件中配置了<code>mapper.xml</code>的位置，然后根据配置的路径读取<code>mapper.xml</code>。整个过程思路很清晰，其中涉及到三个核心的类<code>XMLConfigBuilder</code>、<code>XMLMapperBuilder</code>、<code>XMLStatementBuilder</code>。来看下面的图。</p>
+<h2 id="1-mybatis读取配置"><a href="#1-mybatis读取配置" class="headerlink" title="1. mybatis读取配置"></a>1. mybatis读取配置</h2><p>涉及到mybatis的配置文件不多，主要就是<code>mybatis-config.xml</code>核心配置文件，然后就是<code>mapper.xml</code>映射文件。mybatis在读取配置文件的时候也是按照这个顺序，先读核心配置文件，将核心配置文件中的信息封装到核心配置类<code>Configuration</code>中。核心配置文件中配置了<code>mapper.xml</code>的位置，然后根据配置的路径读取<code>mapper.xml</code>。整个过程思路很清晰，其中涉及到三个核心的类<code>XMLConfigBuilder</code>、<code>XMLMapperBuilder</code>、<code>XMLStatementBuilder</code>。来看下面的图。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/89F36ACF1F5B44249C3F18343F8D1C69.png"></p>
 <p>从图里面可以看的出来，就是将相关配置文件的信息经过封装，然后统一放到<code>Configuration</code>配置类中。</p>
-<h3 id="XMLConfigBuilder源码"><a href="#XMLConfigBuilder源码" class="headerlink" title="XMLConfigBuilder源码"></a>XMLConfigBuilder源码</h3><p>接下来看<code>XMLConfigBuilder</code>加载核心配置文件的代码，这个过程其实不难，流程也很清晰。</p>
-<h5 id="parse"><a href="#parse" class="headerlink" title="parse"></a>parse</h5><p><code>parse</code>方法是入口，在配置文件被读入到<code>parser</code>解析器后，会调用这个方法开始解析工作。</p>
+<h2 id="2-XMLConfigBuilder源码"><a href="#2-XMLConfigBuilder源码" class="headerlink" title="2. XMLConfigBuilder源码"></a>2. XMLConfigBuilder源码</h2><p>接下来看<code>XMLConfigBuilder</code>加载核心配置文件的代码，这个过程其实不难，流程也很清晰。</p>
+<h3 id="2-1-parse"><a href="#2-1-parse" class="headerlink" title="2.1 parse"></a>2.1 parse</h3><p><code>parse</code>方法是入口，在配置文件被读入到<code>parser</code>解析器后，会调用这个方法开始解析工作。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//配置类开始解析的方法</span>
 <span class="token keyword">public</span> <span class="token class-name">Configuration</span> <span class="token function">parse</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>parsed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -359,7 +359,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>上面这个方法首先是判断当前配置文件是否已经在解析了，保证同一个文件不会被重复的解析。</p>
-<h5 id="parseConfiguration"><a href="#parseConfiguration" class="headerlink" title="parseConfiguration"></a>parseConfiguration</h5><p>这里就是开始真正的解析配置文件中的内容啦。</p>
+<h3 id="2-2-parseConfiguration"><a href="#2-2-parseConfiguration" class="headerlink" title="2.2 parseConfiguration"></a>2.2 parseConfiguration</h3><p>这里就是开始真正的解析配置文件中的内容啦。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//解析mybatis核心配置文件mybatis-config.xml，configuration是此文件的根目录</span>
 <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">parseConfiguration</span><span class="token punctuation">(</span><span class="token class-name">XNode</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">try</span> <span class="token punctuation">{</span>
@@ -394,7 +394,7 @@
 
 <p>流程很清晰，在之前的基础文章中也写过在核心配置文件中的主要标签，这里基本都体现到了，就是对这些主要的标签进行依次的解析。（核心标签的的文章可以参考这篇文章：<a href="/2018/08/orm-mybatis-basic-001">ORM框架之Mybatis：基础配置</a>）</p>
 <p>这个方法的流程就不介绍了，上面的源码中也有注释。</p>
-<h5 id="settingsAsProperties"><a href="#settingsAsProperties" class="headerlink" title="settingsAsProperties"></a>settingsAsProperties</h5><p>这里是<code>mybatis-config.xml</code>核心配置文件中<code>&lt;settings&gt;</code>标签的解析。</p>
+<h3 id="2-3-settingsAsProperties"><a href="#2-3-settingsAsProperties" class="headerlink" title="2.3 settingsAsProperties"></a>2.3 settingsAsProperties</h3><p>这里是<code>mybatis-config.xml</code>核心配置文件中<code>&lt;settings&gt;</code>标签的解析。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Properties</span> <span class="token function">settingsAsProperties</span><span class="token punctuation">(</span><span class="token class-name">XNode</span> context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>context <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -426,7 +426,7 @@
 
 <p>遍历子标签，读取子标签的<code>name</code>和<code>value</code>属性，然后封装。没有复杂的逻辑。</p>
 <p>到这里这个<code>&lt;settings&gt;</code>标签下的所有内容就都读取成功啦。</p>
-<h5 id="settingsElement"><a href="#settingsElement" class="headerlink" title="settingsElement"></a>settingsElement</h5><p>这个方法很实用的，平时在开发过程中都会设置各种配置参数，配置参数也有对应的默认值，什么时候需要配置，什么时候不需要配置使用默认就好。都是在这里面啦。</p>
+<h3 id="2-4-settingsElement"><a href="#2-4-settingsElement" class="headerlink" title="2.4 settingsElement"></a>2.4 settingsElement</h3><p>这个方法很实用的，平时在开发过程中都会设置各种配置参数，配置参数也有对应的默认值，什么时候需要配置，什么时候不需要配置使用默认就好。都是在这里面啦。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//将settings标签的子标签配置信息设置到Configuration内，部分配置信息有对应的默认值</span>
 <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">settingsElement</span><span class="token punctuation">(</span><span class="token class-name">Properties</span> props<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
     <span class="token comment">//autoMappingBehavior,默认值PARTIAL</span>
@@ -633,7 +633,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-09-15T08-00-00',
+        id: '2018-09-15T22-21-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -944,7 +944,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

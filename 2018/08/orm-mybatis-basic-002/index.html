@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-08-24
+                    2018-08-五 16:33:00
                 </div>
                 
 
@@ -346,8 +346,7 @@
                 <p>上一篇博客写的是Mybatis基础配置文件（<a href="/2018/08/orm-mybatis-basic-001">ORM框架之Mybatis：基础配置</a>）。这一篇我们来聊一聊Mybatis的映射文件。</p>
 <p>Mybatis的mapper映射文件中有很多常用的标签，如<code>insert</code>、<code>update</code>、<code>delete</code>、<code>select</code>、<code>resultMap</code>、<code>sql</code>等，也会有很多属性，如<code>resultType</code>、<code>reusltMap</code>、<code>parameterType</code>、<code>parameterMap</code>、<code>useGeneratedKeys</code>、<code>keyProperty</code>等。相信这些在项目都有使用，但是这里还是要梳理一下(知识体系都是在不断梳理中完善和获得新知)。</p>
 <p>下面就直入主题啦！</p>
-<p>###insert标签 </p>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>batchInsert<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.zdydoit.dao.model.User<span class="token punctuation">"</span></span> <span class="token attr-name">useGeneratedKeys</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">keyProperty</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<h2 id="1-insert标签"><a href="#1-insert标签" class="headerlink" title="1. insert标签"></a>1. insert标签</h2><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>batchInsert<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.zdydoit.dao.model.User<span class="token punctuation">"</span></span> <span class="token attr-name">useGeneratedKeys</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">keyProperty</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
         insert into t_user
         (
             user_name,
@@ -362,7 +361,7 @@
          )
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="标签的属性"><a href="#标签的属性" class="headerlink" title="标签的属性"></a>标签的属性</h5><table>
+<h3 id="1-1-标签的属性"><a href="#1-1-标签的属性" class="headerlink" title="1.1 标签的属性"></a>1.1 标签的属性</h3><table>
 <thead>
 <tr>
 <th>属性</th>
@@ -410,7 +409,7 @@
 <td>如果配置了 databaseIdProvider，MyBatis 会加载所有的不带 databaseId 或匹配当前 databaseId 的语句；如果带或者不带的语句都有，则不带的会被忽略。</td>
 </tr>
 </tbody></table>
-<h5 id="主要属性说明"><a href="#主要属性说明" class="headerlink" title="主要属性说明"></a>主要属性说明</h5><p><code>insert</code>标签本身没有什么可说的，这里来主要的说明一下属性。</p>
+<h3 id="1-2-主要属性说明"><a href="#1-2-主要属性说明" class="headerlink" title="1.2 主要属性说明"></a>1.2 主要属性说明</h3><p><code>insert</code>标签本身没有什么可说的，这里来主要的说明一下属性。</p>
 <ul>
 <li><code>parameterType</code>参数类型，指定传入参数的类型，这里使用的全类名，同样也可以使用别名(需要在配置文件配置别名规则)。</li>
 <li><code>useGeneratedKeys</code>使用自动生成主键，这个属性要和<code>keyProperty</code>配合使用，用来将插入数据自动增长的id返回回来，这里还有另一种使用方式。如下：</li>
@@ -427,12 +426,12 @@
 <p>变化是在<code>order</code>上和SQL语句上。<code>order</code>字段，当在MySQL数据的时候，是先做数据插入再返回对应的id，当是Oracle时，是先拿到id，再做数据的插入，这是不同数据库执行的一种机制。</p>
 <p><code>insert</code>标签下面还有类似姊妹的属性，<code>parameterMap</code>是<code>parameterType</code>的姊妹属性，但是实际使用是有很大差别的。在传入的参数使用Map封装的时候，就使用<code>parameterMap</code>来指定，在获取的时候，直接写Map中的key就可以。但是这种方式已经很少有用的了，原因有很多。第一代码冗余，在正常的开发习惯中，涉及到多参数，业务代码中都是使用实体对象来传递，如果这里再使用Map，还要有一段实体对象转成Map集合的代码；第二维护性差，这种写法存在一定的耦合性，在别人熟悉代码的过程中很痛苦，只看接口完全不懂这个接口传入的参数，还要去看调用这个接口的业务代码，才能了解字段Map集合中到底封装的是什么内容。所以这里只是提一下，知道就好，基本没人用。</p>
 <p><code>insert</code>其他属性，<code>statementType</code>是用来指定sql执行的statement类型，这个如果对原生JDBC代码有了解的可以知道，常用的statement有<code>PreparedStatement</code>、<code>Statement</code>、<code>CallableStatement</code>，这里就是指定使用哪一个。提供的可选值有三个<code>CALLABLE</code>、<code>PREPARED</code>、<code>STATEMENT</code>。有兴趣的可以研究一下这个字段，这里不多说，采用默认的（<code>PREPARED</code>）就好。其他的后面再总结。</p>
-<h3 id="select标签"><a href="#select标签" class="headerlink" title="select标签"></a>select标签</h3><p>在SQL语句里面，<code>select</code>标签可以说是占据了半壁江山之多，而且<code>select</code>标签的属性也是最多的。</p>
+<h2 id="2-select标签"><a href="#2-select标签" class="headerlink" title="2. select标签"></a>2. select标签</h2><p>在SQL语句里面，<code>select</code>标签可以说是占据了半壁江山之多，而且<code>select</code>标签的属性也是最多的。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>11<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.zdydoit.dao.model.User<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
     select * from t_user where id = #{id}
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="标签的属性-1"><a href="#标签的属性-1" class="headerlink" title="标签的属性"></a>标签的属性</h5><table>
+<h3 id="2-1-标签的属性"><a href="#2-1-标签的属性" class="headerlink" title="2.1 标签的属性"></a>2.1 标签的属性</h3><table>
 <thead>
 <tr>
 <th>属性</th>
@@ -496,9 +495,9 @@
 <td>这个设置仅对多结果集的情况适用，它将列出语句执行后返回的结果集并每个结果集给一个名称，名称是逗号分隔的。</td>
 </tr>
 </tbody></table>
-<h5 id="主要属性说明-1"><a href="#主要属性说明-1" class="headerlink" title="主要属性说明"></a>主要属性说明</h5><p><code>parameterType</code>和<code>parameterMap</code>与在<code>insert</code>标签内使用的方法是相同的。</p>
+<h3 id="2-2-主要属性说明"><a href="#2-2-主要属性说明" class="headerlink" title="2.2 主要属性说明"></a>2.2 主要属性说明</h3><p><code>parameterType</code>和<code>parameterMap</code>与在<code>insert</code>标签内使用的方法是相同的。</p>
 <p><code>resultType</code>结果类型，这里使用全类名，也是可以同<code>parameterType</code>一样用别名，需要在配置文件中配置别名规则。这里需要详细说的是其姊妹属性<code>resultMap</code>。</p>
-<h3 id="resultMap标签"><a href="#resultMap标签" class="headerlink" title="resultMap标签"></a>resultMap标签</h3><p>这个标签可以用的很复杂，也可以用的很简单，这篇文章是偏重了解基础，所以只做简单的说明，后期在深入的时候再具体说其复杂的用法。</p>
+<h2 id="3-resultMap标签"><a href="#3-resultMap标签" class="headerlink" title="3. resultMap标签"></a>3. resultMap标签</h2><p>这个标签可以用的很复杂，也可以用的很简单，这篇文章是偏重了解基础，所以只做简单的说明，后期在深入的时候再具体说其复杂的用法。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resultMap</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>base_column_map<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.zdydoit.dao.model.User<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>user_name<span class="token punctuation">"</span></span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userName<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
@@ -519,7 +518,7 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resultMap</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>因为在给实体类参数设值的时候，首先是要创建对象，mybatis默认的是根据无参构造方法创建，但是如果这个实体类中有有参构造方法，且没有手写无参构造，就会导致mybatis创建对象失败。所以这里提供了构造方法的标签，用来指定用那个构造方法创建对象。</p>
-<h3 id="sql标签"><a href="#sql标签" class="headerlink" title="sql标签"></a>sql标签</h3><p>sql标签很简单，就是做SQL公共片段的抽取，就像java里面的公共代码抽取一样。如下：</p>
+<h2 id="4-sql标签"><a href="#4-sql标签" class="headerlink" title="4. sql标签"></a>4. sql标签</h2><p>sql标签很简单，就是做SQL公共片段的抽取，就像java里面的公共代码抽取一样。如下：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sql</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>base_column<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
     id,user_name,phone,age
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>sql</span><span class="token punctuation">&gt;</span></span>
@@ -533,7 +532,7 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这样抽取以后就不需要重复的写列名了，是一种优化配置文件一种很好的方式，也很好理解。</p>
-<h3 id="udpate、delete标签"><a href="#udpate、delete标签" class="headerlink" title="udpate、delete标签"></a>udpate、delete标签</h3><p>这两个标签没有太多的内容可说的，所用到的属性上面也都说过和列出，因为重复的东西就没有多说。</p>
+<h2 id="5-udpate、delete标签"><a href="#5-udpate、delete标签" class="headerlink" title="5. udpate、delete标签"></a>5. udpate、delete标签</h2><p>这两个标签没有太多的内容可说的，所用到的属性上面也都说过和列出，因为重复的东西就没有多说。</p>
 
                 
             </div>
@@ -681,7 +680,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-08-24T08-00-00',
+        id: '2018-08-24T16-33-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -996,7 +995,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

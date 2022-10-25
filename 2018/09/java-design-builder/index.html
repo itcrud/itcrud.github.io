@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-09-29
+                    2018-09-六 08:00:00
                 </div>
                 
 
@@ -340,12 +340,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>建造者模式是一种常用的设计模式，你可能每时每刻都在用只是你没有察觉到。比如我们常用的lambok内的<code>@Builder</code>注解，就是使用了建造者模式，业务代码中只要调用<code>.builder</code>方法，然后设置属性，最后调用<code>.build</code>就得到了最终的目标对象。这篇文章首先讲建造者模式内的几种角色，以及他们之间是如何配合完成一个对象的创建，最后会将lambok实现建造者模式的代码写出来。这种代码其实很简单，在日常开发过程中都是可以使用的。</p>
-<h3 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h3><p>在建造者模式中有几个重要的角色，一个是指挥者、一个是建造者，最后就是具体需要建造的对象。</p>
+<h2 id="1-建造者模式"><a href="#1-建造者模式" class="headerlink" title="1. 建造者模式"></a>1. 建造者模式</h2><p>在建造者模式中有几个重要的角色，一个是指挥者、一个是建造者，最后就是具体需要建造的对象。</p>
 <p><strong>指挥者</strong>：就是指挥建造者来实现一系列的流程建造一个对象。</p>
 <p><strong>建造者</strong>：通过指挥者的调度，依次执行逻辑代码，最终一步一步的将产品建造出来。</p>
 <p><strong>产品对象</strong>：也就是需要建造的对象。</p>
 <p>概念大概知道了，下面通过代码体现出来。</p>
-<h5 id="产品对象"><a href="#产品对象" class="headerlink" title="产品对象"></a>产品对象</h5><p>这里以炒菜为例，现在客户分别需要两个当地特色菜品，其中醋溜土豆丝只有厨师张三会做，油焖茄子只有李四会做。客户来了以后和点菜的服务员说了，他就想吃这两样特色菜，此时服务员将菜单交给大厨师傅，师傅开始指挥张三和李四开始做菜。</p>
+<h3 id="1-1-产品对象"><a href="#1-1-产品对象" class="headerlink" title="1.1 产品对象"></a>1.1 产品对象</h3><p>这里以炒菜为例，现在客户分别需要两个当地特色菜品，其中醋溜土豆丝只有厨师张三会做，油焖茄子只有李四会做。客户来了以后和点菜的服务员说了，他就想吃这两样特色菜，此时服务员将菜单交给大厨师傅，师傅开始指挥张三和李四开始做菜。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Product</span><span class="token punctuation">{</span>
     
 <span class="token punctuation">}</span>
@@ -373,7 +373,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>需要创建的两个产品有了，但是还要具体的建造者。</p>
-<h5 id="建造者"><a href="#建造者" class="headerlink" title="建造者"></a>建造者</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Builder</span><span class="token punctuation">{</span>
+<h3 id="1-2-建造者"><a href="#1-2-建造者" class="headerlink" title="1.2 建造者"></a>1.2 建造者</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Builder</span><span class="token punctuation">{</span>
     <span class="token keyword">void</span> <span class="token function">addSalt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">void</span> <span class="token function">addOil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token class-name">Product</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -399,7 +399,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>建造者有了，需要一个指挥者，这里的指挥者就相当于张三和李四的大厨师傅。</p>
+<h3 id="1-3-指挥者"><a href="#1-3-指挥者" class="headerlink" title="1.3 指挥者"></a>1.3 指挥者</h3><p>建造者有了，需要一个指挥者，这里的指挥者就相当于张三和李四的大厨师傅。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//指挥者</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Director</span><span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doit</span><span class="token punctuation">(</span><span class="token class-name">Builder</span> builder<span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -429,7 +429,7 @@
 <p>一般在什么时候能用到这个呢，之前在说mybatis源码的时候，就用到建造者模式，这个说起来就点多了，为了更好的说明清楚，来说一个实际开发中能够经常用到的。</p>
 <p>前端传入的参数一般都是用DTO来接收，但是最终入库的时候是需要转换成对应的实体对象，恰恰DTO中接收参数的字段和实际实体类的字段名有出入，这个转换过程就可以用到建造者模式。因为直接在业务代码中写冗长的转换代码实在是不太妥。</p>
 <p>在实体类中创建一个建造者内部类，然后将DTO传入给建造者，有建造者完成构建并给出对应的实体对象。</p>
-<h3 id="建造者的实际运用"><a href="#建造者的实际运用" class="headerlink" title="建造者的实际运用"></a>建造者的实际运用</h3><p>接上面的DTO的介绍来写一个对象转换中使用到建造者模式。</p>
+<h2 id="2-建造者的实际运用"><a href="#2-建造者的实际运用" class="headerlink" title="2. 建造者的实际运用"></a>2. 建造者的实际运用</h2><p>接上面的DTO的介绍来写一个对象转换中使用到建造者模式。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token class-name">String</span> userName<span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token class-name">String</span> mobile<span class="token punctuation">;</span>
@@ -918,7 +918,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

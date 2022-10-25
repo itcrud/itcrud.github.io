@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-09-19
+                    2018-09-三 16:22:00
                 </div>
                 
 
@@ -340,8 +340,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>mybatis使用在日常开发中很简单，基本没有门槛，都是和Spring直接集成，然后把之前的一些配置copy到spring的配置文件中就可以使用。具体mybatis的配置文件加载代码，已经SqlSession执行的细节都被封装到了框架中，符合面向对象编程，但是存在一个问题就是那些细节的代码慢慢都被遗忘。写这个博客就是记录一下，以后忘记可以看看。仅此而已。</p>
-<h3 id="Mybatis配置文件的读取和SqlSessionFactory的构建"><a href="#Mybatis配置文件的读取和SqlSessionFactory的构建" class="headerlink" title="Mybatis配置文件的读取和SqlSessionFactory的构建"></a>Mybatis配置文件的读取和SqlSessionFactory的构建</h3><p>在mybatis中加载的基本的顺序是读取配置文件，然后构建<code>SqlSessionFactory</code>，通过<code>SqlSessionFactory</code>获取<code>Session</code>实例，最后通过<code>Session</code>实例获取到对应Mapper的代理对象，通过代理对象来调用CRUD方法执行数据的操作。</p>
-<h5 id="SqlSessionFactory构建"><a href="#SqlSessionFactory构建" class="headerlink" title="SqlSessionFactory构建"></a>SqlSessionFactory构建</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
+<h2 id="1-Mybatis配置文件的读取和SqlSessionFactory的构建"><a href="#1-Mybatis配置文件的读取和SqlSessionFactory的构建" class="headerlink" title="1. Mybatis配置文件的读取和SqlSessionFactory的构建"></a>1. Mybatis配置文件的读取和SqlSessionFactory的构建</h2><p>在mybatis中加载的基本的顺序是读取配置文件，然后构建<code>SqlSessionFactory</code>，通过<code>SqlSessionFactory</code>获取<code>Session</code>实例，最后通过<code>Session</code>实例获取到对应Mapper的代理对象，通过代理对象来调用CRUD方法执行数据的操作。</p>
+<h3 id="1-1-SqlSessionFactory构建"><a href="#1-1-SqlSessionFactory构建" class="headerlink" title="1.1 SqlSessionFactory构建"></a>1.1 SqlSessionFactory构建</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">SqlSessionFactory</span> sqlSessionFactory<span class="token punctuation">;</span>
     <span class="token comment">//加载xml文件</span>
@@ -369,7 +369,7 @@
 
 <p>先将Mybatis核心配置文件<code>mybatis-config.xml</code>读取到流中，然后交给<code>SqlSessionFactoryBuilder</code>构建<code>SqlSessionFactory</code>对象，在构建前会对核心配置文件进行一系列的分析，并将分析的内容放到<code>Configuration</code>实例中，分析的过程之前的博客中有，可以翻一翻参考一下。</p>
 <p>到这里是<code>sqlSessionFactory</code>构建完成，接下来看如何使用。</p>
-<h5 id="SqlSession、Mapper的获取以及使用"><a href="#SqlSession、Mapper的获取以及使用" class="headerlink" title="SqlSession、Mapper的获取以及使用"></a>SqlSession、Mapper的获取以及使用</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<h3 id="1-2-SqlSession、Mapper的获取以及使用"><a href="#1-2-SqlSession、Mapper的获取以及使用" class="headerlink" title="1.2 SqlSession、Mapper的获取以及使用"></a>1.2 SqlSession、Mapper的获取以及使用</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//获取SqlSession</span>
     <span class="token class-name">SqlSession</span> sqlSession <span class="token operator">=</span> sqlSessionFactory<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">//获取UserMapper</span>
@@ -383,7 +383,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里实现的逻辑的方法不难，关键是在于<code>SqlSession</code>和<code>UserMapper</code>的获取，这里和大家一起看看源码。</p>
-<h3 id="SqlSession获取源码"><a href="#SqlSession获取源码" class="headerlink" title="SqlSession获取源码"></a>SqlSession获取源码</h3><p>在<code>SqlSessionFactory</code>是个接口，其实现是<code>DefaultSqlSessionFactory</code>，在这个类中有各种获取<code>SqlSession</code>实例的方法，根据上面的实例代码，找到<code>openSession</code>方法的实现。</p>
+<h2 id="2-SqlSession获取源码"><a href="#2-SqlSession获取源码" class="headerlink" title="2. SqlSession获取源码"></a>2. SqlSession获取源码</h2><p>在<code>SqlSessionFactory</code>是个接口，其实现是<code>DefaultSqlSessionFactory</code>，在这个类中有各种获取<code>SqlSession</code>实例的方法，根据上面的实例代码，找到<code>openSession</code>方法的实现。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">SqlSession</span> <span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
    <span class="token comment">/**
    * configuration中获取默认的Executor执行器的类型
@@ -427,7 +427,7 @@
 <p>在<code>mybatis-config.xml</code>核心配置文件中有个environment标签，这个标签中会配置相应的数据源信息和事务管理器的信息。在源码中将这些参数传入到事务管理器工厂中，构建工厂对象<code>TransactionFactory</code>，接着调用其创建事务管理器对象的方法。到这里事务管理器实例创建完成。</p>
 <p>然后根据构建好的事务管理器和执行器类型去构建执行器对象，执行器对象的类型共有三种，从<code>ExecutorType</code>枚举类中可以看到，分别是是<code>BATCH</code>批处理模式，<code>REUSE</code>复用模式，<code>SIMPLE</code>简单模式。在<code>newExecutor</code>方法中对执行器类型做了判断，当不是批处理或者复用模式的时候就默认使用简单模式，当然后面还有对<code>cacheEnabled</code>的判断，如果支持缓存，还需要对上面的<code>SimpleExecutor</code>包装一层，然后就是对整个执行链的包装。至此执行器构建完成。(执行器构建的过程使用的是装饰器模式)</p>
 <p>事务管理器、执行器构建结束，使用<code>Configuration</code>、执行器和是否自动提交参数，构建<code>SqlSession</code>对象，这个过程很简单，就是将这些参数设置到<code>SqlSession</code>对象成员变量中。</p>
-<h3 id="Mapper获取源码"><a href="#Mapper获取源码" class="headerlink" title="Mapper获取源码"></a>Mapper获取源码</h3><p>Mapper本身只是一个接口，在从<code>SqlSession</code>对象中<code>get</code>获取对象的时候，是使用的动态代理，在mybatis源码中有一个模块叫做binding，在这里面有具体做动态代理的实现。看源码：</p>
+<h2 id="3-Mapper获取源码"><a href="#3-Mapper获取源码" class="headerlink" title="3. Mapper获取源码"></a>3. Mapper获取源码</h2><p>Mapper本身只是一个接口，在从<code>SqlSession</code>对象中<code>get</code>获取对象的时候，是使用的动态代理，在mybatis源码中有一个模块叫做binding，在这里面有具体做动态代理的实现。看源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">T</span> <span class="token function">getMapper</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//通过configuration构建Mapper实例</span>
     <span class="token keyword">return</span> configuration<span class="token punctuation">.</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span><span class="token function">getMapper</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -449,7 +449,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>通过这里就完成了Mapper代理对象的创建，并返回。</p>
-<h3 id="insert方法调用"><a href="#insert方法调用" class="headerlink" title="insert方法调用"></a>insert方法调用</h3><p>在<code>mapper.xml</code>文件的结果过程中，有对应的方法解析，每个方法解析后会对应有一个<code>MappedStatement</code>。最终会调用到执行器<code>Executor</code>中的<code>update</code>方法。整个执行的过程相对比较复杂一点，这里就不贴出源码，有兴趣的可以看一下，篇幅有限，在后续的博客文章里面再详细说<code>Executor</code>执行各种方法的方式和流程。</p>
+<h2 id="4-insert方法调用"><a href="#4-insert方法调用" class="headerlink" title="4. insert方法调用"></a>4. insert方法调用</h2><p>在<code>mapper.xml</code>文件的结果过程中，有对应的方法解析，每个方法解析后会对应有一个<code>MappedStatement</code>。最终会调用到执行器<code>Executor</code>中的<code>update</code>方法。整个执行的过程相对比较复杂一点，这里就不贴出源码，有兴趣的可以看一下，篇幅有限，在后续的博客文章里面再详细说<code>Executor</code>执行各种方法的方式和流程。</p>
 
                 
             </div>
@@ -593,7 +593,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-09-19T08-00-00',
+        id: '2018-09-19T16-22-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -904,7 +904,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

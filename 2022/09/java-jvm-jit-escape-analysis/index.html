@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2022-09-20
+                    2022-09-二 18:17:33
                 </div>
                 
 
@@ -343,21 +343,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="JIT"><a href="#JIT" class="headerlink" title="JIT"></a>JIT</h2><p>我们可以将java程序变成计算机可执行的机器指令拆分为两个步骤：</p>
+                <h2 id="1-JIT"><a href="#1-JIT" class="headerlink" title="1. JIT"></a>1. JIT</h2><p>我们可以将java程序变成计算机可执行的机器指令拆分为两个步骤：</p>
 <ul>
 <li>首先是把.java文件转换成.class文件。</li>
 <li>然后是把.class转化成机器指令的过程。<br>第一段编译就是<code>javac</code>命令。<br>在第二编译阶段，JVM 通过解释字节码将其翻译成对应的机器指令，逐条读入，逐条解释翻译。这就是传统JVM解释器的功能，速度非常慢，为了解决这种效率问题，在JDK1.6中引入了JIT技术。</li>
 </ul>
 <p>关于JIT技术的介绍可以看这里：<a href="/2022/09/java-jvm-just-in-time/">Java的即时编译（Just In Time, JIT）及其优化</a></p>
 <p>其中JIT优化中最重要的一个就是<strong>逃逸分析</strong>。</p>
-<h2 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h2><p>逃逸分析(Escape Analysis)是一种可以有效减少Java 程序中同步负载和内存堆分配压力的算法。<br><strong>通过逃逸分析，Java Hotspot编译器能够分析出一个新的对象的引用的使用范围，从而决定是否要将这个对象分配到堆上</strong>。<br>简而言之就是：</p>
+<h2 id="2-逃逸分析"><a href="#2-逃逸分析" class="headerlink" title="2. 逃逸分析"></a>2. 逃逸分析</h2><p>逃逸分析(Escape Analysis)是一种可以有效减少Java 程序中同步负载和内存堆分配压力的算法。<br><strong>通过逃逸分析，Java Hotspot编译器能够分析出一个新的对象的引用的使用范围，从而决定是否要将这个对象分配到堆上</strong>。<br>简而言之就是：</p>
 <blockquote>
 <p>通过逃逸分析来决定某些实例或者变量是否要在堆中进行分配，如果开启了逃逸分析，即可将这些变量直接在栈上进行分配，而非堆上进行分配。这些变量的指针可以被全局所引用，或者被其它线程所引用。</p>
 </blockquote>
-<h3 id="主要依据"><a href="#主要依据" class="headerlink" title="主要依据"></a>主要依据</h3><p>JVM判断新创建的对象是否逃逸的依据有：</p>
+<h3 id="2-1-主要依据"><a href="#2-1-主要依据" class="headerlink" title="2.1 主要依据"></a>2.1 主要依据</h3><p>JVM判断新创建的对象是否逃逸的依据有：</p>
 <ul>
 <li>对象被赋值给堆中对象的字段和类的静态变量。</li>
-<li>对象被传进了不确定的代码中去运行。<br>对于第一种情况，因为对象被放进堆中，则其它线程就可以对其进行访问，所以对象的使用情况，编译器就无法再进行追踪。第二种情况相当于JVM在解析普通的字节码的时候，如果没有发生JIT即时编译，编译器是不能事先完整知道这段代码会对对象做什么操作。保守一点，这个时候也只能把对象是当作是逃逸来处理。<h2 id="基于逃逸分析的优化"><a href="#基于逃逸分析的优化" class="headerlink" title="基于逃逸分析的优化"></a>基于逃逸分析的优化</h2><h3 id="同步省略"><a href="#同步省略" class="headerlink" title="同步省略"></a>同步省略</h3>如果同步块所使用的锁对象通过这种分析被证实只能够被一个线程访问，那么JIT编译器在编译这个同步块的时候就会取消对这部分代码的同步。这个取消同步的过程就叫同步省略，也叫锁消除。<br>如以下代码：<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<li>对象被传进了不确定的代码中去运行。<br>对于第一种情况，因为对象被放进堆中，则其它线程就可以对其进行访问，所以对象的使用情况，编译器就无法再进行追踪。第二种情况相当于JVM在解析普通的字节码的时候，如果没有发生JIT即时编译，编译器是不能事先完整知道这段代码会对对象做什么操作。保守一点，这个时候也只能把对象是当作是逃逸来处理。<h2 id="3-基于逃逸分析的优化"><a href="#3-基于逃逸分析的优化" class="headerlink" title="3. 基于逃逸分析的优化"></a>3. 基于逃逸分析的优化</h2><h3 id="3-1-同步省略"><a href="#3-1-同步省略" class="headerlink" title="3.1 同步省略"></a>3.1 同步省略</h3>如果同步块所使用的锁对象通过这种分析被证实只能够被一个线程访问，那么JIT编译器在编译这个同步块的时候就会取消对这部分代码的同步。这个取消同步的过程就叫同步省略，也叫锁消除。<br>如以下代码：<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token class-name">Object</span> hollis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">synchronized</span><span class="token punctuation">(</span>hollis<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>hollis<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -367,7 +367,7 @@
     <span class="token class-name">Object</span> hollis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>hollis<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-所以，在使用synchronized的时候，如果JIT经过逃逸分析之后发现并无线程安全问题的话，就会做锁消除。<h3 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h3>在JIT阶段，如果经过逃逸分析，发现一个对象不会被外界访问的话，那么经过JIT优化，就会把这个对象拆解成若干个其中包含的若干个成员变量来代替。这个过程就是标量替换。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+所以，在使用synchronized的时候，如果JIT经过逃逸分析之后发现并无线程安全问题的话，就会做锁消除。<h3 id="3-2-标量替换"><a href="#3-2-标量替换" class="headerlink" title="3.2 标量替换"></a>3.2 标量替换</h3>在JIT阶段，如果经过逃逸分析，发现一个对象不会被外界访问的话，那么经过JIT优化，就会把这个对象拆解成若干个其中包含的若干个成员变量来代替。这个过程就是标量替换。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
    <span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
@@ -388,7 +388,7 @@
    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"point.x="</span><span class="token operator">+</span>x<span class="token operator">+</span><span class="token string">"; point.y="</span><span class="token operator">+</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这样做的好处就是可以大大减少堆内存的占用。</p>
-<h3 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h3><p>在Java虚拟机中，对象是在Java堆中分配内存的，这是一个普遍的常识。但是，有一种特殊情况，那就是如果经过逃逸分析后发现，一个对象并没有逃逸出方法的话，那么就可能被优化成<strong>栈上分配</strong>。这样就无需在堆上分配内存，也<strong>无须进行垃圾回收</strong>了。</p>
+<h3 id="3-3-栈上分配"><a href="#3-3-栈上分配" class="headerlink" title="3.3 栈上分配"></a>3.3 栈上分配</h3><p>在Java虚拟机中，对象是在Java堆中分配内存的，这是一个普遍的常识。但是，有一种特殊情况，那就是如果经过逃逸分析后发现，一个对象并没有逃逸出方法的话，那么就可能被优化成<strong>栈上分配</strong>。这样就无需在堆上分配内存，也<strong>无须进行垃圾回收</strong>了。</p>
 
                 
             </div>
@@ -851,7 +851,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-07-06
+                    2018-07-五 21:13:35
                 </div>
                 
 
@@ -325,7 +325,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    8 分
                 </div>
                 
 
@@ -348,22 +348,22 @@
 <p>转载请注明文章来源，保护文章版权</p>
 </blockquote>
 <p>高可用，高并发，安全性……<br>随着互联网不断的发展，这些要求越来越高，不论是在面试还是在日常的工作中。作为程序员必须要做到与时俱进，学习和了解这些知识。平时在通勤路上都会去看看一些大神的博客和公众号，学习他们的经验，也会在项目中借鉴。刚好这次项目上用到同步锁，对比数据库的乐观锁、悲观锁、显示锁Lock以及synchronized等，最终还是觉得使用分布式锁更为科学，恰恰就这前两天我看到了程序员小灰的一篇博客讲了redis分布式锁，直接就用上了，在此也感谢那些致力于技术分享的大神们。</p>
-<h3 id="几种常见的分布式锁"><a href="#几种常见的分布式锁" class="headerlink" title="几种常见的分布式锁"></a>几种常见的分布式锁</h3><h4 id="Memcached分布式锁"><a href="#Memcached分布式锁" class="headerlink" title="Memcached分布式锁"></a>Memcached分布式锁</h4><p>利用Memcached的add命令。此命令是原子性操作，只有在key不存在的情况下，才能add成功，也就意味着线程得到了锁。</p>
-<h4 id="Redis分布式锁"><a href="#Redis分布式锁" class="headerlink" title="Redis分布式锁"></a>Redis分布式锁</h4><p>和Memcached的方式类似，利用Redis的setnx命令。此命令同样是原子性操作，只有在key不存在的情况下，才能set成功。（setnx命令并不完善，后续会介绍替代方案）</p>
-<h4 id="Zookeeper分布式锁"><a href="#Zookeeper分布式锁" class="headerlink" title="Zookeeper分布式锁"></a>Zookeeper分布式锁</h4><p>利用Zookeeper的顺序临时节点，来实现分布式锁和等待队列。Zookeeper设计的初衷，就是为了实现分布式锁服务的。</p>
-<h4 id="Chubby"><a href="#Chubby" class="headerlink" title="Chubby"></a>Chubby</h4><p>Google公司实现的粗粒度分布式锁服务，底层利用了Paxos一致性算法。<br>上面是常见的几种分布式锁的实现方式，其中Memcached、Redis、Zookeeper也是在开发项目中经常用到的组件，使用和学习成本会较低，更容易上手。现在就让我们一起进入Redis的世界，一起看看Redis是如何实现分布式锁的。</p>
-<h3 id="Redis实现分布式锁"><a href="#Redis实现分布式锁" class="headerlink" title="Redis实现分布式锁"></a>Redis实现分布式锁</h3><h4 id="逻辑梳理"><a href="#逻辑梳理" class="headerlink" title="逻辑梳理"></a>逻辑梳理</h4><ul>
+<h2 id="1-几种常见的分布式锁"><a href="#1-几种常见的分布式锁" class="headerlink" title="1. 几种常见的分布式锁"></a>1. 几种常见的分布式锁</h2><h3 id="1-1-Memcached分布式锁"><a href="#1-1-Memcached分布式锁" class="headerlink" title="1.1 Memcached分布式锁"></a>1.1 Memcached分布式锁</h3><p>利用Memcached的add命令。此命令是原子性操作，只有在key不存在的情况下，才能add成功，也就意味着线程得到了锁。</p>
+<h3 id="1-2-Redis分布式锁"><a href="#1-2-Redis分布式锁" class="headerlink" title="1.2 Redis分布式锁"></a>1.2 Redis分布式锁</h3><p>和Memcached的方式类似，利用Redis的setnx命令。此命令同样是原子性操作，只有在key不存在的情况下，才能set成功。（setnx命令并不完善，后续会介绍替代方案）</p>
+<h3 id="1-3-Zookeeper分布式锁"><a href="#1-3-Zookeeper分布式锁" class="headerlink" title="1.3 Zookeeper分布式锁"></a>1.3 Zookeeper分布式锁</h3><p>利用Zookeeper的顺序临时节点，来实现分布式锁和等待队列。Zookeeper设计的初衷，就是为了实现分布式锁服务的。</p>
+<h3 id="1-4-Chubby"><a href="#1-4-Chubby" class="headerlink" title="1.4 Chubby"></a>1.4 Chubby</h3><p>Google公司实现的粗粒度分布式锁服务，底层利用了Paxos一致性算法。<br>上面是常见的几种分布式锁的实现方式，其中Memcached、Redis、Zookeeper也是在开发项目中经常用到的组件，使用和学习成本会较低，更容易上手。现在就让我们一起进入Redis的世界，一起看看Redis是如何实现分布式锁的。</p>
+<h2 id="2-Redis实现分布式锁"><a href="#2-Redis实现分布式锁" class="headerlink" title="2. Redis实现分布式锁"></a>2. Redis实现分布式锁</h2><h3 id="2-1-逻辑梳理"><a href="#2-1-逻辑梳理" class="headerlink" title="2.1 逻辑梳理"></a>2.1 逻辑梳理</h3><ul>
 <li>多个线程竞争一个资源，当单个线程获取到资源的执行权后会加锁</li>
 <li>当对资源执行结束后，线程会将锁释放，由其它线程接着操作</li>
 </ul>
 <p>注意这里的要保证锁的安全性，以及对锁操作的原子性。</p>
-<h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><p>最简单的方法是使用setnx命令。key是锁的唯一标识，按业务来决定命名。比如想要给一种商品的秒杀活动加锁，可以给key命名为 “lock_sale_商品ID” 。而value设置成什么呢？我们可以姑且设置成1。加锁的伪代码如下：    </p>
+<h3 id="2-2-加锁"><a href="#2-2-加锁" class="headerlink" title="2.2 加锁"></a>2.2 加锁</h3><p>最简单的方法是使用setnx命令。key是锁的唯一标识，按业务来决定命名。比如想要给一种商品的秒杀活动加锁，可以给key命名为 “lock_sale_商品ID” 。而value设置成什么呢？我们可以姑且设置成1。加锁的伪代码如下：    </p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token function">setnx</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>当一个线程执行setnx返回1，说明key原本不存在，该线程成功得到了锁；当一个线程执行setnx返回0，说明key已经存在，该线程抢锁失败。</p>
-<h4 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h4><p>有加锁就得有解锁。当得到锁的线程执行完任务，需要释放锁，以便其他线程可以进入。释放锁的最简单方式是执行del指令。</p>
+<h3 id="2-3-解锁"><a href="#2-3-解锁" class="headerlink" title="2.3 解锁"></a>2.3 解锁</h3><p>有加锁就得有解锁。当得到锁的线程执行完任务，需要释放锁，以便其他线程可以进入。释放锁的最简单方式是执行del指令。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token function">del</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>释放锁之后，其他线程就可以继续执行setnx命令来获得锁。</p>
-<h4 id="锁超时"><a href="#锁超时" class="headerlink" title="锁超时"></a>锁超时</h4><p>锁超时是什么意思呢？如果一个得到锁的线程在执行任务的过程中挂掉，来不及显式地释放锁，这块资源将会永远被锁住，别的线程再也别想进来。<br>所以，setnx的key必须设置一个超时时间，以保证即使没有被显式释放，这把锁也要在一定时间后自动释放。setnx不支持超时参数，所以需要额外的指令。</p>
+<h3 id="2-4-锁超时"><a href="#2-4-锁超时" class="headerlink" title="2.4 锁超时"></a>2.4 锁超时</h3><p>锁超时是什么意思呢？如果一个得到锁的线程在执行任务的过程中挂掉，来不及显式地释放锁，这块资源将会永远被锁住，别的线程再也别想进来。<br>所以，setnx的key必须设置一个超时时间，以保证即使没有被显式释放，这把锁也要在一定时间后自动释放。setnx不支持超时参数，所以需要额外的指令。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token function">expire</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>综合上面的分析可以得到实现的基本逻辑如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span><span class="token punctuation">(</span>redisClient<span class="token punctuation">.</span><span class="token function">setnx</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span><span class="token string">"value"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//1、设值成功,获得锁</span>
@@ -375,7 +375,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>但是上面的代码存在很多问题。</p>
-<h5 id="setnx和expire操作非原子性"><a href="#setnx和expire操作非原子性" class="headerlink" title="setnx和expire操作非原子性"></a>setnx和expire操作非原子性</h5><p>在第1步执行结束后，获取到了锁，还没来得及执行expire进行设置超时时间就宕机了，这个时候锁就没法释放。那么改进就是将1、2两步的非原子操作变成原子操作。在redis的2.6.X版本后提供了set(key,value,nxxx,expx,time)。</p>
+<h3 id="2-5-setnx和expire操作非原子性"><a href="#2-5-setnx和expire操作非原子性" class="headerlink" title="2.5 setnx和expire操作非原子性"></a>2.5 setnx和expire操作非原子性</h3><p>在第1步执行结束后，获取到了锁，还没来得及执行expire进行设置超时时间就宕机了，这个时候锁就没法释放。那么改进就是将1、2两步的非原子操作变成原子操作。在redis的2.6.X版本后提供了set(key,value,nxxx,expx,time)。</p>
 <p>参数解释：<br><code>key</code>：键<br><code>value</code>：值<br><code>nxxx</code>：表示两种模式NX和XX，NX表示键在redis中已经存在不会再更新，XX表示存在也会更新<br><code>expx</code>：表示有效时间的两种时间单位：EX表示秒，PX表示毫秒<br><code>time</code>：long类型，表示有效时间</p>
 <p>改进后的代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span><span class="token punctuation">(</span>redisClient<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span><span class="token string">"value"</span><span class="token punctuation">,</span><span class="token string">"NX"</span><span class="token punctuation">,</span><span class="token string">"EX"</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//1、设值和设置超时时间</span>
@@ -386,7 +386,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个时候就能实现设置值和超时时间原子化，但是到这里还不够。</p>
-<h4 id="del误删"><a href="#del误删" class="headerlink" title="del误删"></a>del误删</h4><p>执行业务逻辑的时间是不可控的，我们设置了30秒的过期时间，但是如果业务逻辑执行超过30秒，这个时候就会自动释放锁，然后其他线程会重新设置锁到redis中，等上一个业务逻辑执行结束，会删除锁，但是这个时候删除的锁已经不是之前设置的锁，而是后续线程设置的锁。这个可以通过设置锁的唯一性来实现。代码如下：</p>
+<h3 id="2-6-del误删"><a href="#2-6-del误删" class="headerlink" title="2.6 del误删"></a>2.6 del误删</h3><p>执行业务逻辑的时间是不可控的，我们设置了30秒的过期时间，但是如果业务逻辑执行超过30秒，这个时候就会自动释放锁，然后其他线程会重新设置锁到redis中，等上一个业务逻辑执行结束，会删除锁，但是这个时候删除的锁已经不是之前设置的锁，而是后续线程设置的锁。这个可以通过设置锁的唯一性来实现。代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> threadName <span class="token operator">=</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span>redisClient<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span><span class="token string">"value"</span><span class="token punctuation">,</span><span class="token string">"NX"</span><span class="token punctuation">,</span><span class="token string">"EX"</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//1、设值和设置超时时间</span>
     <span class="token keyword">try</span><span class="token punctuation">{</span>
@@ -397,11 +397,11 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>但是这里很明显又出现了原子操作的问题(2、3步，判断和删除锁的操作是两步独立的操作)，之前有set的衍生方法实现，这里就没有了，怎么办？</p>
-<h4 id="Lua脚本"><a href="#Lua脚本" class="headerlink" title="Lua脚本"></a>Lua脚本</h4><p>脚本如下：</p>
+<h3 id="2-7-Lua脚本"><a href="#2-7-Lua脚本" class="headerlink" title="2.7 Lua脚本"></a>2.7 Lua脚本</h3><p>脚本如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> luaScript <span class="token operator">=</span> <span class="token string">"if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end"</span><span class="token punctuation">;</span>
 redisClient<span class="token punctuation">.</span><span class="token function">eval</span><span class="token punctuation">(</span>luaScript <span class="token punctuation">,</span> <span class="token class-name">Collections</span><span class="token punctuation">.</span><span class="token function">singletonList</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Collections</span><span class="token punctuation">.</span><span class="token function">singletonList</span><span class="token punctuation">(</span>threadId<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>这样就能实现删除和验证过程的原子性。<br>但是这里我有思考过，一般在公司项目中使用的Redis都不是单一的实现某一功能，有可能除了实现同步锁，还要缓存其他的数据，在使用上面的Lua脚本会不会对其他缓存产生影响，还不知道。有兴趣的可以试试。</p>
-<h4 id="最后的续命"><a href="#最后的续命" class="headerlink" title="最后的续命"></a>最后的续命</h4><p>综上看一下，还是存在一点小的瑕疵。A线程执行业务逻辑超过有效时间，在删除的时候是不会误删了。但是在实际场景中，一般会存在的情况是其他线程获取这个锁，必须要等到A线程业务逻辑执行完成结束才可以，也就意味着A线程必须要执行结束才去释放锁，而不能用超时自动释放锁。那么这里就需要在A线程执行业务逻辑快到30秒时，自动给锁续命。使用守护线程就能实现。代码如下：</p>
+<h3 id="2-8-最后的续命"><a href="#2-8-最后的续命" class="headerlink" title="2.8 最后的续命"></a>2.8 最后的续命</h3><p>综上看一下，还是存在一点小的瑕疵。A线程执行业务逻辑超过有效时间，在删除的时候是不会误删了。但是在实际场景中，一般会存在的情况是其他线程获取这个锁，必须要等到A线程业务逻辑执行完成结束才可以，也就意味着A线程必须要执行结束才去释放锁，而不能用超时自动释放锁。那么这里就需要在A线程执行业务逻辑快到30秒时，自动给锁续命。使用守护线程就能实现。代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> threadName <span class="token operator">=</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span>redisClient<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"key"</span><span class="token punctuation">,</span><span class="token string">"value"</span><span class="token punctuation">,</span><span class="token string">"NX"</span><span class="token punctuation">,</span><span class="token string">"EX"</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//1、设值和设置超时时间</span>
     <span class="token keyword">try</span><span class="token punctuation">{</span>
@@ -420,7 +420,7 @@ redisClient<span class="token punctuation">.</span><span class="token function">
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在这种情况下，即使当前持有锁的机器断电停机了，锁也会被自动释放。同时也能保证并发时的安全性。</p>
-<h4 id="最终的实现方式"><a href="#最终的实现方式" class="headerlink" title="最终的实现方式"></a>最终的实现方式</h4><p>对照上面的代码，就我个人感觉有点冗余，这里其实不需要对锁做唯一标识，看上面我们可以知道这个唯一标识就是为了防止误删，但是如果加上了续命，就不会出现误删，因为在业务没有执行结束，锁并不会出现超时自动释放的问题，会一直续命。实现的代码如下：</p>
+<h3 id="2-9-最终的实现方式"><a href="#2-9-最终的实现方式" class="headerlink" title="2.9 最终的实现方式"></a>2.9 最终的实现方式</h3><p>对照上面的代码，就我个人感觉有点冗余，这里其实不需要对锁做唯一标识，看上面我们可以知道这个唯一标识就是为了防止误删，但是如果加上了续命，就不会出现误删，因为在业务没有执行结束，锁并不会出现超时自动释放的问题，会一直续命。实现的代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//守护线程</span>
 <span class="token class-name">Thread</span> daemonThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -587,7 +587,7 @@ redisClient<span class="token punctuation">.</span><span class="token function">
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-07-06T21-00-00',
+        id: '2018-07-06T21-13-35',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -902,7 +902,7 @@ redisClient<span class="token punctuation">.</span><span class="token function">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

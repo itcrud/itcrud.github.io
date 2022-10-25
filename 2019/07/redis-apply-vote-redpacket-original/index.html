@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-07-31
+                    2019-07-三 19:41:00
                 </div>
                 
 
@@ -321,7 +321,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    10 分
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>Redis基本数据类型及基本命令的使用都已经做完笔记了，接下来就需要将这些笔记实际运用到项目中。经常在项目中用到的就是缓存常量数据，还有一些基本的计数等操作，比如我的博客里面访问量、文章阅读量都是缓存在Redis中的，累加阅读量、访问量都是在Redis中完成，夜间定时刷入数据库的，这样就不用每次访问都去数据库中查询。基本应用没有问题，那来点稍微复杂的呢，这篇文章就让我们一起来看看其他的应用场景，将从文章投票排行榜、红包出发来依次说说具体使用何种数据结构合适。</p>
-<h2 id="叙述"><a href="#叙述" class="headerlink" title="叙述"></a>叙述</h2><p>在面试的时候经常会被用问Redis用到哪些数据类型，很明显大多数使用过redis的人都是可以回答上来，但是也仅仅是回答上来几种数据类型的名字和存储结构。如果我是面试官，这个回答只能得到5分。为什么？因为几种基本数据类型谁都可以说的出来，就是几个名词和释义而已，5分钟就可以背下来。</p>
+<h2 id="1-叙述"><a href="#1-叙述" class="headerlink" title="1. 叙述"></a>1. 叙述</h2><p>在面试的时候经常会被用问Redis用到哪些数据类型，很明显大多数使用过redis的人都是可以回答上来，但是也仅仅是回答上来几种数据类型的名字和存储结构。如果我是面试官，这个回答只能得到5分。为什么？因为几种基本数据类型谁都可以说的出来，就是几个名词和释义而已，5分钟就可以背下来。</p>
 <p>如果是我回答我会按这样的流程来说（个人理解）：</p>
 <ul>
 <li>5种数据类型，分别是什么</li>
@@ -357,13 +357,13 @@
 </ul>
 <p>当然这些数据结构应用的场景不止这么多，可以根据自己项目中实际实用情况调整。</p>
 <p>这些都介绍完了，下面我们一起看看其在投票排行榜、红包上的应用是怎么做的吧。</p>
-<h2 id="文章投票"><a href="#文章投票" class="headerlink" title="文章投票"></a>文章投票</h2><p>文章投票主要包含的几个功能有以下几种。</p>
+<h2 id="2-文章投票"><a href="#2-文章投票" class="headerlink" title="2. 文章投票"></a>2. 文章投票</h2><p>文章投票主要包含的几个功能有以下几种。</p>
 <ul>
 <li>发布文章</li>
 <li>投票</li>
 <li>展示投票信息</li>
 </ul>
-<h4 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//准备的常量信息、Jedis连接池、发表的文章集合</span>
+<h3 id="2-1-发布文章"><a href="#2-1-发布文章" class="headerlink" title="2.1 发布文章"></a>2.1 发布文章</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//准备的常量信息、Jedis连接池、发表的文章集合</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">JedisPool</span> <span class="token constant">JEDIS_POOL</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JedisPool</span><span class="token punctuation">(</span><span class="token string">"host"</span><span class="token punctuation">,</span> <span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token constant">ARTICLE_ID</span> <span class="token operator">=</span> <span class="token string">"article:id:incr"</span><span class="token punctuation">;</span>
 <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token constant">ARTICLE_PREFIX</span> <span class="token operator">=</span> <span class="token string">"article:"</span><span class="token punctuation">;</span>
@@ -397,7 +397,7 @@
 <li>存储文章信息，采用redis的hash类型存储，因为文章本身有一个访问量的属性，每次被访问就会做累加，可以使用<code>hincrby</code>命令直接实现。（如果是序列化成JSON，就需要查出来，反序列化成对象，对访问量累加，再插入，会有两次连接redis操作和反序列化过程，相对于hash结构，性能和效率都是逊色的）</li>
 <li>文章创建后，会将其放在zset中，默认分数是0，每次投票对分数做累加操作</li>
 </ul>
-<h4 id="投票"><a href="#投票" class="headerlink" title="投票"></a>投票</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//投票，一篇文章一个人只能投票一次</span>
+<h3 id="2-2-投票"><a href="#2-2-投票" class="headerlink" title="2.2 投票"></a>2.2 投票</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//投票，一篇文章一个人只能投票一次</span>
 <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">vote</span><span class="token punctuation">(</span><span class="token class-name">Long</span> articleId<span class="token punctuation">,</span> <span class="token class-name">Long</span> userId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token class-name">Jedis</span> resource <span class="token operator">=</span> <span class="token constant">JEDIS_POOL</span><span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">try</span> <span class="token punctuation">{</span>
@@ -420,7 +420,7 @@
 <li>一个人不能重复给一篇文章投票，那么就针对每篇文章创建一个set集合，每次投票后，将用户ID放到对应的set集合中，如果添加成功，累加一票，如果添加失败，表示已经投过票。</li>
 <li>使用set集合的<code>zincrby</code>命令做累加一票的操作。</li>
 </ul>
-<h4 id="获取排行榜信息"><a href="#获取排行榜信息" class="headerlink" title="获取排行榜信息"></a>获取排行榜信息</h4><p>将投票的排行榜信息展示出来。</p>
+<h3 id="2-3-获取排行榜信息"><a href="#2-3-获取排行榜信息" class="headerlink" title="2.3 获取排行榜信息"></a>2.3 获取排行榜信息</h3><p>将投票的排行榜信息展示出来。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//获取排行榜信息</span>
 <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token class-name">Jedis</span> resource <span class="token operator">=</span> <span class="token constant">JEDIS_POOL</span><span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -438,7 +438,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>zset的默认排序是正序排列，按照分数从低到高，但是这里需要看排行榜，就需要使用倒序排列。使用<code>zrevrange</code>命令，同时将具体得分信息获取。</p>
-<h4 id="模拟发布和投票过程"><a href="#模拟发布和投票过程" class="headerlink" title="模拟发布和投票过程"></a>模拟发布和投票过程</h4><p>模拟发布文章，然后模拟100个用户投出500票，包括重复投票，最后将排行榜信息输出。</p>
+<h3 id="2-4-模拟发布和投票过程"><a href="#2-4-模拟发布和投票过程" class="headerlink" title="2.4 模拟发布和投票过程"></a>2.4 模拟发布和投票过程</h3><p>模拟发布文章，然后模拟100个用户投出500票，包括重复投票，最后将排行榜信息输出。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//创建文章(创建10篇文章，id：1~10)</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -456,8 +456,8 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>到这里一个简易的投票和排行榜实现过程就结束啦。其中使用到了四种数据类型，分别是set、zset、字符串和hash，每种数据类型各司其职，都发挥了自己的优势。</p>
-<h2 id="红包"><a href="#红包" class="headerlink" title="红包"></a>红包</h2><p>看了投票排行榜的套路，红包也是类似的，选择合适的数据结构做合适的事。这里设计的发红包逻辑简单一点，就两个功能点，分别是发红包和抢红包。</p>
-<h4 id="发红包"><a href="#发红包" class="headerlink" title="发红包"></a>发红包</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//准备的常量信息、Jedis连接池</span>
+<h2 id="3-红包"><a href="#3-红包" class="headerlink" title="3. 红包"></a>3. 红包</h2><p>看了投票排行榜的套路，红包也是类似的，选择合适的数据结构做合适的事。这里设计的发红包逻辑简单一点，就两个功能点，分别是发红包和抢红包。</p>
+<h3 id="3-1-发红包"><a href="#3-1-发红包" class="headerlink" title="3.1 发红包"></a>3.1 发红包</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//准备的常量信息、Jedis连接池</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">JedisPool</span> <span class="token constant">JEDIS_POOL</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JedisPool</span><span class="token punctuation">(</span><span class="token string">"host"</span><span class="token punctuation">,</span> <span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">RED_PACKET_LIST</span> <span class="token operator">=</span> <span class="token string">"redpacket:list"</span><span class="token punctuation">;</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">RED_PACKET_USER</span> <span class="token operator">=</span> <span class="token string">"redpacket:user"</span><span class="token punctuation">;</span>
@@ -475,7 +475,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="抢红包"><a href="#抢红包" class="headerlink" title="抢红包"></a>抢红包</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//抢红包</span>
+<h3 id="3-2-抢红包"><a href="#3-2-抢红包" class="headerlink" title="3.2 抢红包"></a>3.2 抢红包</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//抢红包</span>
 <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">rob</span><span class="token punctuation">(</span><span class="token class-name">Long</span> userId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">try</span> <span class="token punctuation">(</span><span class="token class-name">Jedis</span> resource <span class="token operator">=</span> <span class="token constant">JEDIS_POOL</span><span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token comment">//判断用户是否已经抢过红包(使用set)</span>
@@ -498,7 +498,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>抢红包之前的双重判断，是否已经抢过、红包是否已经抢完。当抢到红包后，将红包和用户信息存储到zset集合中。用时间戳作为分数，用来记录抢到红包的先后顺序。当然这里可以使用list队列来记录，效果是一样的。</p>
-<h4 id="模拟发红包和抢红包过程"><a href="#模拟发红包和抢红包过程" class="headerlink" title="模拟发红包和抢红包过程"></a>模拟发红包和抢红包过程</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<h3 id="3-3-模拟发红包和抢红包过程"><a href="#3-3-模拟发红包和抢红包过程" class="headerlink" title="3.3 模拟发红包和抢红包过程"></a>3.3 模拟发红包和抢红包过程</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//发红包</span>
     <span class="token function">publish</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">//抢红包(10个用户抢红包)</span>
@@ -511,7 +511,7 @@
 <p>抢红包整个实现逻辑使用到3种数据类型，分别是zset、list、set。</p>
 <p>上面的两个示例将5种基本类型都囊括在内了，不同的数据类型根据存储数据结构、存储特性的不同，被用来存储不同的数据。其实不管用在什么场景下，整体思路是不变的，那就是用合适的数据类型存储对应的数据。</p>
 <p>除了上面的两个示例，其实还有很多种，比如说购物车，未登陆状态下加入购物车，登陆后如何将购物车合并到用户下原有的购物车中，购物车内商品加入的顺序，每个商品加入的个数，商品的属性信息，购物车有效时间等等。</p>
-<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-redis">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-redis</a></p>
+<h2 id="4-源代码"><a href="#4-源代码" class="headerlink" title="4. 源代码"></a>4. 源代码</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-redis">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-redis</a></p>
 <p>两个示例分别在<code>com.itcrud.redis.repacket</code>和<code>com.itcrud.redis.vote</code>两个包中！！！</p>
 
                 
@@ -656,7 +656,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-07-31T08-00-00',
+        id: '2019-07-31T19-41-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -975,7 +975,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

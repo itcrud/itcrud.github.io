@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-07-22
+                    2018-07-日 21:23:00
                 </div>
                 
 
@@ -344,7 +344,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>aspectj下主要有<code>@Before</code>、<code>@After</code>、<code>@AfterReturning</code>、<code>@AfterThrowing</code>、<code>@Around</code>几个通知的方式。在实际的开发过程中也是经常要用到的，之前只能停留在会用的层面上，为了更深入的了解这些方法执行的时机和原理，只能学习源码，这里分享出来，希望和大家共同学习进步。下面直接上代码：</p>
-<h3 id="需要实现的功能"><a href="#需要实现的功能" class="headerlink" title="需要实现的功能"></a>需要实现的功能</h3><p>调用<code>AspectCenter</code>类中的<code>doit()</code>方法，切面需要切到这个方法并按照切面规则执行增强方法和业务逻辑方法。</p>
+<h2 id="1-需要实现的功能"><a href="#1-需要实现的功能" class="headerlink" title="1. 需要实现的功能"></a>1. 需要实现的功能</h2><p>调用<code>AspectCenter</code>类中的<code>doit()</code>方法，切面需要切到这个方法并按照切面规则执行增强方法和业务逻辑方法。</p>
 <ul>
 <li>引入依赖</li>
 </ul>
@@ -450,7 +450,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里的代码其实很简单，但是涉及到的注意点还是有的，下面依次来说明。</p>
-<h5 id="重点说明"><a href="#重点说明" class="headerlink" title="重点说明"></a>重点说明</h5><ul>
+<h2 id="2-重点说明"><a href="#2-重点说明" class="headerlink" title="2. 重点说明"></a>2. 重点说明</h2><ul>
 <li><code>@EnableAspectJAutoProxy</code></li>
 </ul>
 <p><code>@EnableAspectJAutoProxy</code>是aspectj的自动代理功能开启注解，这个注解的上又加了一个<code>@Import</code>注解，在注解上导入了<code>AspectJAutoProxyRegistrar</code>类，如果对IOC容器初始化有所了解的可以知道，在bean的注册和初始化，通过<code>@Import</code>也是一种方式。具体内容不错，可以参考之前的博客（<a target="_blank" rel="noopener" href="//2018/07/spring-ioc-init">Spring IOC初始化bean对象创建的N种实现方式理解</a>）。</p>
@@ -508,7 +508,7 @@
 <li>代理生成时机</li>
 </ul>
 <p>经过这里的了解可以知道，当Spring IOC初始化的时候<code>AnnotationAwareAspectJAutoProxyCreator</code>处理器会被创建，并在被切到的对象创建时做后置增强。具体怎么增强，下面继续。</p>
-<h3 id="IOC后置增强代理过程"><a href="#IOC后置增强代理过程" class="headerlink" title="IOC后置增强代理过程"></a>IOC后置增强代理过程</h3><p>IOC容器初始化创建bean的时候有很多步骤，这里就拿处理器的后置处理来说，之前有博客写过相关IOC容器初始化过程,可以借鉴（<a href="/2018/07/spring-ioc-base-init-first">Spring IOC容器初始化基础过程源码了解</a>）。</p>
+<h2 id="3-IOC后置增强代理过程"><a href="#3-IOC后置增强代理过程" class="headerlink" title="3. IOC后置增强代理过程"></a>3. IOC后置增强代理过程</h2><p>IOC容器初始化创建bean的时候有很多步骤，这里就拿处理器的后置处理来说，之前有博客写过相关IOC容器初始化过程,可以借鉴（<a href="/2018/07/spring-ioc-base-init-first">Spring IOC容器初始化基础过程源码了解</a>）。</p>
 <p>处理器的后置处理执行的位置是在<code>AbstractAutowireCapableBeanFactory</code>类中的<code>initializeBean</code>方法中，源码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Object</span> <span class="token function">initializeBean</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name">Object</span> bean<span class="token punctuation">,</span> <span class="token class-name">RootBeanDefinition</span> mbd<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment">// ……</span>
@@ -536,7 +536,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在IOC容器初始化<code>AspectCenter</code>的时候，会进入到后置处理逻辑，在后置处理逻辑中会遍历所有的处理器，因为<code>AspectCenter</code>内的方法被切面切到，所以这里会进入到<code>AnnotationAwareAspectJAutoProxyCreator</code>的后置处理方法中。</p>
-<h5 id="源码：postProcessAfterInitialization"><a href="#源码：postProcessAfterInitialization" class="headerlink" title="源码：postProcessAfterInitialization()"></a>源码：<code>postProcessAfterInitialization()</code></h5><p>在<code>AnnotationAwareAspectJAutoProxyCreator</code>处理器中首先进入的是<code>AbstractAutoProxyCreator</code>类中的<code>postProcessAfterInitialization()</code>方法。(<code>AbstractAutoProxyCreator</code>是<code>AnnotationAwareAspectJAutoProxyCreator</code>父类)</p>
+<h3 id="3-1-源码：postProcessAfterInitialization"><a href="#3-1-源码：postProcessAfterInitialization" class="headerlink" title="3.1 源码：postProcessAfterInitialization()"></a>3.1 源码：<code>postProcessAfterInitialization()</code></h3><p>在<code>AnnotationAwareAspectJAutoProxyCreator</code>处理器中首先进入的是<code>AbstractAutoProxyCreator</code>类中的<code>postProcessAfterInitialization()</code>方法。(<code>AbstractAutoProxyCreator</code>是<code>AnnotationAwareAspectJAutoProxyCreator</code>父类)</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">postProcessAfterInitialization</span><span class="token punctuation">(</span><span class="token class-name">Object</span> bean<span class="token punctuation">,</span> <span class="token class-name">String</span> beanName<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">BeansException</span> <span class="token punctuation">{</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span>bean <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -551,7 +551,7 @@
 	<span class="token keyword">return</span> bean<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="源码：wrapIfNecessary"><a href="#源码：wrapIfNecessary" class="headerlink" title="源码：wrapIfNecessary()"></a>源码：<code>wrapIfNecessary()</code></h5><p>进入到<code>wrapIfNecessary()</code>方法后，这个方法很重要，也是后续要说的执行链的关键。</p>
+<h3 id="3-2-源码：wrapIfNecessary"><a href="#3-2-源码：wrapIfNecessary" class="headerlink" title="3.2 源码：wrapIfNecessary()"></a>3.2 源码：<code>wrapIfNecessary()</code></h3><p>进入到<code>wrapIfNecessary()</code>方法后，这个方法很重要，也是后续要说的执行链的关键。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Object</span> <span class="token function">wrapIfNecessary</span><span class="token punctuation">(</span><span class="token class-name">Object</span> bean<span class="token punctuation">,</span> <span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token class-name">Object</span> cacheKey<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span>beanName <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>targetSourcedBeans<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>beanName<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">return</span> bean<span class="token punctuation">;</span>
@@ -581,7 +581,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>原文上的注释也很清楚，如果有通知就创建代理对象。那接下来就是去获取通知方法，再去创建代理对象。</p>
-<h5 id="源码：findEligibleAdvisors"><a href="#源码：findEligibleAdvisors" class="headerlink" title="源码：findEligibleAdvisors()"></a>源码：<code>findEligibleAdvisors()</code></h5><p>从<code>getAdvicesAndAdvisorsForBean()</code>方法依次进入到<code>findEligibleAdvisors()</code>方法中，这个方法中具体如下：</p>
+<h3 id="3-3-源码：findEligibleAdvisors"><a href="#3-3-源码：findEligibleAdvisors" class="headerlink" title="3.3 源码：findEligibleAdvisors()"></a>3.3 源码：<code>findEligibleAdvisors()</code></h3><p>从<code>getAdvicesAndAdvisorsForBean()</code>方法依次进入到<code>findEligibleAdvisors()</code>方法中，这个方法中具体如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Advisor</span><span class="token punctuation">&gt;</span></span> <span class="token function">findEligibleAdvisors</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> beanClass<span class="token punctuation">,</span> <span class="token class-name">String</span> beanName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment">// 获取通知方法</span>
     <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Advisor</span><span class="token punctuation">&gt;</span></span> candidateAdvisors <span class="token operator">=</span> <span class="token function">findCandidateAdvisors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -595,7 +595,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里的逻辑并不复杂，获取当前类被增强的所有通知方法，然后将通知方法排序，然后返回。这里涉及到排序，可以知道在通知方法的执行过程是有先后顺序的。具体如何获取通知方法，如何排序这里不多做赘述。</p>
-<h5 id="源码：createProxy"><a href="#源码：createProxy" class="headerlink" title="源码：createProxy()"></a>源码：<code>createProxy()</code></h5><p>上面看完了通知方法的获取，通知方法获取后，带上通知方法进入到创建代理的方法中。看<code>createProxy()</code>方法源码：</p>
+<h3 id="3-4-源码：createProxy"><a href="#3-4-源码：createProxy" class="headerlink" title="3.4 源码：createProxy()"></a>3.4 源码：<code>createProxy()</code></h3><p>上面看完了通知方法的获取，通知方法获取后，带上通知方法进入到创建代理的方法中。看<code>createProxy()</code>方法源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Object</span> <span class="token function">createProxy</span><span class="token punctuation">(</span>
 		<span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> beanClass<span class="token punctuation">,</span> <span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> specificInterceptors<span class="token punctuation">,</span> <span class="token class-name">TargetSource</span> targetSource<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
@@ -641,7 +641,7 @@
 <li>上面两步准备工作结束，就可以调用代理工厂生成代理对象。</li>
 </ul>
 <p>然后后面的创建过程就可以忽略了。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>下面来对上面的内容做个总结。</p>
+<h3 id="3-5-总结"><a href="#3-5-总结" class="headerlink" title="3.5 总结"></a>3.5 总结</h3><p>下面来对上面的内容做个总结。</p>
 <p>先看图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/53F5703010274308939DD389F78BFCDA.png"></p>
 <p>图转文解释：</p>
@@ -652,8 +652,8 @@
 <li>生成代理对象，拥有一个执行链的代理对象。</li>
 </ul>
 <p>到这里执行链大家可以猜的出来就是先执行前置增强方法，然后执行目标方法，在执行后置增强方法。事实也的确是这样的，知道实现思路，看源码就稍微轻松点。</p>
-<h3 id="执行目标方法过程"><a href="#执行目标方法过程" class="headerlink" title="执行目标方法过程"></a>执行目标方法过程</h3><p>代码中虽然直接调用的是目标方法<code>doit()</code>，但是如果debug进入的话，会发现其实先走代理中的方法。</p>
-<h5 id="源码：-intercept"><a href="#源码：-intercept" class="headerlink" title="源码： intercept()"></a>源码： <code>intercept()</code></h5><p>这里生成的代理对象使用的是CGLB方式生成，通多<code>doit()</code>被调用的位置debug进入。此时进入的方法就是<code>intercept()</code>方法，在<code>CiglbAopProxy</code>类中。</p>
+<h2 id="4-执行目标方法过程"><a href="#4-执行目标方法过程" class="headerlink" title="4. 执行目标方法过程"></a>4. 执行目标方法过程</h2><p>代码中虽然直接调用的是目标方法<code>doit()</code>，但是如果debug进入的话，会发现其实先走代理中的方法。</p>
+<h3 id="4-1-源码：-intercept"><a href="#4-1-源码：-intercept" class="headerlink" title="4.1 源码： intercept()"></a>4.1 源码： <code>intercept()</code></h3><p>这里生成的代理对象使用的是CGLB方式生成，通多<code>doit()</code>被调用的位置debug进入。此时进入的方法就是<code>intercept()</code>方法，在<code>CiglbAopProxy</code>类中。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">intercept</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">,</span> <span class="token class-name">MethodProxy</span> methodProxy<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">{</span>
 	<span class="token class-name">Object</span> oldProxy <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
@@ -706,7 +706,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>根据目标方法、参数、目标类等参数创建<code>CglibMethodInvocation</code>实例，然后执行实例内的<code>proceed()</code>方法。</p>
-<h5 id="源码：proeed"><a href="#源码：proeed" class="headerlink" title="源码：proeed()"></a>源码：<code>proeed()</code></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<h3 id="4-2-源码：proeed"><a href="#4-2-源码：proeed" class="headerlink" title="4.2 源码：proeed()"></a>4.2 源码：<code>proeed()</code></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">{</span>
 	<span class="token comment">//	We start with an index of -1 and increment early.</span>
     <span class="token comment">// 每次将currentInterceptorIndex递增1，然后和执行链长度比较</span>
@@ -755,13 +755,13 @@ public Object invoke(MethodInvocation mi) throws Throwable {
 
 <p>这个方法里面有调用了上一步的<code>proceed()</code>方法，这个让我们想起了递归，对的，这里就是递归的思想，将执行链里面的类依次遍历出来，然后进行压栈，待执行链全部压栈后就会弹栈。使整个执行过程是有序的。</p>
 <p>其他的<code>invoke()</code>方法就不看了，只是对<code>proceed()</code>方法调用的位置不同罢了。</p>
-<h5 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h5><ul>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><ul>
 <li>首先调用到<code>CglibAopProxy</code>类的<code>intercept()</code>方法，创建<code>Invocation</code>对象，执行<code>proceed()</code>方法；</li>
 <li>在<code>proceed()</code>方法中依次获取通知方法封装类，然后通过<code>invoke()</code>方法执行通知方法；</li>
 <li>在<code>invoke()</code>方法内又会去调用<code>proceed()</code>方法，这里就形成了递归，直到执行链内的所有通知方法都被压栈后开始弹栈；</li>
 <li>依次弹栈，执行通知方法和目标方法。</li>
 </ul>
-<h3 id="Aspectj的通知方法执行顺序"><a href="#Aspectj的通知方法执行顺序" class="headerlink" title="Aspectj的通知方法执行顺序"></a>Aspectj的通知方法执行顺序</h3><p>如果想知道执行顺序其实很简单，这里就不再去跟源码，看压栈和弹栈的顺序。直接给出下面的结果。</p>
+<h2 id="6-Aspectj的通知方法执行顺序"><a href="#6-Aspectj的通知方法执行顺序" class="headerlink" title="6. Aspectj的通知方法执行顺序"></a>6. Aspectj的通知方法执行顺序</h2><p>如果想知道执行顺序其实很简单，这里就不再去跟源码，看压栈和弹栈的顺序。直接给出下面的结果。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/C3472ACDCCDC4FB3A9B976393601CA51.png"></p>
 <p>到这里整个过程都说明清楚了，从代理对象的创建、执行链的形成到目标方法执行过程。整个内容中没有把源码都贴出来，也没有将源码一行一行的解释。感觉没有必要，博客的要旨是提供思想，主干思路。</p>
 
@@ -911,7 +911,7 @@ public Object invoke(MethodInvocation mi) throws Throwable {
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-07-22T21-00-00',
+        id: '2018-07-22T21-23-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1226,7 +1226,7 @@ public Object invoke(MethodInvocation mi) throws Throwable {
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

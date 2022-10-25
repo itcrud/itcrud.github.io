@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-10-28
+                    2018-10-日 12:31:31
                 </div>
                 
 
@@ -345,8 +345,8 @@
             <div id="articleContent">
                 <p>发邮件，项目的必备功能之一，如果一个稍微模块化一点的公司，一般会单独出来一个项目专用来做公司的发送信息的功能，当然这个发送信息中不止包含发邮件，还会有短信、APP push等。这篇聊聊推送邮件。</p>
 <p>在以前的开发中，公司用Java mail的比较多，由自己来写邮件的组装和发送功能，但是Java mail使用操作比较繁杂，后来渐渐的都开始使用spring提供的JavaMailSender工具来实现，用过的都知道，这叫一个爽，执行几个set、add操作，一个复杂的邮件就可以发送出去，但是在业务代码中发送邮件的位置很多，不能在每个业务逻辑位置都写一遍同样的set操作，这是基本常识，因此都会基于JavaMailSender再做一个工具类，这个工具类让调用者只用一句话实现就OK。引出主题工具类，接下来就开干吧。</p>
-<h3 id="JavaMail邮件推送"><a href="#JavaMail邮件推送" class="headerlink" title="JavaMail邮件推送"></a>JavaMail邮件推送</h3><p>这边的主要内容是写JavaMailSender，但是开始还是来看看JavaMail的基本实现，因为JavaMailSender也是基于JavaMail做的再次封装。</p>
-<h5 id="邮件主要组成部分"><a href="#邮件主要组成部分" class="headerlink" title="邮件主要组成部分"></a>邮件主要组成部分</h5><p>发送邮件的三个重点：</p>
+<h2 id="1-JavaMail邮件推送"><a href="#1-JavaMail邮件推送" class="headerlink" title="1. JavaMail邮件推送"></a>1. JavaMail邮件推送</h2><p>这边的主要内容是写JavaMailSender，但是开始还是来看看JavaMail的基本实现，因为JavaMailSender也是基于JavaMail做的再次封装。</p>
+<h3 id="1-1-邮件主要组成部分"><a href="#1-1-邮件主要组成部分" class="headerlink" title="1.1 邮件主要组成部分"></a>1.1 邮件主要组成部分</h3><p>发送邮件的三个重点：</p>
 <ul>
 <li>Session：是用来设置邮件参数以及和邮件服务器建立会话用的。</li>
 <li>MimeMessage：邮件本体，所有的邮件内容、邮件的收件人、发送人、附件、内嵌图片等都是在这里面封装。</li>
@@ -361,7 +361,7 @@
 transport<span class="token punctuation">.</span><span class="token function">sendMessage</span><span class="token punctuation">(</span>message<span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">Address</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>上面Session的transport只能指定发送人，抄送人、密送人都不能添加，如果在MimeMessage中添加不知道能不能起作用，这个没有尝试过，如果你喜欢用这种方式可以分享一下。</p>
-<h5 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h5><p>Java mail有两个依赖，分别是mail和activation。</p>
+<h3 id="1-2-引入依赖"><a href="#1-2-引入依赖" class="headerlink" title="1.2 引入依赖"></a>1.2 引入依赖</h3><p>Java mail有两个依赖，分别是mail和activation。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>javax.mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
@@ -373,7 +373,7 @@ transport<span class="token punctuation">.</span><span class="token function">se
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.1.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="简单邮件"><a href="#简单邮件" class="headerlink" title="简单邮件"></a>简单邮件</h5><p>简单的发送邮件没有复杂的逻辑，代码也很清晰，直接上代码：</p>
+<h3 id="1-3-简单邮件"><a href="#1-3-简单邮件" class="headerlink" title="1.3 简单邮件"></a>1.3 简单邮件</h3><p>简单的发送邮件没有复杂的逻辑，代码也很清晰，直接上代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">MessagingException</span> <span class="token punctuation">{</span>
     <span class="token comment">//构建Session</span>
     <span class="token class-name">Properties</span> properties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -405,7 +405,7 @@ transport<span class="token punctuation">.</span><span class="token function">se
 <li>发件人要和进行密码验证的邮箱保持一致，否则会报错：<code>com.sun.mail.smtp.SMTPSendFailedException: 553 Mail from must equal authorized user</code>；</li>
 <li>如果要发抄送人和密送人，需要使用<code>setRecipient</code>方法，在第一参数中指定抄送类型即可。</li>
 </ul>
-<h5 id="复杂邮件"><a href="#复杂邮件" class="headerlink" title="复杂邮件"></a>复杂邮件</h5><p>复杂邮件使用的相对会比较多一点，在发送邮件的时候多少会带上内嵌图片或者附件。MimeMessage是整个邮件本体，构建复杂邮件的过程就是向这个本体中加不同的内容，Java mail提供了一个类<code>MimeBodyPart</code>，表示邮件内容的组件。将需要发送的内容用组件包装起来，再塞到邮件本地中即可。</p>
+<h3 id="1-4-复杂邮件"><a href="#1-4-复杂邮件" class="headerlink" title="1.4 复杂邮件"></a>1.4 复杂邮件</h3><p>复杂邮件使用的相对会比较多一点，在发送邮件的时候多少会带上内嵌图片或者附件。MimeMessage是整个邮件本体，构建复杂邮件的过程就是向这个本体中加不同的内容，Java mail提供了一个类<code>MimeBodyPart</code>，表示邮件内容的组件。将需要发送的内容用组件包装起来，再塞到邮件本地中即可。</p>
 <p>示例代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">MessagingException</span> <span class="token punctuation">{</span>
     <span class="token comment">//构建Session</span>
@@ -459,8 +459,8 @@ transport<span class="token punctuation">.</span><span class="token function">se
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>复杂邮件构建的过程不是很难，就是代码量会多一点。</p>
-<h3 id="JavaMailSender"><a href="#JavaMailSender" class="headerlink" title="JavaMailSender"></a>JavaMailSender</h3><p>JavaMailSender是由spring提供的，功能很强大，对Java mail做了一层封装，在Spring boot中可以拿来用，是自动集成的。</p>
-<h5 id="引入依赖-1"><a href="#引入依赖-1" class="headerlink" title="引入依赖"></a>引入依赖</h5><p>和Spring boot整合后，引入依赖就很简单啦。</p>
+<h2 id="2-JavaMailSender"><a href="#2-JavaMailSender" class="headerlink" title="2. JavaMailSender"></a>2. JavaMailSender</h2><p>JavaMailSender是由spring提供的，功能很强大，对Java mail做了一层封装，在Spring boot中可以拿来用，是自动集成的。</p>
+<h3 id="2-1-引入依赖"><a href="#2-1-引入依赖" class="headerlink" title="2.1 引入依赖"></a>2.1 引入依赖</h3><p>和Spring boot整合后，引入依赖就很简单啦。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-starter-mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
@@ -472,7 +472,7 @@ transport<span class="token punctuation">.</span><span class="token function">se
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.6.4<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h5><p>使用JavaMailSender需要在配置文件中配置相关的信息，在Java mail中是通过Session来配置，在JavaMailSender上，在Spring项目中可以通过在配置文件中配置。(如果使用的是spring boot，在properties中配置，如果是Spring MVC项目就要用xml文件啦，或者自己手动的使用Configuration类来配置，本文以Spring boot为基础)</p>
+<h3 id="2-2-配置信息"><a href="#2-2-配置信息" class="headerlink" title="2.2 配置信息"></a>2.2 配置信息</h3><p>使用JavaMailSender需要在配置文件中配置相关的信息，在Java mail中是通过Session来配置，在JavaMailSender上，在Spring项目中可以通过在配置文件中配置。(如果使用的是spring boot，在properties中配置，如果是Spring MVC项目就要用xml文件啦，或者自己手动的使用Configuration类来配置，本文以Spring boot为基础)</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.mail.default-encoding</span><span class="token punctuation">=</span><span class="token value attr-value">utf-8</span>
 <span class="token key attr-name">spring.mail.host</span><span class="token punctuation">=</span><span class="token value attr-value">smtp.163.com</span>
 <span class="token key attr-name">spring.mail.protocol</span><span class="token punctuation">=</span><span class="token value attr-value">smtp</span>
@@ -483,7 +483,7 @@ transport<span class="token punctuation">.</span><span class="token function">se
 <span class="token key attr-name">spring.mail.username</span><span class="token punctuation">=</span><span class="token value attr-value">xxx@163.com</span>
 <span class="token key attr-name">spring.mail.password</span><span class="token punctuation">=</span><span class="token value attr-value">xxxx</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="简单邮件-1"><a href="#简单邮件-1" class="headerlink" title="简单邮件"></a>简单邮件</h5><p>简单邮件发送方法，到底简单到什么程度，看下面的代码：</p>
+<h3 id="2-3-简单邮件"><a href="#2-3-简单邮件" class="headerlink" title="2.3 简单邮件"></a>2.3 简单邮件</h3><p>简单邮件发送方法，到底简单到什么程度，看下面的代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">SpringJUnit4ClassRunner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@SpringBootTest</span><span class="token punctuation">(</span>classes <span class="token operator">=</span> <span class="token class-name">ItcrudCommonsUtilApplication</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JavaMailSenderTest</span> <span class="token punctuation">{</span>
@@ -511,7 +511,7 @@ transport<span class="token punctuation">.</span><span class="token function">se
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>看了这段发送邮件的代码，然后和上面Java mail的代码对比，果断的舍弃Java mail的有木有。</p>
-<h5 id="复杂邮件-1"><a href="#复杂邮件-1" class="headerlink" title="复杂邮件"></a>复杂邮件</h5><p>对于Java mail来说是复杂邮件，但是对于JavaMailSender来说，复杂也会变得简单。</p>
+<h3 id="2-4-复杂邮件"><a href="#2-4-复杂邮件" class="headerlink" title="2.4 复杂邮件"></a>2.4 复杂邮件</h3><p>对于Java mail来说是复杂邮件，但是对于JavaMailSender来说，复杂也会变得简单。</p>
 <p>示例代码：</p>
 <pre class="line-numbers language-JAVA" data-language="JAVA"><code class="language-JAVA">@Test
 public void sendComplexText() throws MessagingException {
@@ -534,7 +534,7 @@ public void sendComplexText() throws MessagingException {
 <li>在创建MimeMessageHelper的时候要指定是否为multipart（构造方法的第二个参数），可以理解为复杂邮件的意思；</li>
 <li>在setText方法的第二个参数也是要指定为true，如果这里没有设置true，这个内容会直接显示在邮件中，不会解析html内容。</li>
 </ul>
-<h5 id="模板邮件"><a href="#模板邮件" class="headerlink" title="模板邮件"></a>模板邮件</h5><p>上面的两个内容都不是最主要的，在将Java mail的时候最后一个功能很难说，代码量太多。下面我们用JavaMailSender来实现。</p>
+<h3 id="3-模板邮件"><a href="#3-模板邮件" class="headerlink" title="3. 模板邮件"></a>3. 模板邮件</h3><p>上面的两个内容都不是最主要的，在将Java mail的时候最后一个功能很难说，代码量太多。下面我们用JavaMailSender来实现。</p>
 <p>场景：在公司对外发送邮件的时候，除了附件、内嵌图片和普通文本，还有两个很重的东西，那就是签名和占位填充。个人发邮件的时候都会带上自己的签名，何况是公司向外发邮件啦。另外一个邮件的基本格式相同，只是部分填充内容不同，总不能每次发送文件都要重新写一个html文件吧。</p>
 <p>但是想想，邮件签名就直接加在内容里面不就可以啦，然后使用html格式来进行邮件的排版。对的没有错，但是如果整个邮件的排版比较复杂，html内容很长怎么办。那也没问题啊，可以放在文件里面，通过流来读取文件不就可以了吗。对的的确是这样的，但是如果使用Java mail就要去手动的读取问题，不觉得会很麻烦吗。还有就是占位符的填充。</p>
 <p>这个时候JavaMailSender帮我们解决了这一系列的问题。准确的说是和另一个插件Velocity结合来解决。这就是在引入依赖的时候，我加上velocity的依赖的重点所在。</p>
@@ -593,8 +593,8 @@ public void sendComplexText() throws MessagingException {
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>完美解决上面的两个问题，并且整个实现过程的代码量也是很少的，比上面Java mail发送一个复杂邮件还要少。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这里讲到了Java mail发送邮件和Spring封装后的JavaMailSender，两者对比来说，JavaMailSender要比Java mail直接实现要简单的多。如果你有时间其实可以自己实现一套Spring的这种封装，但是为何要重复造轮子呢。</p>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>GitHub：<a target="_blank" rel="noopener" href="https://github.com/itcrud/itcrud-commons">https://github.com/itcrud/itcrud-commons(mail)</a></p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>这里讲到了Java mail发送邮件和Spring封装后的JavaMailSender，两者对比来说，JavaMailSender要比Java mail直接实现要简单的多。如果你有时间其实可以自己实现一套Spring的这种封装，但是为何要重复造轮子呢。</p>
+<h2 id="5-源代码"><a href="#5-源代码" class="headerlink" title="5. 源代码"></a>5. 源代码</h2><p>GitHub：<a target="_blank" rel="noopener" href="https://github.com/itcrud/itcrud-commons">https://github.com/itcrud/itcrud-commons(mail)</a></p>
 
                 
             </div>
@@ -742,7 +742,7 @@ public void sendComplexText() throws MessagingException {
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-10-28T08-00-00',
+        id: '2018-10-28T12-31-31',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1057,7 +1057,7 @@ public void sendComplexText() throws MessagingException {
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

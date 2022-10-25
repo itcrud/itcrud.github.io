@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-07-27
+                    2019-07-六 23:12:00
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>长字符串切分，取其中元素封装或者将封装信息组合成长字符串都是常规操作，但是这种长字符串往往是不可控的，如一个长字符串就是由一个元素组成，或者存在空字符串的元素，看似这并没有什么问题，但是使用不同工具类的<code>split</code>方法进行切分结果是完全不同的。不知道你是否遇到这样的坑，下面一起来看看。</p>
-<h2 id="String类自带的split方法"><a href="#String类自带的split方法" class="headerlink" title="String类自带的split方法"></a>String类自带的split方法</h2><p>直接使用String本身自带的<code>split</code>方法，看对不同字符串的切分结果。</p>
+<h2 id="1-String类自带的split方法"><a href="#1-String类自带的split方法" class="headerlink" title="1. String类自带的split方法"></a>1. String类自带的split方法</h2><p>直接使用String本身自带的<code>split</code>方法，看对不同字符串的切分结果。</p>
 <ul>
 <li><p>没有分隔符的字符串</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//str = "1"</span>
@@ -368,7 +368,7 @@
 </li>
 </ul>
 <p>最终总结不管分隔符有多少个，最终切分的结果都是n+1个元素。也是正常业务逻辑所需要的。但是这里有一个问题，如果传入的字符串是<code>null</code>的时候会报<code>NullPointException</code>异常，需要另外加一层非空判断。</p>
-<h2 id="commons提供的StringUtils工具类"><a href="#commons提供的StringUtils工具类" class="headerlink" title="commons提供的StringUtils工具类"></a>commons提供的StringUtils工具类</h2><p>具体全限定类名是<code>org.apache.commons.lang3.StringUtils</code>，这个可以说是最常用一个字符串的工具类。如判断非<code>null</code>、非空字符串或者非空格，用<code>isNotBlank</code>方法，使用集合元素组装字符串，用<code>join</code>方法等等。现在来看一下<code>split</code>方法在不同的情况下是如何实现。</p>
+<h2 id="2-commons提供的StringUtils工具类"><a href="#2-commons提供的StringUtils工具类" class="headerlink" title="2. commons提供的StringUtils工具类"></a>2. commons提供的StringUtils工具类</h2><p>具体全限定类名是<code>org.apache.commons.lang3.StringUtils</code>，这个可以说是最常用一个字符串的工具类。如判断非<code>null</code>、非空字符串或者非空格，用<code>isNotBlank</code>方法，使用集合元素组装字符串，用<code>join</code>方法等等。现在来看一下<code>split</code>方法在不同的情况下是如何实现。</p>
 <ul>
 <li><p>没有分隔符的字符串</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//str = "1"</span>
@@ -397,7 +397,7 @@
 </ul>
 <p>从这里就可以看的出来问题的所在，当出现空字符串的时候，会自动将空字符串丢弃，只保留非空字符串。但是这里还是需要注意的是如果是空格，也会形成一个元素。比如现在str输入的是<code>"1, ,2"</code>，两个分隔符间有一个空格，此时就会切分成三个元素。</p>
 <p><code>org.apache.commons.lang3.StringUtils</code>还是很强大的，在切分上split有10种方法左右，如可以按照驼峰规则切分等。基本想要的切分场景都有的。所以就个人使用StringUtils来说，首选是<code>commons.lang3</code>下的。</p>
-<h2 id="Spring下util包提供的StringUtils工具类"><a href="#Spring下util包提供的StringUtils工具类" class="headerlink" title="Spring下util包提供的StringUtils工具类"></a>Spring下util包提供的StringUtils工具类</h2><p>全限定类名<code>org.springframework.util.StringUtils</code>，这个StringUtils也经常被用到，因为在输入StringUtils的时候，IDEA自动提示，往往它就是在第一位。那它和上面两种在<code>split</code>方法上有什么不同呢？</p>
+<h2 id="3-Spring下util包提供的StringUtils工具类"><a href="#3-Spring下util包提供的StringUtils工具类" class="headerlink" title="3. Spring下util包提供的StringUtils工具类"></a>3. Spring下util包提供的StringUtils工具类</h2><p>全限定类名<code>org.springframework.util.StringUtils</code>，这个StringUtils也经常被用到，因为在输入StringUtils的时候，IDEA自动提示，往往它就是在第一位。那它和上面两种在<code>split</code>方法上有什么不同呢？</p>
 <ul>
 <li><p>没有分隔符的字符串</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//str = "1"</span>
@@ -425,7 +425,7 @@
 </li>
 </ul>
 <p>这个<code>split</code>方法还是很坑的，它会从字符串中找分隔符是否存在，如果不存在直接报错，如果存在，不管有多少个分隔符，都是以第一个分隔符做切分，最终形成两个元素。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>三个<code>split</code>方法三种不同的切分逻辑，到底在什么时候用那种方式切分就很讲究了，因为在开发过程中因为这个切分出过很多莫名其妙的BUG。我就遇到过两次。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>三个<code>split</code>方法三种不同的切分逻辑，到底在什么时候用那种方式切分就很讲究了，因为在开发过程中因为这个切分出过很多莫名其妙的BUG。我就遇到过两次。</p>
 <ul>
 <li>第一次是使用的<code>org.apache.commons.lang3.StringUtils</code>来切分字符串，字符串内有空字符串存在，导致切割后的元素个数和实际个数不同，准确的来说少了元素，结果代码中在向另一个字符串占位符中填充数据的时候，总是出现错位的现象。（如本来应该放在占位符3位置上的字符串出现为空字符串，在切分的时候，3位置的元素实际被抛弃，4位置的元素放在了3的位置）</li>
 <li>第二次也是使用的<code>org.apache.commons.lang3.StringUtils</code>来切分字符串，测试一直都是很正常，但是测试一段时间后，发现报<code>NullPointException</code>，排查后才发现，引入的StringUtils被其他开发人员换成了<code>org.springframework.util.StringUtils</code>导致的。因为这个字符串可能没有分隔符。</li>
@@ -573,7 +573,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-07-27T08-00-00',
+        id: '2019-07-27T23-12-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -884,7 +884,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

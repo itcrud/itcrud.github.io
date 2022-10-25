@@ -313,7 +313,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-06-27
+                    2018-06-三 21:56:00
                 </div>
                 
 
@@ -348,10 +348,9 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>面试的时候总是会遇到各种Spring主要功能点的问题，因为Spring对于java来说太重要。如Spring的IOC容器、动态代理、事务、切面编程等等。后期再更新文章的时候我们会慢慢讨论这些东西，这里现在我们先看其中一个功能点IOC容器，其实也不算是说IOC容器，主要的重点是放在Spring注解对IOC容器初始化的影响。也是在面试中最常说漏的。</p>
-<h3 id="面试模拟"><a href="#面试模拟" class="headerlink" title="面试模拟"></a>面试模拟</h3><p>面试官：小明，看你的简历中说对Spring有熟练的理解，那问你一个关于Spring IOC容器的问题。<br>小明：嗯！<br>面试官：我们在Spring中都会使用到IOC容器，那就说一下IOC初始化的基本实现原理吧。<br>小明：在项目启动的时候，Spring会去创建并加载对象到IOC容器中，在加载的过程可以通过以下几种方式，xml、Configuration……<br>面试官：嗯，说的挺好的，但是如果我在创建bean的时候，使用Scope和Lazy注解，你能解释以下这两个注解对初始化bean有什么影响。<br>小明：……不太清楚。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>小明很明显对IOC容器的初始化理解还是很不错的，但是理解的都是普通模式下情景，却没有理解到外界会对这个过程的影响，也就是太片面。关于Scope和Lazy注解到底对Spring的IOC容器的初始化有什么影响呢。</p>
-<h3 id="Scope注解的使用"><a href="#Scope注解的使用" class="headerlink" title="Scope注解的使用"></a>Scope注解的使用</h3><p><code>@Scope</code>注解在项目中很少用到，但是实际上底层是用到的，不过是给了默认的值。</p>
-<h4 id="Scope注解属性"><a href="#Scope注解属性" class="headerlink" title="Scope注解属性"></a>Scope注解属性</h4><p>先瞅瞅源码：</p>
+<h2 id="1-面试模拟"><a href="#1-面试模拟" class="headerlink" title="1. 面试模拟"></a>1. 面试模拟</h2><p>面试官：小明，看你的简历中说对Spring有熟练的理解，那问你一个关于Spring IOC容器的问题。<br>小明：嗯！<br>面试官：我们在Spring中都会使用到IOC容器，那就说一下IOC初始化的基本实现原理吧。<br>小明：在项目启动的时候，Spring会去创建并加载对象到IOC容器中，在加载的过程可以通过以下几种方式，xml、Configuration……<br>面试官：嗯，说的挺好的，但是如果我在创建bean的时候，使用Scope和Lazy注解，你能解释以下这两个注解对初始化bean有什么影响。<br>小明：……不太清楚。<br>小明很明显对IOC容器的初始化理解还是很不错的，但是理解的都是普通模式下情景，却没有理解到外界会对这个过程的影响，也就是太片面。关于Scope和Lazy注解到底对Spring的IOC容器的初始化有什么影响呢。</p>
+<h2 id="2-Scope注解的使用"><a href="#2-Scope注解的使用" class="headerlink" title="2. Scope注解的使用"></a>2. Scope注解的使用</h2><p><code>@Scope</code>注解在项目中很少用到，但是实际上底层是用到的，不过是给了默认的值。</p>
+<h3 id="2-1-Scope注解属性"><a href="#2-1-Scope注解属性" class="headerlink" title="2.1 Scope注解属性"></a>2.1 Scope注解属性</h3><p>先瞅瞅源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Alias for {@link #scopeName}.
  * @see #scopeName
@@ -380,7 +379,7 @@
 <li>session，每个会话对应一个实例，针对web应用</li>
 </ul>
 <p>这里对session、request模式不做太多说明，博友们有兴趣可以自己研究一下。</p>
-<h3 id="案例说明-Scope"><a href="#案例说明-Scope" class="headerlink" title="案例说明@Scope"></a>案例说明@Scope</h3><p>直接上代码，一切都不是问题。</p>
+<h3 id="2-2-案例说明-Scope"><a href="#2-2-案例说明-Scope" class="headerlink" title="2.2 案例说明@Scope"></a>2.2 案例说明@Scope</h3><p>直接上代码，一切都不是问题。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * @Author: 战斗猿DOIT
  * @Project: lazy-scope
@@ -471,7 +470,7 @@
 <span class="token class-name">Person</span><span class="token punctuation">{</span>name<span class="token operator">=</span>'zdydoit'<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">22</span><span class="token punctuation">}</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>和上面结果不同的是，有两次初始化bean，并且初始化bean都是在IOC初始化结束后才执行的，判断两次获取到的bean对象是否相等，返回的是false，可以很明确的知道，两个对象不是同一个。结论就是在IOC容器初始化的时候对于<code>@Scope</code>为<code>prototype</code>时，不会立即创建对象，而是每次使用的时候创建，并且每次都是创建新的对象，之前创建的不复用。</p>
-<h3 id="案例说明-Lazy"><a href="#案例说明-Lazy" class="headerlink" title="案例说明@Lazy"></a>案例说明@Lazy</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 实体类还是使用之前的Person</span>
+<h2 id="3-案例说明-Lazy"><a href="#3-案例说明-Lazy" class="headerlink" title="3. 案例说明@Lazy"></a>3. 案例说明@Lazy</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 实体类还是使用之前的Person</span>
 <span class="token comment">/**
  * @Author: 战斗猿DOIT
  * @Project: lazy-scope
@@ -512,7 +511,7 @@
 <span class="token class-name">Person</span><span class="token punctuation">{</span>name<span class="token operator">=</span>'zdydoit'<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">18</span><span class="token punctuation">}</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>bean的初始化是在IOC容器初始化结束以后执行的，也就是在<code>getBean()</code>执行的时候才去做bean的初始化，当第二次<code>getBean()</code>的时候就不会再去初始化，而是采用的第一次bean初始化的对象，最终两个bean的等于判断也是相等的，由此可以看来<code>@Lazy</code>就相当于懒汉模式，第一次请求创建bean，然后bean会被放入到IOC容器中，后续请求直接使用。</p>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>从上面分析看的出来，在Spring容器初始化的时候，并不会把所有的对象都初始化并放到容器中，对于<code>@Scope("prototype")</code>和<code>@Lazy</code>，都是使用的时候去创建，两个不同之处在于一个创建多个（多例），一个创建单个（单例）。<br>从上面的分析，如果在面试的时候问到Spring的IOC容器初始化，是不是又多了一些可以说(zhuang)的机会了。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>从上面分析看的出来，在Spring容器初始化的时候，并不会把所有的对象都初始化并放到容器中，对于<code>@Scope("prototype")</code>和<code>@Lazy</code>，都是使用的时候去创建，两个不同之处在于一个创建多个（多例），一个创建单个（单例）。<br>从上面的分析，如果在面试的时候问到Spring的IOC容器初始化，是不是又多了一些可以说(zhuang)的机会了。</p>
 
                 
             </div>
@@ -664,7 +663,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-06-27T21-00-00',
+        id: '2018-06-27T21-56-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -979,7 +978,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

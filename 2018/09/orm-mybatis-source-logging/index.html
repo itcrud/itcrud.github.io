@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-09-11
+                    2018-09-二 08:00:00
                 </div>
                 
 
@@ -341,12 +341,12 @@
             <div id="articleContent">
                 <p>mybatis框架源码的实现相对spring来说要简单的很多，模块的分工也很明确，每个模块的代码量也不是很大，比较容易阅读，如果你对设计模式很了解的话。里面用到很多设计模式，如工厂模式、代理模式、装饰器模式、适配器模式等等，都是值得平时开发学习和借鉴的，都说高手的代码都是向高级框架靠拢，谁知道他是自己设计还是看了源码学习的呢，对不？</p>
 <p>mybatis的模块比较多，如对外的用SqlSession、内部底层日志logging、数据源模块、反射等，这一篇来看mybatis源码中最简单的部分logging日志。这个模块主要就是用工厂模式生成适配不同logging组件的日志类。然后就是适配器模式，适配不同的logging组件，并支持无侵入的logging组件扩展。</p>
-<h3 id="logging整体了解"><a href="#logging整体了解" class="headerlink" title="logging整体了解"></a>logging整体了解</h3><p>想了解细节，先了解整体，会更好。看图：</p>
+<h2 id="1-logging整体了解"><a href="#1-logging整体了解" class="headerlink" title="1. logging整体了解"></a>1. logging整体了解</h2><p>想了解细节，先了解整体，会更好。看图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/894FB084AC2E4CF5B8534CE09578C933.png"></p>
 <p>市场上日志组件有很多，各个公司采用的日志组件不尽相同，但是可能都要使用到mybatis，如果mybatis只能支持一种日志的话，那么就会出现其他日志组件无法打印日志的问题。</p>
 <p>此时使用适配器模式，不论其他的组件是什么样的，统一使用适配类去对这些组件进行封装，适配类都实现Log接口，将Log暴露给mybatis调用方，调用方直接调用log接口内的方法即可。不用管底层到底是适配哪个日志组件。另外每种日志组件的日志级别分类都是有所差别的，做了统一封装，就不用考虑日志级别变化的问题。</p>
 <p>这种设计拓展性很好，如果需要添加日志组件，只要写一个适配类去封装此日志组件，然后在工厂类中添加日志适配类加载的代码就可以，上层的业务代码是无需任何修改，是无感的。</p>
-<h3 id="看一下源码"><a href="#看一下源码" class="headerlink" title="看一下源码"></a>看一下源码</h3><h5 id="Log接口类"><a href="#Log接口类" class="headerlink" title="Log接口类"></a>Log接口类</h5><p>Log接口类的代码：</p>
+<h2 id="2-看一下源码"><a href="#2-看一下源码" class="headerlink" title="2. 看一下源码"></a>2. 看一下源码</h2><h3 id="2-1-Log接口类"><a href="#2-1-Log接口类" class="headerlink" title="2.1 Log接口类"></a>2.1 Log接口类</h3><p>Log接口类的代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Log</span> <span class="token punctuation">{</span>
   <span class="token keyword">boolean</span> <span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//是否可以debug日志</span>
   <span class="token keyword">boolean</span> <span class="token function">isTraceEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//是否可以跟进日志</span>
@@ -363,7 +363,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里日志接口很简单，就四种日志级别。如果多log4j、commons-logging这些日志组件有所了解的话，可以知道他们的日志级别都是有所不同。因此这里就必须要是做适配了，适配器就上场喽。(slf4j为例)</p>
-<h5 id="Slf4jImpl实现类"><a href="#Slf4jImpl实现类" class="headerlink" title="Slf4jImpl实现类"></a>Slf4jImpl实现类</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Slf4jImpl</span> <span class="token keyword">implements</span> <span class="token class-name">Log</span> <span class="token punctuation">{</span>
+<h3 id="2-2-Slf4jImpl实现类"><a href="#2-2-Slf4jImpl实现类" class="headerlink" title="2.2 Slf4jImpl实现类"></a>2.2 Slf4jImpl实现类</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Slf4jImpl</span> <span class="token keyword">implements</span> <span class="token class-name">Log</span> <span class="token punctuation">{</span>
 
   <span class="token keyword">private</span> <span class="token class-name">Log</span> log<span class="token punctuation">;</span>
   <span class="token comment">// 构造函数(很重要)</span>
@@ -420,7 +420,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里主要看的就是构造函数，看构造函数是如何创建适配器对象的。先根据实际日志组件类创建logger实例，然后根据对logger实例进行包装，得到一个适配后的log实例，也就是对应日志组件的log适配器对象。<code>Slf4jLocationAwareLoggerImpl</code>内的代码就不跟进去看了，里面很简单，就是将传入的logger赋值给成员变量。然后在四种日志级别的方法里面都使用这个logger对象进行日志打印。</p>
-<h5 id="LogFactory工厂类"><a href="#LogFactory工厂类" class="headerlink" title="LogFactory工厂类"></a>LogFactory工厂类</h5><p>工厂类做了两件事情，第一步在静态代码块中依次扫描日志实现，然后根据优先级加载日志实现类的构造器，只会加载一个，谁在前加载谁。第二步提供<code>getLog</code>方法，通过此方法中调用构造器的<code>newInstance</code>方法构造正式的日志对象和日志适配对象。</p>
+<h3 id="2-3-LogFactory工厂类"><a href="#2-3-LogFactory工厂类" class="headerlink" title="2.3 LogFactory工厂类"></a>2.3 LogFactory工厂类</h3><p>工厂类做了两件事情，第一步在静态代码块中依次扫描日志实现，然后根据优先级加载日志实现类的构造器，只会加载一个，谁在前加载谁。第二步提供<code>getLog</code>方法，通过此方法中调用构造器的<code>newInstance</code>方法构造正式的日志对象和日志适配对象。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//加载日志构造器的静态代码块</span>
 <span class="token comment">//根据顺序依次执行日志类的加载，有加载顺序和优先级</span>
 <span class="token comment">//顺序(优先级)：slf4j-&gt;commons-logging-&gt;log4j-logging-&gt;log4j-&gt;jdk-&gt;no-loging</span>
@@ -479,7 +479,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>创建日志实例的方法如上，很简单，就是<code>newInstance</code>方法的调用。</p>
-<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>日志组件适配的整个过程不难，代码也很简洁，过程也很清晰，然后现在通过下面的图总结一下执行的流程。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>日志组件适配的整个过程不难，代码也很简洁，过程也很清晰，然后现在通过下面的图总结一下执行的流程。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/BEC18FEB47F846278B9D6C77042F9EF5.png" alt="mybatis日志源码-加载"></p>
 <p>日志工厂类加载日志适配器类过程。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/1272A631BA184D72A1A68E88159267E1.png" alt="mybatis日志源码-创建"></p>
@@ -938,7 +938,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

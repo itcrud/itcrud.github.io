@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-08-31
+                    2018-08-五 21:54:00
                 </div>
                 
 
@@ -346,13 +346,13 @@
                 <p>Mybatis的映射文件中顶级的标签并不多，之前有说过<code>select</code>、<code>update</code>、<code>delete</code>、<code>insert</code>、<code>sql</code>等标签，<code>resultMap</code>在之前的文章也有提过，但是当时也是简单的提过，其实这个标签里面的内容很多，可简单可复杂。正常开发中简单的基本都在使用，但是涉及到复杂的用的就少啦。</p>
 <p><code>association</code>实现一对一的查询，<code>collection</code>实现一对多的查询，<code>discriminator</code>实现鉴别器的功能，也就是根据不同的条件实现不同的关联查询。为什么说用到这些复杂的内容很少呢。以前在项目上性能要求不是很高，对分库分表概念没有那么高的时候，采用关联查询其实没有什么不好，但是现在互联网发展迅速，数据量变得庞大，查询SQL的性能要求也变得更高。关联查询在大数据量的时候执行效率不高也就格外的凸显出来了。如果看过阿里的Java开发手册可以知道，他们是不推荐关联查询，而是提倡单表操作，如果需要查其他表信息，就根据条件，操作其他单表。</p>
 <p>虽然关联查询操作变少，但是面试的时候还是可以用来问的。不管从哪一个方面来说扩展知识面都不是坏事。</p>
-<h3 id="resultMap子标签之association标签"><a href="#resultMap子标签之association标签" class="headerlink" title="resultMap子标签之association标签"></a>resultMap子标签之association标签</h3><p>在说<code>association</code>标签的具体使用前，先说一下两种关联查询方式。</p>
+<h2 id="1-resultMap子标签之association标签"><a href="#1-resultMap子标签之association标签" class="headerlink" title="1. resultMap子标签之association标签"></a>1. resultMap子标签之association标签</h2><p>在说<code>association</code>标签的具体使用前，先说一下两种关联查询方式。</p>
 <ul>
 <li>嵌套结果：使用嵌套结果映射来处理重复的联合结果的子集</li>
 <li>嵌套查询：通过执行另外一个 SQL 映射语句来返回预期的复杂类型 </li>
 </ul>
 <p>咋一看上面的两个概念很难理解，下面用代码体现一下。</p>
-<h5 id="嵌套结果方式"><a href="#嵌套结果方式" class="headerlink" title="嵌套结果方式"></a>嵌套结果方式</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//用户类</span>
+<h3 id="1-1-嵌套结果方式"><a href="#1-1-嵌套结果方式" class="headerlink" title="1.1 嵌套结果方式"></a>1.1 嵌套结果方式</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//用户类</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token class-name">Integer</span> id<span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token class-name">String</span> user_name<span class="token punctuation">;</span>
@@ -401,7 +401,7 @@
 
 <p>用户表中有一个字段<code>father</code>，对应的是<code>Father</code>实体类，每人都有一个父亲，而且是一对一的关系，至于那些大干爹、二干爹这里不做考虑。查询出来的结果用户信息的字段自然封装到<code>User</code>中，那父亲的信息就是放在<code>father</code>字段中。</p>
 <p>查询语句对应的<code>resultMap</code>是<code>selectUserMap1</code>，<code>selectUserMap1</code>是继承<code>userBaseColumnMap</code>，这里继承可以理解成java里面的继承，也就是说继承了父类的字段映射关系。重点看的是<code>association</code>标签，<code>property</code>属性对应的是<code>User</code>类中的<code>father</code>字段，表示<code>association</code>内的查询结果是封装在<code>father</code>字段中，对应的<code>javaType</code>自然就是<code>Father</code>，<code>columnPrefix</code>表示字段的前缀，这里加上前缀是很有必要的，因为在两个表做关联的时候，可能会存在数据库中字段名相同，那么在这里如果不用别名，就会导致两个字段映射过程混乱。</p>
-<h5 id="嵌套查询方式"><a href="#嵌套查询方式" class="headerlink" title="嵌套查询方式"></a>嵌套查询方式</h5><p>这种方式需要关联到另一个命名空间，上面的例子是在同一个命名空间<code>com.zdydoit.core.mapper.UserMapper</code>下。这里的另一个命名空间就是<code>com.zdydoit.core.mapper.FatherMapper</code>。</p>
+<h3 id="1-2-嵌套查询方式"><a href="#1-2-嵌套查询方式" class="headerlink" title="1.2 嵌套查询方式"></a>1.2 嵌套查询方式</h3><p>这种方式需要关联到另一个命名空间，上面的例子是在同一个命名空间<code>com.zdydoit.core.mapper.UserMapper</code>下。这里的另一个命名空间就是<code>com.zdydoit.core.mapper.FatherMapper</code>。</p>
 <p>实体类的代码和上面的一样，下面只做映射关系的展示。</p>
 <p><code>com.zdydoit.core.mapper.UserMapper</code>命名空间下：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 嵌套查询方式 --&gt;</span>
@@ -455,12 +455,12 @@
 <li><code>fetchType</code>属性，这个属性有两个可选值，分别是<code>lazy</code>和<code>eager</code>,分别表示是否懒加载，如果设置为懒加载，在主类中没有使用到这个关联对象，就会少一次关联字句查询的过程，只有使用的时候才去查询。</li>
 <li><code>javaType</code>属性，指定关联对象的具体类型。</li>
 </ul>
-<h3 id="resultMap子标签之collection标签"><a href="#resultMap子标签之collection标签" class="headerlink" title="resultMap子标签之collection标签"></a>resultMap子标签之collection标签</h3><p><code>collection</code>和<code>association</code>标签的使用方式是相同的，也包含两种关联查询方式，唯一不同的就是<code>association</code>只能对应一条记录，是一对一的关系，使用单个类字段来接收，<code>collection</code>可以对应多条记录，是一对多的关系，接收使用集合方式。</p>
+<h2 id="2-resultMap子标签之collection标签"><a href="#2-resultMap子标签之collection标签" class="headerlink" title="2. resultMap子标签之collection标签"></a>2. resultMap子标签之collection标签</h2><p><code>collection</code>和<code>association</code>标签的使用方式是相同的，也包含两种关联查询方式，唯一不同的就是<code>association</code>只能对应一条记录，是一对一的关系，使用单个类字段来接收，<code>collection</code>可以对应多条记录，是一对多的关系，接收使用集合方式。</p>
 <p>还有就是<code>collection</code>多了一个<code>ofType</code>字段，这个字段是用来指定集合内元素的类型，如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Computer</span><span class="token punctuation">&gt;</span></span> computers<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>这个是有<code>ofType</code>对应的类型就是<code>Computer</code>。同样理解<code>javaType</code>对应的类型就是<code>List</code>。不过这里一般都不会手动去指定<code>javaType</code>，会自动映射到集合中。</p>
-<h3 id="resultMap子标签之discriminator标签"><a href="#resultMap子标签之discriminator标签" class="headerlink" title="resultMap子标签之discriminator标签"></a>resultMap子标签之discriminator标签</h3><p>这个应用场景感觉不多，不过还是可以举个栗子理解一下的。</p>
+<h2 id="3-resultMap子标签之discriminator标签"><a href="#3-resultMap子标签之discriminator标签" class="headerlink" title="3. resultMap子标签之discriminator标签"></a>3. resultMap子标签之discriminator标签</h2><p>这个应用场景感觉不多，不过还是可以举个栗子理解一下的。</p>
 <p>在做体检的时候，男性和女性体检内容是有区别的。现在有三张表，分别是人员表、男性体检报告表、女性体检报告表。要求查一个人的体检报告。那很简单是当这个人是男性的时候，查询其体检报告是从男性体检报告表中查询，反之就到女性体检报告表中查询。实现方式如下：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 人员基础信息 --&gt;</span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resultMap</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>personBaseColumnMap<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Person<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
@@ -499,8 +499,7 @@
 <li><code>case</code>标签内有<code>resultType</code>和<code>resultMap</code>两种指定结果的方式，这里使用的都是<code>resultMap</code>的方式，因为这种方式更优。如果使用<code>resultType</code>，只能使用嵌套结果方式，然后又涉及到多张不同的表，代码量变大，而且是重复的代码量。这里稍微有点难理解，可以上手写一下就知道了。</li>
 <li><code>resultMap</code>的继承关系，这里涉及到多个<code>resultMap</code>，<code>select</code>标签指定的是<code>personReportMap</code>，是直接<code>resultMap</code>，<code>personReportMap</code>继承<code>personBaseColumnMap</code>，因为人员基础信息映射关系都在这个<code>personBaseColumnMap</code>中,然后<code>case</code>内的<code>healtReportMaleMap</code>和<code>healthReportFemaleMap</code>都是继承<code>personReportMap</code>。</li>
 </ul>
-<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>习惯性的总结一下。</p>
-<ul>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><ul>
 <li>说了两种关联查询方式，分别是嵌套结果和嵌套查询，贯穿了三个标签的使用。</li>
 <li><code>association</code>标签用于一对一的关联查询，主要属性也做了说明。</li>
 <li><code>collection</code>标签用于一对多的关联查询，没有具体说，可以参考<code>association</code>标签的解释，基本相同。</li>
@@ -656,7 +655,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-08-31T08-00-00',
+        id: '2018-08-31T21-54-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -971,7 +970,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

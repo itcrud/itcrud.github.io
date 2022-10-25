@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-10-11
+                    2018-10-四 08:00:00
                 </div>
                 
 
@@ -344,7 +344,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>SQL优化，心中永远的痛，同事写的各种复杂SQL，各种坑，有时候想拿出来优化一下，但是总感觉力不从心，不知从哪里下手。下面就一起聊聊SQL优化有哪些技巧。</p>
-<h3 id="优化前准备"><a href="#优化前准备" class="headerlink" title="优化前准备"></a>优化前准备</h3><p>首先需要建立一张表，这个表里面有联合索引，有普通索引。也是平时最常用了，看SQL：</p>
+<h2 id="1-优化前准备"><a href="#1-优化前准备" class="headerlink" title="1. 优化前准备"></a>1. 优化前准备</h2><p>首先需要建立一张表，这个表里面有联合索引，有普通索引。也是平时最常用了，看SQL：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>t<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
   <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
   <span class="token identifier"><span class="token punctuation">`</span>uname<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
@@ -362,28 +362,28 @@
 
 <p>采用的存储引擎是InnoDB，工作中百分之九十都是用这个，其他的存储引擎不做特殊说明。</p>
 <p>其中uname、age、pos三列用的是联合索引，其他都是普通索引。表创建好了，那就填几条数据，这个大家随意，不提供具体的执行SQL喽！进入正题。</p>
-<h3 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h3><p>这里总结的SQL优化有十条规则，看似很多，其实的确很多，但这是让自己吃上一碗热饭的必备技能，咬咬牙背下来，然后在工作中多用用，也许并没有那么的难。</p>
-<h5 id="尽量全值匹配"><a href="#尽量全值匹配" class="headerlink" title="尽量全值匹配"></a>尽量全值匹配</h5><p>表示在对索引列查询的时候尽量使用完整的值去匹配。</p>
+<h2 id="2-SQL优化"><a href="#2-SQL优化" class="headerlink" title="2. SQL优化"></a>2. SQL优化</h2><p>这里总结的SQL优化有十条规则，看似很多，其实的确很多，但这是让自己吃上一碗热饭的必备技能，咬咬牙背下来，然后在工作中多用用，也许并没有那么的难。</p>
+<h3 id="2-1-尽量全值匹配"><a href="#2-1-尽量全值匹配" class="headerlink" title="2.1 尽量全值匹配"></a>2.1 尽量全值匹配</h3><p>表示在对索引列查询的时候尽量使用完整的值去匹配。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/4CE08AD49D164F9FB82ABC25AAD612F7.png"></p>
-<h5 id="最佳左前缀原则"><a href="#最佳左前缀原则" class="headerlink" title="最佳左前缀原则"></a>最佳左前缀原则</h5><p>这个原则只对联合索引来说，在建立联合索引的时候，多列会有一个依次的顺序，在使用的时候需要注意，第一列需要用上，如果不用直接用后面的字段查询，索引会失效。</p>
+<h3 id="2-2-最佳左前缀原则"><a href="#2-2-最佳左前缀原则" class="headerlink" title="2.2 最佳左前缀原则"></a>2.2 最佳左前缀原则</h3><p>这个原则只对联合索引来说，在建立联合索引的时候，多列会有一个依次的顺序，在使用的时候需要注意，第一列需要用上，如果不用直接用后面的字段查询，索引会失效。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/999C82B678044090BD60A1516CD512CB.png"></p>
 <p>如上面的两个SQL，uname是第一列，当uname和age同时存在于where条件中的时候，索引是生效的。当只使用age列查询的时候，索引就失效，type对应的值是ALL，表示全表扫描。</p>
-<h5 id="不在索引列上做任何操作"><a href="#不在索引列上做任何操作" class="headerlink" title="不在索引列上做任何操作"></a>不在索引列上做任何操作</h5><p>在我自己接手的一个项目中就有这种情况，以前的开发小朋友特别喜欢在SQL里面做各种操作，而且SQL比较复杂，可读性也不强，最重要的是会导致索引失效。</p>
+<h3 id="2-3-不在索引列上做任何操作"><a href="#2-3-不在索引列上做任何操作" class="headerlink" title="2.3 不在索引列上做任何操作"></a>2.3 不在索引列上做任何操作</h3><p>在我自己接手的一个项目中就有这种情况，以前的开发小朋友特别喜欢在SQL里面做各种操作，而且SQL比较复杂，可读性也不强，最重要的是会导致索引失效。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/84CA821F5AD84E7790737DF8E278BC39.png"></p>
 <p>如上面的SQL，uname是建立索引的，就因为使用了left函数去截取字符串，导致了索引的失效。不过还有救，使用覆盖索引，但是这仅仅能挽回一点点，此时的type是index，在type类型的排行里面，index只比ALL高一级。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/41EEB79E21B945A5BEE3F973060073E0.png"></p>
-<h5 id="范围条件放最后"><a href="#范围条件放最后" class="headerlink" title="范围条件放最后"></a>范围条件放最后</h5><p>这个也是对联合索引来说的，如果联合索引有多个，其中一个索引使用了范围查询，会导致后续的索引失效。</p>
+<h3 id="2-4-范围条件放最后"><a href="#2-4-范围条件放最后" class="headerlink" title="2.4 范围条件放最后"></a>2.4 范围条件放最后</h3><p>这个也是对联合索引来说的，如果联合索引有多个，其中一个索引使用了范围查询，会导致后续的索引失效。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/28D6E7C81434483F8687B271C5576228.png"></p>
 <p>如图，uname的长度是32对应的字节长度是99，age对应的字节长度是5，pos对应的字节长度是195，总共是299。从上面的SQL执行计划可以看出来key_len的长度只有104，也就是只有uname和age的索引生效，而pos的索引失效。原因就是age使用了范围查询。在建立索引的时候，age是放在了pos的前面。优化的方法就是将age在索引里面的位置调到pos的后面。也就是将原来的<code>KEY idx_name_age_pos (uname,age,pos) USING BTREE</code>修改成<code>KEY idx_name_age_pos (uname,pos,age) USING BTREE</code>。</p>
 <p>查询SQL不变，看执行计划结果如下图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/470828C85B8949088DD923DCC1850971.png"></p>
 <p>两个图很像，但是注意key_len列的值变化。</p>
-<h5 id="覆盖索引尽量用"><a href="#覆盖索引尽量用" class="headerlink" title="覆盖索引尽量用"></a>覆盖索引尽量用</h5><p>覆盖索引上面已经用到了，是在做列上操作的时候说到。覆盖索引可以在很多情况下优化SQL，下面也会经常用到，这里不做具体的SQL演示。主要是要覆盖索引是怎么用的。</p>
+<h3 id="2-5-覆盖索引尽量用"><a href="#2-5-覆盖索引尽量用" class="headerlink" title="2.5 覆盖索引尽量用"></a>2.5 覆盖索引尽量用</h3><p>覆盖索引上面已经用到了，是在做列上操作的时候说到。覆盖索引可以在很多情况下优化SQL，下面也会经常用到，这里不做具体的SQL演示。主要是要覆盖索引是怎么用的。</p>
 <p>在查询的时候，条件使用到索引列，同时在select中需要查询的内容也包括该索引列，此时就可以形成覆盖索引。</p>
 <p>这里可以说了一下，为什么在很多其他博客中或者前辈们都说，不要用<code>select *</code>，而是用具体的字段名，这个时候就是想尽量的使用覆盖索引，可以避免大部分的索引失效问题。</p>
-<h5 id="不等于要慎用"><a href="#不等于要慎用" class="headerlink" title="不等于要慎用"></a>不等于要慎用</h5><p>将不等于使用在索引上面，会导致索引失效。但是如果业务中必须使用到，可以使用覆盖索引，提高SQL的性能。如下图：</p>
+<h3 id="2-6-不等于要慎用"><a href="#2-6-不等于要慎用" class="headerlink" title="2.6 不等于要慎用"></a>2.6 不等于要慎用</h3><p>将不等于使用在索引上面，会导致索引失效。但是如果业务中必须使用到，可以使用覆盖索引，提高SQL的性能。如下图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/6B57D7F8DB0C401A8608861CDF2A51F5.png"></p>
-<h5 id="null-not-null要注意"><a href="#null-not-null要注意" class="headerlink" title="null/not null要注意"></a>null/not null要注意</h5><p>这个就要分不同的情况来说了。</p>
+<h3 id="2-7-null-not-null要注意"><a href="#2-7-null-not-null要注意" class="headerlink" title="2.7 null/not null要注意"></a>2.7 null/not null要注意</h3><p>这个就要分不同的情况来说了。</p>
 <ul>
 <li>当索引列是可以为null的时候，使用is not null会导致索引失效，而is null不会失效</li>
 </ul>
@@ -393,21 +393,21 @@
 </ul>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/E4A64DA78AF74D11AE54CC6E9AD8C684.png"></p>
 <p>对于上面索引失效的情况，可以用覆盖索引来解决，具体写法不多做阐述，参考之前的使用。</p>
-<h5 id="like查询要注意通配符"><a href="#like查询要注意通配符" class="headerlink" title="like查询要注意通配符"></a>like查询要注意通配符</h5><p>like使用的时候可能会导致索引失效。以前都听说like肯定会导致索引失效，这个说法其实是不正确的，只是可能而已。下面说一下不同情况中的体现。(like查询的时候可能使用到通配符分别是”_”和”%”，例子中以”%”为例)</p>
+<h3 id="2-8-like查询要注意通配符"><a href="#2-8-like查询要注意通配符" class="headerlink" title="2.8 like查询要注意通配符"></a>2.8 like查询要注意通配符</h3><p>like使用的时候可能会导致索引失效。以前都听说like肯定会导致索引失效，这个说法其实是不正确的，只是可能而已。下面说一下不同情况中的体现。(like查询的时候可能使用到通配符分别是”_”和”%”，例子中以”%”为例)</p>
 <ul>
 <li>当通配符放在like条件值的前面时会导致索引失效</li>
 <li>上面情况的反之就不会导致索引失效</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/184F06A726A045F895B5ED68ACC19BFA.png"></p>
 <p>对于上面出现的失效问题，可以使用覆盖索引来解决，到这里可以看出来覆盖索引为什么要尽量用了吧。</p>
-<h5 id="字符串记得加引号"><a href="#字符串记得加引号" class="headerlink" title="字符串记得加引号"></a>字符串记得加引号</h5><p>有时写SQL的时候偷懒或者没有注意，在写字符串条件的时候没有写引号，这样也是会导致索引失效的。如图：</p>
+<h3 id="2-9-字符串记得加引号"><a href="#2-9-字符串记得加引号" class="headerlink" title="2.9 字符串记得加引号"></a>2.9 字符串记得加引号</h3><p>有时写SQL的时候偷懒或者没有注意，在写字符串条件的时候没有写引号，这样也是会导致索引失效的。如图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/56C3490F5FBE4C00868236D1589DE9EF.png"></p>
 <p>这种情况怎么解决呢，使用覆盖索引，是的这是可以的，但是不是最好的，最好的方式是把引号加上。如图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/38A11B675B17483B96A2885F62BDCB86.png"></p>
 <p>但是这种情况发生的几率不高，现在都是用mybatis或者第三方的ORM框架，在通过占位符引入变量的时候，ORM都会在生成SQL的时候帮忙加上。但是还是要注意，有时候太过于依赖第三方框架，更容易出错。</p>
-<h5 id="OR换成UNION效率会更高"><a href="#OR换成UNION效率会更高" class="headerlink" title="OR换成UNION效率会更高"></a>OR换成UNION效率会更高</h5><p>直接看下面的语句，第一条使用的是<code>select *</code>，这样在使用OR的时候，type类型值是ALL，就会导致全表扫描。如果使用覆盖索引，就会将原来的ALL变成range，有效的提高了性能，如第三条语句，但是这并不是最好的。最好的是第二条语句，将OR换成UNION方式查询，在第二条执行计划中可以看的出来，执行的type类型都是ref，性能是高于range的。</p>
+<h3 id="2-10-OR换成UNION效率会更高"><a href="#2-10-OR换成UNION效率会更高" class="headerlink" title="2.10 OR换成UNION效率会更高"></a>2.10 OR换成UNION效率会更高</h3><p>直接看下面的语句，第一条使用的是<code>select *</code>，这样在使用OR的时候，type类型值是ALL，就会导致全表扫描。如果使用覆盖索引，就会将原来的ALL变成range，有效的提高了性能，如第三条语句，但是这并不是最好的。最好的是第二条语句，将OR换成UNION方式查询，在第二条执行计划中可以看的出来，执行的type类型都是ref，性能是高于range的。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/85F62187FA22441693E9A808BAE65934.png"></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>上面的所有说完了是不是要回去改代码啦😏！下面编一个口诀大家可以参考一下。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>上面的所有说完了是不是要回去改代码啦😏！下面编一个口诀大家可以参考一下。</p>
 <p>全值匹配是最优<br>最左前缀原则要注意<br>乱在索引列上操作惹祸害<br>范围查询记得放后面<br>不等于使用要小心<br>空和非空要注意<br>模糊查询通配符勿乱放<br>字符串查询加引号<br>OR变UNION效率会更高<br>记得覆盖索引尽量用哦</p>
 <p>完！！！</p>
 
@@ -872,7 +872,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

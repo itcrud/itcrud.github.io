@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-12-09
+                    2018-12-日 08:00:00
                 </div>
                 
 
@@ -340,12 +340,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>nginx目前在市场上使用是非常广泛的，作为一个开发人员，可以不会nginx的高级使用，但是基本的使用场景以及日常问题排查技能还是要有的。nginx使用的方向主要有三个，分别是路由功能、负载均衡功能以及静态资源服务功能。路由功能主要是用来将不同请求分发到不用的服务上，负载均衡是将请求分发到一个服务的集群中的不同虚拟机上，这两种有一点类似，但是存在本质的区别。再就是静态资源服务功能，以前的开发和现在的小公司服务，习惯将静态资源直接放在项目下，但是随着公司产品量和服务量的增多，静态资源自然也会增长，如果继续放在项目下，就会增加项目的压力。所以单独出来建立对应的静态资源服务器也是很常见的，这个时候就需要将静态资源的请求路由到对应静态资源服务器上。</p>
-<h3 id="nginx的三种使用场景"><a href="#nginx的三种使用场景" class="headerlink" title="nginx的三种使用场景"></a>nginx的三种使用场景</h3><h5 id="路由服务功能"><a href="#路由服务功能" class="headerlink" title="路由服务功能"></a>路由服务功能</h5><p>对外提供服务不会直接将机器暴露给外界提供访问（安全问题），往往是提供统一的路由机器，由路由机器来将请求分发到内部提供真实服务的服务器上，处理请求后再通过路由机器响应给请求方。内部服务器很多，具体需要路由到那一台机器，这是就可以用到nginx的路由服务功能。实现思路如下：</p>
+<h2 id="1-nginx的三种使用场景"><a href="#1-nginx的三种使用场景" class="headerlink" title="1. nginx的三种使用场景"></a>1. nginx的三种使用场景</h2><h3 id="1-1-路由服务功能"><a href="#1-1-路由服务功能" class="headerlink" title="1.1 路由服务功能"></a>1.1 路由服务功能</h3><p>对外提供服务不会直接将机器暴露给外界提供访问（安全问题），往往是提供统一的路由机器，由路由机器来将请求分发到内部提供真实服务的服务器上，处理请求后再通过路由机器响应给请求方。内部服务器很多，具体需要路由到那一台机器，这是就可以用到nginx的路由服务功能。实现思路如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/BC32DD0DDF374DD4B8A94C68DC2F52B5.png"></p>
-<h5 id="负载均衡功能"><a href="#负载均衡功能" class="headerlink" title="负载均衡功能"></a>负载均衡功能</h5><p>负载均衡，一个服务集群部署，由多个机器组成，为了不让一台机器的压力过大而造成崩溃发现，就需要将所有的请求均衡的分配到每一台机器中，既能提高响应的速度也能降低单台机器的压力。nginx可以通过配置多台机器的负载实现。实现思路如下：</p>
+<h3 id="1-2-负载均衡功能"><a href="#1-2-负载均衡功能" class="headerlink" title="1.2 负载均衡功能"></a>1.2 负载均衡功能</h3><p>负载均衡，一个服务集群部署，由多个机器组成，为了不让一台机器的压力过大而造成崩溃发现，就需要将所有的请求均衡的分配到每一台机器中，既能提高响应的速度也能降低单台机器的压力。nginx可以通过配置多台机器的负载实现。实现思路如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/84997AF624D44C60A229AE4D5034D21B.png"></p>
-<h5 id="静态资源服务功能"><a href="#静态资源服务功能" class="headerlink" title="静态资源服务功能"></a>静态资源服务功能</h5><p>这个其实和路由服务基本相同，只不过是将业务服务的路由改成静态资源服务的路由，另外加上一些静态资源的一些优化策略，让静态资源的响应速度更快，更有效（如静态资源的压缩，降低传输数据的量，提高传输速度）。实现思路可以参照路由服务功能。</p>
-<h3 id="linux环境下安装nginx"><a href="#linux环境下安装nginx" class="headerlink" title="linux环境下安装nginx"></a>linux环境下安装nginx</h3><h5 id="安装方式一"><a href="#安装方式一" class="headerlink" title="安装方式一"></a>安装方式一</h5><p>这种方式是推荐的，等说完第二种方式再做一个对比。安装步骤如下：</p>
+<h3 id="1-3-静态资源服务功能"><a href="#1-3-静态资源服务功能" class="headerlink" title="1.3 静态资源服务功能"></a>1.3 静态资源服务功能</h3><p>这个其实和路由服务基本相同，只不过是将业务服务的路由改成静态资源服务的路由，另外加上一些静态资源的一些优化策略，让静态资源的响应速度更快，更有效（如静态资源的压缩，降低传输数据的量，提高传输速度）。实现思路可以参照路由服务功能。</p>
+<h2 id="2-linux环境下安装nginx"><a href="#2-linux环境下安装nginx" class="headerlink" title="2. linux环境下安装nginx"></a>2. linux环境下安装nginx</h2><h3 id="2-1-安装方式一"><a href="#2-1-安装方式一" class="headerlink" title="2.1 安装方式一"></a>2.1 安装方式一</h3><p>这种方式是推荐的，等说完第二种方式再做一个对比。安装步骤如下：</p>
 <ul>
 <li><p>在<code>/usr/local/</code>目录下使用wget下载nginx资源包</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> http://nginx.org/download/nginx-1.9.0.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
@@ -370,7 +370,7 @@ yum <span class="token function">install</span> <span class="token parameter var
 <p>这里看到nginx就是安装在上面configure配置的路径下面，在说第二种安装方式的时候会进行一个比较。</p>
 </li>
 </ul>
-<h5 id="安装方式二"><a href="#安装方式二" class="headerlink" title="安装方式二"></a>安装方式二</h5><p>这种安装方式很简单，很省事。执行下面的命令即可。</p>
+<h3 id="2-2-安装方式二"><a href="#2-2-安装方式二" class="headerlink" title="2.2 安装方式二"></a>2.2 安装方式二</h3><p>这种安装方式很简单，很省事。执行下面的命令即可。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>如果上面的命令执行报错，说明需要安装yum的epel-release扩展源。命令也很简单。如下：</p>
@@ -380,7 +380,7 @@ yum <span class="token function">install</span> <span class="token parameter var
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nginx: /usr/sbin/nginx /etc/nginx /usr/lib64/nginx /usr/share/nginx /usr/share/man/man3/nginx.3pm.gz /usr/share/man/man8/nginx.8.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>安装后的nginx被放到了不同的位置，分散开的，这个为后期的配置文件修改，日志查看提供了很大的不便，没有第一种方式好，统一放在一个指定的目录下。</p>
-<h3 id="nginx中的常用命令"><a href="#nginx中的常用命令" class="headerlink" title="nginx中的常用命令"></a>nginx中的常用命令</h3><h5 id="nginx命令"><a href="#nginx命令" class="headerlink" title="nginx命令"></a>nginx命令</h5><p>启动命令：</p>
+<h2 id="3-nginx中的常用命令"><a href="#3-nginx中的常用命令" class="headerlink" title="3. nginx中的常用命令"></a>3. nginx中的常用命令</h2><h3 id="3-1-nginx命令"><a href="#3-1-nginx命令" class="headerlink" title="3.1 nginx命令"></a>3.1 nginx命令</h3><p>启动命令：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>重启命令：</p>
@@ -397,7 +397,7 @@ yum <span class="token function">install</span> <span class="token parameter var
 或
 /usr/local/nginx/sbin/nginx/ <span class="token parameter variable">-c</span> /usr/local/nginx.conf <span class="token parameter variable">-s</span> reload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="nginx控制信号"><a href="#nginx控制信号" class="headerlink" title="nginx控制信号"></a>nginx控制信号</h5><p>nginx启动后，对应的pid是存在nginx目录下的<code>nginx.pid</code>文件中。可以通过<code>cat</code>命令读取文件获取pid。也可以通过<code>ps -ef | grep nginx</code>命令来获取pid。</p>
+<h3 id="3-2-nginx控制信号"><a href="#3-2-nginx控制信号" class="headerlink" title="3.2 nginx控制信号"></a>3.2 nginx控制信号</h3><p>nginx启动后，对应的pid是存在nginx目录下的<code>nginx.pid</code>文件中。可以通过<code>cat</code>命令读取文件获取pid。也可以通过<code>ps -ef | grep nginx</code>命令来获取pid。</p>
 <p>主进程可处理信号：</p>
 <ul>
 <li><code>TERM</code>，<code>INT</code>：表示快速关闭</li>
@@ -412,14 +412,14 @@ yum <span class="token function">install</span> <span class="token parameter var
 <span class="token comment">#或者(/usr/local/nginx/是nginx的安装目录)</span>
 <span class="token function">kill</span> <span class="token parameter variable">-TERM</span> <span class="token function">cat</span> /usr/local/nginx/nginx.pid<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="nginx配置文件的初认识"><a href="#nginx配置文件的初认识" class="headerlink" title="nginx配置文件的初认识"></a>nginx配置文件的初认识</h3><h5 id="nginx配置文件整体布局"><a href="#nginx配置文件整体布局" class="headerlink" title="nginx配置文件整体布局"></a>nginx配置文件整体布局</h5><p>nginx配置文件中主要分三个模块，分别是主全局配置、工作模型及连接上限配置、http服务相关属性。</p>
+<h2 id="4-nginx配置文件的初认识"><a href="#4-nginx配置文件的初认识" class="headerlink" title="4. nginx配置文件的初认识"></a>4. nginx配置文件的初认识</h2><h3 id="4-1-nginx配置文件整体布局"><a href="#4-1-nginx配置文件整体布局" class="headerlink" title="4.1 nginx配置文件整体布局"></a>4.1 nginx配置文件整体布局</h3><p>nginx配置文件中主要分三个模块，分别是主全局配置、工作模型及连接上限配置、http服务相关属性。</p>
 <ul>
 <li>全局配置：里面包含的信息由当前用户信息、工作进程数（worker_processes 数量默认是机器的核心数，可以手动设置，一般推荐设置为核心数的两倍）、全局日志以及日志的级别设置、nginx进程的pid信息等。</li>
 <li>工作模型和连接上限：工作模型默认是epoll，连接上限（worker_connections）默认是1024。</li>
 <li>http服务相关属性：其中包含http服务的全局设置，以及对应Server配置。每个Server路由到不同服务，可以使用upStream配置负载均衡，以及根据Location配置URL匹配的位置等。</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/6FC88088362540A1B6042AC0F66AB793.png"></p>
-<h5 id="nginx配置参数说明"><a href="#nginx配置参数说明" class="headerlink" title="nginx配置参数说明"></a>nginx配置参数说明</h5><ul>
+<h3 id="4-2-nginx配置参数说明"><a href="#4-2-nginx配置参数说明" class="headerlink" title="4.2 nginx配置参数说明"></a>4.2 nginx配置参数说明</h3><ul>
 <li><code>worker_processes</code>：工作进程数，默认是当前机器的核心数。</li>
 <li><code>pid</code>：当前nginx的进程编号，默认存储在logs/nginx.pid文件中。</li>
 <li><code>worker_connections</code>：连接上限，默认设值是1024。</li>
@@ -431,7 +431,7 @@ yum <span class="token function">install</span> <span class="token parameter var
 <li><code>location</code>：指定URL匹配特定服务的位置和相关配置信息。</li>
 <li><code>error_page</code>：指定对应的响应码，当服务出现对应的错误时，给出相应的错误页面信息展示。</li>
 </ul>
-<h5 id="常用全局变量"><a href="#常用全局变量" class="headerlink" title="常用全局变量"></a>常用全局变量</h5><p>这里的日志和应用的日志是类似的，使用不同的占位符来表示不同的信息，然后打印日志的时候，使用全局变量进行填充，形成一条具体的日志信息。当然这些全局变量不仅仅可以用于日志输出的方式，还可以用于一些请求参数的设值等。</p>
+<h3 id="4-3-常用全局变量"><a href="#4-3-常用全局变量" class="headerlink" title="4.3 常用全局变量"></a>4.3 常用全局变量</h3><p>这里的日志和应用的日志是类似的，使用不同的占位符来表示不同的信息，然后打印日志的时候，使用全局变量进行填充，形成一条具体的日志信息。当然这些全局变量不仅仅可以用于日志输出的方式，还可以用于一些请求参数的设值等。</p>
 <ul>
 <li><code>$remote_addr</code>：客户端的IP地址（代理服务器，显示代理服务器IP）</li>
 <li><code>$remote_user</code>：用于记录远程客户端的用户名称（一般是“-”）</li>
@@ -917,7 +917,7 @@ yum <span class="token function">install</span> <span class="token parameter var
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-09-08
+                    2019-09-日 18:13:44
                 </div>
                 
 
@@ -321,7 +321,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    10 分
                 </div>
                 
 
@@ -344,7 +344,7 @@
 <blockquote>
 <p>本篇文章借鉴于小灰公众号文章：<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Q99jGZOUGFiM-ZTnkWWYew">什么是AES算法？（整合版）</a></p>
 </blockquote>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>在数据加密传输的时候经常会用到AES，接收方可以根据秘钥对密文进行解密获取其内容。使用步骤如下：</p>
+<h2 id="1-使用场景"><a href="#1-使用场景" class="headerlink" title="1. 使用场景"></a>1. 使用场景</h2><p>在数据加密传输的时候经常会用到AES，接收方可以根据秘钥对密文进行解密获取其内容。使用步骤如下：</p>
 <ul>
 <li>数据输出方通过秘钥”123456”将一段明文数据加密处理</li>
 <li>将密文通过网络发送给接收方</li>
@@ -353,7 +353,7 @@
 <p>如图示意：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/179625C5F6DE42BEA44207E37BE85F52.png"></p>
 <p>了解AES在什么时候用到，下面来看一下AES重要的组成部分。</p>
-<h2 id="重要组成部分：秘钥"><a href="#重要组成部分：秘钥" class="headerlink" title="重要组成部分：秘钥"></a>重要组成部分：秘钥</h2><p>秘钥是非常重要的组成部分，也是决定数据安全性的重要部分。在AES中秘钥的长度有三种分别是128、192、256，所以AES算法又被分为AES128、AES192、AES256。秘钥的长度决定计算的复杂程度和安全性。一般使用到AES128即可。(使用后两种需要做特殊处理，后面有坑)</p>
+<h2 id="2-重要组成部分：秘钥"><a href="#2-重要组成部分：秘钥" class="headerlink" title="2. 重要组成部分：秘钥"></a>2. 重要组成部分：秘钥</h2><p>秘钥是非常重要的组成部分，也是决定数据安全性的重要部分。在AES中秘钥的长度有三种分别是128、192、256，所以AES算法又被分为AES128、AES192、AES256。秘钥的长度决定计算的复杂程度和安全性。一般使用到AES128即可。(使用后两种需要做特殊处理，后面有坑)</p>
 <p>在AES加密的时候，并不是把整个AES加密成一个密文串，而是根据秘钥的长度，将明文切分成若干个明文块进行加密，得到若干个密文块，然后对密文块进行组装，最终形成一个密文串。当秘钥长度是128bit的时候，就会将明文切分成若干个128bit的明文块。对应192bit、256bit秘钥长度，也是类似切分。</p>
 <p>示意图如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/504DA79D8027457C9B69C0C8BD63C5ED.png"></p>
@@ -366,31 +366,30 @@ generator<span class="token punctuation">.</span><span class="token function">in
 <span class="token keyword">return</span> generator<span class="token punctuation">.</span><span class="token function">generateKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//最终生成秘钥</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>更好的说法是将传入的key理解为秘钥种子。当然要是能做到长度刚刚好符合要求，称为秘钥也不是不可以。</p>
-<h2 id="重要组成部分：填充"><a href="#重要组成部分：填充" class="headerlink" title="重要组成部分：填充"></a>重要组成部分：填充</h2><p>填充，是一个很重要的概念，因为不同的明文长度变化很大，不可能保证长度刚好是128、192、256的整数倍。这个时候就需要对不满足长度的明文块进行填充，保证长度符合要求。在AES中有Nopadding、PKCS5Padding、ISO10126Padding三种方式，其中PKCS5Padding是默认的方式。下面了解一下。</p>
-<h4 id="NoPadding"><a href="#NoPadding" class="headerlink" title="NoPadding"></a>NoPadding</h4><p>从名字就看的出来，不填充，要求明文就是指定长度的整数倍。这种模式基本用不到，对传入明文长度要求太高。可用性不高，知道即可。</p>
-<h4 id="PKCS5Padding"><a href="#PKCS5Padding" class="headerlink" title="PKCS5Padding"></a>PKCS5Padding</h4><p>这种模式是默认的模式。当最后一个明文块长度不满足要求的时候，会以缺少长度的值来填充。比如切分长度按照128bit来算，最后一个明文块的长度是112bit，缺少16bit，对应的字节数是2，此时后面2个字节都是用2来填充。如下图所示：</p>
+<h2 id="3-重要组成部分：填充"><a href="#3-重要组成部分：填充" class="headerlink" title="3. 重要组成部分：填充"></a>3. 重要组成部分：填充</h2><p>填充，是一个很重要的概念，因为不同的明文长度变化很大，不可能保证长度刚好是128、192、256的整数倍。这个时候就需要对不满足长度的明文块进行填充，保证长度符合要求。在AES中有Nopadding、PKCS5Padding、ISO10126Padding三种方式，其中PKCS5Padding是默认的方式。下面了解一下。</p>
+<h3 id="3-1-NoPadding"><a href="#3-1-NoPadding" class="headerlink" title="3.1 NoPadding"></a>3.1 NoPadding</h3><p>从名字就看的出来，不填充，要求明文就是指定长度的整数倍。这种模式基本用不到，对传入明文长度要求太高。可用性不高，知道即可。</p>
+<h3 id="3-2-PKCS5Padding"><a href="#3-2-PKCS5Padding" class="headerlink" title="3.2 PKCS5Padding"></a>3.2 PKCS5Padding</h3><p>这种模式是默认的模式。当最后一个明文块长度不满足要求的时候，会以缺少长度的值来填充。比如切分长度按照128bit来算，最后一个明文块的长度是112bit，缺少16bit，对应的字节数是2，此时后面2个字节都是用2来填充。如下图所示：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/AAF76ED27FB14C87A8AA0294E526E60C.png"></p>
-<h4 id="ISO10126Padding"><a href="#ISO10126Padding" class="headerlink" title="ISO10126Padding"></a>ISO10126Padding</h4><p>此模式也会根据实际缺少的部分进行填充，但不是填充固定值而是随机值，最后一位是填充的位数。如下所示：</p>
+<h3 id="3-3-ISO10126Padding"><a href="#3-3-ISO10126Padding" class="headerlink" title="3.3 ISO10126Padding"></a>3.3 ISO10126Padding</h3><p>此模式也会根据实际缺少的部分进行填充，但不是填充固定值而是随机值，最后一位是填充的位数。如下所示：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/8EB52DFE2B4D4BBCB01C80A30E9FD469.png"></p>
 <p>总共填充4位，最后一位值是4，其他三个是随机值。</p>
 <p><strong>注意点：这里填充的过程需要注意，除了NoPadding外，其他两种填充模式，即使出现明文长度是对应要求长度的整数倍，也会再填充一个明文块。(从秘钥的那张示意图就可以看出来，明文是4倍的128bit，但是在图中总共画了5个明文块)</strong></p>
-<h2 id="重要组成部分：工作模式"><a href="#重要组成部分：工作模式" class="headerlink" title="重要组成部分：工作模式"></a>重要组成部分：工作模式</h2><p>工作模式总共有5种，但是常被使用到的就ECB和CBC两种模式。其中ECB是默认的工作模式，相对于效率最高，一般在开发中使用的比较多的还有一种是CBC，效率比ECB低一点，但是比ECB安全。</p>
-<p><strong>5种模式</strong></p>
-<ul>
+<h2 id="4-重要组成部分：工作模式"><a href="#4-重要组成部分：工作模式" class="headerlink" title="4. 重要组成部分：工作模式"></a>4. 重要组成部分：工作模式</h2><p>工作模式总共有5种，但是常被使用到的就ECB和CBC两种模式。其中ECB是默认的工作模式，相对于效率最高，一般在开发中使用的比较多的还有一种是CBC，效率比ECB低一点，但是比ECB安全。</p>
+<h3 id="4-1-5种模式"><a href="#4-1-5种模式" class="headerlink" title="4.1 5种模式"></a>4.1 5种模式</h3><ul>
 <li>ECB：电码本模式（Electronic Codebook Book）</li>
 <li>CBC：密码分组链接模式（Cipher Block Chaining）</li>
 <li>CTR：计算器模式（Counter）</li>
 <li>CFB：密码反馈模式（Cipher Feedback）</li>
 <li>OFB：输出反馈模式（Output Feedback）</li>
 </ul>
-<h4 id="ECB（电码本模式）"><a href="#ECB（电码本模式）" class="headerlink" title="ECB（电码本模式）"></a>ECB（电码本模式）</h4><p>多个明文块分别和秘钥进行加密操作，最终生成多个密文块，明文块组装成对应的密文信息。在加密的过程是并发操作，不会互相干扰，加密过程用时比较长。加密示意图如下：</p>
+<h3 id="4-2-ECB（电码本模式）"><a href="#4-2-ECB（电码本模式）" class="headerlink" title="4.2 ECB（电码本模式）"></a>4.2 ECB（电码本模式）</h3><p>多个明文块分别和秘钥进行加密操作，最终生成多个密文块，明文块组装成对应的密文信息。在加密的过程是并发操作，不会互相干扰，加密过程用时比较长。加密示意图如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/FC3566D6D5294C76AD206E57D5D9B8F5.png"></p>
 <p><strong>优缺点：</strong></p>
 <ul>
 <li>并行加密，加密速度快，效率高</li>
 <li>相同明文块加密结果相同，安全性差</li>
 </ul>
-<h4 id="CBC（密码分组链接模式）"><a href="#CBC（密码分组链接模式）" class="headerlink" title="CBC（密码分组链接模式）"></a>CBC（密码分组链接模式）</h4><p>在CBC模式下会引入一个<strong>初始向量</strong>的概念，先看一下其加密流程图如下：</p>
+<h3 id="4-3-CBC（密码分组链接模式）"><a href="#4-3-CBC（密码分组链接模式）" class="headerlink" title="4.3 CBC（密码分组链接模式）"></a>4.3 CBC（密码分组链接模式）</h3><p>在CBC模式下会引入一个<strong>初始向量</strong>的概念，先看一下其加密流程图如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/00532F4ABF994B528938DF7212DC1BE8.png"></p>
 <p>在加密的过程中，将前一个密文块和当前明文块做异或操作，将操作的结果进行加密得到对应的密文块，以此类推。但是当加密第一个明文块的时候，前面没有对应的密文块与其进行异或操作，这个时候就需要引入一个初始向量，作为与第一个明文块做异或操作的值。整个加密过程都是依赖上一个加密结果，所以只能串行，无法并行操作。</p>
 <p><strong>优缺点：</strong></p>
@@ -399,7 +398,7 @@ generator<span class="token punctuation">.</span><span class="token function">in
 <li>引入初始向量，加密过程复杂度高</li>
 <li>整个加密过程无法并行计算，效率低</li>
 </ul>
-<h2 id="代码使用、坑和解决方案"><a href="#代码使用、坑和解决方案" class="headerlink" title="代码使用、坑和解决方案"></a>代码使用、坑和解决方案</h2><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>首先来看一下我自己对AES的封装，JDK自带的加密方法是有的，但是不够简洁，每次加密都要写一大串代码，因此在使用的时候必须做一下封装，作为一个工具类存在。下面看一下代码：</p>
+<h2 id="5-代码使用、坑和解决方案"><a href="#5-代码使用、坑和解决方案" class="headerlink" title="5. 代码使用、坑和解决方案"></a>5. 代码使用、坑和解决方案</h2><h3 id="5-1-代码实现"><a href="#5-1-代码实现" class="headerlink" title="5.1 代码实现"></a>5.1 代码实现</h3><p>首先来看一下我自己对AES的封装，JDK自带的加密方法是有的，但是不够简洁，每次加密都要写一大串代码，因此在使用的时候必须做一下封装，作为一个工具类存在。下面看一下代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>crypto<span class="token punctuation">.</span></span><span class="token class-name">Cipher</span></span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>crypto<span class="token punctuation">.</span></span><span class="token class-name">KeyGenerator</span></span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>crypto<span class="token punctuation">.</span></span><span class="token class-name">SecretKey</span></span><span class="token punctuation">;</span>
@@ -493,12 +492,12 @@ generator<span class="token punctuation">.</span><span class="token function">in
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>具体代码里的内容就不做解释了，其中使用到自定义的枚举，这列也具体贴出来，文末会给出源码地址。</p>
-<h4 id="坑和解决方案"><a href="#坑和解决方案" class="headerlink" title="坑和解决方案"></a>坑和解决方案</h4><p>在调试过程有遇到两个坑。第一个是AES支持的位数问题，因为Java本身只支持128，导致使用192或者256位的时候报错（异常信息：java.security.InvalidKeyException: Illegal key size）。具体解决方案参考下面这篇博客。</p>
+<h3 id="5-2-坑和解决方案"><a href="#5-2-坑和解决方案" class="headerlink" title="5.2 坑和解决方案"></a>5.2 坑和解决方案</h3><p>在调试过程有遇到两个坑。第一个是AES支持的位数问题，因为Java本身只支持128，导致使用192或者256位的时候报错（异常信息：java.security.InvalidKeyException: Illegal key size）。具体解决方案参考下面这篇博客。</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dling8/article/details/84061948"><strong>java.security.InvalidKeyException: Illegal key size</strong></a></p>
 <p>第二个坑就是根据key(秘钥种子)生成符合位数要求的秘钥时出现的，<code>SecureRandom</code>中使用的PRNG是根据当前环境提供的PRNG获取的，由于不同的电脑，可能会出现PRNG不同，又或者提供的PRNG不支持，就会导致出现异常问题，不能正常的加解密。在调试过程，代码在win10系统下正常，同样的代码在mac中就会抛出异常。</p>
 <p>通过了解一下<code>SecureRandom</code>中获取PRNG的过程可以知道，首先它是自动获取本地提供的PRNG，如果获取不到就是用默认的PRNG，也就是SHA1PRNG。所以为了避免不同系统，不同环境出现问题，这里统一在构建<code>SecureRandom</code>的时候就指定PRNG为SHA1PRNG即可解决。</p>
 <p>这个问题可能会导致在本地运行正常，进入到测试或者生产环境出现异常，个人还是要重视一下的。</p>
-<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-6">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-6</a></p>
+<h2 id="6-源代码"><a href="#6-源代码" class="headerlink" title="6. 源代码"></a>6. 源代码</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-6">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-6</a></p>
 
                 
             </div>
@@ -642,7 +641,7 @@ generator<span class="token punctuation">.</span><span class="token function">in
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-09-08T08-00-00',
+        id: '2019-09-08T18-13-44',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -961,7 +960,7 @@ generator<span class="token punctuation">.</span><span class="token function">in
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

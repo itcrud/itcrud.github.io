@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-07-08
+                    2018-07-日 21:15:33
                 </div>
                 
 
@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.4k
                 </div>
                 
 
@@ -340,14 +340,14 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>死锁在多线程开发过程中比较经常遇到，并且这个问题很隐性，很难排查到问题的所在，即使是查看项目的日志都找不到，很让人头疼。死锁的体现形式主要有两种，分别是简单的死锁和动态死锁，简单死锁在写代码的时候很容易避免，动态死锁就很麻烦。因为出现死锁的主要原因是两个锁的加锁顺序不同，动态死锁看似是加载顺序都相同，但是实际不同，所以一旦发生，就很难排查。</p>
-<h3 id="死锁的原因和体现形式"><a href="#死锁的原因和体现形式" class="headerlink" title="死锁的原因和体现形式"></a>死锁的原因和体现形式</h3><h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><ul>
+<h2 id="1-死锁的原因和体现形式"><a href="#1-死锁的原因和体现形式" class="headerlink" title="1. 死锁的原因和体现形式"></a>1. 死锁的原因和体现形式</h2><h3 id="1-1-原因"><a href="#1-1-原因" class="headerlink" title="1.1 原因"></a>1.1 原因</h3><ul>
 <li>两个线程分别是A线程、B线程</li>
 <li>两个资源分别是SA和SB</li>
 </ul>
 <p>在操作SA资源同时也要对SB资源进行操作，为了让两个资源能够保证线程安全，需要锁定两个资源后才能对其进行操作。<br>当A线程获取SA资源锁后，CPU切换执行到了B线程，这个时候B线程锁了SB资源，当再切换到A线程后，想要获取SB资源锁，却发现锁已经被持有，只能等待释放，同样的B线程也在等SA资源锁被释放，这两个线程就会僵持不下，最终导致死锁。</p>
-<h4 id="死锁的两种体现形式"><a href="#死锁的两种体现形式" class="headerlink" title="死锁的两种体现形式"></a>死锁的两种体现形式</h4><ul>
+<h3 id="1-2-死锁的两种体现形式"><a href="#1-2-死锁的两种体现形式" class="headerlink" title="1.2 死锁的两种体现形式"></a>1.2 死锁的两种体现形式</h3><ul>
 <li>简单死锁</li>
-<li>动态死锁<h3 id="简单死锁"><a href="#简单死锁" class="headerlink" title="简单死锁"></a>简单死锁</h3><h4 id="代码体现"><a href="#代码体现" class="headerlink" title="代码体现"></a>代码体现</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SimpleDeadLock</span> <span class="token punctuation">{</span>
+<li>动态死锁<h2 id="2-简单死锁"><a href="#2-简单死锁" class="headerlink" title="2. 简单死锁"></a>2. 简单死锁</h2><h3 id="2-1-代码体现"><a href="#2-1-代码体现" class="headerlink" title="2.1 代码体现"></a>2.1 代码体现</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SimpleDeadLock</span> <span class="token punctuation">{</span>
 
     <span class="token comment">//定义两把锁</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Object</span> firstLock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -394,7 +394,7 @@
 main&gt;&gt;&gt;get secondLock
 Thread-0&gt;&gt;&gt;get firstLock
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-两个资源firstLock和secondLock，主线程和子线程都要去对两个资源加锁并操作，其中主线程会先锁secondLock，再锁firstLock，子线程是先锁firstLock，再锁secondLock。这样就很容易导致主线程持有secondLock不放等待firstLock被释放，子线程持有firstLock不放等待secondLock被释放，结果就是两个线程都无法继续实现，被阻塞。<h4 id="原因分析和解决方案"><a href="#原因分析和解决方案" class="headerlink" title="原因分析和解决方案"></a>原因分析和解决方案</h4>这里其实比较简单，可以比较容易发现和避免，只要理解死锁的基本原理就可以。<br>只要将主线程和子线程多两个锁的获取顺序改为相同即可。<h3 id="动态死锁"><a href="#动态死锁" class="headerlink" title="动态死锁"></a>动态死锁</h3><h4 id="代码体现-1"><a href="#代码体现-1" class="headerlink" title="代码体现"></a>代码体现</h4>一个在多线程中经常使用的例子，银行转账。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 银行账户实体类</span>
+两个资源firstLock和secondLock，主线程和子线程都要去对两个资源加锁并操作，其中主线程会先锁secondLock，再锁firstLock，子线程是先锁firstLock，再锁secondLock。这样就很容易导致主线程持有secondLock不放等待firstLock被释放，子线程持有firstLock不放等待secondLock被释放，结果就是两个线程都无法继续实现，被阻塞。<h3 id="2-3-原因分析和解决方案"><a href="#2-3-原因分析和解决方案" class="headerlink" title="2.3 原因分析和解决方案"></a>2.3 原因分析和解决方案</h3>这里其实比较简单，可以比较容易发现和避免，只要理解死锁的基本原理就可以。<br>只要将主线程和子线程多两个锁的获取顺序改为相同即可。<h2 id="3-动态死锁"><a href="#3-动态死锁" class="headerlink" title="3. 动态死锁"></a>3. 动态死锁</h2><h3 id="3-1-代码体现"><a href="#3-1-代码体现" class="headerlink" title="3.1 代码体现"></a>3.1 代码体现</h3>一个在多线程中经常使用的例子，银行转账。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 银行账户实体类</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Account</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
@@ -481,7 +481,7 @@ Thread-0&gt;&gt;&gt;get firstLock
         <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DynamicRun</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TransferMachineImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> secondAccount<span class="token punctuation">,</span> firstAccount<span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-zhangsan和lisi账户初始金额都是20000，在某个时刻，zhangsan和lisi互相转账，这个时候可以看的出来，在转账机器实现中，都是先锁转出账户再锁转入账户，顺序是不变的。但是运行代码会发现，在转账的过程中发生了死锁，明明这里已经保证了多个线程对两个相同的资源操作加锁的顺序相同，为什么还是会死锁。<h4 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h4>这里其实稍微思考一下就知道，看起来锁的顺序相同，但是实际是不同的，因为这个方法里面两个资源都是通过变量传过来的，当在传入的两个变量的顺序相反时，自然锁的顺序就被偷换。<br>想要解决就要想办法将两个锁的顺序保持相同。如何保持相同？<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="方式一：通过hash值得比较实现加锁顺序相同"><a href="#方式一：通过hash值得比较实现加锁顺序相同" class="headerlink" title="方式一：通过hash值得比较实现加锁顺序相同"></a>方式一：通过hash值得比较实现加锁顺序相同</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TransferMachineImpl</span> <span class="token keyword">implements</span> <span class="token class-name">TransferMachine</span> <span class="token punctuation">{</span>
+zhangsan和lisi账户初始金额都是20000，在某个时刻，zhangsan和lisi互相转账，这个时候可以看的出来，在转账机器实现中，都是先锁转出账户再锁转入账户，顺序是不变的。但是运行代码会发现，在转账的过程中发生了死锁，明明这里已经保证了多个线程对两个相同的资源操作加锁的顺序相同，为什么还是会死锁。<h3 id="3-2-原因分析"><a href="#3-2-原因分析" class="headerlink" title="3.2 原因分析"></a>3.2 原因分析</h3>这里其实稍微思考一下就知道，看起来锁的顺序相同，但是实际是不同的，因为这个方法里面两个资源都是通过变量传过来的，当在传入的两个变量的顺序相反时，自然锁的顺序就被偷换。<br>想要解决就要想办法将两个锁的顺序保持相同。如何保持相同？<h3 id="3-3-解决方案"><a href="#3-3-解决方案" class="headerlink" title="3.3 解决方案"></a>3.3 解决方案</h3><h4 id="3-3-1-方式一：通过hash值得比较实现加锁顺序相同"><a href="#3-3-1-方式一：通过hash值得比较实现加锁顺序相同" class="headerlink" title="3.3.1 方式一：通过hash值得比较实现加锁顺序相同"></a>3.3.1 方式一：通过hash值得比较实现加锁顺序相同</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TransferMachineImpl</span> <span class="token keyword">implements</span> <span class="token class-name">TransferMachine</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Object</span> fairLock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//公平竞争锁</span>
 
@@ -528,7 +528,7 @@ zhangsan和lisi账户初始金额都是20000，在某个时刻，zhangsan和lisi
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-通过<code>System.identityHashCode(Object o)</code>的方法获取当前对象的原生hash值，然后比较两个资源的hash值大小，每次都是先锁hash值小的账户，但是难免会遇到hash值相同的时候，这个时候就让他们共同竞争一把锁。但是为什么不直接使用else代码来实现呢。<br>我们都知道加锁和释放锁的过程都是一种性能的消耗，明显的是else代码中要多一层锁，但是我们也知道在计算得到两个不同对象的hash值后，出现相同的几率是很低的，因此else代码极少的会执行到。对性能的影响可以忽略不计，但是直接使用这块代码，就很难保证了。<br>上面计算hash值是一种方式，如果我们账户里面有一个数值类型字段id，并且能够保证不同的账户id绝对不会出现相同，那么使用账户的id来代替hash也不失为一种变通方式。<h5 id="方式二：通过显示锁的方式实现"><a href="#方式二：通过显示锁的方式实现" class="headerlink" title="方式二：通过显示锁的方式实现"></a>方式二：通过显示锁的方式实现</h5>变动就是在账户实体类中加上一个显示锁的字段，并提供get方法。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Lock</span> lock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+通过<code>System.identityHashCode(Object o)</code>的方法获取当前对象的原生hash值，然后比较两个资源的hash值大小，每次都是先锁hash值小的账户，但是难免会遇到hash值相同的时候，这个时候就让他们共同竞争一把锁。但是为什么不直接使用else代码来实现呢。<br>我们都知道加锁和释放锁的过程都是一种性能的消耗，明显的是else代码中要多一层锁，但是我们也知道在计算得到两个不同对象的hash值后，出现相同的几率是很低的，因此else代码极少的会执行到。对性能的影响可以忽略不计，但是直接使用这块代码，就很难保证了。<br>上面计算hash值是一种方式，如果我们账户里面有一个数值类型字段id，并且能够保证不同的账户id绝对不会出现相同，那么使用账户的id来代替hash也不失为一种变通方式。<h4 id="3-3-2-方式二：通过显示锁的方式实现"><a href="#3-3-2-方式二：通过显示锁的方式实现" class="headerlink" title="3.3.2 方式二：通过显示锁的方式实现"></a>3.3.2 方式二：通过显示锁的方式实现</h4>变动就是在账户实体类中加上一个显示锁的字段，并提供get方法。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Lock</span> lock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span> <span class="token class-name">Lock</span> <span class="token function">getLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>lock<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
@@ -578,7 +578,7 @@ Thread-1&gt;&gt;&gt;lock to success
 Thread-0&gt;&gt;&gt;lock from success
 Thread-0&gt;&gt;&gt;lock to success
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-两个线程同时执行，并没有出现死锁现象，但是输出的结果有点意思，按道理说应该是四行，两个lock from，两次lock to，但是这里输出的貌似有点多。<br>分析一下：Thread-0拿到转出账户后加锁，Thread-1拿到转出账户后加锁，接着Thread-0尝试去拿转入账户的锁，发现锁被其他线程持有了，没有拿成功，然后把转出账户的锁释放，休眠100毫秒，这个时候Thread-1去拿转入账户的锁，因为Thread-0释放了，Thread-1加锁成功，完成转账。等Thread-0从休眠中结束后再去拿转出和转入的锁，就很轻松了，和其竞争的Thread-1已经执行结束。这里有点绕。<br>为什么这里代码中要让其中一个线程在获取两把锁失败的时候休眠呢。仔细思考的小伙伴可能已经知道，如果不休眠，可能会导致两个线程都拿到第一个锁，第二个锁拿不到，然后释放第一个锁，这两线程来回的释放锁获取锁，虽然最终在某个时间点，一个线程可以拿到两个锁，但是这个就会导致循环执行次数很多。<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3>在整个分析的过程中，一个不变的目标就是让锁被获取的顺序相同，保证执行不会死锁，换句话说就是不论是简单死锁还是动态死锁，只要能保证两个锁的获取和释放顺序绝对相同，那么死锁问题就解决了。当然后面的显示锁实现方式有点例外。<h3 id="代码获取"><a href="#代码获取" class="headerlink" title="代码获取"></a>代码获取</h3>Github：<a target="_blank" rel="noopener" href="https://github.com/IT-CRUD/dead-lock">https://github.com/IT-CRUD/dead-lock</a></li>
+两个线程同时执行，并没有出现死锁现象，但是输出的结果有点意思，按道理说应该是四行，两个lock from，两次lock to，但是这里输出的貌似有点多。<br>分析一下：Thread-0拿到转出账户后加锁，Thread-1拿到转出账户后加锁，接着Thread-0尝试去拿转入账户的锁，发现锁被其他线程持有了，没有拿成功，然后把转出账户的锁释放，休眠100毫秒，这个时候Thread-1去拿转入账户的锁，因为Thread-0释放了，Thread-1加锁成功，完成转账。等Thread-0从休眠中结束后再去拿转出和转入的锁，就很轻松了，和其竞争的Thread-1已经执行结束。这里有点绕。<br>为什么这里代码中要让其中一个线程在获取两把锁失败的时候休眠呢。仔细思考的小伙伴可能已经知道，如果不休眠，可能会导致两个线程都拿到第一个锁，第二个锁拿不到，然后释放第一个锁，这两线程来回的释放锁获取锁，虽然最终在某个时间点，一个线程可以拿到两个锁，但是这个就会导致循环执行次数很多。<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2>在整个分析的过程中，一个不变的目标就是让锁被获取的顺序相同，保证执行不会死锁，换句话说就是不论是简单死锁还是动态死锁，只要能保证两个锁的获取和释放顺序绝对相同，那么死锁问题就解决了。当然后面的显示锁实现方式有点例外。<h2 id="5-代码获取"><a href="#5-代码获取" class="headerlink" title="5. 代码获取"></a>5. 代码获取</h2>Github：<a target="_blank" rel="noopener" href="https://github.com/itcrud/dead-lock">https://github.com/itcrud/dead-lock</a></li>
 </ul>
 
                 
@@ -723,7 +723,7 @@ Thread-0&gt;&gt;&gt;lock to success
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-07-08T21-00-00',
+        id: '2018-07-08T21-15-33',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1042,7 +1042,7 @@ Thread-0&gt;&gt;&gt;lock to success
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

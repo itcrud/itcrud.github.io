@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-06-15
+                    2019-06-六 14:46:00
                 </div>
                 
 
@@ -344,7 +344,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>序列化器、反序列化器以及分区器都有所了解，Kafka客户端提供默认的7种方式基本够用了，但是对于一个大型复杂的项目群里面，总是会有特殊的要求，这个时候就需要自己去定义相关的序列化器和反序列化器。另外就是自定义分区器，这个应用的可能会多一点，根据实际业务将消息发送到指定的分区中。</p>
-<h2 id="自定义序列化器"><a href="#自定义序列化器" class="headerlink" title="自定义序列化器"></a>自定义序列化器</h2><p>自定的序列化器并不难，只要遵循序列化器的规矩就可以。实现Kafka提供的<code>Serializer</code>序列化接口，在<code>serialize</code>方法中写入具体序列化的实现代码即可。如下代码：</p>
+<h2 id="1-自定义序列化器"><a href="#1-自定义序列化器" class="headerlink" title="1. 自定义序列化器"></a>1. 自定义序列化器</h2><p>自定的序列化器并不难，只要遵循序列化器的规矩就可以。实现Kafka提供的<code>Serializer</code>序列化接口，在<code>serialize</code>方法中写入具体序列化的实现代码即可。如下代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//实现Serializer&lt;T&gt;接口</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SelfSerializer</span> <span class="token keyword">implements</span> <span class="token class-name">Serializer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">SelfUser</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
     <span class="token annotation punctuation">@Override</span>
@@ -365,7 +365,7 @@
 properties <span class="token operator">=</span> <span class="token class-name">ProducerConfig</span><span class="token punctuation">.</span><span class="token function">addSerializerToConfig</span><span class="token punctuation">(</span>properties<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">StringSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SelfSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>到此生产者的自定义序列化器就完成啦。下面看一下自定义反序列化器的定义。</p>
-<h2 id="自定义反序列化器"><a href="#自定义反序列化器" class="headerlink" title="自定义反序列化器"></a>自定义反序列化器</h2><p>反序列化器的定义和序列化器的定义是完全相同的。不多做赘述，直接看代码。</p>
+<h2 id="2-自定义反序列化器"><a href="#2-自定义反序列化器" class="headerlink" title="2. 自定义反序列化器"></a>2. 自定义反序列化器</h2><p>反序列化器的定义和序列化器的定义是完全相同的。不多做赘述，直接看代码。</p>
 <p>自定义反序列化器代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//实现Deserializer&lt;T&gt;接口</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SelfDeserializer</span> <span class="token keyword">implements</span> <span class="token class-name">Deserializer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">SelfUser</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
@@ -387,7 +387,7 @@ properties <span class="token operator">=</span> <span class="token class-name">
 properties <span class="token operator">=</span> <span class="token class-name">ProducerConfig</span><span class="token punctuation">.</span><span class="token function">addSerializerToConfig</span><span class="token punctuation">(</span>properties<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">StringSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SelfSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>测试一下即可，这里不演示测试过程了，具体可以参考文末提供的代码示例。</p>
-<h2 id="自定义分区器"><a href="#自定义分区器" class="headerlink" title="自定义分区器"></a>自定义分区器</h2><p>自定义分区器创建方式和自定义序列化器、反序列化器的套路都是相同的。无非就是实现的接口不同，实现的方法不同，核心逻辑不同。</p>
+<h2 id="3-自定义分区器"><a href="#3-自定义分区器" class="headerlink" title="3. 自定义分区器"></a>3. 自定义分区器</h2><p>自定义分区器创建方式和自定义序列化器、反序列化器的套路都是相同的。无非就是实现的接口不同，实现的方法不同，核心逻辑不同。</p>
 <p>自定义分区器代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SelfPartitioner</span> <span class="token keyword">implements</span> <span class="token class-name">Partitioner</span> <span class="token punctuation">{</span>
     <span class="token annotation punctuation">@Override</span>
@@ -412,32 +412,27 @@ properties<span class="token punctuation">.</span><span class="token function">p
 <span class="token comment">//2、使用class</span>
 properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">ProducerConfig</span><span class="token punctuation">.</span><span class="token constant">PARTITIONER_CLASS_CONFIG</span><span class="token punctuation">,</span><span class="token class-name">SelfPartitioner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="默认自定义分区器"><a href="#默认自定义分区器" class="headerlink" title="默认自定义分区器"></a>默认自定义分区器</h4><p>这里补充说明一下默认分区器，在默认的逻辑里面首先就是对传入的<code>key</code>进行非空判断。</p>
+<h3 id="3-1-默认自定义分区器"><a href="#3-1-默认自定义分区器" class="headerlink" title="3.1 默认自定义分区器"></a>3.1 默认自定义分区器</h3><p>这里补充说明一下默认分区器，在默认的逻辑里面首先就是对传入的<code>key</code>进行非空判断。</p>
 <p>如果<code>key</code>是<code>null</code>，那么默认分区器就会采用轮询的方式，将消息下发到<code>topic</code>下的分区中。</p>
 <p>如果<code>key</code>不为<code>null</code>，默认分区器根据自定义的散列算法，这个散列算法是针对<code>key</code>的，这样就可以达到，将同一个<code>key</code>的数据发到同一个分区中。但是这样还是存在问题的，什么问题？</p>
 <p>采用这种方式有一个弊端，如果这个<code>topic</code>下的分区数量是固定的，不会做增加的操作，这种算法是没有问题的，也能达到预想的效果。但是当分区增加时，虽然<code>key</code>是不变的，但是<code>key</code>算出来的分区就可能会发生变化。</p>
 <p>如果在业务需求中必须需强固定分区且一个<code>topic</code>下分区数变化，那么默认的分区器就不能使用，只能根据业务来自定义分区器啦。</p>
-<h2 id="分区和消费者"><a href="#分区和消费者" class="headerlink" title="分区和消费者"></a>分区和消费者</h2><h4 id="分区个数对消费者的影响"><a href="#分区个数对消费者的影响" class="headerlink" title="分区个数对消费者的影响"></a>分区个数对消费者的影响</h4><p>在单个topic下可以创建多个分区，在一个消费者群组中，一个分区只能被一个消费者消费，那么消费者群组成员的个数就不能超过当前消费的topic下分区个数，当存在超过时，超过的消费者也是闲置。如果消费者在消费消息的时候耗时太长，就会导致消息阻塞，不能被及时的消费。这个时候怎么解决呢？如果再添加一个消费者群组呢？这样同样无法解决消息阻塞的问题，同时还导致了消息重复消费的问题。</p>
+<h2 id="4-分区和消费者"><a href="#4-分区和消费者" class="headerlink" title="4. 分区和消费者"></a>4. 分区和消费者</h2><h3 id="4-1-分区个数对消费者的影响"><a href="#4-1-分区个数对消费者的影响" class="headerlink" title="4.1 分区个数对消费者的影响"></a>4.1 分区个数对消费者的影响</h3><p>在单个topic下可以创建多个分区，在一个消费者群组中，一个分区只能被一个消费者消费，那么消费者群组成员的个数就不能超过当前消费的topic下分区个数，当存在超过时，超过的消费者也是闲置。如果消费者在消费消息的时候耗时太长，就会导致消息阻塞，不能被及时的消费。这个时候怎么解决呢？如果再添加一个消费者群组呢？这样同样无法解决消息阻塞的问题，同时还导致了消息重复消费的问题。</p>
 <p>解决方案：</p>
 <ul>
 <li>增加分区个数，从而横向扩展消费者个数，让单位时间内消费的速度大于生产的速度，至少要持平。</li>
 <li>消费者单线程拉取数据，将拉取的数据多线程消费。但是需要注意，如果单程拉取后直接交给子线程执行，而没等到子线程执行结束，就会出现消费端不断的拉取数据，一直开启新线程处理新的数据，消耗消费者大量的性能。即使使用了线程池，也可能会导致线程池过饱和，大量数据堆积在消费端。此时可以考虑线程池和<code>CountDownLatch</code>配合使用，数据交给线程池处理，用<code>CountDownLatch</code>保证每次拉取的数据都已经处理结束。</li>
 </ul>
-<h4 id="分区再均衡策略"><a href="#分区再均衡策略" class="headerlink" title="分区再均衡策略"></a>分区再均衡策略</h4><p>分区再均衡策略在Kafka中是非常重要的，保证了消费能均衡的被每个消费者消费，在什么情况下会触发分区再平衡策略呢？</p>
+<h3 id="4-2-分区再均衡策略"><a href="#4-2-分区再均衡策略" class="headerlink" title="4.2 分区再均衡策略"></a>4.2 分区再均衡策略</h3><p>分区再均衡策略在Kafka中是非常重要的，保证了消费能均衡的被每个消费者消费，在什么情况下会触发分区再平衡策略呢？</p>
 <ul>
 <li>当有消费者退出：比如消费者群组中的某一台机器宕机了，又或者是消费者过剩，需要削减消费者个数。此时此机器消费的分区就要分配到群组中的其他机器中。</li>
 <li>当新增消费者：比如原来10个分区对应5个消费者，可以正常运行，后来业务量增加，5个消费者压力太大，此时就需要添加机器来分担消息的消费任务。</li>
 <li>当新增分区：消费者群组需要将新增的分区均衡分配到现有消费者群组成员上。</li>
 </ul>
 <p>需要注意的是分区再均衡的过程消费者群组会有短时间拉取不到数据的问题，导致短暂的消费延迟问题。</p>
-<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-3">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-3</a></p>
+<h2 id="5-源代码"><a href="#5-源代码" class="headerlink" title="5. 源代码"></a>5. 源代码</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-3">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-3</a></p>
 <p><strong>自定义序列化器+自定义反序列化器在<code>com.itcrud.kafka.selfserializer</code>包内!!!</strong></p>
 <p><strong>自定义分区器在<code>com.itcrud.kafka.selfpartition</code>包内!!!</strong></p>
-<h2 id="推荐文章"><a href="#推荐文章" class="headerlink" title="推荐文章"></a>推荐文章</h2><ul>
-<li><a href="/2019/05/kafka-basic-concept-original/"><strong>Kafka学习笔记(一)：Kafka基本概念理解</strong></a></li>
-<li><a href="/2019/05/kafka-configuration-original/"><strong>Kafka学习笔记(二)：Kafka之常用配置文件核心内容</strong></a></li>
-<li><a href="/2019/06/kafka-hello-world-original/"><strong>Kafka学习笔记(三)：Kafka的第一个HelloWorld</strong></a></li>
-</ul>
 
                 
             </div>
@@ -585,7 +580,7 @@ properties<span class="token punctuation">.</span><span class="token function">p
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-06-15T08-00-00',
+        id: '2019-06-15T14-46-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -904,7 +899,7 @@ properties<span class="token punctuation">.</span><span class="token function">p
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

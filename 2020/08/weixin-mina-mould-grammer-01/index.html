@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2020-08-17
+                    2020-08-一 08:00:00
                 </div>
                 
 
@@ -344,7 +344,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>微信模板语法和vue有点相似，但是也有所不同，在vue中涉及到运算或者数据绑定，都是采用<code>v-bind</code>来实现，但是在微信中，不使用也是完全可以的，比较的灵活。之前如果有vue学习经验的，上手会很快。</p>
-<h2 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h2><p>数据绑定普通写法如下：</p>
+<h2 id="1-数据绑定"><a href="#1-数据绑定" class="headerlink" title="1. 数据绑定"></a>1. 数据绑定</h2><p>数据绑定普通写法如下：</p>
 <ul>
 <li>首先需要在页面对应的json文件中定义初始化数据</li>
 </ul>
@@ -393,7 +393,7 @@
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 在第一个花括号和双引号间有一个空格，这个时候，false就会被认为是字符串，不会最为布尔值生效 --&gt;</span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>checkbox</span> <span class="token attr-name">checked</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span> {{false}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>checkbox</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h2 id="列表渲染"><a href="#列表渲染" class="headerlink" title="列表渲染"></a>列表渲染</h2><p>这个很重要，使用很广，最常用的就是列表数据渲染。使用如下：</p>
+<h2 id="2-列表渲染"><a href="#2-列表渲染" class="headerlink" title="2. 列表渲染"></a>2. 列表渲染</h2><p>这个很重要，使用很广，最常用的就是列表数据渲染。使用如下：</p>
 <ul>
 <li>定义列表数据</li>
 </ul>
@@ -443,14 +443,14 @@
 <li>对于<code>wx:key</code>是可以不加的，框架推荐加上，可以提高性能。如果使用过vue的会知道，其中也是有一个<code>:key</code>，其目的都是相同的。</li>
 <li>如果循环的list是一个数组，里面都是单值元素，非对象且唯一，如<code>[1,2,3,4]</code>，元素不重复，则<code>wx:key</code>的值就使用<code>*this</code>，完整写法就是<code>wx:key="*this"</code>，表示是当前元素</li>
 </ol>
-<h2 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h2><p>条件渲染有两种，一种是直接用if、elif、else的方式，一种是通过标签本身所带的<code>hidden</code>属性。</p>
-<h3 id="if、elif、else方式"><a href="#if、elif、else方式" class="headerlink" title="if、elif、else方式"></a>if、elif、else方式</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name"><span class="token namespace">wx:</span>if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{x&gt;100}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>大于100<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+<h2 id="3-条件渲染"><a href="#3-条件渲染" class="headerlink" title="3. 条件渲染"></a>3. 条件渲染</h2><p>条件渲染有两种，一种是直接用if、elif、else的方式，一种是通过标签本身所带的<code>hidden</code>属性。</p>
+<h3 id="3-1-if、elif、else方式"><a href="#3-1-if、elif、else方式" class="headerlink" title="3.1 if、elif、else方式"></a>3.1 if、elif、else方式</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name"><span class="token namespace">wx:</span>if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{x&gt;100}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>大于100<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name"><span class="token namespace">wx:</span>elif</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{x&gt;50}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>大于50<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name"><span class="token namespace">wx:</span>elif</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{x&gt;30}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>大于30<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name"><span class="token namespace">wx:</span>else</span><span class="token punctuation">&gt;</span></span>小于等于30<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>如果x是大于100的，在页面上最终渲染的标签就一个，其他三个标签会被剔除。假设这里的x值是频繁的变化，那么就可能会导致标签的频繁被删除和添加。</p>
-<h3 id="hidden方式"><a href="#hidden方式" class="headerlink" title="hidden方式"></a>hidden方式</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name">hidden</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{x&gt;100}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>大于100<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+<h3 id="3-2-hidden方式"><a href="#3-2-hidden方式" class="headerlink" title="3.2 hidden方式"></a>3.2 hidden方式</h3><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name">hidden</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{x&gt;100}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>大于100<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name">hidden</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{x&gt;50}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>大于50<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name">hidden</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{x&gt;30}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>大于30<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
@@ -918,7 +918,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

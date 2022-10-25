@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-12-18
+                    2018-12-二 16:33:00
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>logback日志必备。平时在新建项目的时候都是<code>Ctrl+C</code>和<code>Ctrl+V</code>，完全不要自己做什么，不管使用Springmvc还是Springboot都不需要配置<code>logback.xml</code>文件的位置，直接将<code>logback.xml</code>放到resources目录下，命令符合要求即可。但是真正懂或者了解logback里面的各项配置的却少之又少。现在工作闲暇时间看了一下官方的文档，然后自己操作一下，算是入门，不再像之前那么懵比。</p>
-<h3 id="logback的主要组成部分"><a href="#logback的主要组成部分" class="headerlink" title="logback的主要组成部分"></a>logback的主要组成部分</h3><ul>
+<h2 id="1-logback的主要组成部分"><a href="#1-logback的主要组成部分" class="headerlink" title="1. logback的主要组成部分"></a>1. logback的主要组成部分</h2><ul>
 <li><code>appender</code>，是用来定义一个写日志记录的组件，常用的appender类有<code>ConsoleAppender</code>和<code>RollingFileAppender</code>，前者个是用来在控制台上打印日志，后者是将日志输出到文件中。</li>
 <li><code>layout</code>，是指定日志的布局方式，这个基本都不会去特殊的指定，可以忽略，知道有这个东西即可。</li>
 <li><code>encoder</code>，负责把事件转换成字节数组并把字节数组写到合适的输出流。<code>encoder</code>可以指定属性值<code>class</code>，这里对应的类只有一个<code>PatternLayoutEncoder</code>，也是默认值，可以不去指定。</li>
@@ -349,7 +349,7 @@
 <li><code>triggeringPolicy</code>，日志触发器策略，常用的是日志的大小的控制，当日志达到对应的大小的时候，就会触发。生成新的日志文件。日志大小的控制配合<code>rollingPlicy</code>使用的时候，不同的<code>rollingPolicy</code>会有所不同。</li>
 </ul>
 <p>上面就是常用的几个组成部分，下面来各个说明一下。</p>
-<h3 id="logback组成部分详解"><a href="#logback组成部分详解" class="headerlink" title="logback组成部分详解"></a>logback组成部分详解</h3><h5 id="Appender"><a href="#Appender" class="headerlink" title="Appender"></a>Appender</h5><p>定义日志组件:（具体结束看代码注释）</p>
+<h2 id="2-logback组成部分详解"><a href="#2-logback组成部分详解" class="headerlink" title="2. logback组成部分详解"></a>2. logback组成部分详解</h2><h3 id="2-1-Appender"><a href="#2-1-Appender" class="headerlink" title="2.1 Appender"></a>2.1 Appender</h3><p>定义日志组件:（具体结束看代码注释）</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 
 打印在控制台上的日志，日志的encoder是默认的PatternLayoutEncoder，具体的pattern通过标签指定
 appender对应的class类型使用的是ConsoleAppender
@@ -360,7 +360,7 @@ appender对应的class类型使用的是ConsoleAppender
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>encoder</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>appender</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="rollingPolicy-amp-triggeringPolicy"><a href="#rollingPolicy-amp-triggeringPolicy" class="headerlink" title="rollingPolicy &amp; triggeringPolicy"></a>rollingPolicy &amp; triggeringPolicy</h5><p><strong><code>rollingPolicy</code>对应是时间滚动策略的日志文件定义:</strong></p>
+<h3 id="2-2-rollingPolicy-amp-triggeringPolicy"><a href="#2-2-rollingPolicy-amp-triggeringPolicy" class="headerlink" title="2.2 rollingPolicy &amp; triggeringPolicy"></a>2.2 rollingPolicy &amp; triggeringPolicy</h3><p><strong><code>rollingPolicy</code>对应是时间滚动策略的日志文件定义:</strong></p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 滚动文件的方式生成日志日志文件，文件的存储位置通过file标签指定 --&gt;</span>
 <span class="token comment">&lt;!-- 通过encoder指定日志的生成格式,每个appender的日志格式都可以自定义，不用相同 --&gt;</span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>appender</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ch.qos.logback.core.rolling.RollingFileAppender<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
@@ -410,7 +410,7 @@ appender对应的class类型使用的是ConsoleAppender
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rollingPolicy</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>说明：按照时间滚动的单位是天，按照文件大小的滚动是1M，当今天产生的日志大小是5M，就会生成5个日志文件，每个文件对应的大小是1M，对应生成日期是一天，对应的编号不同，也就是<code>%i</code>占位符替换后的编号(从0开始)。</p>
-<h5 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h5><p>过滤器，根据日志类型将日志输出到不同的日志文件中。文件定义如下：</p>
+<h3 id="2-3-filter"><a href="#2-3-filter" class="headerlink" title="2.3 filter"></a>2.3 filter</h3><p>过滤器，根据日志类型将日志输出到不同的日志文件中。文件定义如下：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- info级别日志会输出到test-info.log日志文件中 --&gt;</span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>appender</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>info-log<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ch.qos.logback.core.rolling.RollingFileAppender<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>file</span><span class="token punctuation">&gt;</span></span>/logback/log/test-info.log<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>file</span><span class="token punctuation">&gt;</span></span>
@@ -439,9 +439,8 @@ appender对应的class类型使用的是ConsoleAppender
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>appender</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>不同appender对应不同的日志组件，常规操作，不多说。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实logback里面的东西还有很多，这里只说基本的操作，在日常开发中很实用的内容。至于源码什么的解析了没什么意思。遇到logback报错能够解决，遇到logback配置报错能够解决，在没有logback模板的情况下，可以徒手写一波就OK啦。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>其实logback里面的东西还有很多，这里只说基本的操作，在日常开发中很实用的内容。至于源码什么的解析了没什么意思。遇到logback报错能够解决，遇到logback配置报错能够解决，在没有logback模板的情况下，可以徒手写一波就OK啦。</p>
 <p>这篇文章说的是主要核心元素，接下来还会写一篇文章，写一下MDC的使用和其他酷炫的操作。</p>
-<h3 id="推荐文章"><a href="#推荐文章" class="headerlink" title="推荐文章"></a>推荐文章</h3><p><a href="/2018/12/logback-second"><strong>logback新认识(二)：logback之MDC日志跟踪、日志自定义效果</strong></a></p>
 
                 
             </div>
@@ -585,7 +584,7 @@ appender对应的class类型使用的是ConsoleAppender
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-12-18T08-00-00',
+        id: '2018-12-18T16-33-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -904,7 +903,7 @@ appender对应的class类型使用的是ConsoleAppender
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

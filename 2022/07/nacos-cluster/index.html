@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2022-07-01
+                    2022-07-五 18:38:31
                 </div>
                 
 
@@ -339,7 +339,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h2><p>nacos安装部署非常的简单，下面一起学习一下nacos的安装。初步了解一下nacos的安装过程。</p>
+                <h2 id="1-前置条件"><a href="#1-前置条件" class="headerlink" title="1. 前置条件"></a>1. 前置条件</h2><p>nacos安装部署非常的简单，下面一起学习一下nacos的安装。初步了解一下nacos的安装过程。</p>
 <ul>
 <li><p>因为nacos需要依赖java，所以需要提前安装好jdk，官方推荐jdk8，按照要求安装即可，具体安装可以参考：<a href="/2020/10/linux-jdk-install/">Linux环境JDK安装</a></p>
 </li>
@@ -353,10 +353,10 @@
 </li>
 </ul>
 <p>上面基础环境奠定了以后开始做nacos集群的安装和部署工作。</p>
-<h2 id="下载nacos"><a href="#下载nacos" class="headerlink" title="下载nacos"></a>下载nacos</h2><p>根据官方推荐，目前推荐使用2.0.3稳定版本。下载地址：<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/tags">nacos在github上的下载地址</a>。</p>
+<h2 id="2-下载nacos"><a href="#2-下载nacos" class="headerlink" title="2. 下载nacos"></a>2. 下载nacos</h2><p>根据官方推荐，目前推荐使用2.0.3稳定版本。下载地址：<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/tags">nacos在github上的下载地址</a>。</p>
 <p><strong>特别提醒：</strong></p>
 <p>这里有个坑需要规避，进入这个下载地址后，不要直接点击后面的<code>zip</code>或者<code>tar.gz</code>下载，需要点击对应版本号，进入详情页面，拉到底部下载，下载的包名是<code>nacos-server-2.0.3.tar.gz</code>。如果直接点击后面的<code>zip</code>或者<code>tar.gz</code>下载，下载的包是<code>nacos-2.0.2.tar.gz</code>，这个不是编译好的安装包。</p>
-<h2 id="上传nacos安装包到服务器上"><a href="#上传nacos安装包到服务器上" class="headerlink" title="上传nacos安装包到服务器上"></a>上传nacos安装包到服务器上</h2><ul>
+<h2 id="3-上传nacos安装包到服务器上"><a href="#3-上传nacos安装包到服务器上" class="headerlink" title="3. 上传nacos安装包到服务器上"></a>3. 上传nacos安装包到服务器上</h2><ul>
 <li>可以通过<code>scp</code>命令将nacos安装包上传到服务器上，命令如下：</li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> D:<span class="token punctuation">\</span><span class="token punctuation">\</span>nacos-server-2.0.3.tar.gz root@192.168.75.130:/usr/local<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -371,7 +371,7 @@
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mv</span> nacos nacos-8840<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="持久化数据库配置"><a href="#持久化数据库配置" class="headerlink" title="持久化数据库配置"></a>持久化数据库配置</h2><ul>
+<h2 id="4-持久化数据库配置"><a href="#4-持久化数据库配置" class="headerlink" title="4. 持久化数据库配置"></a>4. 持久化数据库配置</h2><ul>
 <li>进入<code>nacos-8840/cnof</code>目录下，将<code>Connect URL of DB</code>修改为如下内容：</li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">spring.datasource.platform</span><span class="token operator">=</span>mysql
@@ -392,7 +392,7 @@ create datasource nacos_config
 use nacos_config
 <span class="token builtin class-name">source</span> /usr/local/nacos-mysql.sql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="修改集群配置"><a href="#修改集群配置" class="headerlink" title="修改集群配置"></a>修改集群配置</h2><ul>
+<h2 id="5-修改集群配置"><a href="#5-修改集群配置" class="headerlink" title="5. 修改集群配置"></a>5. 修改集群配置</h2><ul>
 <li>将<code>nacos-8840/conf</code>目录下的<code>cluster.conf.example</code>文件复制一份并重命名为<code>cluster.conf</code>，修改其内容如下：</li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 复制并重命名</span>
@@ -412,7 +412,7 @@ use nacos_config
 <span class="token comment">### Default web server port:</span>
 <span class="token assign-left variable">server.port</span><span class="token operator">=</span><span class="token number">8840</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="配置优化点"><a href="#配置优化点" class="headerlink" title="配置优化点"></a>配置优化点</h2><p>这个优化点在你的服务器性能较好的情况下，可以不做，我是在单台虚拟机里面部署三个nacos服务，资源紧张，修改一下此配置更放心，进入<code>nacos-8840/bin</code>目录，找到<code>startup.sh</code>文件，将文件中java堆栈的配置修改小一点，这里修改成128m，修改内容<code>JAVA_OPT="${JAVA_OPT} -server -Xms128m -Xmx128m -Xmn128m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m"</code>，具体修改如下：</p>
+<h2 id="6-配置优化点"><a href="#6-配置优化点" class="headerlink" title="6. 配置优化点"></a>6. 配置优化点</h2><p>这个优化点在你的服务器性能较好的情况下，可以不做，我是在单台虚拟机里面部署三个nacos服务，资源紧张，修改一下此配置更放心，进入<code>nacos-8840/bin</code>目录，找到<code>startup.sh</code>文件，将文件中java堆栈的配置修改小一点，这里修改成128m，修改内容<code>JAVA_OPT="${JAVA_OPT} -server -Xms128m -Xmx128m -Xmn128m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m"</code>，具体修改如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 修改前的内容</span>
 <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token string">"<span class="token variable">${MODE}</span>"</span> <span class="token operator">==</span> <span class="token string">"standalone"</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
     <span class="token assign-left variable">JAVA_OPT</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${JAVA_OPT}</span> -Xms512m -Xmx512m -Xmn256m"</span>
@@ -438,7 +438,7 @@ use nacos_config
     <span class="token assign-left variable">JAVA_OPT</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${JAVA_OPT}</span> -XX:-UseLargePages"</span>
 <span class="token keyword">fi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="复制集群节点"><a href="#复制集群节点" class="headerlink" title="复制集群节点"></a>复制集群节点</h2><ul>
+<h2 id="7-复制集群节点"><a href="#7-复制集群节点" class="headerlink" title="7. 复制集群节点"></a>7. 复制集群节点</h2><ul>
 <li>上面已经完成端口为<code>8840</code>节点的配置，接下来将<code>nacos-8840</code>复制两份出来，并重命名：</li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> <span class="token parameter variable">-R</span> nacos-8840 nacos-8850
@@ -447,7 +447,7 @@ use nacos_config
 <ul>
 <li>修改<code>8850</code>和<code>8860</code>节点的配置，很简单，将<code>application.properties</code>文件中的<code>server-port</code>做对应的修改即可。</li>
 </ul>
-<h2 id="启动集群服务"><a href="#启动集群服务" class="headerlink" title="启动集群服务"></a>启动集群服务</h2><ul>
+<h2 id="8-启动集群服务"><a href="#8-启动集群服务" class="headerlink" title="8. 启动集群服务"></a>8. 启动集群服务</h2><ul>
 <li>分别执行三个节点的<code>startup.sh</code>命令：</li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在/usr/local目录下执行</span>
@@ -462,7 +462,7 @@ use nacos_config
 <span class="token function">netstat</span> <span class="token parameter variable">-ano</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token number">8850</span>
 <span class="token function">netstat</span> <span class="token parameter variable">-ano</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token number">8860</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="配置nginx负载均衡"><a href="#配置nginx负载均衡" class="headerlink" title="配置nginx负载均衡"></a>配置nginx负载均衡</h2><ul>
+<h2 id="9-配置nginx负载均衡"><a href="#9-配置nginx负载均衡" class="headerlink" title="9. 配置nginx负载均衡"></a>9. 配置nginx负载均衡</h2><ul>
 <li>主要配置负载和监听，配置内容如下：</li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 在http下配置负载</span>
@@ -500,8 +500,8 @@ stream <span class="token punctuation">{</span>
 <ul>
 <li>配置完成后启动或者重启nginx即可。</li>
 </ul>
-<h2 id="访问nacos页面"><a href="#访问nacos页面" class="headerlink" title="访问nacos页面"></a>访问nacos页面</h2><p>在浏览器中输入：<code>http://192.168.75.130:8848/nacos</code>，会弹出登录页面，默认用户名和密码都是nacos，到此集群部署大功告成。</p>
-<h2 id="存在的坑点"><a href="#存在的坑点" class="headerlink" title="存在的坑点"></a>存在的坑点</h2><h3 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h3><p>nacos2.0版本相比1.x新增了gRPC的通信方式，因此需要增加两个端口，新增端口在配置的主端口（<code>server.port</code>）基础上，进行一定的偏移量自动生成。偏移规则：</p>
+<h2 id="10-访问nacos页面"><a href="#10-访问nacos页面" class="headerlink" title="10. 访问nacos页面"></a>10. 访问nacos页面</h2><p>在浏览器中输入：<code>http://192.168.75.130:8848/nacos</code>，会弹出登录页面，默认用户名和密码都是nacos，到此集群部署大功告成。</p>
+<h2 id="11-存在的坑点"><a href="#11-存在的坑点" class="headerlink" title="11. 存在的坑点"></a>11. 存在的坑点</h2><h3 id="11-1-官方解释"><a href="#11-1-官方解释" class="headerlink" title="11.1 官方解释"></a>11.1 官方解释</h3><p>nacos2.0版本相比1.x新增了gRPC的通信方式，因此需要增加两个端口，新增端口在配置的主端口（<code>server.port</code>）基础上，进行一定的偏移量自动生成。偏移规则：</p>
 <table>
 <thead>
 <tr>
@@ -521,12 +521,12 @@ stream <span class="token punctuation">{</span>
 <td>客户端gRPC请求服务端端口，用于服务间同步等</td>
 </tr>
 </tbody></table>
-<h3 id="改动引起的变化说明"><a href="#改动引起的变化说明" class="headerlink" title="改动引起的变化说明"></a>改动引起的变化说明</h3><p>因为这个改动，在一台机器上部署nacos集群时，不能将运行端口设置为连续端口，比如：<code>8840</code>、<code>8841</code>、<code>8842</code>，否则会发生端口冲突。</p>
+<h3 id="11-2-改动引起的变化说明"><a href="#11-2-改动引起的变化说明" class="headerlink" title="11.2 改动引起的变化说明"></a>11.2 改动引起的变化说明</h3><p>因为这个改动，在一台机器上部署nacos集群时，不能将运行端口设置为连续端口，比如：<code>8840</code>、<code>8841</code>、<code>8842</code>，否则会发生端口冲突。</p>
 <p>运行在<code>8840</code>端口nacos服务实际上会占用<code>8840</code>、<code>8940</code>、<code>8941</code>三个端口；</p>
 <p>运行在<code>8841</code>端口nacos服务实际上会占用<code>8841</code>、<code>8941</code>、<code>8942</code>三个端口；</p>
 <p>运行在<code>8842</code>端口nacos服务实际上会占用<code>8842</code>、<code>8942</code>、<code>8943</code>三个端口。</p>
-<h3 id="另一个问题"><a href="#另一个问题" class="headerlink" title="另一个问题"></a>另一个问题</h3><p>在官方文档中，还有一个很重要的说明，是加粗的内容：<br><strong>使用VIP/nginx请求时，需要配置成TCP转发，不能配置http2转发，否则连接会被nginx断开。</strong><br>正常Nacos都是使用集群的模式，需要使用nginx做转发，这里就需要在nginx配置文件中增加一些配置，如果继续使用<code>nacos 1.x</code>的配置，在启动项目的时候会出现报错。详细说明如下。</p>
-<h4 id="代码中nacos的配置信息"><a href="#代码中nacos的配置信息" class="headerlink" title="代码中nacos的配置信息"></a>代码中nacos的配置信息</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+<h3 id="11-3-另一个问题"><a href="#11-3-另一个问题" class="headerlink" title="11.3 另一个问题"></a>11.3 另一个问题</h3><p>在官方文档中，还有一个很重要的说明，是加粗的内容：<br><strong>使用VIP/nginx请求时，需要配置成TCP转发，不能配置http2转发，否则连接会被nginx断开。</strong><br>正常Nacos都是使用集群的模式，需要使用nginx做转发，这里就需要在nginx配置文件中增加一些配置，如果继续使用<code>nacos 1.x</code>的配置，在启动项目的时候会出现报错。详细说明如下。</p>
+<h4 id="11-3-1-代码中nacos的配置信息"><a href="#11-3-1-代码中nacos的配置信息" class="headerlink" title="11.3.1 代码中nacos的配置信息"></a>11.3.1 代码中nacos的配置信息</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
   <span class="token key atrule">application</span><span class="token punctuation">:</span>
     <span class="token key atrule">name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>payment<span class="token punctuation">-</span>provider
   <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
@@ -534,7 +534,7 @@ stream <span class="token punctuation">{</span>
       <span class="token key atrule">discovery</span><span class="token punctuation">:</span>
         <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 192.168.75.130<span class="token punctuation">:</span><span class="token number">8848</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个配置是在<code>nacos 1.x</code>的时候是没有问题的，但是如果你nacos更新到了2.x，也没有修改nginx配置文件中grpc的转发，这里就会出现启动项目报错问题。报错信息:<code>Request nacos server failed</code>。这里提到，但是这里没有需要修改的，需要修改的在nginx内。</p>
-<h4 id="nginx需要做的修改"><a href="#nginx需要做的修改" class="headerlink" title="nginx需要做的修改"></a>nginx需要做的修改</h4><p>首先是要求你的nginx中包含<code>stream</code>模块，如何检查你的nginx是否安装了<code>stream</code>模块呢，用下面的命令：</p>
+<h4 id="11-3-2-nginx需要做的修改"><a href="#11-3-2-nginx需要做的修改" class="headerlink" title="11.3.2 nginx需要做的修改"></a>11.3.2 nginx需要做的修改</h4><p>首先是要求你的nginx中包含<code>stream</code>模块，如何检查你的nginx是否安装了<code>stream</code>模块呢，用下面的命令：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/usr/local/nginx/sbin/ningx <span class="token parameter variable">-V</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>打印出来的信息如下：</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">nginx version: nginx/1.16.1
@@ -1017,7 +1017,7 @@ configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module --
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

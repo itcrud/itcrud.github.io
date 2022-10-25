@@ -313,7 +313,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-12-15
+                    2018-12-六 19:29:00
                 </div>
                 
 
@@ -322,7 +322,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    867
+                    871
                 </div>
                 
 
@@ -348,7 +348,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>这篇文章分享一个好用的脚本，用在xshell和CRT上，真的很爽，也是简单的不要不要的。<br>当负责的项目有多个环境，看日志需要到Linux环境下，数据库也不能用navicat等工具连接，这个时候只能使用xshell或者CRT进入对应的机器，但是这里存在的麻烦就是机器太多（测试环境、演示环境、生产环境），每次都要用ssh命令在不同的机器之间跳来跳去，很麻烦。因此这里可以用vbscript来让这些操作不再麻烦，直接自动操作即可。</p>
-<h3 id="vbscript在xshell软件上的脚本"><a href="#vbscript在xshell软件上的脚本" class="headerlink" title="vbscript在xshell软件上的脚本"></a>vbscript在xshell软件上的脚本</h3><p>vbscript在xshell和CRT上脚本稍微有点不同，所以这里分开来看，先看xshell下的。</p>
+<h2 id="1-vbscript在xshell软件上的脚本"><a href="#1-vbscript在xshell软件上的脚本" class="headerlink" title="1. vbscript在xshell软件上的脚本"></a>1. vbscript在xshell软件上的脚本</h2><p>vbscript在xshell和CRT上脚本稍微有点不同，所以这里分开来看，先看xshell下的。</p>
 <pre class="line-numbers language-vbscript" data-language="vbscript"><code class="language-vbscript">Sub Main
     xsh.Screen.Synchronous = true '*** 设置异步 ***
     xsh.Session.Sleep 100 '*** 设置休眠时间 ***
@@ -370,14 +370,14 @@ end Sub <span aria-hidden="true" class="line-numbers-rows"><span></span><span></
 <li>还有一个就是回车和上一行的命令可以合并成一行，简化代码。如：<code>xsh.Screen.Send "pwd001" &amp; VbCr</code>。</li>
 <li>这里还有一个坑，在使用<code>mysql</code>命令来连接数据库的时候，需要在语句后面加上分号（”;”）。如：<code>xsh.Screen.Send "mysql -h xxx -u xxx -pxxx;"</code></li>
 </ul>
-<h3 id="vbscript在CRT软件上的脚本"><a href="#vbscript在CRT软件上的脚本" class="headerlink" title="vbscript在CRT软件上的脚本"></a>vbscript在CRT软件上的脚本</h3><p>xshell上的脚本写完了，CRT上的脚本其实就不用写了，他们直接的不同之处就是命令的前缀不同，xshell使用的是<code>xsh.</code>，CTR上使用的是<code>crt.</code>。直接把上面的脚本拿下来，直接替换即可。</p>
-<h3 id="xshell导入脚本的引导"><a href="#xshell导入脚本的引导" class="headerlink" title="xshell导入脚本的引导"></a>xshell导入脚本的引导</h3><ul>
+<h2 id="2-vbscript在CRT软件上的脚本"><a href="#2-vbscript在CRT软件上的脚本" class="headerlink" title="2. vbscript在CRT软件上的脚本"></a>2. vbscript在CRT软件上的脚本</h2><p>xshell上的脚本写完了，CRT上的脚本其实就不用写了，他们直接的不同之处就是命令的前缀不同，xshell使用的是<code>xsh.</code>，CTR上使用的是<code>crt.</code>。直接把上面的脚本拿下来，直接替换即可。</p>
+<h2 id="3-xshell导入脚本的引导"><a href="#3-xshell导入脚本的引导" class="headerlink" title="3. xshell导入脚本的引导"></a>3. xshell导入脚本的引导</h2><ul>
 <li>创建会话，输入对应的主机名、登录用户名和密码。</li>
 <li>在新建会话窗口的右侧选择”登录脚本”，然后选择第二个复选框”连接回话时运行脚本”。</li>
 <li>点下面的选择框，到文件所在的目录下，将刚才写好的脚本文件引入到里面即可。（脚本文件是以<code>.vbs</code>为后缀）</li>
 </ul>
 <p>至于CRT如何导入脚本可以根据上面的步骤来，可能会有所不同，但是基本思路是一样的，希望能帮助到你。</p>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>之前都是一直使用xshell，现在换成CRT，我按照上面的内容去替换<code>xsh.</code>为<code>crt.</code>出现了问题。在经过网上资料的查阅知道，做了一点修改。</p>
+<h2 id="4-补充"><a href="#4-补充" class="headerlink" title="4. 补充"></a>4. 补充</h2><p>之前都是一直使用xshell，现在换成CRT，我按照上面的内容去替换<code>xsh.</code>为<code>crt.</code>出现了问题。在经过网上资料的查阅知道，做了一点修改。</p>
 <p><strong>在CRT的脚本中，只是替换<code>xsh.</code>是不够的，如果用到<code>Sleep</code>指令，需要将<code>Sleep</code>前的<code>Session</code>去掉，否则会报错。</strong></p>
 
                 
@@ -530,7 +530,7 @@ end Sub <span aria-hidden="true" class="line-numbers-rows"><span></span><span></
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-12-15T08-00-00',
+        id: '2018-12-15T19-29-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -845,7 +845,7 @@ end Sub <span aria-hidden="true" class="line-numbers-rows"><span></span><span></
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

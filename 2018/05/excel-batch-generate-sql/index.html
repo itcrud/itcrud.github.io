@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-05-27
+                    2018-05-日 21:15:11
                 </div>
                 
 
@@ -339,13 +339,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="实际场景"><a href="#实际场景" class="headerlink" title="实际场景"></a>实际场景</h3><p>A项目前期上线后有两张表，第一张表里面有订单的基本信息(重点：没有订单完成时间)，第二张表记录订单的流程节点信息，如买车这个订单，走的流程节点有交定金、交首付、贷款申请、贷款审批……取车，每个节点都有开始时间和完成时间记录，当所有节点都完成后，会自动将订单的状态更新为完成状态。后期迭代需求生成报表，需要统计订单整个执行流程的时间。那么这个时候的基本构思就是取订单的创建时间为开始时间和最后一个节点的完成时间作为结束时间计算执行流程时间。这样不太方便，为了更好的利于报表统计，需要在订单表中加一个完成时间字段，但是存在一个问题就是线上旧的数据中会出现完成时间都为空的现象，这个时候需要手动的取这个模块的节点最后完成时间，将这个时间填充到订单表新加字段完成时间上，直接写SQL需要先select再update，而且需要根据订单号匹配到对应节点和订单关联。觉得不太容易些，如果通过上线自动执行加载任务在代码中来实现，下次上线把这段代码再去掉。这个好像有点折腾。SQL不容易写，代码实现不友好，那就继续往下看，也许就是你想要的惊喜。</p>
-<h3 id="excel批量生产SQL"><a href="#excel批量生产SQL" class="headerlink" title="excel批量生产SQL"></a>excel批量生产SQL</h3><h5 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h5><p>之前说写SQL比较麻烦，因为需要select以后再update，直接一句SQL不能实现，那我们就分开来写，先select出数据，然后再根据结果写update，但是如果update数据很多，几条还可以，几百条几万条估计你就受不了了，一天的时候都写不完，还很容易出错。这段说明的结论：一句SQL不行，就分开执行，分开执行，分开执行语句太多，写起来很麻烦。矛盾就在写起来很多很麻烦上。</p>
-<h5 id="表的设计"><a href="#表的设计" class="headerlink" title="表的设计"></a>表的设计</h5><p>最简化的表格字段设计如下。<br>订单表<br>编号(id)|订单人(order_person)|订单金额(order_amount)|创建时间(created_time)<br>节点表<br>编号(id)|订单编号(order_id)|节点名称(phase_name)|节点状态(phase_status)|完成时间(complete_date)</p>
-<h5 id="select查询需要的数据"><a href="#select查询需要的数据" class="headerlink" title="select查询需要的数据"></a>select查询需要的数据</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> tor<span class="token punctuation">.</span>id<span class="token punctuation">,</span><span class="token function">max</span><span class="token punctuation">(</span>ph<span class="token punctuation">.</span>complete_date<span class="token punctuation">)</span> max_date <span class="token keyword">from</span> tab_order tor<span class="token punctuation">,</span>tab_phase ph <span class="token keyword">where</span> ph<span class="token punctuation">.</span>phase_status <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">and</span> tor<span class="token punctuation">.</span>id <span class="token operator">=</span> ph<span class="token punctuation">.</span>order_id <span class="token keyword">group</span> <span class="token keyword">by</span> tor<span class="token punctuation">.</span>id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h2 id="1-实际场景"><a href="#1-实际场景" class="headerlink" title="1. 实际场景"></a>1. 实际场景</h2><p>A项目前期上线后有两张表，第一张表里面有订单的基本信息(重点：没有订单完成时间)，第二张表记录订单的流程节点信息，如买车这个订单，走的流程节点有交定金、交首付、贷款申请、贷款审批……取车，每个节点都有开始时间和完成时间记录，当所有节点都完成后，会自动将订单的状态更新为完成状态。后期迭代需求生成报表，需要统计订单整个执行流程的时间。那么这个时候的基本构思就是取订单的创建时间为开始时间和最后一个节点的完成时间作为结束时间计算执行流程时间。这样不太方便，为了更好的利于报表统计，需要在订单表中加一个完成时间字段，但是存在一个问题就是线上旧的数据中会出现完成时间都为空的现象，这个时候需要手动的取这个模块的节点最后完成时间，将这个时间填充到订单表新加字段完成时间上，直接写SQL需要先select再update，而且需要根据订单号匹配到对应节点和订单关联。觉得不太容易些，如果通过上线自动执行加载任务在代码中来实现，下次上线把这段代码再去掉。这个好像有点折腾。SQL不容易写，代码实现不友好，那就继续往下看，也许就是你想要的惊喜。</p>
+<h2 id="2-excel批量生产SQL"><a href="#2-excel批量生产SQL" class="headerlink" title="2. excel批量生产SQL"></a>2. excel批量生产SQL</h2><h3 id="2-1-基本思路"><a href="#2-1-基本思路" class="headerlink" title="2.1 基本思路"></a>2.1 基本思路</h3><p>之前说写SQL比较麻烦，因为需要select以后再update，直接一句SQL不能实现，那我们就分开来写，先select出数据，然后再根据结果写update，但是如果update数据很多，几条还可以，几百条几万条估计你就受不了了，一天的时候都写不完，还很容易出错。这段说明的结论：一句SQL不行，就分开执行，分开执行，分开执行语句太多，写起来很麻烦。矛盾就在写起来很多很麻烦上。</p>
+<h3 id="2-2-表的设计"><a href="#2-2-表的设计" class="headerlink" title="2.2 表的设计"></a>2.2 表的设计</h3><p>最简化的表格字段设计如下。<br>订单表<br>编号(id)|订单人(order_person)|订单金额(order_amount)|创建时间(created_time)<br>节点表<br>编号(id)|订单编号(order_id)|节点名称(phase_name)|节点状态(phase_status)|完成时间(complete_date)</p>
+<h3 id="2-3-select查询需要的数据"><a href="#2-3-select查询需要的数据" class="headerlink" title="2.3 select查询需要的数据"></a>2.3 select查询需要的数据</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> tor<span class="token punctuation">.</span>id<span class="token punctuation">,</span><span class="token function">max</span><span class="token punctuation">(</span>ph<span class="token punctuation">.</span>complete_date<span class="token punctuation">)</span> max_date <span class="token keyword">from</span> tab_order tor<span class="token punctuation">,</span>tab_phase ph <span class="token keyword">where</span> ph<span class="token punctuation">.</span>phase_status <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">and</span> tor<span class="token punctuation">.</span>id <span class="token operator">=</span> ph<span class="token punctuation">.</span>order_id <span class="token keyword">group</span> <span class="token keyword">by</span> tor<span class="token punctuation">.</span>id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这个时候我们获取到了对应的订单编号和最新的完成时间，只需要使用update语句就可以实现上面的场景需求，如果对照着一句一句写，估计会眼瞎、手残，直接猝死的。如果使用update语句，怎么实现，也许可以，但是这里不使用，这里采用更简单的方式。</p>
-<h5 id="将数据放到excel表格中"><a href="#将数据放到excel表格中" class="headerlink" title="将数据放到excel表格中"></a>将数据放到excel表格中</h5><h6 id="方式一：使用工具查询到结果"><a href="#方式一：使用工具查询到结果" class="headerlink" title="方式一：使用工具查询到结果"></a>方式一：使用工具查询到结果</h6><p>这里使用工具意思是使用例如navicat这样的软件，直接把查出来的数据复制粘贴到excel表格中就可以了，但是对于稍微正规一点的公司，生产库是不可以这样直接连接的。</p>
-<h6 id="方式二：dba提供或者命令行查询数据"><a href="#方式二：dba提供或者命令行查询数据" class="headerlink" title="方式二：dba提供或者命令行查询数据"></a>方式二：dba提供或者命令行查询数据</h6><p>上面的复制粘贴方式很简单，不赘述，主要讲一下下面的这种方式。通过dba在数据库里面查询或者自己通过xshell、CRT连接服务器通过命令查询，往往查询查询出来的结果是这样的。</p>
+<h3 id="2-4-将数据放到excel表格中"><a href="#2-4-将数据放到excel表格中" class="headerlink" title="2.4 将数据放到excel表格中"></a>2.4 将数据放到excel表格中</h3><h4 id="2-4-1-方式一：使用工具查询到结果"><a href="#2-4-1-方式一：使用工具查询到结果" class="headerlink" title="2.4.1 方式一：使用工具查询到结果"></a>2.4.1 方式一：使用工具查询到结果</h4><p>这里使用工具意思是使用例如navicat这样的软件，直接把查出来的数据复制粘贴到excel表格中就可以了，但是对于稍微正规一点的公司，生产库是不可以这样直接连接的。</p>
+<h4 id="2-4-2-方式二：dba提供或者命令行查询数据"><a href="#2-4-2-方式二：dba提供或者命令行查询数据" class="headerlink" title="2.4.2 方式二：dba提供或者命令行查询数据"></a>2.4.2 方式二：dba提供或者命令行查询数据</h4><p>上面的复制粘贴方式很简单，不赘述，主要讲一下下面的这种方式。通过dba在数据库里面查询或者自己通过xshell、CRT连接服务器通过命令查询，往往查询查询出来的结果是这样的。</p>
 <pre class="line-numbers language-none"><code class="language-none">+--+-------------------+
 |id|        max_date   |
 +--+-------------------+
@@ -359,10 +359,10 @@
 |2|2018-04-17 12:12:12|
 |3|2018-04-18 12:12:12|
 |4|2018-04-19 12:12:12|<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h6 id="数据导入excel表格"><a href="#数据导入excel表格" class="headerlink" title="数据导入excel表格"></a>数据导入excel表格</h6><p>说明：用的excel版本是2010的。<br>新建一个excel表格–&gt;找到表头选项卡中的”数据”–&gt;自文本–&gt;选择之前准备好的txt文件–&gt;原始数据类型选择”分隔符号”–&gt;下一步–&gt;分隔符号选择”其他”，输入框里输入”|”–&gt;下一步–&gt;前后会多出来两列空白列，选中然后对应的列数据格式设置为不导入此列–&gt;中间有数值的列设置列数据格式为文本(都是文本，包括日期也选择文本)–&gt;完成–&gt;确定。OK！到此数据导入成功。</p>
-<h5 id="批量生成update语句SQL"><a href="#批量生成update语句SQL" class="headerlink" title="批量生成update语句SQL"></a>批量生成update语句SQL</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token operator">=</span><span class="token string">"update tab_order set complete_date ='"</span> <span class="token operator">&amp;</span> A1 <span class="token operator">&amp;</span> <span class="token string">"' where id ="</span> <span class="token operator">&amp;</span> B1 <span class="token operator">&amp;</span> <span class="token string">";"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="2-5-数据导入excel表格"><a href="#2-5-数据导入excel表格" class="headerlink" title="2.5 数据导入excel表格"></a>2.5 数据导入excel表格</h3><p>说明：用的excel版本是2010的。<br>新建一个excel表格–&gt;找到表头选项卡中的”数据”–&gt;自文本–&gt;选择之前准备好的txt文件–&gt;原始数据类型选择”分隔符号”–&gt;下一步–&gt;分隔符号选择”其他”，输入框里输入”|”–&gt;下一步–&gt;前后会多出来两列空白列，选中然后对应的列数据格式设置为不导入此列–&gt;中间有数值的列设置列数据格式为文本(都是文本，包括日期也选择文本)–&gt;完成–&gt;确定。OK！到此数据导入成功。</p>
+<h3 id="2-6-批量生成update语句SQL"><a href="#2-6-批量生成update语句SQL" class="headerlink" title="2.6 批量生成update语句SQL"></a>2.6 批量生成update语句SQL</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token operator">=</span><span class="token string">"update tab_order set complete_date ='"</span> <span class="token operator">&amp;</span> A1 <span class="token operator">&amp;</span> <span class="token string">"' where id ="</span> <span class="token operator">&amp;</span> B1 <span class="token operator">&amp;</span> <span class="token string">";"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这个表达式放在第一行数据的后一个单元格里面，您会发现一个SQL已经生成，接下来就是下拉这个单元格填充，然后就会生成n条对应的update语句，然后选中所有SQL，复制出来，粘贴到txt文件，到此批量生成的update语句就可以到线上环境运行啦。是不是很简单。</p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>1、这里举例只是个例子，不要太过于纠结例子的合理性；<br>2、这只是一种生成方式，不同的公司，不同的项目，不同的数据库，执行起来的方式不一样，例子只说怎么用。</p>
+<h2 id="3-说明"><a href="#3-说明" class="headerlink" title="3. 说明"></a>3. 说明</h2><p>1、这里举例只是个例子，不要太过于纠结例子的合理性；<br>2、这只是一种生成方式，不同的公司，不同的项目，不同的数据库，执行起来的方式不一样，例子只说怎么用。</p>
 
                 
             </div>
@@ -506,7 +506,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-05-27T21-00-00',
+        id: '2018-05-27T21-15-11',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -822,7 +822,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

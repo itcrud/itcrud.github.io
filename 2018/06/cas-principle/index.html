@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-06-06
+                    2018-06-三 21:12:56
                 </div>
                 
 
@@ -344,7 +344,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>众所周知锁有两种：乐观锁与悲观锁。独占锁是一种悲观锁，而 synchronized  就是一种独占锁，synchronized&nbsp;会导致其它所有未持有锁的线程阻塞，等待持有锁的线程释放锁。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。而乐观锁用到的机制就是CAS。</p>
-<h3 id="CAS（Compare-And-Set）"><a href="#CAS（Compare-And-Set）" class="headerlink" title="CAS（Compare And Set）"></a>CAS（Compare And Set）</h3><p>Compare And Set（或Compare And Swap），CAS是解决多线程并行情况下使用锁造成性能损耗的一种机制，CAS操作包含三个操作数——内存位置（V）、预期原值（A）、新值(B)。如果内存位置的值与预期原值相匹配，那么处理器会自动将该位置值更新为新值。否则，处理器不做任何操作。无论哪种情况，它都会在CAS指令之前返回该位置的值。CAS有效地说明了“我认为位置V应该包含值A；如果包含该值，则将B放到这个位置；否则，不要更改该位置，只告诉我这个位置现在的值即可。<br>在java中可以通过锁和循环CAS的方式来实现原子操作。Java中 java.util.concurrent.atomic包相关类就是 CAS的实现，atomic包里包括以下类：</p>
+<h2 id="1-CAS（Compare-And-Set）"><a href="#1-CAS（Compare-And-Set）" class="headerlink" title="1. CAS（Compare And Set）"></a>1. CAS（Compare And Set）</h2><p>Compare And Set（或Compare And Swap），CAS是解决多线程并行情况下使用锁造成性能损耗的一种机制，CAS操作包含三个操作数——内存位置（V）、预期原值（A）、新值(B)。如果内存位置的值与预期原值相匹配，那么处理器会自动将该位置值更新为新值。否则，处理器不做任何操作。无论哪种情况，它都会在CAS指令之前返回该位置的值。CAS有效地说明了“我认为位置V应该包含值A；如果包含该值，则将B放到这个位置；否则，不要更改该位置，只告诉我这个位置现在的值即可。<br>在java中可以通过锁和循环CAS的方式来实现原子操作。Java中 java.util.concurrent.atomic包相关类就是 CAS的实现，atomic包里包括以下类：</p>
 <table>
 <thead>
 <tr>
@@ -407,7 +407,7 @@
 </tbody></table>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">boolean</span> <span class="token function">compareAndSet</span><span class="token punctuation">(</span>expectedValue<span class="token punctuation">,</span> updateValue<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>如果此方法（在不同的类间参数类型也不同）当前保持 expectedValue，则以原子方式将变量设置为 updateValue，并在成功时报告 true。此包中的类还包含获取并无条件设置值的方法，以及以下描述的较弱条件的原子更新操作 weakCompareAndSet。<br>这些方法的规范使实现能够使用当代处理器上提供的高效机器级别原子指令。但是在某些平台上，该支持可能需要某种形式的内部锁。因而，该方法不能严格保证不被阻塞 - 执行操作之前可能暂时阻塞线程。</p>
-<h3 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a>AtomicInteger</h3><p>AtomicInteger可以用原子方式更新的 int 值。AtomicInteger 可用在应用程序中（如以原子方式增加的计数器），并且不能用于替换 Integer。但是，此类确实扩展了 Number，允许那些处理基于数字类的工具和实用工具进行统一访问。 我们拿 AtomicInteger为例来学习下 CAS操作是如何实现的。<br>通常情况下，在 Java中，i++等类似操作并不是线程安全的，因为 i++可分为三个独立的操作：获取变量当前值，为该值+1，然后写回新的值。在没有额外资源可以利用的情况下，只能使用加锁才能保证读-改-写这三个操作时“原子性”的。但是利用加锁的方式来实现该功能的话，代码将非常复杂及难以维护，如：</p>
+<h2 id="2-AtomicInteger"><a href="#2-AtomicInteger" class="headerlink" title="2. AtomicInteger"></a>2. AtomicInteger</h2><p>AtomicInteger可以用原子方式更新的 int 值。AtomicInteger 可用在应用程序中（如以原子方式增加的计数器），并且不能用于替换 Integer。但是，此类确实扩展了 Number，允许那些处理基于数字类的工具和实用工具进行统一访问。 我们拿 AtomicInteger为例来学习下 CAS操作是如何实现的。<br>通常情况下，在 Java中，i++等类似操作并不是线程安全的，因为 i++可分为三个独立的操作：获取变量当前值，为该值+1，然后写回新的值。在没有额外资源可以利用的情况下，只能使用加锁才能保证读-改-写这三个操作时“原子性”的。但是利用加锁的方式来实现该功能的话，代码将非常复杂及难以维护，如：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">synchronized</span> <span class="token punctuation">(</span>lock<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
     i<span class="token operator">++</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -474,7 +474,7 @@
 线程安全计数结果：10000
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其中非线程安全计数器所计算的结果每次都不相同且不正确，而线程安全计数器计算的结果每次都是正确的。可以看到代码中并不含有任何有关 synchronized 关键字的地方，所以 safeCount可以当做一个普通的方法来使用。<br>示例中使用了 compareAndSet方法，那么我们就从此方法开始深入了解 <code>AtomicInteger</code>的用法。</p>
-<h4 id="compareAndSet方法"><a href="#compareAndSet方法" class="headerlink" title="compareAndSet方法"></a>compareAndSet方法</h4><p>如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值。</p>
+<h3 id="2-1-compareAndSet方法"><a href="#2-1-compareAndSet方法" class="headerlink" title="2.1 compareAndSet方法"></a>2.1 compareAndSet方法</h3><p>如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">compareAndSet</span><span class="token punctuation">(</span><span class="token keyword">int</span> expect<span class="token punctuation">,</span> <span class="token keyword">int</span> update<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
     <span class="token keyword">return</span> unsafe<span class="token punctuation">.</span><span class="token function">compareAndSwapInt</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> valueOffset<span class="token punctuation">,</span> expect<span class="token punctuation">,</span> update<span class="token punctuation">)</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -653,7 +653,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-06-06T21-00-00',
+        id: '2018-06-06T21-12-56',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -964,7 +964,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

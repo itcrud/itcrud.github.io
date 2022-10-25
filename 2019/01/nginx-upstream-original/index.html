@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-01-05
+                    2019-01-六 08:00:00
                 </div>
                 
 
@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    870
+                    881
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>nginx的三大主角功能之一：负载均衡。主要应用在集群上面，根据机器的承载能力给予不同的处理权重。这些权重的方式可以通过三种方式来实现。分别是：<code>ip_hash</code>、<code>weight</code>和轮询。每个使用的场景有所不同，下面来细说。</p>
-<h3 id="upstream的三种策略"><a href="#upstream的三种策略" class="headerlink" title="upstream的三种策略"></a>upstream的三种策略</h3><ul>
+<h2 id="1-upstream的三种策略"><a href="#1-upstream的三种策略" class="headerlink" title="1. upstream的三种策略"></a>1. upstream的三种策略</h2><ul>
 <li><code>ip_hash</code>：通过ip来计算hash值，根据hash值将分配到不同的机器中，同一个hash值会一直落在一台机器上（也就是同一个ip）。</li>
 <li>weight：通过设置权重值指定集群中不同机器的权重，权重越高，落到该机器的请求次数越多。</li>
 <li>轮询：将请求均匀的分配到集群中的每一台机器上。</li>
@@ -349,7 +349,7 @@
 <pre class="line-numbers language-none"><code class="language-none">ip_hash &gt; weight &gt; 轮询<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><code>ip_hash</code>是优先级最高，当配置了<code>ip_hash</code>，其他两种配置就会失效，只会根据<code>ip_hash</code>策略。配置了<code>weight</code>也是同样，轮询会失效。</p>
-<h3 id="upstream使用"><a href="#upstream使用" class="headerlink" title="upstream使用"></a>upstream使用</h3><h5 id="upstream配置语法"><a href="#upstream配置语法" class="headerlink" title="upstream配置语法"></a>upstream配置语法</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">upstream <span class="token operator">&lt;</span>名称<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+<h2 id="2-upstream使用"><a href="#2-upstream使用" class="headerlink" title="2. upstream使用"></a>2. upstream使用</h2><h3 id="2-1-upstream配置语法"><a href="#2-1-upstream配置语法" class="headerlink" title="2.1 upstream配置语法"></a>2.1 upstream配置语法</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">upstream <span class="token operator">&lt;</span>名称<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
 	<span class="token punctuation">[</span>ip_hash策略<span class="token punctuation">]</span><span class="token punctuation">;</span>
     server <span class="token operator">&lt;</span>服务信息<span class="token operator">&gt;</span> <span class="token punctuation">[</span>权重信息<span class="token punctuation">]</span><span class="token punctuation">;</span>
     server <span class="token operator">&lt;</span>服务信息<span class="token operator">&gt;</span> <span class="token punctuation">[</span>权重信息<span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -361,7 +361,7 @@
 <li>服务信息：必填，集群中提供服务的虚拟机地址，如：<code>168.192.0.1:8080</code>。</li>
 <li>权重信息：选填，需要用<code>weight</code>指定每台虚拟机的权重信息。</li>
 </ul>
-<h5 id="ip-hash示例"><a href="#ip-hash示例" class="headerlink" title="ip_hash示例"></a>ip_hash示例</h5><pre class="line-numbers language-none"><code class="language-none">upstream demo {
+<h3 id="2-2-ip-hash示例"><a href="#2-2-ip-hash示例" class="headerlink" title="2.2 ip_hash示例"></a>2.2 ip_hash示例</h3><pre class="line-numbers language-none"><code class="language-none">upstream demo {
 		ip_hash;
         server 192.168.0.1:8080;
         server 192.168.0.2:9090;
@@ -375,7 +375,7 @@ server {
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>当请求<code>test.xxx.com</code>时，会匹配进入到<code>location</code>，<code>proxy_pass</code>指定了<code>upstream</code>，此时就会根据<code>ip_hash</code>，对当前的请求IP做hash计算，得到最终会落到那台机器上。以后同一个ip请求，都会落到这个机器上。在某些项目中，可以考虑用这种方式来解决<code>session</code>共享的问题。</p>
-<h5 id="weight示例"><a href="#weight示例" class="headerlink" title="weight示例"></a>weight示例</h5><pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">upstream</span> <span class="token value attr-value">demo {</span>
+<h3 id="2-3-weight示例"><a href="#2-3-weight示例" class="headerlink" title="2.3 weight示例"></a>2.3 weight示例</h3><pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">upstream</span> <span class="token value attr-value">demo {</span>
 <span class="token key attr-name">        server</span> <span class="token value attr-value">192.168.0.1:8080 weight 2;</span>
 <span class="token key attr-name">        server</span> <span class="token value attr-value">192.168.0.2:9090 weight 1;</span>
 }
@@ -384,14 +384,14 @@ server {
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>请求<code>test.xxx.com</code>时，会两次落在<code>192.168.0.1:8080</code>机器上，一次落在<code>192.168.0.2:9090</code>上。</p>
-<h5 id="轮询示例"><a href="#轮询示例" class="headerlink" title="轮询示例"></a>轮询示例</h5><p>轮询很简单，采用默认即可。如下：</p>
+<h3 id="2-4-轮询示例"><a href="#2-4-轮询示例" class="headerlink" title="2.4 轮询示例"></a>2.4 轮询示例</h3><p>轮询很简单，采用默认即可。如下：</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">upstream</span> <span class="token value attr-value">demo {</span>
 <span class="token key attr-name">        server</span> <span class="token value attr-value">192.168.0.1:8080;</span>
 <span class="token key attr-name">        server</span> <span class="token value attr-value">192.168.0.2:9090;   </span>
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>请求会均匀的落在两台机器上。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>根据不同的场景来适用不同的方式，一般使用默认即可。在多台机器性能有差异的情况下，可以考虑设置不同的权重，让性能好的机器不浪费，性能差的机器不超负荷。<code>ip_hash</code>一般用的比较少，不能保证负载的均衡性，要是运气衰的时候，有可能导致一台机器瞬时命中过多被弄死。个人感觉<code>ip_hash</code>更适用于一个小的应用，单台机器本身就是可以承载所有请求，之所以使用集群是用来提高服务的高可用，但是集群又有<code>session</code>共享问题，所以使用<code>ip_hash</code>作为解决方案就是个不错的选择。</p>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>根据不同的场景来适用不同的方式，一般使用默认即可。在多台机器性能有差异的情况下，可以考虑设置不同的权重，让性能好的机器不浪费，性能差的机器不超负荷。<code>ip_hash</code>一般用的比较少，不能保证负载的均衡性，要是运气衰的时候，有可能导致一台机器瞬时命中过多被弄死。个人感觉<code>ip_hash</code>更适用于一个小的应用，单台机器本身就是可以承载所有请求，之所以使用集群是用来提高服务的高可用，但是集群又有<code>session</code>共享问题，所以使用<code>ip_hash</code>作为解决方案就是个不错的选择。</p>
 <p>还有一种情况需要说明一下，如果集群中的机器存在部分宕机的情况下，请求会自动分配到服务正常的机器上。不会影响服务的使用。基本外部是无感知的。</p>
 
                 
@@ -847,7 +847,7 @@ server {
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

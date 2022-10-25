@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-09-24
+                    2018-09-一 15:55:00
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>mybatis有一级和二级两个缓存，在默认的情况下一级缓存是开启的，但是二级缓存是关闭的需要自己去配置，首先是在<code>mybatis-config.xml</code>配置文件中打开二级缓存的总开关，然后就是在每个Mapper.xml文件中开启对应的二级缓存，因为二级缓存是基于命名空间，也可以变相的理解为基于一个Mapper.xml文件。在cache的标签里面对缓存的清理的策略有很多种，比如FIFO的先进先出策略，比如LRU的最少使用策略等。每种策略都对应一个类，如何创建这些类？还有mybatis还实现了阻塞队列版缓存，使用了BlockingCache装饰类。这么多功能如何糅合到一起？</p>
-<h3 id="Cache内层实现PerpetualCache"><a href="#Cache内层实现PerpetualCache" class="headerlink" title="Cache内层实现PerpetualCache"></a>Cache内层实现PerpetualCache</h3><p><code>PerpetualCache</code>可以说是内层实现，也可以说的原始实现，他是实现<code>Cache</code>接口，怎么说是内层实现呢。<code>Cache</code>采用的是装饰器模式，装饰器类会对<code>PerpetualCache</code>层层嵌套，装饰器的调用也是一层一层调用，最终调用到<code>PerpetualCache</code>内的方法。</p>
+<h2 id="1-Cache内层实现PerpetualCache"><a href="#1-Cache内层实现PerpetualCache" class="headerlink" title="1. Cache内层实现PerpetualCache"></a>1. Cache内层实现PerpetualCache</h2><p><code>PerpetualCache</code>可以说是内层实现，也可以说的原始实现，他是实现<code>Cache</code>接口，怎么说是内层实现呢。<code>Cache</code>采用的是装饰器模式，装饰器类会对<code>PerpetualCache</code>层层嵌套，装饰器的调用也是一层一层调用，最终调用到<code>PerpetualCache</code>内的方法。</p>
 <p>简单看其中几个方法的实现：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PerpetualCache</span> <span class="token keyword">implements</span> <span class="token class-name">Cache</span> <span class="token punctuation">{</span>
 
@@ -368,7 +368,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>从上面的方法实现内容看来，就是简单的到cache中put放数据，get获取数据，但是这个简单的实现有很多问题，比如多线程数据安全问题，比如缓存不能清理，内存会被撑爆等。</p>
-<h3 id="装饰器之LRU"><a href="#装饰器之LRU" class="headerlink" title="装饰器之LRU"></a>装饰器之LRU</h3><p>LRU是mybatis的默认缓存回收策略，当达到LRU的设定大小的时候(默认大小1024，表示1024个key)，会根据最小使用率的原则，将其移除出缓存。</p>
+<h2 id="2-装饰器之LRU"><a href="#2-装饰器之LRU" class="headerlink" title="2. 装饰器之LRU"></a>2. 装饰器之LRU</h2><p>LRU是mybatis的默认缓存回收策略，当达到LRU的设定大小的时候(默认大小1024，表示1024个key)，会根据最小使用率的原则，将其移除出缓存。</p>
 <p>看<code>LruCache</code>的<code>setSize</code>实现源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setSize</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     keyMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">.75F</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -403,7 +403,7 @@
 
 <p>这个方法很好理解，就是将键设置到<code>keyMap</code>做记录存入，然后将<code>setSize</code>中设置的<code>eldestKey</code>交给下一层装饰器清理，层层调用，和上面的<code>putObject</code>方式一样，最后还是会进入到<code>PerpetualCache</code>内。</p>
 <p>总结：由这里可以看的出来，在缓存的各种策略下，都是使用<code>setSize</code>方法，判断当前的<code>keyMap</code>中有没有达到设置的最大容量，然后根据不同的算法将这个key对应数据从cache中清理。锁定所要清理数据的过程是在<code>setSize</code>中实现，记录最新的key，并且触发清理方法是在<code>cycleKeyList</code>方法中实现，二级缓存中所有的装饰器都是这么实现的。回收策略的装饰器就看这一个，其他就是同理。</p>
-<h3 id="阻塞队列BlockingCache"><a href="#阻塞队列BlockingCache" class="headerlink" title="阻塞队列BlockingCache"></a>阻塞队列BlockingCache</h3><p>阻塞队列就是实行排队机制，来之前先拿锁，拿到锁的执行，未拿到锁的等待。拿到锁的线程先是从缓存中获取数据，如果没有，就去数据库中获取，获取以后会将数据缓存起来，并释放锁。以后的线程进来如果缓存中有数据就直接从缓存中获取，提高了效率。同时也解决了线程安全问题，多线程操作同一拨数据，造成数据的不一致等问题。</p>
+<h2 id="3-阻塞队列BlockingCache"><a href="#3-阻塞队列BlockingCache" class="headerlink" title="3. 阻塞队列BlockingCache"></a>3. 阻塞队列BlockingCache</h2><p>阻塞队列就是实行排队机制，来之前先拿锁，拿到锁的执行，未拿到锁的等待。拿到锁的线程先是从缓存中获取数据，如果没有，就去数据库中获取，获取以后会将数据缓存起来，并释放锁。以后的线程进来如果缓存中有数据就直接从缓存中获取，提高了效率。同时也解决了线程安全问题，多线程操作同一拨数据，造成数据的不一致等问题。</p>
 <p>先看getObject方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">getObject</span><span class="token punctuation">(</span><span class="token class-name">Object</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token function">acquireLock</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//尝试获取锁</span>
@@ -428,7 +428,7 @@
 <p><code>putObject</code>方法中只有释放锁的过程，并没有获取锁的过程。这个就和之前的<code>getObject</code>方法不谋而合啦。其实value为空后，真正的释放锁的过程是在<code>putObject</code>方法中。</p>
 <p>总结：这个过程理解就在于<code>putObject</code>和<code>getObject</code>存在锁的获取、释放的关联。如果单独看一个方法，会觉得这是明显的错误，但是两个方法合起来看就知道设计的巧妙之处。下面展示一下Blocking实现的原理图(度娘一大堆，但是自己画出来的才是自己的)：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/E0F3A933CAC449BBBCD84213D8544218.png"></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>虽然mybatis的二级缓存很少被用到，因为它存在一些弊端，比如数据的脏读。但是作为mybatis的一个组件还是要有一定的了解，可能这个功能用不上，但是里面的实现思路是很好的(设计模式、阻塞队列锁的获取和释放逻辑)，可以学习并融入到自己的开发过程中。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>虽然mybatis的二级缓存很少被用到，因为它存在一些弊端，比如数据的脏读。但是作为mybatis的一个组件还是要有一定的了解，可能这个功能用不上，但是里面的实现思路是很好的(设计模式、阻塞队列锁的获取和释放逻辑)，可以学习并融入到自己的开发过程中。</p>
 <hr>
 ##### 番外说明篇
 
@@ -577,7 +577,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-09-24T08-00-00',
+        id: '2018-09-24T15-55-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -888,7 +888,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

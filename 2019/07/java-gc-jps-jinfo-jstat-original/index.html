@@ -313,7 +313,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-07-08
+                    2019-07-一 15:12:41
                 </div>
                 
 
@@ -353,7 +353,7 @@
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/maosijunzi/article/details/46049117">java高分局之jstat命令使用</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5ace2a0cafa4">初步诊断你的GC</a></p>
 </blockquote>
-<h2 id="JPS：查看Java进程"><a href="#JPS：查看Java进程" class="headerlink" title="JPS：查看Java进程"></a>JPS：查看Java进程</h2><p>通过<code>jps</code>命令可以查看当前运行的Java进程，输出的信息包含进程ID和进程的名称，如下：</p>
+<h2 id="1-JPS：查看Java进程"><a href="#1-JPS：查看Java进程" class="headerlink" title="1. JPS：查看Java进程"></a>1. JPS：查看Java进程</h2><p>通过<code>jps</code>命令可以查看当前运行的Java进程，输出的信息包含进程ID和进程的名称，如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">joker@yangbaodeMacBook-Pro:~/joker$ jps
 <span class="token number">60608</span> Launcher
 <span class="token number">60609</span> IcaApplication
@@ -378,7 +378,7 @@
 <p>接下来使用下面的命令就可以看到远程机器<code>192.168.1.101</code>上Java进程的信息啦。命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jps <span class="token number">192.168</span>.1.101<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="JINFO：查看Java信息详细"><a href="#JINFO：查看Java信息详细" class="headerlink" title="JINFO：查看Java信息详细"></a>JINFO：查看Java信息详细</h2><p><code>jinfo</code>使用的详细表达式格式可以用<code>jinfo -h</code>，很详细，下面提供一个精简版的，基本囊括日常使用。</p>
+<h2 id="2-JINFO：查看Java信息详细"><a href="#2-JINFO：查看Java信息详细" class="headerlink" title="2. JINFO：查看Java信息详细"></a>2. JINFO：查看Java信息详细</h2><p><code>jinfo</code>使用的详细表达式格式可以用<code>jinfo -h</code>，很详细，下面提供一个精简版的，基本囊括日常使用。</p>
 <p>表达式如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">本地：jinfo <span class="token punctuation">[</span>option<span class="token punctuation">]</span> <span class="token operator">&lt;</span>pid<span class="token operator">&gt;</span>
 远程：jinfo <span class="token punctuation">[</span>option<span class="token punctuation">]</span> <span class="token punctuation">[</span>server_id@<span class="token punctuation">]</span><span class="token operator">&lt;</span>remote server IP or hostname<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -400,8 +400,8 @@ Non-default VM flags: <span class="token parameter variable">-XX:-BytecodeVerifi
 Command line:  <span class="token parameter variable">-agentlib:jdwp</span><span class="token operator">=</span>transport<span class="token operator">=</span>dt_socket,address<span class="token operator">=</span><span class="token number">127.0</span>.0.1:2298,suspend<span class="token operator">=</span>y,server<span class="token operator">=</span>n <span class="token parameter variable">-XX:TieredStopAtLevel</span><span class="token operator">=</span><span class="token number">1</span> <span class="token parameter variable">-Xverify:none</span> <span class="token parameter variable">-Dspring.output.ansi.enabled</span><span class="token operator">=</span>always <span class="token parameter variable">-Dcom.sun.management.jmxremote</span> <span class="token parameter variable">-Dcom.sun.management.jmxremote.port</span><span class="token operator">=</span><span class="token number">2297</span> <span class="token parameter variable">-Dcom.sun.management.jmxremote.authenticate</span><span class="token operator">=</span>false <span class="token parameter variable">-Dcom.sun.management.jmxremote.ssl</span><span class="token operator">=</span>false <span class="token parameter variable">-Djava.rmi.server.hostname</span><span class="token operator">=</span>localhost <span class="token parameter variable">-Dspring.liveBeansView.mbeanDomain</span> <span class="token parameter variable">-Dspring.application.admin.enabled</span><span class="token operator">=</span>true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>其他的option选项对应的信息是什么，可以尝试看一下，不赘述啦。</p>
-<h2 id="JSTAT：查看堆内存信息"><a href="#JSTAT：查看堆内存信息" class="headerlink" title="JSTAT：查看堆内存信息"></a>JSTAT：查看堆内存信息</h2><p>这个命令是非常重要，也是最常用的，每一个选项使用都比较重要，接下来将依次说一下。</p>
-<h4 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h4><p>表达式和上面的命令介绍一样，复杂的通过<code>jstat -h</code>查看，常用下面来说。</p>
+<h2 id="3-JSTAT：查看堆内存信息"><a href="#3-JSTAT：查看堆内存信息" class="headerlink" title="3. JSTAT：查看堆内存信息"></a>3. JSTAT：查看堆内存信息</h2><p>这个命令是非常重要，也是最常用的，每一个选项使用都比较重要，接下来将依次说一下。</p>
+<p>表达式和上面的命令介绍一样，复杂的通过<code>jstat -h</code>查看，常用下面来说。</p>
 <ul>
 <li><p>查询选项列表</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">jstat <span class="token parameter variable">-options</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
@@ -414,7 +414,7 @@ Command line:  <span class="token parameter variable">-agentlib:jdwp</span><span
 <p><code>count</code>:表示打印多少条数据和<code>interval</code>参数配合，用于每隔多长时间打一条，总共打印多少条数据</p>
 </li>
 </ul>
-<h4 id="option选项之类加载统计：class"><a href="#option选项之类加载统计：class" class="headerlink" title="option选项之类加载统计：class"></a>option选项之类加载统计：class</h4><p>执行的命令如下：</p>
+<h3 id="3-1-option选项之类加载统计：class"><a href="#3-1-option选项之类加载统计：class" class="headerlink" title="3.1 option选项之类加载统计：class"></a>3.1 option选项之类加载统计：class</h3><p>执行的命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-class</span> <span class="token number">3660</span> 3s <span class="token number">10</span>
 <span class="token comment">#输出内容</span>
@@ -428,7 +428,7 @@ Loaded  Bytes  Unloaded  Bytes     Time
 <li>Bytes:未加载所占空间</li>
 <li>Time:加载所消耗时间</li>
 </ul>
-<h4 id="option选项之编译统计：compiler"><a href="#option选项之编译统计：compiler" class="headerlink" title="option选项之编译统计：compiler"></a>option选项之编译统计：compiler</h4><p>执行的命令如下：</p>
+<h3 id="3-2-option选项之编译统计：compiler"><a href="#3-2-option选项之编译统计：compiler" class="headerlink" title="3.2 option选项之编译统计：compiler"></a>3.2 option选项之编译统计：compiler</h3><p>执行的命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-compiler</span> <span class="token number">3660</span>
 <span class="token comment">#输出内容</span>
@@ -443,7 +443,7 @@ Compiled Failed Invalid   Time   FailedType   FailedMethod
 <li>FailedType:失败类型</li>
 <li>FailedMethod:失败的方法</li>
 </ul>
-<h4 id="option选项之垃圾回收统计：gc"><a href="#option选项之垃圾回收统计：gc" class="headerlink" title="option选项之垃圾回收统计：gc"></a>option选项之垃圾回收统计：gc</h4><p>执行的命令如下：</p>
+<h3 id="3-3-option选项之垃圾回收统计：gc"><a href="#3-3-option选项之垃圾回收统计：gc" class="headerlink" title="3.3 option选项之垃圾回收统计：gc"></a>3.3 option选项之垃圾回收统计：gc</h3><p>执行的命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gc</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -469,7 +469,7 @@ S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU  
 <li>FGCT:老年代GC消耗时间</li>
 <li>GCT:GC总消耗时间</li>
 </ul>
-<h4 id="option选项之堆内存统计：gccapacity"><a href="#option选项之堆内存统计：gccapacity" class="headerlink" title="option选项之堆内存统计：gccapacity"></a>option选项之堆内存统计：gccapacity</h4><p>执行的命令如下：</p>
+<h3 id="3-4-option选项之堆内存统计：gccapacity"><a href="#3-4-option选项之堆内存统计：gccapacity" class="headerlink" title="3.4 option选项之堆内存统计：gccapacity"></a>3.4 option选项之堆内存统计：gccapacity</h3><p>执行的命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gccapacity</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -496,7 +496,7 @@ NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC   
 <li>YGC:年轻代GC次数</li>
 <li>FGC:老年代GC次数</li>
 </ul>
-<h4 id="option选项之新生代垃圾回收统计：gcnew"><a href="#option选项之新生代垃圾回收统计：gcnew" class="headerlink" title="option选项之新生代垃圾回收统计：gcnew"></a>option选项之新生代垃圾回收统计：gcnew</h4><p>执行的命令如下：</p>
+<h3 id="3-5-option选项之新生代垃圾回收统计：gcnew"><a href="#3-5-option选项之新生代垃圾回收统计：gcnew" class="headerlink" title="3.5 option选项之新生代垃圾回收统计：gcnew"></a>3.5 option选项之新生代垃圾回收统计：gcnew</h3><p>执行的命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gcnew</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -515,7 +515,7 @@ S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT
 <li>YGC:年轻代GC次数</li>
 <li>YGCT:年轻代GC消耗时间</li>
 </ul>
-<h4 id="option选项之新生代内存统计：gcnewcapacity"><a href="#option选项之新生代内存统计：gcnewcapacity" class="headerlink" title="option选项之新生代内存统计：gcnewcapacity"></a>option选项之新生代内存统计：gcnewcapacity</h4><p>执行命令如下：</p>
+<h3 id="3-6-option选项之新生代内存统计：gcnewcapacity"><a href="#3-6-option选项之新生代内存统计：gcnewcapacity" class="headerlink" title="3.6 option选项之新生代内存统计：gcnewcapacity"></a>3.6 option选项之新生代内存统计：gcnewcapacity</h3><p>执行命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gcnewcapacity</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -535,7 +535,7 @@ NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX      
 <li>YGC:年轻代GC次数</li>
 <li>FGC:老轻代GC次数</li>
 </ul>
-<h4 id="option选项之老年代垃圾回收统计：gcold"><a href="#option选项之老年代垃圾回收统计：gcold" class="headerlink" title="option选项之老年代垃圾回收统计：gcold"></a>option选项之老年代垃圾回收统计：gcold</h4><p>执行命令如下：</p>
+<h3 id="3-7-option选项之老年代垃圾回收统计：gcold"><a href="#3-7-option选项之老年代垃圾回收统计：gcold" class="headerlink" title="3.7 option选项之老年代垃圾回收统计：gcold"></a>3.7 option选项之老年代垃圾回收统计：gcold</h3><p>执行命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gcold</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -554,7 +554,7 @@ MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT    
 <li>FGCT:老年代GC耗时时间</li>
 <li>GCT:GC总消耗时间</li>
 </ul>
-<h4 id="option选项之老年代内存统计：gcoldcapacity"><a href="#option选项之老年代内存统计：gcoldcapacity" class="headerlink" title="option选项之老年代内存统计：gcoldcapacity"></a>option选项之老年代内存统计：gcoldcapacity</h4><p>执行命令如下：</p>
+<h3 id="3-8-option选项之老年代内存统计：gcoldcapacity"><a href="#3-8-option选项之老年代内存统计：gcoldcapacity" class="headerlink" title="3.8 option选项之老年代内存统计：gcoldcapacity"></a>3.8 option选项之老年代内存统计：gcoldcapacity</h3><p>执行命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gcoldcapacity</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -571,7 +571,7 @@ OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT
 <li>FGCT:老年代GC耗时时间</li>
 <li>GCT:GC总消耗时间</li>
 </ul>
-<h4 id="option选项之元数据空间统计：gcmetacapacity"><a href="#option选项之元数据空间统计：gcmetacapacity" class="headerlink" title="option选项之元数据空间统计：gcmetacapacity"></a>option选项之元数据空间统计：gcmetacapacity</h4><p>执行命令如下：</p>
+<h3 id="3-9-option选项之元数据空间统计：gcmetacapacity"><a href="#3-9-option选项之元数据空间统计：gcmetacapacity" class="headerlink" title="3.9 option选项之元数据空间统计：gcmetacapacity"></a>3.9 option选项之元数据空间统计：gcmetacapacity</h3><p>执行命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gcmetacapacity</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -590,7 +590,7 @@ MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGC
 <li>FGCT:老年代GC耗时时间</li>
 <li>GCT:GC总消耗时间</li>
 </ul>
-<h4 id="option选项之JVM编译方法统计：printcompilation"><a href="#option选项之JVM编译方法统计：printcompilation" class="headerlink" title="option选项之JVM编译方法统计：printcompilation"></a>option选项之JVM编译方法统计：printcompilation</h4><p>执行命令如下：</p>
+<h3 id="3-10-option选项之JVM编译方法统计：printcompilation"><a href="#3-10-option选项之JVM编译方法统计：printcompilation" class="headerlink" title="3.10 option选项之JVM编译方法统计：printcompilation"></a>3.10 option选项之JVM编译方法统计：printcompilation</h3><p>执行命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-printcompilation</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -603,7 +603,7 @@ Compiled  Size  Type  Method
 <li>Type:最近编译方法的编译类型</li>
 <li>Method:方法名标识</li>
 </ul>
-<h4 id="option选项之总结垃圾回收统计：gcutil"><a href="#option选项之总结垃圾回收统计：gcutil" class="headerlink" title="option选项之总结垃圾回收统计：gcutil"></a>option选项之总结垃圾回收统计：gcutil</h4><p>执行命令如下：</p>
+<h3 id="3-11-option选项之总结垃圾回收统计：gcutil"><a href="#3-11-option选项之总结垃圾回收统计：gcutil" class="headerlink" title="3.11 option选项之总结垃圾回收统计：gcutil"></a>3.11 option选项之总结垃圾回收统计：gcutil</h3><p>执行命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gcutil</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -623,7 +623,7 @@ S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
 <li>FGCT:老年代GC消耗时间</li>
 <li>GCT:GC总消耗时间</li>
 </ul>
-<h4 id="option选项之GC发生原因：gccause"><a href="#option选项之GC发生原因：gccause" class="headerlink" title="option选项之GC发生原因：gccause"></a>option选项之GC发生原因：gccause</h4><p>执行命令如下：</p>
+<h3 id="3-12-option选项之GC发生原因：gccause"><a href="#3-12-option选项之GC发生原因：gccause" class="headerlink" title="3.12 option选项之GC发生原因：gccause"></a>3.12 option选项之GC发生原因：gccause</h3><p>执行命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 命令</span>
 jstat <span class="token parameter variable">-gccause</span> <span class="token number">3660</span> 1s
 <span class="token comment">#输出内容</span>
@@ -796,7 +796,7 @@ S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-07-08T08-00-00',
+        id: '2019-07-08T15-12-41',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1111,7 +1111,7 @@ S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

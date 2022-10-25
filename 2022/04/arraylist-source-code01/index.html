@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2022-04-06
+                    2022-04-三 20:19:57
                 </div>
                 
 
@@ -339,7 +339,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一、ArrayList概述"><a href="#一、ArrayList概述" class="headerlink" title="一、ArrayList概述"></a>一、ArrayList概述</h1><h2 id="1-1-ArrayList简介"><a href="#1-1-ArrayList简介" class="headerlink" title="1.1 ArrayList简介"></a>1.1 ArrayList简介</h2><p>ArrayList经常用，今天对它的源码探究一二。首先看一下ArrayList源码中对ArrayList的讲解：</p>
+                <h2 id="1-ArrayList概述"><a href="#1-ArrayList概述" class="headerlink" title="1. ArrayList概述"></a>1. ArrayList概述</h2><h3 id="1-1-ArrayList简介"><a href="#1-1-ArrayList简介" class="headerlink" title="1.1 ArrayList简介"></a>1.1 ArrayList简介</h3><p>ArrayList经常用，今天对它的源码探究一二。首先看一下ArrayList源码中对ArrayList的讲解：</p>
 <blockquote>
 <p>List是大小可变数组的实现。实现了所有可选列表操作，并允许包括null在内的所有元素。除了实现List接口外，此类还提供一些方法来操作内部用来存储列表的数组的大小。（此类大致上等同于Vector类，除了此类是不同步的。）</p>
 <p>size、isEmpty、get、set、iterator和listIterator操作都以固定时间运行。add操作以分摊的固定时间运行，也就是说，添加n个元素需要O(n)时间。其他所有操作都以线性时间运行（大体上讲）。与用于LinkedList实现的常数因子相比，此实现的常数因子较低。<br>每个ArrayList实例都有一个容量。该容量是指用来存储列表元素的数组的大小。它总是至少等于列表的大小。随着向ArrayList中不断添加元素，其容量也自动增长。并未指定增长策略的细节，因为这不只是添加元素会带来分摊固定时间开销那样简单。在添加大量元素前，应用程序可以使用ensureCapacity操作来增加ArrayList实例的容量。这可以减少递增式再分配的数量。</p>
@@ -355,9 +355,9 @@
 <li>ArrayList<strong>不是同步的</strong>（非线程安全的）；</li>
 <li>ArrayList的iterator和listIterator方法返回的迭代器是<strong>fail-fast</strong>的。</li>
 </ul>
-<h2 id="1-2-ArrayList数据结构"><a href="#1-2-ArrayList数据结构" class="headerlink" title="1.2 ArrayList数据结构"></a>1.2 ArrayList数据结构</h2><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/75da30de979d4e06bcd3d051a771e320.png" alt="在这里插入图片描述"></p>
+<h3 id="1-2-ArrayList数据结构"><a href="#1-2-ArrayList数据结构" class="headerlink" title="1.2 ArrayList数据结构"></a>1.2 ArrayList数据结构</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/75da30de979d4e06bcd3d051a771e320.png" alt="在这里插入图片描述"></p>
 <p>容量：CAPACITY ； 实际大小：size；<br>ArrayList底层的数据结构就是数组，数组元素类型为Object类型，即可以存放所有类型数据。我们对ArrayList类的实例的所有的操作底层都是基于数组的。</p>
-<h1 id="ArrayList源码分析"><a href="#ArrayList源码分析" class="headerlink" title="ArrayList源码分析"></a>ArrayList源码分析</h1><h2 id="2-1-ArrayList结构和层次"><a href="#2-1-ArrayList结构和层次" class="headerlink" title="2.1 ArrayList结构和层次"></a>2.1 ArrayList结构和层次</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">&gt;</span></span> <span class="token keyword">extends</span> <span class="token class-name">AbstractList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">&gt;</span></span>
+<h2 id="2-ArrayList源码分析"><a href="#2-ArrayList源码分析" class="headerlink" title="2. ArrayList源码分析"></a>2. ArrayList源码分析</h2><h3 id="2-1-ArrayList结构和层次"><a href="#2-1-ArrayList结构和层次" class="headerlink" title="2.1 ArrayList结构和层次"></a>2.1 ArrayList结构和层次</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">&gt;</span></span> <span class="token keyword">extends</span> <span class="token class-name">AbstractList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">&gt;</span></span>
         <span class="token keyword">implements</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">,</span> <span class="token class-name">RandomAccess</span><span class="token punctuation">,</span> <span class="token class-name">Cloneable</span><span class="token punctuation">,</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>Serializable</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>结构图更直观：</p>
@@ -377,7 +377,7 @@
 <li><p>implements java.io.Serializable：表明该类具有序列化功能，该类可以被序列化，什么是序列化？简单的说，就是能够从类变成字节流传输，然后还能从字节流变成原来的类。</p>
 </li>
 </ul>
-<h2 id="2-2-类的属性"><a href="#2-2-类的属性" class="headerlink" title="2.2 类的属性"></a>2.2 类的属性</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 序列化id</span>
+<h3 id="2-2-类的属性"><a href="#2-2-类的属性" class="headerlink" title="2.2 类的属性"></a>2.2 类的属性</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 序列化id</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token number">8683452581122892189L</span><span class="token punctuation">;</span>
 
 <span class="token comment">/**
@@ -433,7 +433,7 @@
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">MAX_ARRAY_SIZE</span> <span class="token operator">=</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token constant">MAX_VALUE</span> <span class="token operator">-</span> <span class="token number">8</span><span class="token punctuation">;</span>
 <span class="token comment">//备注：MAX.VALUE为0x7fffffff，转换成十进制就是2147483647，也就是数组的最大长度是2147483639；</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="2-3-构造方法"><a href="#2-3-构造方法" class="headerlink" title="2.3 构造方法"></a>2.3 构造方法</h2><p>ArrayList提供了三种构造方法：</p>
+<h3 id="2-3-构造方法"><a href="#2-3-构造方法" class="headerlink" title="2.3 构造方法"></a>2.3 构造方法</h3><p>ArrayList提供了三种构造方法：</p>
 <ol>
 <li>ArrayList(int initialCapacity)：构造一个指定容量为capacity的空ArrayList。这是一个带初始容量大小的有参构造函数。<ul>
 <li>初始容量大于0,实例化数组，将自定义的容量大小当成初始化elementData的大小；</li>
@@ -508,7 +508,7 @@
   <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>ArrayList的构造方法就做一件事情，就是初始化一下储存数据的容器，其实本质上就是一个数组，在其中就叫elementData。</p>
-<h2 id="2-4-主要方法"><a href="#2-4-主要方法" class="headerlink" title="2.4 主要方法"></a>2.4 主要方法</h2><h3 id="2-4-1-get-方法"><a href="#2-4-1-get-方法" class="headerlink" title="2.4.1 get()方法"></a>2.4.1 get()方法</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">   <span class="token comment">/**
+<h3 id="2-4-主要方法"><a href="#2-4-主要方法" class="headerlink" title="2.4 主要方法"></a>2.4 主要方法</h3><h4 id="2-4-1-get-方法"><a href="#2-4-1-get-方法" class="headerlink" title="2.4.1 get()方法"></a>2.4.1 get()方法</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">   <span class="token comment">/**
     * Returns the element at the specified position in this list.
     * 返回list中指定位置的元素
     * @param  index index of the element to return 要返回的元素的索引
@@ -551,7 +551,7 @@
    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>从代码中可以看到，因为ArrayList底层是数组，所以它的get方法非常简单，先是判断一下有没有越界（索引小于0或者大于等于数组实际长度，错误信息返回索引和数组的实际长度），之后就直接通过数组下标来获取元素。</p>
-<h3 id="2-4-2-set-方法"><a href="#2-4-2-set-方法" class="headerlink" title="2.4.2 set()方法"></a>2.4.2 set()方法</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">  <span class="token comment">/**
+<h4 id="2-4-2-set-方法"><a href="#2-4-2-set-方法" class="headerlink" title="2.4.2 set()方法"></a>2.4.2 set()方法</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">  <span class="token comment">/**
    * Replaces the element at the specified position in this list with
    * the specified element.
    * 用指定的元素替换列表中指定位置的元素。
@@ -572,7 +572,7 @@
   <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>确保set的位置小于当前数组的长度（size）并且大于0，获取指定位置（index）元素，然后放到oldValue存放，将需要设置的元素放到指定的位置（index）上，然后将原来位置上的元素oldValue返回给用户。</p>
-<h3 id="2-4-3-add-方法"><a href="#2-4-3-add-方法" class="headerlink" title="2.4.3 add()方法"></a>2.4.3 add()方法</h3><p>add的方法有两个，一个是带一个参数的，一个是带两个参数的。</p>
+<h4 id="2-4-3-add-方法"><a href="#2-4-3-add-方法" class="headerlink" title="2.4.3 add()方法"></a>2.4.3 add()方法</h4><p>add的方法有两个，一个是带一个参数的，一个是带两个参数的。</p>
 <ul>
 <li>boolean add(E e)方法</li>
 </ul>
@@ -696,7 +696,7 @@
           <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IndexOutOfBoundsException</span><span class="token punctuation">(</span><span class="token function">outOfBoundsMsg</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="2-4-4-remove-方法"><a href="#2-4-4-remove-方法" class="headerlink" title="2.4.4 remove()方法"></a>2.4.4 remove()方法</h3><ul>
+<h4 id="2-4-4-remove-方法"><a href="#2-4-4-remove-方法" class="headerlink" title="2.4.4 remove()方法"></a>2.4.4 remove()方法</h4><ul>
 <li>根据索引remove,通过删除指定位置上的元素</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">  <span class="token comment">/**
@@ -788,7 +788,7 @@
     <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>循环遍历所有对象，得到对象所在索引位置，然后调用fastRemove方法，执行remove操作。<br>定位到需要remove的元素索引，先将index后面的元素往前面移动一位（调用System.arraycooy实现），然后将最后一个元素置空。<br>这里最主要是知道arrayList可以存储null值。</p>
-<h3 id="2-4-5-indexOf-和lastIndexOf-方法"><a href="#2-4-5-indexOf-和lastIndexOf-方法" class="headerlink" title="2.4.5 indexOf()和lastIndexOf()方法"></a>2.4.5 indexOf()和lastIndexOf()方法</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//返回此列表中指定元素的第一个出现项的索引，如果该列表不包含该元素，则返回-1。</span>
+<h4 id="2-4-5-indexOf-和lastIndexOf-方法"><a href="#2-4-5-indexOf-和lastIndexOf-方法" class="headerlink" title="2.4.5 indexOf()和lastIndexOf()方法"></a>2.4.5 indexOf()和lastIndexOf()方法</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//返回此列表中指定元素的第一个出现项的索引，如果该列表不包含该元素，则返回-1。</span>
   <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token class-name">Object</span> o<span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">if</span> <span class="token punctuation">(</span>o <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 查找的元素为空</span>
           <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token comment">// 遍历数组，找到第一个为空的元素，返回下标</span>
@@ -816,7 +816,7 @@
   <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="2-4-6-clear-方法"><a href="#2-4-6-clear-方法" class="headerlink" title="2.4.6 clear()方法"></a>2.4.6 clear()方法</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token comment">/**
+<h4 id="2-4-6-clear-方法"><a href="#2-4-6-clear-方法" class="headerlink" title="2.4.6 clear()方法"></a>2.4.6 clear()方法</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token comment">/**
    * Removes all of the elements from this list.  The list will
    * be empty after this call returns.
 从列表中删除所有元素。该调用返回后，列表将为空。
@@ -831,7 +831,7 @@
       size <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h1><p>1）arrayList可以存放null。<br>2）arrayList本质上就是一个elementData数组。<br>3）arrayList区别于数组的地方在于能够自动扩展大小，其中关键的方法就是gorw()方法。<br>4）arrayList中removeAll(collection c)和clear()的区别就是removeAll可以删除批量指定的元素，而clear是全是删除集合中的元素。<br>5）arrayList由于本质是数组，所以它在数据的查询方面会很快，而在插入删除这些方面，性能下降很多，有移动很多数据才能达到应有的效果。<br>6）arrayList实现了RandomAccess，所以在遍历它的时候推荐使用for循环。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>1）arrayList可以存放null。<br>2）arrayList本质上就是一个elementData数组。<br>3）arrayList区别于数组的地方在于能够自动扩展大小，其中关键的方法就是gorw()方法。<br>4）arrayList中removeAll(collection c)和clear()的区别就是removeAll可以删除批量指定的元素，而clear是全是删除集合中的元素。<br>5）arrayList由于本质是数组，所以它在数据的查询方面会很快，而在插入删除这些方面，性能下降很多，有移动很多数据才能达到应有的效果。<br>6）arrayList实现了RandomAccess，所以在遍历它的时候推荐使用for循环。</p>
 
                 
             </div>
@@ -1286,7 +1286,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

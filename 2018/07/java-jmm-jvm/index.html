@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-07-04
+                    2018-07-三 21:14:00
                 </div>
                 
 
@@ -344,7 +344,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>最近翻看了java线程相关的东西，书中有一边专门讲到java内存模型，读完之后边回想起java虚拟机模型，那时心中便在思考java内存模型（以下简称JMM）和java虚拟机模型（以下简称JVM）之间的关系，下面将详细讲述。</p>
-<h3 id="JVM结构"><a href="#JVM结构" class="headerlink" title="JVM结构"></a>JVM结构</h3><p>JVM的内部结构如下图所示，这张图很清楚形象的描绘了整个JVM的内部结构，以及各个部分之间的交互和作用。<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/9951BD6B73744AEDB0BBCDFBA5F37F12.png"></p>
+<h2 id="1-JVM结构"><a href="#1-JVM结构" class="headerlink" title="1. JVM结构"></a>1. JVM结构</h2><p>JVM的内部结构如下图所示，这张图很清楚形象的描绘了整个JVM的内部结构，以及各个部分之间的交互和作用。<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/9951BD6B73744AEDB0BBCDFBA5F37F12.png"></p>
 <ul>
 <li><p>Class Loader（类加载器）就是将Class文件加载到内存，再说的详细一点就是，把描述类的数据从Class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，这就是类加载器的作用。</p>
 </li>
@@ -355,11 +355,11 @@
 <li><p>Native interface 与native libraries交互，是其它编程语言交互的接口。当调用native方法的时候，就进入了一个全新的并且不再受虚拟机限制的世界，所以也很容易出现JVM无法控制的native heap OutOfMemory。</p>
 </li>
 </ul>
-<h3 id="Run-Data-Area（运行时数据区-分析"><a href="#Run-Data-Area（运行时数据区-分析" class="headerlink" title="Run Data Area（运行时数据区)分析"></a>Run Data Area（运行时数据区)分析</h3><h5 id="Program-Counter-Register"><a href="#Program-Counter-Register" class="headerlink" title="Program Counter Register"></a>Program Counter Register</h5><p>程序计数器，<strong>线程私有</strong>、指向下一条要很执行的指令</p>
-<h5 id="Java-Stack"><a href="#Java-Stack" class="headerlink" title="Java Stack"></a>Java Stack</h5><p>Java虚拟机栈，<strong>线程私有</strong>，生命周期与线程相同。描述的是Java方法执行的内存模型：每个方法被执行的时候都会同时创建一个栈帧（Stack Frame）用于<strong>存储局部变量表、操作栈、动态链接、方法出口</strong>。</p>
-<h5 id="Native-Method-Stack"><a href="#Native-Method-Stack" class="headerlink" title="Native Method Stack"></a>Native Method Stack</h5><p>为虚拟机使用到的Native 方法服务</p>
-<h5 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h5><p><strong>线程共享</strong>，由于现在收集器基本采用的分代收集算法，所以Java堆中还可以细分：新生代和老生代；更细致一点的有Eden空间、From Survivor空间、To Survivor空间等。<strong>所有的对象实例以及数组都要在堆上分配</strong>，是垃圾收集器管理的主要区域。</p>
-<h5 id="Method-Area"><a href="#Method-Area" class="headerlink" title="Method Area"></a>Method Area</h5><p>方法区，别名叫做非堆(Non-Heap)，<strong>线程共享的内存区域</strong>。目的是与Java堆区分开来，<strong>存储类信息、常量、静态变量、即时编译器编译后的代码</strong>。<br><strong>方法区存放的信息包括：</strong></p>
+<h2 id="2-Run-Data-Area（运行时数据区-分析"><a href="#2-Run-Data-Area（运行时数据区-分析" class="headerlink" title="2. Run Data Area（运行时数据区)分析"></a>2. Run Data Area（运行时数据区)分析</h2><h3 id="2-1-Program-Counter-Register"><a href="#2-1-Program-Counter-Register" class="headerlink" title="2.1 Program Counter Register"></a>2.1 Program Counter Register</h3><p>程序计数器，<strong>线程私有</strong>、指向下一条要很执行的指令</p>
+<h3 id="2-2-Java-Stack"><a href="#2-2-Java-Stack" class="headerlink" title="2.2 Java Stack"></a>2.2 Java Stack</h3><p>Java虚拟机栈，<strong>线程私有</strong>，生命周期与线程相同。描述的是Java方法执行的内存模型：每个方法被执行的时候都会同时创建一个栈帧（Stack Frame）用于<strong>存储局部变量表、操作栈、动态链接、方法出口</strong>。</p>
+<h3 id="2-3-Native-Method-Stack"><a href="#2-3-Native-Method-Stack" class="headerlink" title="2.3 Native Method Stack"></a>2.3 Native Method Stack</h3><p>为虚拟机使用到的Native 方法服务</p>
+<h3 id="2-4-Heap"><a href="#2-4-Heap" class="headerlink" title="2.4 Heap"></a>2.4 Heap</h3><p><strong>线程共享</strong>，由于现在收集器基本采用的分代收集算法，所以Java堆中还可以细分：新生代和老生代；更细致一点的有Eden空间、From Survivor空间、To Survivor空间等。<strong>所有的对象实例以及数组都要在堆上分配</strong>，是垃圾收集器管理的主要区域。</p>
+<h3 id="2-5-Method-Area"><a href="#2-5-Method-Area" class="headerlink" title="2.5 Method Area"></a>2.5 Method Area</h3><p>方法区，别名叫做非堆(Non-Heap)，<strong>线程共享的内存区域</strong>。目的是与Java堆区分开来，<strong>存储类信息、常量、静态变量、即时编译器编译后的代码</strong>。<br><strong>方法区存放的信息包括：</strong></p>
 <ul>
 <li><p>A类的基本信息： </p>
 <ul>
@@ -381,7 +381,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="JMM"><a href="#JMM" class="headerlink" title="JMM"></a>JMM</h3><p>Java内存模型(Java Memory Model，JMM)JMM主要是为了规定了线程和内存之间的一些关系。根据JMM的设计，系统存在一个<strong>主内存</strong>(Main Memory)，Java中所有<strong>变量都储存在主存中，对于所有线程都是共享</strong>的。每条<strong>线程都有自己的工作内存</strong>(Working Memory)，工作内存中保存的是主存中某些变量的拷贝，线程对所有变量的操作都是在工作内存中进行，<strong>线程之间无法相互直接访问</strong>，变量传递均需要通过主存完成。<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/70821F5749AD43448D10C5287359AC9D.png"></p>
+<h2 id="3-JMM"><a href="#3-JMM" class="headerlink" title="3. JMM"></a>3. JMM</h2><p>Java内存模型(Java Memory Model，JMM)JMM主要是为了规定了线程和内存之间的一些关系。根据JMM的设计，系统存在一个<strong>主内存</strong>(Main Memory)，Java中所有<strong>变量都储存在主存中，对于所有线程都是共享</strong>的。每条<strong>线程都有自己的工作内存</strong>(Working Memory)，工作内存中保存的是主存中某些变量的拷贝，线程对所有变量的操作都是在工作内存中进行，<strong>线程之间无法相互直接访问</strong>，变量传递均需要通过主存完成。<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/70821F5749AD43448D10C5287359AC9D.png"></p>
 
                 
             </div>
@@ -529,7 +529,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-07-04T21-00-00',
+        id: '2018-07-04T21-14-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -848,7 +848,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

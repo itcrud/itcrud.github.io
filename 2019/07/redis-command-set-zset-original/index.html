@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-07-18
+                    2019-07-四 22:48:00
                 </div>
                 
 
@@ -340,8 +340,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>上一篇博客说了str、hash和list三种数据类型，这篇博客将会介绍五种数据类型的后两种set和zset，分别是集合和有序集合。这两个数据类型就我个人的开发经验来说没用过，一方面是不熟悉，一方面是前面的三种类型基本已经满足了日常开发需求。在文章的最后还会补充说明一些全局的命令，至此关于命令的内容就结束啦。写的有点麻烦，但是写完后有种发现新大陆的感觉，后期在使用redis的时候，选择性知识体系将会更宽，不会仅限于一两种数据类型啦。</p>
-<h2 id="redis数据类型之set"><a href="#redis数据类型之set" class="headerlink" title="redis数据类型之set"></a>redis数据类型之set</h2><p>set集合和Java中的set集合有点像，内部元素是无序的，不可重复。单个键的value值里面可以存储2的32次方减1个元素。另外还可以直接做交、并、差集的运算。下面来一起了解一下set集合的常用命令。</p>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><ul>
+<h2 id="1-redis数据类型之set"><a href="#1-redis数据类型之set" class="headerlink" title="1. redis数据类型之set"></a>1. redis数据类型之set</h2><p>set集合和Java中的set集合有点像，内部元素是无序的，不可重复。单个键的value值里面可以存储2的32次方减1个元素。另外还可以直接做交、并、差集的运算。下面来一起了解一下set集合的常用命令。</p>
+<h3 id="1-1-常用命令"><a href="#1-1-常用命令" class="headerlink" title="1.1 常用命令"></a>1.1 常用命令</h3><ul>
 <li><p><code>sadd key members</code>：向集合中插入元素，一次可以插入多个元素，member值指定具体元素</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sadd user:1:tag it <span class="token function">java</span> js<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p><code>smembers key</code>：查询集合中的所有元素</p>
@@ -366,8 +366,8 @@
 <li><p><code>sinterstore destination keys</code>:取多个集合之间的交集，并将交集存储到destination指定集合中，如果destination指定的集合存在，直接覆盖，如不存在，新增集合存储</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sinterstore intertags user:1:tag user:2:tag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
-<h2 id="redis数据类型之zset"><a href="#redis数据类型之zset" class="headerlink" title="redis数据类型之zset"></a>redis数据类型之zset</h2><p>zset是有序的集合，内部元素不可重复，单个键下可以存储2的32次方减1个元素。zset内部元素排序是通过当前元素的分数来的，默认采用正排序。一般用来做排行榜相关需求比较多。</p>
-<h4 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h4><ul>
+<h2 id="2-redis数据类型之zset"><a href="#2-redis数据类型之zset" class="headerlink" title="2. redis数据类型之zset"></a>2. redis数据类型之zset</h2><p>zset是有序的集合，内部元素不可重复，单个键下可以存储2的32次方减1个元素。zset内部元素排序是通过当前元素的分数来的，默认采用正排序。一般用来做排行榜相关需求比较多。</p>
+<h3 id="2-1-常用命令"><a href="#2-1-常用命令" class="headerlink" title="2.1 常用命令"></a>2.1 常用命令</h3><ul>
 <li><p><code>zadd key [nx|xx] [ch] [incr] scores members</code>：添加zset类型数据，nx、xx为可选值，nx表示不可覆盖，xx为可覆盖，在<code>zadd</code>命令里面ch、incr基本不用，可以使用<code>zincrby</code>替代。score表示分数，双精度浮点数，以字符串形式表示。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">zadd user <span class="token number">10</span> u1 <span class="token number">15</span> u2 <span class="token number">11</span> u3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p><code>zincrby key increment member</code>：对zset集合中member对应的分数做累加操作，具体累加的数值有increment指定</p>
@@ -389,8 +389,8 @@ zrevrange user <span class="token number">0</span> <span class="token number">1<
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">zcount key <span class="token number">10</span> <span class="token number">20</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
 <p><strong>说明：正排序表示从小到大排序，分数越大越靠后，反排序表示从大到小，分数越高越靠前</strong></p>
-<h2 id="redis全局命令"><a href="#redis全局命令" class="headerlink" title="redis全局命令"></a>redis全局命令</h2><p>redis有一些全局命令是经常被使用的，比如删除、设置有效时间等。下面列出经常使用的。</p>
-<h4 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h4><ul>
+<h2 id="3-redis全局命令"><a href="#3-redis全局命令" class="headerlink" title="3. redis全局命令"></a>3. redis全局命令</h2><p>redis有一些全局命令是经常被使用的，比如删除、设置有效时间等。下面列出经常使用的。</p>
+<ul>
 <li><p><code>del keys</code>：根据key删除，可以同时删除多个</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">del user:1 user:2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p><code>exists keys</code>：判断指定key是否存在</p>
@@ -417,7 +417,7 @@ expire user:1 <span class="token number">10</span><span aria-hidden="true" class
 <li><p><code>type key</code>：查看当前key存储数据的类型，类型有string、hash、set、zset、list</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">type</span> user:1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到这里基本的命令都写完了，也都忘完了。在写这些内容参考了很多东西，有个腾讯云关于redis的说明，感觉很好，推荐给大家，可以参照一下。参考地址：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/section/1374142">https://cloud.tencent.com/developer/section/1374142</a></p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>到这里基本的命令都写完了，也都忘完了。在写这些内容参考了很多东西，有个腾讯云关于redis的说明，感觉很好，推荐给大家，可以参照一下。参考地址：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/section/1374142">https://cloud.tencent.com/developer/section/1374142</a></p>
 
                 
             </div>
@@ -561,7 +561,7 @@ expire user:1 <span class="token number">10</span><span aria-hidden="true" class
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-07-18T08-00-00',
+        id: '2019-07-18T22-48-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -872,7 +872,7 @@ expire user:1 <span class="token number">10</span><span aria-hidden="true" class
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

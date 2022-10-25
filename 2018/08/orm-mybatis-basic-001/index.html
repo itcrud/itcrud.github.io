@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-08-16
+                    2018-08-四 17:21:00
                 </div>
                 
 
@@ -344,8 +344,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>这篇文章说的是mybatis的入门，内容浅显，但是能够理解并完整的梳理出来却是不简单。下面就来一起看看。</p>
-<h3 id="JDBC到ORM的更替"><a href="#JDBC到ORM的更替" class="headerlink" title="JDBC到ORM的更替"></a>JDBC到ORM的更替</h3><p>最原始是使用JDBC和数据库建立连接，但是使用JDBC连接数据库做一系列操作的过程你还记得吗，你的记忆力还够用吗？这个对90%的开发小伙伴都是一个头疼的问题，因为现在的ORM框架(hibernate、mybatis)做的封装太好，让我们渐渐的遗忘了底层是怎么做的啦。</p>
-<h5 id="原始的JDBC"><a href="#原始的JDBC" class="headerlink" title="原始的JDBC"></a>原始的JDBC</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">demoTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<h2 id="1-JDBC到ORM的更替"><a href="#1-JDBC到ORM的更替" class="headerlink" title="1. JDBC到ORM的更替"></a>1. JDBC到ORM的更替</h2><p>最原始是使用JDBC和数据库建立连接，但是使用JDBC连接数据库做一系列操作的过程你还记得吗，你的记忆力还够用吗？这个对90%的开发小伙伴都是一个头疼的问题，因为现在的ORM框架(hibernate、mybatis)做的封装太好，让我们渐渐的遗忘了底层是怎么做的啦。</p>
+<h3 id="1-1-原始的JDBC"><a href="#1-1-原始的JDBC" class="headerlink" title="1.1 原始的JDBC"></a>1.1 原始的JDBC</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">demoTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token class-name">Connection</span> conn <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 	<span class="token class-name">Statement</span> stmt <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 	<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TUser</span><span class="token punctuation">&gt;</span></span> users <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -403,7 +403,7 @@
 <li>依次将<code>ResultSet</code>、<code>Statement</code>、<code>Connection</code>关闭，这个关闭的过程需要注意的就是要在finally代码块中再判断并关闭一次，确保在出异常的情况下依然能够关闭连接资源。</li>
 </ul>
 <p>这里举例出来的是查询的过程，如果是增删改的过程还会涉及到事务的开启、提交、关闭，异常时要回滚。可以看的出来有多么的麻烦，而且容易出错。开发一个实用的ORM框架迫在眉睫。</p>
-<h3 id="ORM框架概述"><a href="#ORM框架概述" class="headerlink" title="ORM框架概述"></a>ORM框架概述</h3><p>基本概念：**对象关系映射(ORM Obeject Relational Mapping)**，ORM模型就是数据库的表与简单Java对象 (POJO)的映射模型，它主要解决数据库数据和POJO对象的相互映射。</p>
+<h2 id="2-ORM框架概述"><a href="#2-ORM框架概述" class="headerlink" title="2. ORM框架概述"></a>2. ORM框架概述</h2><p>基本概念：**对象关系映射(ORM Obeject Relational Mapping)**，ORM模型就是数据库的表与简单Java对象 (POJO)的映射模型，它主要解决数据库数据和POJO对象的相互映射。</p>
 <p>主流的ORM框架：Hibernate、Mybatis，早期的时候Hibernate使用的比较多，但是由于过于笨重，近几年慢慢的被Mybatis替代了。可以说现在90%以上的公司都是用的Mybatis。</p>
 <p>这篇文章也是围绕Mybatis来说的，后续还会陆续更新Mybatis相关源码的解析。</p>
 <p>ORM框架的优点：</p>
@@ -414,7 +414,7 @@
 <li>提高代码的可维护性，通过映射关系，一目了然，降低了学习成本，同时也提高了可维护性。</li>
 <li>……(感觉用的爽的都是优点)</li>
 </ul>
-<h3 id="Mybatis映射关系"><a href="#Mybatis映射关系" class="headerlink" title="Mybatis映射关系"></a>Mybatis映射关系</h3><p>Mybatis的映射关系分配三个要素：</p>
+<h2 id="2-1-Mybatis映射关系"><a href="#2-1-Mybatis映射关系" class="headerlink" title="2.1 Mybatis映射关系"></a>2.1 Mybatis映射关系</h2><p>Mybatis的映射关系分配三个要素：</p>
 <ul>
 <li>POJO实体类，对应着数据库字段的信息</li>
 <li>SQL，对数据库进行操作的语句</li>
@@ -422,7 +422,7 @@
 </ul>
 <p>直观的映射关系如图所示：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/FFE0D29B592D40709102B7F40A0B39F3.png"></p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>配置文件是重头戏，这种规则是有了，但是数据库的连接，映射规则的读取，mapper接口和映射规则的关联等，都要在配置文件中体现和整合。另外还有一些对使用过程的一些优化配置，如插件、驼峰规则等。</p>
+<h2 id="2-2-配置文件"><a href="#2-2-配置文件" class="headerlink" title="2.2 配置文件"></a>2.2 配置文件</h2><p>配置文件是重头戏，这种规则是有了，但是数据库的连接，映射规则的读取，mapper接口和映射规则的关联等，都要在配置文件中体现和整合。另外还有一些对使用过程的一些优化配置，如插件、驼峰规则等。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
 <span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">configuration</span> <span class="token name">PUBLIC</span> <span class="token string">"-//mybatis.org//DTD Config 3.0//EN"</span> <span class="token string">"http://mybatis.org/dtd/mybatis-3-config.dtd"</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">&gt;</span></span>
@@ -567,7 +567,7 @@
 <li><code>properties</code>下直接配置参数见的不多，但是用来加载配置文件的却挺多，如将数据库的用户名、密码、连接信息放在一个<code>jdbc.properties</code>配置文件中，然后将这个配置文件加载，直接用<code>${jdbc.username}</code>操作导入。后期mybatis和spring整合，这个读取的过程就交给spring，渐渐的这个标签就被弱化了。</li>
 <li><code>typeHandlers</code>自定义处理器，用的很少。那平时用在哪里呢。如现在实体类中有个字段是枚举类，如果需要将查询到的值映射到枚举类中，那就需要自定义处理器来实现。</li>
 </ul>
-<h5 id="挑几个常用的配置说说"><a href="#挑几个常用的配置说说" class="headerlink" title="挑几个常用的配置说说"></a>挑几个常用的配置说说</h5><p>关于Mybatis的配置真的很多，但是真的需要手动配置的却不是很多，大部分配置都是使用默认的即可。下面我们摘几个常用的来说说。</p>
+<h3 id="2-3-挑几个常用的配置说说"><a href="#2-3-挑几个常用的配置说说" class="headerlink" title="2.3 挑几个常用的配置说说"></a>2.3 挑几个常用的配置说说</h3><p>关于Mybatis的配置真的很多，但是真的需要手动配置的却不是很多，大部分配置都是使用默认的即可。下面我们摘几个常用的来说说。</p>
 <ul>
 <li><code>cacheEnabled </code>:该配置影响的所有映射器中配置的缓存的全局开关。默认是打开的。</li>
 <li><code>lazyLoadingEnabled </code>:延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 特定关联 关系中可通过设置fetchType属性来覆盖该项的开关状态 。默认是关闭的。</li>
@@ -577,8 +577,6 @@
 <li><code>logImpl</code>:指定 MyBatis 所用日志的具体实现，未指定时将自动查找。 可选项有很多，如slf4j、log4j、jdk_logging、common_logging等。如果同时都有那mybatis优先选谁呢。有兴趣可以看一下源码，我记得是slf4j。</li>
 <li><code>proxyFactory</code>:代理方式，指定 Mybatis 创建具有延迟加载能力的对象所用到的代理工具 。选项有两个分别是CGLIB和JAVASSIST，在mybatis版本3.3.0以上，默认使用的JAVASSIST。</li>
 </ul>
-<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>习惯性总结，其实这里没啥总结的，内容都是一目了然，也不是很难。但是往往不难的东西会被忽略，到关键需要用的时候又想不起来。你是不是有同感？</p>
-<p>由此可以知道为什么随着IT界的发展，各大、小公司都对入职程序员考察基础。</p>
 
                 
             </div>
@@ -726,7 +724,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-08-16T08-00-00',
+        id: '2018-08-16T17-21-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1045,7 +1043,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

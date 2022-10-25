@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-04-30
+                    2019-04-二 15:46:22
                 </div>
                 
 
@@ -343,7 +343,7 @@
 <p>前言：这篇文章涉及的面很浅，只是总结一下jdk8推出的lambda表达式常用的一些功能，至于内部的实现原理，那是不可能的。</p>
 </blockquote>
 <p>这两年，基本所有的公司都由之前的JDK7转战JDK8，还记得上次去饿了么面试给的面试题，第一题就是用lambda实现一个功能，当时对lambda表达式基本是零了解，然后……。现在随着慢慢的使用，也慢慢了解lambda表达式真的是一个好东西，可以大大的简化以前的代码，下面在说常用lambda表达式的时候，会附上对应之前需要的代码量。相信你也会喜欢上它的。</p>
-<h3 id="一组对象的分组"><a href="#一组对象的分组" class="headerlink" title="一组对象的分组"></a>一组对象的分组</h3><blockquote>
+<h2 id="1-一组对象的分组"><a href="#1-一组对象的分组" class="headerlink" title="1. 一组对象的分组"></a>1. 一组对象的分组</h2><blockquote>
 <p>场景：Collection下的用户对象集合，根据用户的年龄分组。</p>
 </blockquote>
 <p>代码：</p>
@@ -361,7 +361,7 @@
         users<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">groupingBy</span><span class="token punctuation">(</span><span class="token class-name">User</span><span class="token operator">::</span><span class="token function">getAge</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>n行代码直接简化成一行代码，爽歪歪<del>接下来都是一行代码搞定</del></p>
-<h3 id="对象集合抽取字段"><a href="#对象集合抽取字段" class="headerlink" title="对象集合抽取字段"></a>对象集合抽取字段</h3><blockquote>
+<h2 id="2-对象集合抽取字段"><a href="#2-对象集合抽取字段" class="headerlink" title="2. 对象集合抽取字段"></a>2. 对象集合抽取字段</h2><blockquote>
 <p>场景：标题不想写太长，场景来描述。在实际开发中会经常遇到，两个表有关联，先查询一张表的数据，获取关联另一张表数据的ID集合，然后根据这个ID集合去关联表中查对应的数据。这里就要对ID集合进行抽取。</p>
 </blockquote>
 <p>代码：</p>
@@ -375,7 +375,7 @@
 <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> relationIds <span class="token operator">=</span> users<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">User</span><span class="token operator">::</span><span class="token function">getRelationId</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="过滤数据"><a href="#过滤数据" class="headerlink" title="过滤数据"></a>过滤数据</h3><blockquote>
+<h2 id="3-过滤数据"><a href="#3-过滤数据" class="headerlink" title="3. 过滤数据"></a>3. 过滤数据</h2><blockquote>
 <p>场景：过滤出所有年龄大于35的程序员。给这些兄弟一人送一张飞机票……</p>
 </blockquote>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> users <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//假装数组中有数据</span>
@@ -391,7 +391,7 @@
         <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>u <span class="token operator">-&gt;</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span><span class="token number">35</span><span class="token punctuation">,</span> u<span class="token punctuation">.</span><span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
         <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="数据排序"><a href="#数据排序" class="headerlink" title="数据排序"></a>数据排序</h3><blockquote>
+<h2 id="4-数据排序"><a href="#4-数据排序" class="headerlink" title="4. 数据排序"></a>4. 数据排序</h2><blockquote>
 <p>场景：根据用户的年龄排序，升序和降序两种。</p>
 </blockquote>
 <ul>
@@ -411,7 +411,7 @@
         <span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token class-name">Comparator</span><span class="token punctuation">.</span><span class="token function">comparing</span><span class="token punctuation">(</span><span class="token class-name">User</span><span class="token operator">::</span><span class="token function">getAge</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reversed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里就不具体单独的写排序逻辑啦，有点麻烦，偷懒一下~</p>
-<h3 id="抽取对象唯一标识"><a href="#抽取对象唯一标识" class="headerlink" title="抽取对象唯一标识"></a>抽取对象唯一标识</h3><blockquote>
+<h2 id="5-抽取对象唯一标识"><a href="#5-抽取对象唯一标识" class="headerlink" title="5. 抽取对象唯一标识"></a>5. 抽取对象唯一标识</h2><blockquote>
 <p>这种场景出现的也比较多的，今天在做的功能就用到，刚好做个笔记。</p>
 <p>场景：给前端一个列表，前端会对这个列表做增删改查操作。操作完成后传入后端，后端需要查询出之前给前端的列表，然后和现在的列表比对，发生哪些变动，更好的做CRUD操作。这个时候就要把给前端的列表做对象唯一标识抽取。有点抽象，看例子。</p>
 </blockquote>
@@ -438,7 +438,7 @@
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>这里其实是有一个坑的，<code>Article::getId</code>要唯一，否则会报<code>Duplicate key</code>(键重复)异常。上面也提到是唯一标识。</strong></p>
-<h3 id="待续………"><a href="#待续………" class="headerlink" title="待续………"></a>待续………</h3>
+
                 
             </div>
             <hr/>
@@ -581,7 +581,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-04-30T08-00-00',
+        id: '2019-04-30T15-46-22',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -892,7 +892,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

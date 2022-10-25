@@ -309,7 +309,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2019-06-26
+                    2019-06-三 11:52:00
                 </div>
                 
 
@@ -318,7 +318,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.5k
+                    3.4k
                 </div>
                 
 
@@ -345,15 +345,15 @@
             <div id="articleContent">
                 <p>再均衡的概念以及触发的情况都在上一篇文章中做了说明。再均衡的执行过程是造成重复消费、消息丢失的主要原因。另外消费者偏移量如何提交，如何保证再均衡后，消费者能够从上次执行到的偏移量开始消费，防止重复消费和丢失问题，都将在这篇文章中体现。</p>
 <p>接下来书写的基本思路：知道消费者提交偏移量到Kafka的几种方式、再均衡监听器、再均衡监听器配合消费者提交机制做到不丢失消息也不重复消费的解决方案。最后说一下独立消费者的使用。</p>
-<h2 id="消费者偏移量提交"><a href="#消费者偏移量提交" class="headerlink" title="消费者偏移量提交"></a>消费者偏移量提交</h2><h4 id="自动提交"><a href="#自动提交" class="headerlink" title="自动提交"></a>自动提交</h4><p>自动提交配置参数<code>enable.auto.commit</code>，默认值是<code>true</code>，表示默认支持自动提交。如果需要指定提交间隔时间，就需要配置<code>auto.commit.interval.ms</code>参数，默认是5秒。</p>
+<h2 id="1-消费者偏移量提交"><a href="#1-消费者偏移量提交" class="headerlink" title="1. 消费者偏移量提交"></a>1. 消费者偏移量提交</h2><h3 id="1-1-自动提交"><a href="#1-1-自动提交" class="headerlink" title="1.1 自动提交"></a>1.1 自动提交</h3><p>自动提交配置参数<code>enable.auto.commit</code>，默认值是<code>true</code>，表示默认支持自动提交。如果需要指定提交间隔时间，就需要配置<code>auto.commit.interval.ms</code>参数，默认是5秒。</p>
 <p>消费者使用<code>poll()</code>方法轮询去Kafka中拉取消息数据，同时消费者会有一个异步的线程在定时的向Kafka提交消费者的偏移量，这个偏移量是<code>poll()</code>最后一次拉取的偏移量。这样是存在问题的。</p>
 <p>假设A消费者消费0分区，当A消费者上次提交偏移量是30000，在后续的3秒又执行了三次<code>poll()</code>操作，每次拉取1000条数据，当时间间隔还没到5秒，后续拉取的数据偏移量就不会提交给Kafka，这个时候如果出现再均衡操作，原来的0分区被分配给了B消费者，这个时候B消费者会根据0分区记录的消费偏移量开始消费，这个时候就会造成A消费者已消费且没有来得及提交偏移量的部分被B重复消费。</p>
-<h4 id="同步手动提交"><a href="#同步手动提交" class="headerlink" title="同步手动提交"></a>同步手动提交</h4><p>使用手动提交的时候，需要将自动提交关闭，把<code>enable.auto.commit</code>值设备为<code>false</code>即可。下面的异步手动提交也是一样要关闭。</p>
+<h3 id="1-2-同步手动提交"><a href="#1-2-同步手动提交" class="headerlink" title="1.2 同步手动提交"></a>1.2 同步手动提交</h3><p>使用手动提交的时候，需要将自动提交关闭，把<code>enable.auto.commit</code>值设备为<code>false</code>即可。下面的异步手动提交也是一样要关闭。</p>
 <p>在执行业务代码中直接调用<code>commitSync()</code>方法执行提交偏移量操作，此方法是阻塞的，需要等待Kafka的响应，如果成功直接返回结果，如果失败会抛出异常信息。如果每消费一条消息提交一次，可以防止重复消费问题，但是会对性能造成巨大的消耗，如果等消费一批(比如消费20条)提交一次，这样同样会造成重复消费问题。</p>
-<h4 id="异步手动提交"><a href="#异步手动提交" class="headerlink" title="异步手动提交"></a>异步手动提交</h4><p>异步提交调用<code>commitAsync()</code>方法，不阻塞，异步执行提交操作，但是还是存在问题。如现在第一次提交偏移量是2000没有成功，会进行重新发送，在重新发送之前又发生了一次异步提交操作，此时是成功的，提交的偏移量是2100，此时上一个重新发送的提交也成功了，把最新的偏移量重置成了2000，如果在这个时刻发生了再均衡就可能导致2000到2100中间的100条消息被重复消费。</p>
+<h3 id="1-3-异步手动提交"><a href="#1-3-异步手动提交" class="headerlink" title="1.3 异步手动提交"></a>1.3 异步手动提交</h3><p>异步提交调用<code>commitAsync()</code>方法，不阻塞，异步执行提交操作，但是还是存在问题。如现在第一次提交偏移量是2000没有成功，会进行重新发送，在重新发送之前又发生了一次异步提交操作，此时是成功的，提交的偏移量是2100，此时上一个重新发送的提交也成功了，把最新的偏移量重置成了2000，如果在这个时刻发生了再均衡就可能导致2000到2100中间的100条消息被重复消费。</p>
 <p>基本的提交方式就是这三种，还有其他的提交方式都是由这三种方式组合，但是重复消费和消息丢失都是会出现的。上面因为提交导致的都是消息重复消费，消息丢失什么时候会发生呢？</p>
 <p>消息丢失：假设A消费者<code>poll()</code>拉取了1000条记录，此时刚好提交偏移量的时间到了，将最新的1000偏移量提交给Kafka，但是此时A消费者拉取的数据还未消费结束就异常退出。此时其他消费者接盘这个分区的消费任务，就会从1000偏移量开始消费，导致A消费者未消费完的数据丢失，没有被消费。</p>
-<h2 id="再均衡监听器"><a href="#再均衡监听器" class="headerlink" title="再均衡监听器"></a>再均衡监听器</h2><p>消费者群组在进行再均衡操作的时候会通知群组成员，当群组成员执行下一次拉取的时候就会触发再均衡监听器的<code>onPartitionsRevoked</code>方法，待群组中所有成员执行完此方法后才真正进入再均衡操作。再均衡操作结束后，所有群组成员会执行<code>onPartitionsAssigned</code>方法。在业务操作中就可以利用这两个方法来实现再均衡前做分区、偏移量持久化逻辑，以及再均衡后从指定偏移量开始读取消息数据操作。但是如何使用呢？</p>
+<h2 id="2-再均衡监听器"><a href="#2-再均衡监听器" class="headerlink" title="2. 再均衡监听器"></a>2. 再均衡监听器</h2><p>消费者群组在进行再均衡操作的时候会通知群组成员，当群组成员执行下一次拉取的时候就会触发再均衡监听器的<code>onPartitionsRevoked</code>方法，待群组中所有成员执行完此方法后才真正进入再均衡操作。再均衡操作结束后，所有群组成员会执行<code>onPartitionsAssigned</code>方法。在业务操作中就可以利用这两个方法来实现再均衡前做分区、偏移量持久化逻辑，以及再均衡后从指定偏移量开始读取消息数据操作。但是如何使用呢？</p>
 <p>先看一下自定义再均衡器监听器的实现方式：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//实现ConsumerRebalanceListener接口</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SelfRebalance</span> <span class="token keyword">implements</span> <span class="token class-name">ConsumerRebalanceListener</span> <span class="token punctuation">{</span>
@@ -374,7 +374,7 @@
 <p>Consumer订阅时指定再均衡监听器：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">consumer<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token class-name">Collections</span><span class="token punctuation">.</span><span class="token function">singleton</span><span class="token punctuation">(</span><span class="token string">"self-rebalance-listener"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SelfRebalance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="重复消费和消息丢失解决方案"><a href="#重复消费和消息丢失解决方案" class="headerlink" title="重复消费和消息丢失解决方案"></a>重复消费和消息丢失解决方案</h2><p>数据安全和性能是对立的，需要安全就要在性能上做出让步。对于Kafka也是一样，如果需要做到不能有一条数据丢失、一条数据重复消费，那么就需要投入大量的数据安全处理逻辑，进而导致性能的下降，降低Kafka本身的吞吐量。如果这个时候还要求大的吞吐量，就需要横向拓展增加分区数量和消费者数量啦。</p>
+<h2 id="3-重复消费和消息丢失解决方案"><a href="#3-重复消费和消息丢失解决方案" class="headerlink" title="3. 重复消费和消息丢失解决方案"></a>3. 重复消费和消息丢失解决方案</h2><p>数据安全和性能是对立的，需要安全就要在性能上做出让步。对于Kafka也是一样，如果需要做到不能有一条数据丢失、一条数据重复消费，那么就需要投入大量的数据安全处理逻辑，进而导致性能的下降，降低Kafka本身的吞吐量。如果这个时候还要求大的吞吐量，就需要横向拓展增加分区数量和消费者数量啦。</p>
 <p>但是在使用Kafka之前就应该考虑到Kafka存在这方面的问题。因为Kafka主要致力于做大数据的吞吐量。如日志埋点，分析用户行为，定向推送，千人千面。这个时候要保证吞吐量，就需要能够接受再均衡时引起的部分数据重复消费或者丢失问题。</p>
 <p>虽然说很多情况下是可以接受重复消费和消息丢失问题，但是保证数据尽可能的安全是必须的。下面来说一下我的思路。具体实现代码不写，用伪代码代替。</p>
 <p>生产者代码就不写了，这里主要说的是消费者。先看一下消费者的伪代码。</p>
@@ -454,7 +454,7 @@
 </li>
 </ul>
 <p>通过这个解决方案就可以解决重复消费和重复提交的问题，即使是处理出现异常、或者消费者异常退出，也不会造成消息消息丢失问题。增加事务、增加偏移量持久化、增加手动提交等逻辑，都是拉低消费者消费效率、提高性能消耗的问题点。</p>
-<h2 id="独立消费者"><a href="#独立消费者" class="headerlink" title="独立消费者"></a>独立消费者</h2><p>之前的demo中，写消费者的时候都会加入一个群组信息配置，如果现在有一个消费想单独成体，不与其他消费者组成群组，可以根据自己的需求去消费指定主题、指定分区的消息。那么怎么实现呢？其实并不难，看一下下面的代码：</p>
+<h2 id="4-独立消费者"><a href="#4-独立消费者" class="headerlink" title="4. 独立消费者"></a>4. 独立消费者</h2><p>之前的demo中，写消费者的时候都会加入一个群组信息配置，如果现在有一个消费想单独成体，不与其他消费者组成群组，可以根据自己的需求去消费指定主题、指定分区的消息。那么怎么实现呢？其实并不难，看一下下面的代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//配置信息</span>
     <span class="token class-name">Properties</span> properties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -488,15 +488,9 @@
 <li>在订阅的时候先根据主题获取主题下分区信息，然后根据业务需求订阅指定的分区</li>
 </ul>
 <p>实现过程很简单，其他不多做赘述。</p>
-<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-3">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-3</a></p>
+<h2 id="5-源代码"><a href="#5-源代码" class="headerlink" title="5. 源代码"></a>5. 源代码</h2><p>码云（gitee）：<a target="_blank" rel="noopener" href="https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-3">https://gitee.com/itcrud/itcrud-note/tree/master/itcrud-note-1-3</a></p>
 <p><strong>重复消费和消息丢失解决方案以及自定义再均衡监听器：<code>com.itcrud.kafka.selfrebalance</code>包内!!!</strong></p>
 <p><strong>独立消费者：<code>com.itcrud.kafka.independentconsumer</code>包内!!!</strong></p>
-<h2 id="推荐文章"><a href="#推荐文章" class="headerlink" title="推荐文章"></a>推荐文章</h2><ul>
-<li><a href="/2019/05/kafka-basic-concept-original/"><strong>Kafka学习笔记(一)：Kafka基本概念理解</strong></a></li>
-<li><a href="/2019/05/kafka-configuration-original/"><strong>Kafka学习笔记(二)：Kafka之常用配置文件核心内容</strong></a></li>
-<li><a href="/2019/06/kafka-hello-world-original/"><strong>Kafka学习笔记(三)：Kafka的第一个HelloWorld</strong></a></li>
-<li><a href="/2019/06/kafka-self-serializer-and-partition-original/"><strong>Kafka学习笔记(四)：自定义序列化器、反序列化器、分区器以及分区再均衡策略</strong></a></li>
-</ul>
 
                 
             </div>
@@ -644,7 +638,7 @@
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2019-06-26T08-00-00',
+        id: '2019-06-26T11-52-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -967,7 +961,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             

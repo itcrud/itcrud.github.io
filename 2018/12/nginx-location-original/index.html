@@ -305,7 +305,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2018-12-31
+                    2018-12-一 20:17:00
                 </div>
                 
 
@@ -340,7 +340,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>上一篇文章写的nginx的基础安装，以及nginx配置文件的整体结构。这篇文章将会一起来看一下nginx中的一个重要属性<code>location</code>，<code>location</code>是放在server里面的，用于匹配访问的域名后的path路径。<code>location</code>匹配的规则很复杂，内容也是非常多，这里只做简单的介绍。</p>
-<h3 id="location的匹配规则"><a href="#location的匹配规则" class="headerlink" title="location的匹配规则"></a>location的匹配规则</h3><h5 id="location的三种匹配方式"><a href="#location的三种匹配方式" class="headerlink" title="location的三种匹配方式"></a>location的三种匹配方式</h5><p>location的匹配规则有三种，分别是精准匹配、普通匹配和正则匹配。下面对三种匹配做一个说明。</p>
+<h2 id="1-location的匹配规则"><a href="#1-location的匹配规则" class="headerlink" title="1. location的匹配规则"></a>1. location的匹配规则</h2><h3 id="1-1-location的三种匹配方式"><a href="#1-1-location的三种匹配方式" class="headerlink" title="1.1 location的三种匹配方式"></a>1.1 location的三种匹配方式</h3><p>location的匹配规则有三种，分别是精准匹配、普通匹配和正则匹配。下面对三种匹配做一个说明。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">http://blog.itcrud.com/2018/12/12
 监听的端口是：80
 服务名是：blog.itcrud.com
@@ -375,7 +375,7 @@ location ~ <span class="token punctuation">\</span>.html$ <span class="token pun
 <span class="token punctuation">}</span>
 <span class="token comment">#当浏览器中输入：http://blog.itcrud.com/regex.html,此时两个正则表达式都是可以命中的，但是由于正则1是在前面，所以会直接作为命中目标，不会再去考虑正则2。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h5 id="匹配规则混合使用命中逻辑"><a href="#匹配规则混合使用命中逻辑" class="headerlink" title="匹配规则混合使用命中逻辑"></a>匹配规则混合使用命中逻辑</h5><p>在一个server中一般不会只出现一种匹配方式，往往是好几种混合的使用，在多种匹配方式都命中的情况下，到底是以谁为准呢，这里有一个匹配命中的逻辑。看下图：</p>
+<h3 id="1-2-匹配规则混合使用命中逻辑"><a href="#1-2-匹配规则混合使用命中逻辑" class="headerlink" title="1.2 匹配规则混合使用命中逻辑"></a>1.2 匹配规则混合使用命中逻辑</h3><p>在一个server中一般不会只出现一种匹配方式，往往是好几种混合的使用，在多种匹配方式都命中的情况下，到底是以谁为准呢，这里有一个匹配命中的逻辑。看下图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/096D7591A3C04861AA700374886D8081.png"></p>
 <p>解释：</p>
 <ul>
@@ -383,7 +383,7 @@ location ~ <span class="token punctuation">\</span>.html$ <span class="token pun
 <li>当命中的是普通匹配的时候，命中一个后会直接进入此规则的逻辑。命中多个的话需要根据最长匹配原则来筛选出最终命中的规则。到这里还没有完，命中规则逻辑实现完后，会继续做正则匹配，如果没有匹配到正则规则，就按照普通匹配来做最终返回，如果命中了正则的规则，最终是以正则规则为准。</li>
 <li>当精准匹配和普通匹配都没有命中时，会进入正则匹配。匹配中给返回，不中也是给返回，但是是错误信息。</li>
 </ul>
-<h3 id="location下的子元素root"><a href="#location下的子元素root" class="headerlink" title="location下的子元素root"></a>location下的子元素root</h3><p>在匹配的时候，根据请求地址中<code>path</code>到<code>root</code>到指定的目录下找对应的文件。</p>
+<h2 id="2-location下的子元素root"><a href="#2-location下的子元素root" class="headerlink" title="2. location下的子元素root"></a>2. location下的子元素root</h2><p>在匹配的时候，根据请求地址中<code>path</code>到<code>root</code>到指定的目录下找对应的文件。</p>
 <p>示例：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 请求地址：http://blog.itcrud.com/2018/12/user.html</span>
 <span class="token comment"># location配置：</span>
@@ -393,7 +393,7 @@ location /2018 <span class="token punctuation">{</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>请求命中<code>/2018</code>的的普通匹配规则，请求地址对应的path是<code>/2018/12/user.html</code>，这个时候会到<code>root</code>对应目录下找<code>path</code>对应的文件。最终找的是<code>/usr/local/html/2018/12/user.html</code>。</p>
-<h3 id="location下的子元素alias"><a href="#location下的子元素alias" class="headerlink" title="location下的子元素alias"></a>location下的子元素alias</h3><p>当配置的是<code>alias</code>的时候，会将<code>location</code>匹配的路径舍弃，进入到<code>alias</code>目录中，按照请求地址的<code>path</code>找对应的文件，相当于<code>alias</code>替代了<code>location</code>配置的匹配地址。</p>
+<h2 id="3-location下的子元素alias"><a href="#3-location下的子元素alias" class="headerlink" title="3. location下的子元素alias"></a>3. location下的子元素alias</h2><p>当配置的是<code>alias</code>的时候，会将<code>location</code>匹配的路径舍弃，进入到<code>alias</code>目录中，按照请求地址的<code>path</code>找对应的文件，相当于<code>alias</code>替代了<code>location</code>配置的匹配地址。</p>
 <p>示例：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 请求地址：http：//blog.itcrud.com/2018/12/user.html</span>
 <span class="token comment"># location配置：</span>
@@ -403,7 +403,7 @@ location /2018/12 <span class="token punctuation">{</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>请求命中规则，请求地址对应的<code>path</code>是<code>2018/12/user.html</code>，由于是采用<code>alias</code>，会将请求地址中<code>/2018/12</code>替换成<code>/usr/local/html</code>，最终查找文件的路径是<code>/usr/local/html/user.html</code>。</p>
-<h3 id="location下的子元素proxy-pass"><a href="#location下的子元素proxy-pass" class="headerlink" title="location下的子元素proxy_pass"></a>location下的子元素proxy_pass</h3><p><code>proxy_pass</code>是在使用的时候最经常使用的，上面都是静态文件，这里是将请求转化给代理的服务。</p>
+<h2 id="4-location下的子元素proxy-pass"><a href="#4-location下的子元素proxy-pass" class="headerlink" title="4. location下的子元素proxy_pass"></a>4. location下的子元素proxy_pass</h2><p><code>proxy_pass</code>是在使用的时候最经常使用的，上面都是静态文件，这里是将请求转化给代理的服务。</p>
 <p>示例：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 请求地址：http://blog.itcrud.com/2018/user/index.html</span>
 <span class="token comment"># location配置：</span>
@@ -424,7 +424,7 @@ location /2018 <span class="token punctuation">{</span> <span class="token comme
     proxy_pass http://127.0.0.1:8081/<span class="token punctuation">;</span><span class="token comment"># 后面用"/",进行关闭操作</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="proxy反向代理相关参数"><a href="#proxy反向代理相关参数" class="headerlink" title="proxy反向代理相关参数"></a>proxy反向代理相关参数</h5><ul>
+<h3 id="4-1-proxy反向代理相关参数"><a href="#4-1-proxy反向代理相关参数" class="headerlink" title="4.1 proxy反向代理相关参数"></a>4.1 proxy反向代理相关参数</h3><ul>
 <li><p><code>proxy_set_header</code>：通过此参数来指定代理的请求头信息，如：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">proxy_set_header X-Forwarded-For <span class="token variable">$remote_addr</span><span class="token punctuation">;</span><span class="token comment">#1</span>
 proxy_set_header X-Real-IP <span class="token variable">$remote_addr</span><span class="token punctuation">;</span><span class="token comment">#2</span>
@@ -450,7 +450,7 @@ proxy_redirect http://127.0.0.1:8080/server1 http://127.0.0.1:8081/server2<span 
 </li>
 </ul>
 <p>还有很多参数就不一一的说明了，一般使用默认的就好，需要设置的也就是主要的几个参数（请求头设置<code>proxy_set_header</code>、请求重定向设置<code>proxy_redirect</code>、请求代理设置<code>proxy_pass</code>）。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>简明的总结一下这篇文章的主旨。首先说明一下<code>location</code>的三种匹配方式以及匹配方式之间的关系。然后就是介绍<code>location</code>里面的主要的属性<code>alias</code>、<code>proxy_pass</code>、<code>root</code>，当然还有其他重要的属性，篇幅有限，将在下一篇文章来具体说明。</p>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>简明的总结一下这篇文章的主旨。首先说明一下<code>location</code>的三种匹配方式以及匹配方式之间的关系。然后就是介绍<code>location</code>里面的主要的属性<code>alias</code>、<code>proxy_pass</code>、<code>root</code>，当然还有其他重要的属性，篇幅有限，将在下一篇文章来具体说明。</p>
 
                 
             </div>
@@ -594,7 +594,7 @@ proxy_redirect http://127.0.0.1:8080/server1 http://127.0.0.1:8081/server2<span 
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2018-12-31T08-00-00',
+        id: '2018-12-31T20-17-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -679,9 +679,9 @@ proxy_redirect http://127.0.0.1:8080/server1 http://127.0.0.1:8081/server2<span 
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="springboot+spring+mybatis项目构建模板介绍和分享">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="spring Boot+Spring+Mybatis项目构建模板介绍和分享">
                         
-                        <span class="card-title">springboot+spring+mybatis项目构建模板介绍和分享</span>
+                        <span class="card-title">spring Boot+Spring+Mybatis项目构建模板介绍和分享</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -905,7 +905,7 @@ proxy_redirect http://127.0.0.1:8080/server1 http://127.0.0.1:8081/server2<span 
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259k</span>
+                        class="white-color">260.2k</span>
             
             
             
