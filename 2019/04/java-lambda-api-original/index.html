@@ -314,7 +314,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    1.1k
                 </div>
                 
 
@@ -438,7 +438,25 @@
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>这里其实是有一个坑的，<code>Article::getId</code>要唯一，否则会报<code>Duplicate key</code>(键重复)异常。上面也提到是唯一标识。</strong></p>
-
+<h2 id="6-集合求和"><a href="#6-集合求和" class="headerlink" title="6. 集合求和"></a>6. 集合求和</h2><blockquote>
+<p>给定一个List集合，对List集合内的元素求和<br>场景：</p>
+<ol>
+<li>List集合内的元素的数值类型的包装类，直接怼元素进行求和</li>
+<li>List集合中是对象，需要对对象内的某个字段进行求和</li>
+</ol>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 场景1
+List<span class="token operator">&lt;</span>Integer<span class="token operator">&gt;</span> intList <span class="token operator">=</span> Lists.newArrayList<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+intList.add<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+intList.add<span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+intList.add<span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+int <span class="token function">sum</span> <span class="token operator">=</span> intList.stream<span class="token punctuation">(</span><span class="token punctuation">)</span>.mapToInt<span class="token punctuation">(</span>Integer::intValue<span class="token punctuation">)</span>.sum<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">// 场景2
+List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span> userList <span class="token operator">=</span> Lists.newArrayList<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+userList.add<span class="token punctuation">(</span>new User<span class="token punctuation">(</span><span class="token number">35</span><span class="token punctuation">))</span><span class="token punctuation">;</span>
+userList.add<span class="token punctuation">(</span>new User<span class="token punctuation">(</span><span class="token number">26</span><span class="token punctuation">))</span><span class="token punctuation">;</span>
+userList.add<span class="token punctuation">(</span>new User<span class="token punctuation">(</span><span class="token number">47</span><span class="token punctuation">))</span><span class="token punctuation">;</span>
+int sum2 <span class="token operator">=</span> userList.stream<span class="token punctuation">(</span><span class="token punctuation">)</span>.mapToInt<span class="token punctuation">(</span>User::getAge<span class="token punctuation">)</span>.sum<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -892,7 +910,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">265.9k</span>
+                        class="white-color">334.1k</span>
             
             
             
