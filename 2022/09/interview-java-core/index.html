@@ -100,7 +100,7 @@
     
     <a href="/categories" class="waves-effect waves-light">
       
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
       
       <span>分类</span>
     </a>
@@ -120,11 +120,11 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/about" class="waves-effect waves-light">
+    <a href="/toolbox" class="waves-effect waves-light">
       
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      <i class="fas fa-toolbox" style="zoom: 0.6;"></i>
       
-      <span>关于</span>
+      <span>工具箱</span>
     </a>
     
   </li>
@@ -133,9 +133,20 @@
     
     <a href="/friends" class="waves-effect waves-light">
       
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      <i class="fas fa-link" style="zoom: 0.6;"></i>
       
       <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
     </a>
     
   </li>
@@ -195,7 +206,7 @@
 	  
 		<a href="/categories" class="waves-effect waves-light">
 			
-			    <i class="fa-fw fas fa-bookmark"></i>
+			    <i class="fa-fw fas fa-archive"></i>
 			
 			分类
 		</a>
@@ -215,11 +226,11 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/about" class="waves-effect waves-light">
+		<a href="/toolbox" class="waves-effect waves-light">
 			
-			    <i class="fa-fw fas fa-user-circle"></i>
+			    <i class="fa-fw fas fa-toolbox"></i>
 			
-			关于
+			工具箱
 		</a>
           
         </li>
@@ -228,9 +239,20 @@
 	  
 		<a href="/friends" class="waves-effect waves-light">
 			
-			    <i class="fa-fw fas fa-address-book"></i>
+			    <i class="fa-fw fas fa-link"></i>
 			
 			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
 		</a>
           
         </li>
@@ -314,14 +336,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    66.4k
+                    79.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    235 分
+                    283 分
                 </div>
                 
 
@@ -436,7 +458,93 @@
 <li>catch捕获异常后，可以采用三种解决方案，第一通过对异常的处理，封装成自定义异常抛出；第二可以通过日志记录异常信息后，将原始异常直接抛出；第三是将无需处理的异常进行记录，不中断流程，继续业务代码的执行。其中第一、二种解决方案可以配合切面或者Spring Boot自带的异常处理机制，从控制层统一做异常的处理。</li>
 <li>finally中是在异常发生后，对需要释放的资源等做最后的保证，需要注意finally内不能使用return，这样会导致程序提前退出，try、catch块中做的处理后的返回值无法返回。</li>
 </ul>
-<h1 id="2-JVM篇"><a href="#2-JVM篇" class="headerlink" title="2. JVM篇"></a>2. JVM篇</h1><p>JVM系列文章：<a href="https://itcrud.github.io/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/">Java虚拟机</a></p>
+<h2 id="1-14-说说什么是单例模式"><a href="#1-14-说说什么是单例模式" class="headerlink" title="1.14 说说什么是单例模式"></a>1.14 说说什么是单例模式</h2><p>单例模式是一种常用的软件设计模式，在应用这个模式时，单例对象的类必须保证只有一个实例存在，整个系统只能使用一个对象实例。</p>
+<p>优点：不会频繁地创建和销毁对象，浪费系统资源。</p>
+<p>可能这会需要你手写一个单例模式，这就得自己去学了，因为单例模式有很多种写法，懒汉模式，饿汉模式，双重检查模式等。懒汉模式就是用的时候再去创建对象，饿汉模式就是提前就已经加载好的静态static对象，双重检查模式就是两次检查避免多线程造成创建了多个对象。</p>
+<p>单例模式有很多种的写法，我总结一下：</p>
+<ul>
+<li>饿汉式单例模式：线程安全</li>
+<li>懒汉式单例模式：非线程安全</li>
+<li>双检锁单例模式：线程安全</li>
+<li>静态内部类模式：线程安全</li>
+<li>枚举模式：线程安全</li>
+</ul>
+<p>参考文章：<a href="/2019/08/singleton-model-original/">一起谈谈设计模式(三)：单例模式4种最终版</a></p>
+<h2 id="1-15-说说你对代理模式的理解"><a href="#1-15-说说你对代理模式的理解" class="headerlink" title="1.15 说说你对代理模式的理解"></a>1.15 说说你对代理模式的理解</h2><p>代理模式是给某一个对象提供一个代理，并由代理对象控制对原对象的引用。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>代理模式能够协调调用者和被调用者，在一定程度上降低了系统的耦合度；</li>
+<li>可以灵活地隐藏被代理对象的部分功能和服务，也增加额外的功能和服务。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>由于使用了代理模式，因此程序的性能没有直接调用性能高；</li>
+<li>使用代理模式提高了代码的复杂度。</li>
+</ul>
+<p>黄牛卖火车票：没有流行网络购票的年代是很喜欢找黄牛买火车票的，因为工作忙的原因，没时间去买票，然后就托黄牛给你买张回家过年的火车票。这个过程中黄牛就是代理人，火车票就是被代理的对象。</p>
+<p>婚姻介绍所：婚姻介绍所的工作人员，搜集单身人士信息，婚介所的工作人员为这个单身人士找对象，这个过程也是代理模式的生活案例。对象就是被代理的对象。</p>
+<p>注意了，问代理模式的时候，很有可能会问：动态代理。在Spring篇中已经讲述过，如果你把动态代理讲了后，很有可能还会问什么是静态代理？</p>
+<h2 id="1-16-说说工厂模式"><a href="#1-16-说说工厂模式" class="headerlink" title="1.16 说说工厂模式"></a>1.16 说说工厂模式</h2><p>简单工厂模式又叫静态工厂方法模式，就是建立一个工厂类，对实现了同一接口的一些类进行实例的创建。比如，一台咖啡机就可以理解为一个工厂模式，你只需要按下想喝的咖啡品类的按钮（摩卡或拿铁），它就会给你生产一杯相应的咖啡，你不需要管它内部的具体实现，只要告诉它你的需求即可。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>工厂类含有必要的判断逻辑，可以决定在什么时候创建哪一个产品类的实例，客户端可以免除直接创建产品对象的责任，而仅仅“消费”产品；简单工厂模式通过这种做法实现了对责任的分割，它提供了专门的工厂类用于创建对象；</li>
+<li>客户端无须知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可，对于一些复杂的类名，通过简单工厂模式可以减少使用者的记忆量；</li>
+<li>通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>不易拓展，一旦添加新的产品类型，就不得不修改工厂的创建逻辑；</li>
+<li>产品类型较多时，工厂的创建逻辑可能过于复杂，一旦出错可能造成所有产品的创建失败，不利于系统的维护。</li>
+</ul>
+<h2 id="1-17-抽象工厂模式"><a href="#1-17-抽象工厂模式" class="headerlink" title="1.17 抽象工厂模式"></a>1.17 抽象工厂模式</h2><p>抽象工厂模式是在简单工厂的基础上将未来可能需要修改的代码抽象出来，通过继承的方式让子类去做决定。</p>
+<p>比如，以上面的咖啡工厂为例，某天我的口味突然变了，不想喝咖啡了想喝啤酒，这个时候如果直接修改简单工厂里面的代码，这种做法不但不够优雅，也不符合软件设计的“开闭原则”，因为每次新增品类都要修改原来的代码。这个时候就可以使用抽象工厂类了，抽象工厂里只声明方法，具体的实现交给子类（子工厂）去实现，这个时候再有新增品类的需求，只需要新创建代码即可。</p>
+<h2 id="1-18-装饰器模式是什么"><a href="#1-18-装饰器模式是什么" class="headerlink" title="1.18 装饰器模式是什么"></a>1.18 装饰器模式是什么</h2><p>装饰器模式是指动态地给一个对象增加一些额外的功能，同时又不改变其结构。</p>
+<p>优点：装饰类和被装饰类可以独立发展，不会相互耦合，装饰模式是继承的一个替代模式，装饰模式可以动态扩展一个实现类的功能。</p>
+<p>装饰器模式的关键：装饰器中使用了被装饰的对象。</p>
+<h2 id="1-19-模板方法模式"><a href="#1-19-模板方法模式" class="headerlink" title="1.19 模板方法模式"></a>1.19 模板方法模式</h2><p>模板方法模式是指定义一个算法骨架，将具体内容延迟到子类去实现。</p>
+<p><strong>优点：</strong> 提高代码复用性：将相同部分的代码放在抽象的父类中，而将不同的代码放入不同的子类中；实现了反向控制：通过一个父类调用其子类的操作，通过对子类的具体实现扩展不同的行为，实现了反向控制并且符合开闭原则。</p>
+<h2 id="1-20-享元模式"><a href="#1-20-享元模式" class="headerlink" title="1.20 享元模式"></a>1.20 享元模式</h2><p>顾名思义就是被共享的单元。享元模式的意图是复用对象，节省内存，前提是享元对象是不可变对象。</p>
+<p>具体来讲，当一个系统中存在大量重复对象的时候，如果这些重复的对象是不可变对象，我们就可以利用享元模式将对象设计成享元，在内存中只保留一份实例，供多处代码引用。这样可以减少内存中对象的数量，起到节省内存的目的。</p>
+<p>典型的使用场景：Integer中cache，就是享元模式很经典的实现。</p>
+<h2 id="1-21-享元模式和单例模式的区别"><a href="#1-21-享元模式和单例模式的区别" class="headerlink" title="1.21 享元模式和单例模式的区别"></a>1.21 享元模式和单例模式的区别</h2><p>单例模式是创建型模式，重在只能有一个对象。而享元模式是结构型模式，重在节约内存使用，提升程序性能。</p>
+<p>享元模式：把一个或者多个对象缓存起来，用的时候，直接从缓存里获取。也就是说享元模式不一定只有一个对象。</p>
+<h2 id="1-22-说说策略模式在我们生活的场景"><a href="#1-22-说说策略模式在我们生活的场景" class="headerlink" title="1.22 说说策略模式在我们生活的场景"></a>1.22 说说策略模式在我们生活的场景</h2><p>策略模式是指定义一系列算法，将每个算法都封装起来，并且使他们之间可以相互替换。</p>
+<p><strong>优点：</strong> 遵循了开闭原则，扩展性良好。<br><strong>缺点：</strong> 随着策略的增加，对外暴露越来越多。</p>
+<p>条条大路通罗马，条条大路通北京。</p>
+<p>我们去北京的交通方式（策略）很多，比如说坐飞机、坐高铁、自己开车等方式。每一种方式就可以理解为每一种策略。</p>
+<p>这就是生活中的策略模式。</p>
+<h2 id="1-23-适配器模式"><a href="#1-23-适配器模式" class="headerlink" title="1.23 适配器模式"></a>1.23 适配器模式</h2><p>适配器模式是将一个类的接口变成客户端所期望的另一种接口，从而使原本因接口不匹配而无法一起工作的两个类能够在一起工作。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>可以让两个没有关联的类一起运行，起着中间转换的作用；</li>
+<li>灵活性好，不会破坏原有的系统。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<p>过多地使用适配器，容易使代码结构混乱，如明明看到调用的是 A 接口，内部调用的却是 B接口的实现。</p>
+<p>生活中的插座，为了适应各种插头，然后上面有两个孔的，三个空的，基本都能适应。还有万能充电器、USB接口等。这些都是生活中的适配器模式。</p>
+<h2 id="1-24-观察者模式"><a href="#1-24-观察者模式" class="headerlink" title="1.24 观察者模式"></a>1.24 观察者模式</h2><p>观察者模式是定义对象间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。观察者模式又叫做发布-订阅（Publish/Subscribe）模式、模型-视图（Model/View）模式、源-监听器（Source/Listener）模式或从属者（Dependents）模式。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>观察者模式可以实现表示层和数据逻辑层的分离，并定义了稳定的消息更新传递机制，抽象了更新接口，使得可以有各种各样不同的表示层作为具体观察者角色；</li>
+<li>观察者模式在观察目标和观察者之间建立一个抽象的耦合；</li>
+<li>观察者模式支持广播通信；</li>
+<li>观察者模式符合开闭原则（对拓展开放，对修改关闭）的要求。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>如果一个观察目标对象有很多直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间；</li>
+<li>如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃；</li>
+<li>观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</li>
+</ul>
+<p>在观察者模式中有如下角色：</p>
+<ul>
+<li>Subject：抽象主题（抽象被观察者），抽象主题角色把所有观察者对象保存在一个集合里，每个主题都可以有任意数量的观察者，抽象主题提供一个接口，可以增加和删除观察者对象；</li>
+<li>ConcreteSubject：具体主题（具体被观察者），该角色将有关状态存入具体观察者对象，在具体主题的内部状态- 发生改变时，给所有注册过的观察者发送通知；</li>
+<li>Observer：抽象观察者，是观察者者的抽象类，它定义了一个更新接口，使得在得到主题更改通知时更新自己；</li>
+<li>ConcrereObserver：具体观察者，实现抽象观察者定义的更新接口，以便在得到主题更改通知时更新自身的状态。</li>
+</ul>
+<p>在Spring中大量的使用的观察者模式，只要看到是以Event结尾或者Publish开头的基本上都是观察者模式。</p>
+<h1 id="2-JVM篇"><a href="#2-JVM篇" class="headerlink" title="2. JVM篇"></a>2. JVM篇</h1><p>JVM系列文章：<a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/">Java虚拟机</a></p>
 <h2 id="2-1-OOM和SOF在什么情况下会引起"><a href="#2-1-OOM和SOF在什么情况下会引起" class="headerlink" title="2.1 OOM和SOF在什么情况下会引起"></a>2.1 OOM和SOF在什么情况下会引起</h2><h3 id="2-1-1-OOM（OutOfMemoryError异常）"><a href="#2-1-1-OOM（OutOfMemoryError异常）" class="headerlink" title="2.1.1 OOM（OutOfMemoryError异常）"></a>2.1.1 OOM（OutOfMemoryError异常）</h3><p>除了程序计数器外，虚拟机内存的其他几个运行是区域都有发生OutOfMemoryError（OOM）异常的可能。</p>
 <h4 id="2-1-1-1-Java-Heap-溢出"><a href="#2-1-1-1-Java-Heap-溢出" class="headerlink" title="2.1.1.1 Java Heap 溢出"></a>2.1.1.1 Java Heap 溢出</h4><p>一般的异常信息：java.lang.OutOfMemoryError:Java heap spacess<br>Java堆用于存储对象实例，我们只要不断的创建对象，并且保证GC Roots到对象之间有可达路径来避免垃圾回收机制清除对象，就会在对象数量达到最大堆容量限制后产生内存溢出异常。<br>出现这种异常，一般手段是先通过内存映像分析工具对dump出来的堆转存快照进行分析，重点是确认内存中的对象是否是必要的，先分清是因为内存泄漏还是内存溢出引起的。<br>如果是内存泄漏，可进一步通过工具查看泄漏对象到GC Roots的应用链。于是就能找到泄漏对象是通过怎样的路径与GC Roots相关联并导致垃圾收集器无法自动回收。<br>如果不存在泄漏，那几应该检查虚拟机的参数（-Xmx和-Xms）的设置是否适当。</p>
 <h4 id="2-1-1-2-虚拟机栈和本地方法栈溢出"><a href="#2-1-1-2-虚拟机栈和本地方法栈溢出" class="headerlink" title="2.1.1.2 虚拟机栈和本地方法栈溢出"></a>2.1.1.2 虚拟机栈和本地方法栈溢出</h4><ul>
@@ -1925,7 +2033,424 @@
 <p>这 12 位计数支持每个节点每毫秒（同一台机器，同一时刻）最多生成 1 &lt;&lt; 12 = 4096个ID加起来刚好64位，为一个Long型。<br><strong>优点：</strong> 高性能，低延迟，按时间有序，一般不会造成ID碰撞。<br><strong>优点：</strong> 高性能，低延迟，按时间有序，一般不会造成ID碰撞。</p>
 <h4 id="14-7-2-6-百度UidGenerator"><a href="#14-7-2-6-百度UidGenerator" class="headerlink" title="14.7.2.6 百度UidGenerator"></a>14.7.2.6 百度UidGenerator</h4><p>UidGenerator是百度开源的分布式ID生成器，基于于snowflake算法的实现，看起来感觉还行。不过，国内开源的项目维护性真是担忧。</p>
 <h4 id="14-7-2-7-美团Leaf"><a href="#14-7-2-7-美团Leaf" class="headerlink" title="14.7.2.7 美团Leaf"></a>14.7.2.7 美团Leaf</h4><p>Leaf 是美团开源的分布式ID生成器，能保证全局唯一性、趋势递增、单调递增、信息安全，里面也提到了几种分布式方案的对比，但也需要依赖关系数据库、Zookeeper等中间件。</p>
-<h2 id="14-8-幂等解决方法有哪些"><a href="#14-8-幂等解决方法有哪些" class="headerlink" title="14.8 幂等解决方法有哪些"></a>14.8 幂等解决方法有哪些</h2>
+<h2 id="14-8-幂等解决方法有哪些"><a href="#14-8-幂等解决方法有哪些" class="headerlink" title="14.8 幂等解决方法有哪些"></a>14.8 幂等解决方法有哪些</h2><h3 id="14-8-1-什么是幂等"><a href="#14-8-1-什么是幂等" class="headerlink" title="14.8.1 什么是幂等"></a>14.8.1 什么是幂等</h3><ul>
+<li>常见描述：对于相同的请求应该返回相同的结果，所以查询类接口是天然的幂等性接口。</li>
+<li>真正的回答方式：幂等指的是相同请求（identical request）执行一次或者多次所带来的副作用（side-effects）是一样的。</li>
+</ul>
+<h3 id="14-8-2-常见出现幂等问题场景"><a href="#14-8-2-常见出现幂等问题场景" class="headerlink" title="14.8.2 常见出现幂等问题场景"></a>14.8.2 常见出现幂等问题场景</h3><ul>
+<li>前端调后端接口发起支付超时，然后再次发起重试。可能会导致多次支付。</li>
+<li>Dubbo中也有重试机制。</li>
+<li>页面上多次点击。</li>
+</ul>
+<p>我们想要的是：接口的幂等性实际上就是接口可重复调用，在调用方多次调用的情况下，接口最终得到的结果是一致的。</p>
+<h3 id="14-8-3-解决方案"><a href="#14-8-3-解决方案" class="headerlink" title="14.8.3 解决方案"></a>14.8.3 解决方案</h3><p>在插入数据的时候，插入去重表，利用数据库的唯一索引特性，保证唯一的逻辑。</p>
+<p>悲观锁，select for update，整个执行过程中锁定该订单对应的记录。注意：这种在DB读大于写的情况下尽量少用。</p>
+<p>先查询后修改数据，并发不高的后台系统，或者一些任务JOB，为了支持幂等，支持重复执行，简单的处理方法是，先查询下一些关键数据，判断是否已经执行过，在进行业务处理，就可以了。注意：核心高并发流程不要用这种方法。</p>
+<p>状态机幂等，在设计单据相关的业务，或者是任务相关的业务，肯定会涉及到状态机，就是业务单据上面有个状态，状态在不同的情况下会发生变更，一般情况下存在有限状态机，这时候，如果状态机已经处于下一个状态，这时候来了一个上一个状态的变更，理论上是不能够变更的，这样的话，保证了有限状态机的幂等。</p>
+<p>token机制，防止页面重复提交：</p>
+<ul>
+<li>集群环境：采用token加redis（redis单线程的，处理需要排队）或者</li>
+<li>单JVM环境：采用token加redis或token加jvm内存</li>
+</ul>
+<p>数据提交前要向服务的申请token，token放到redis或jvm内存，设置token有效时间，提交后后台校验token，同时删除token，生成新的token返回。token特点：要申请，一次有效性，可以限流。</p>
+<p>全局唯一ID，如果使用全局唯一ID，就是根据业务的操作和内容生成一个全局ID，在执行操作前先根据这个全局唯一ID是否存在，来判断这个操作是否已经执行。如果不存在则把全局ID，存储到存储系统中，比如数据库、redis等。如果存在则表示该方法已经执行。</p>
+<h2 id="14-9-你知道哪些限流算法"><a href="#14-9-你知道哪些限流算法" class="headerlink" title="14.9 你知道哪些限流算法"></a>14.9 你知道哪些限流算法</h2><p>限流算法有四种常见算法：</p>
+<ul>
+<li>计数器算法（固定窗口）</li>
+<li>滑动窗口</li>
+<li>漏桶算法</li>
+<li>令牌桶算法</li>
+</ul>
+<h2 id="14-10-说说什么是计数器（固定窗口）算法"><a href="#14-10-说说什么是计数器（固定窗口）算法" class="headerlink" title="14.10 说说什么是计数器（固定窗口）算法"></a>14.10 说说什么是计数器（固定窗口）算法</h2><p>计数器算法是使用计数器在周期内累加访问次数，当达到设定的限流值时，触发限流策略。下一个周期开始时，进行清零，重新计数。</p>
+<p>此算法在单机还是分布式环境下实现都非常简单，使用redis的incr原子自增性和线程安全即可轻松实现。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211031827.png"></p>
+<p>这个算法通常用于QPS限流和统计总访问量，对于秒级以上的时间周期来说，会存在一个非常严重的问题，那就是临界问题，如下图：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211061828.png"></p>
+<p>假设1min内服务器的负载能力为100，因此一个周期的访问量限制在100，然而在第一个周期的最后5秒和下一个周期的开始5秒时间段内，分别涌入100的访问量，虽然没有超过每个周期的限制量，但是整体上10秒内已达到200的访问量，已远远超过服务器的负载能力，由此可见，计数器算法方式限流对于周期比较长的限流，存在很大的弊端。</p>
+<h2 id="14-11-说说什么是滑动窗口算法"><a href="#14-11-说说什么是滑动窗口算法" class="headerlink" title="14.11 说说什么是滑动窗口算法"></a>14.11 说说什么是滑动窗口算法</h2><p>滑动窗口算法是将时间周期分为N个小周期，分别记录每个小周期内访问次数，并且根据时间滑动删除过期的小周期。</p>
+<p>如下图，假设时间周期为1min，将1min再分为2个小周期，统计每个小周期的访问数量，则可以看到，第一个时间周期内，访问数量为75，第二个时间周期内，访问数量为100，超过100的访问则被限流掉了。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211031829.png"></p>
+<p>由此可见，当滑动窗口的格子划分的越多，那么滑动窗口的滚动就越平滑，限流的统计就会越精确。</p>
+<p>此算法可以很好的解决固定窗口算法的临界问题。</p>
+<h2 id="14-12-说说什么是漏桶算法"><a href="#14-12-说说什么是漏桶算法" class="headerlink" title="14.12 说说什么是漏桶算法"></a>14.12 说说什么是漏桶算法</h2><p>漏桶算法是访问请求到达时直接放入漏桶，如当前容量已达到上限（限流值），则进行丢弃（触发限流策略）。漏桶以固定的速率进行释放访问请求（即请求通过），直到漏桶为空。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211031831.png"></p>
+<h2 id="14-13-说说什么是令牌桶算法"><a href="#14-13-说说什么是令牌桶算法" class="headerlink" title="14.13 说说什么是令牌桶算法"></a>14.13 说说什么是令牌桶算法</h2><p>令牌桶算法是程序以r（r=时间周期/限流值）的速度向令牌桶中增加令牌，直到令牌桶满，请求到达时向令牌桶请求令牌，如获取到令牌则通过请求，否则触发限流策略。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211031832.png"></p>
+<h2 id="14-14-数据库如何处理海量数据"><a href="#14-14-数据库如何处理海量数据" class="headerlink" title="14.14 数据库如何处理海量数据"></a>14.14 数据库如何处理海量数据</h2><p>对数据库进行：分库分表，主从架构，读写分离。</p>
+<p>水平分库/分表，垂直分库/分表。</p>
+<ul>
+<li>水平分库/表，各个库和表的结构一模一样。</li>
+<li>垂直分库/表，各个库和表的结构不一样。</li>
+</ul>
+<p>读写分离：主机负责写，从机负责读。</p>
+<h2 id="14-15-如何将长链接转换成短链接，并发送短信"><a href="#14-15-如何将长链接转换成短链接，并发送短信" class="headerlink" title="14.15 如何将长链接转换成短链接，并发送短信"></a>14.15 如何将长链接转换成短链接，并发送短信</h2><p>短 URL 从生成到使用分为以下几步</p>
+<ul>
+<li>有一个服务,将要发送给你的长 URL 对应到一个短 URL 上.例如 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> -&gt; <a target="_blank" rel="noopener" href="http://www.t.cn/1%E3%80%82">www.t.cn/1。</a></li>
+<li>把短 url 拼接到短信等的内容上发送。</li>
+<li>用户点击短 URL ,浏览器用 301 / 302 进行重定向,访问到对应的长 URL。</li>
+<li>展示对应的内容。</li>
+</ul>
+<h2 id="14-16-如何提高系统的并发能力"><a href="#14-16-如何提高系统的并发能力" class="headerlink" title="14.16 如何提高系统的并发能力"></a>14.16 如何提高系统的并发能力</h2><ul>
+<li>使用分布式系统。</li>
+<li>部署多台服务器，并做负载均衡。</li>
+<li>使用缓存（Redis）集群。</li>
+<li>数据库分库分表 + 读写分离。</li>
+<li>引入消息中间件集群。</li>
+</ul>
+<h1 id="15-网络篇"><a href="#15-网络篇" class="headerlink" title="15. 网络篇"></a>15. 网络篇</h1><h2 id="15-1-HTTP-响应码有哪些？分别代表什么含义？"><a href="#15-1-HTTP-响应码有哪些？分别代表什么含义？" class="headerlink" title="15.1 HTTP 响应码有哪些？分别代表什么含义？"></a>15.1 HTTP 响应码有哪些？分别代表什么含义？</h2><ul>
+<li>200：成功，Web 服务器成功处理了客户端的请求。</li>
+<li>301：永久重定向，当客户端请求一个网址的时候，Web 服务器会将当前请求重定向到另一个网址，搜索引擎会抓取重定向后网页的内容并且将旧的网址替换为重定向后的网址。</li>
+<li>302：临时重定向，搜索引擎会抓取重定向后网页的内容而保留旧的网址，因为搜索引擎认为重定向后的网址是暂时的。</li>
+<li>400：客户端请求错误，多为参数不合法导致 Web 服务器验参失败。</li>
+<li>404：未找到，Web 服务器找不到资源。</li>
+<li>500：Web 服务器错误，服务器处理客户端请求的时候发生错误。</li>
+<li>503：服务不可用，服务器停机。</li>
+<li>504：网关超时。</li>
+</ul>
+<h2 id="15-2-Forward-和-Redirect-的区别"><a href="#15-2-Forward-和-Redirect-的区别" class="headerlink" title="15.2 Forward 和 Redirect 的区别"></a>15.2 Forward 和 Redirect 的区别</h2><ul>
+<li>浏览器 URL 地址：Forward 是服务器内部的重定向，服务器内部请求某个 servlet，然后获取响应的内容，浏览器的 URL 地址是不会变化的；Redirect 是客户端请求服务器，然后服务给客户端返回了一个 302 状态码和新的 location，客户端重新发起 HTTP 请求，服务器给客户端响应 location 对应的 URL 地址，浏览器的 URL 地址发生了变化。</li>
+<li>数据的共享：Forward 是服务器内部的重定向，request 在整个重定向过程中是不变的，request 中的信息在 servlet 间是共享的。Redirect 发起了两次 HTTP 请求分别使用不同的request。</li>
+<li>请求的次数：Forward 只有一次请求；Redirect 有两次请求。</li>
+</ul>
+<h2 id="15-3-Get-和-Post-请求有哪些区别"><a href="#15-3-Get-和-Post-请求有哪些区别" class="headerlink" title="15.3 Get 和 Post 请求有哪些区别"></a>15.3 Get 和 Post 请求有哪些区别</h2><h3 id="15-3-1-用途"><a href="#15-3-1-用途" class="headerlink" title="15.3.1 用途"></a>15.3.1 用途</h3><ul>
+<li>get 请求用来从服务器获取资源</li>
+<li>post 请求用来向服务器提交数据</li>
+</ul>
+<h3 id="15-3-2-表单的提交方式"><a href="#15-3-2-表单的提交方式" class="headerlink" title="15.3.2 表单的提交方式"></a>15.3.2 表单的提交方式</h3><ul>
+<li>get 请求直接将表单数据以 name1=value1&amp;name2=value2 的形式拼接到 URL 上（<a target="_blank" rel="noopener" href="http://www.baidu.com/action?name1=value1&amp;name2=value2%EF%BC%89%EF%BC%8C%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E5%8F%82%E6%95%B0%E5%80%BC%E9%9C%80%E8%A6%81%E7%94%A8">http://www.baidu.com/action?name1=value1&amp;name2=value2），多个参数参数值需要用</a> &amp; 连接起来并且用 ? 拼接到 action 后面；</li>
+<li>post 请求将表单数据放到请求头或者请求的消息体中。</li>
+</ul>
+<h3 id="15-3-3-传输数据的大小限制"><a href="#15-3-3-传输数据的大小限制" class="headerlink" title="15.3.3 传输数据的大小限制"></a>15.3.3 传输数据的大小限制</h3><ul>
+<li>get 请求传输的数据受到 URL 长度的限制，而 URL 长度是由浏览器决定的；</li>
+<li>post 请求传输数据的大小理论上来说是没有限制的。</li>
+</ul>
+<h3 id="15-3-4-参数的编码"><a href="#15-3-4-参数的编码" class="headerlink" title="15.3.4 参数的编码"></a>15.3.4 参数的编码</h3><ul>
+<li>get 请求的参数会在地址栏明文显示，使用 URL 编码的文本格式传递参数；</li>
+<li>post 请求使用二进制数据多重编码传递参数。</li>
+</ul>
+<h3 id="15-3-5-缓存"><a href="#15-3-5-缓存" class="headerlink" title="15.3.5 缓存"></a>15.3.5 缓存</h3><ul>
+<li>get 请求可以被浏览器缓存被收藏为标签；</li>
+<li>post 请求不会被缓存也不能被收藏为标签。</li>
+</ul>
+<h2 id="15-4-说说-TCP-与-UDP-的区别，以及各自的优缺点"><a href="#15-4-说说-TCP-与-UDP-的区别，以及各自的优缺点" class="headerlink" title="15.4 说说 TCP 与 UDP 的区别，以及各自的优缺点"></a>15.4 说说 TCP 与 UDP 的区别，以及各自的优缺点</h2><ul>
+<li>TCP面向连接（如打电话要先拨号建立连接）：UDP是无连接的，即发送数据之前不需要建立连接。</li>
+<li>TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付。tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，还可以对次序乱掉的分包进行顺序控制。</li>
+<li>UDP具有较好的实时性，工作效率比TCP高，适用于对高速传输和实时性有较高的通信或广播通信。</li>
+<li>每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信。</li>
+<li>TCP对系统资源要求较多，UDP对系统资源要求较少。</li>
+</ul>
+<h2 id="15-5-说一下-HTTP-和-HTTPS-的区别"><a href="#15-5-说一下-HTTP-和-HTTPS-的区别" class="headerlink" title="15.5 说一下 HTTP 和 HTTPS 的区别"></a>15.5 说一下 HTTP 和 HTTPS 的区别</h2><p>端口不同：HTTP和 HTTPS 的连接方式不同没用的端口也不一样，HTTP是80， HTTPS 用的是443。</p>
+<p>消耗资源：和HTTP相比，HTTPS通信会因为加解密的处理消耗更多的CPU和内存资源。</p>
+<p>开销： HTTPS 通信需要证书，这类证书通常需要向认证机构申请或者付费购买。</p>
+<h2 id="15-6-说说HTTP、TCP、Socket-的关系是什么"><a href="#15-6-说说HTTP、TCP、Socket-的关系是什么" class="headerlink" title="15.6 说说HTTP、TCP、Socket 的关系是什么"></a>15.6 说说HTTP、TCP、Socket 的关系是什么</h2><ul>
+<li>TCP/IP 代表传输控制协议/网际协议，指的是一系列协议族。</li>
+<li>HTTP 本身就是一个协议，是从 Web 服务器传输超文本到本地浏览器的传送协议。</li>
+<li>Socket 是 TCP/IP 网络的 API ，其实就是一个门面模式，它把复杂的 TCP/IP 协议族隐藏在Socket 接口后面。对用户来说，一组简单的接口就是全部，让 Socket 去组织数据，以符合指定的协议。</li>
+</ul>
+<p>综上所述：</p>
+<ul>
+<li>需要 IP 协议来连接网络</li>
+<li>TCP 是一种允许我们安全传输数据的机制，使用 TCP 协议来传输数据的 HTTP 是 Web 服务器和客户端使用的特殊协议。</li>
+<li>HTTP 基于 TCP 协议，所以可以使用 Socket 去建立一个 TCP 连接。</li>
+</ul>
+<h2 id="15-7-说一下HTTP的长连接与短连接的区别"><a href="#15-7-说一下HTTP的长连接与短连接的区别" class="headerlink" title="15.7 说一下HTTP的长连接与短连接的区别"></a>15.7 说一下HTTP的长连接与短连接的区别</h2><p>HTTP协议的长连接和短连接，实质上是TCP协议的长连接和短连接。</p>
+<h3 id="15-7-1-短连接"><a href="#15-7-1-短连接" class="headerlink" title="15.7.1 短连接"></a>15.7.1 短连接</h3><p>在HTTP/1.0中默认使用短链接,也就是说，浏览器和服务器每进行一次HTTP操作，就建立一次连接，但任务结束就中断连接。如果客户端访问的某个HTML或其他类型的Web资源，如 JavaScript文件、图像文件、 CSS 文件等。当浏览器每遇到这样一个Web资源，就会建立一个HTTP会话。</p>
+<h3 id="15-7-2-长连接"><a href="#15-7-2-长连接" class="headerlink" title="15.7.2 长连接"></a>15.7.2 长连接</h3><p>从HTTP/1.1起，默认使用长连接，用以保持连接特性。在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭。如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。</p>
+<h2 id="15-8-TCP-为什么要三次握手，两次不行吗？为什么？"><a href="#15-8-TCP-为什么要三次握手，两次不行吗？为什么？" class="headerlink" title="15.8 TCP 为什么要三次握手，两次不行吗？为什么？"></a>15.8 TCP 为什么要三次握手，两次不行吗？为什么？</h2><ul>
+<li>TCP 客户端和服务端建立连接需要三次握手，首先服务端需要开启监听，等待客户端的连接请求，这个时候服务端处于“收听”状态；</li>
+<li>客户端向服务端发起连接，选择 seq=x 的初始序列号，此时客户端处于“同步已发送”的状态；</li>
+<li>服务端收到客户端的连接请求，同意连接并向客户端发送确认，确认号是 ack=x+1 表示客户端可以发送下一个数据包序号从 x+1 开始，同时选择 seq=y 的初始序列号，此时服务端处于“同步收到”状态；</li>
+<li>客户端收到服务端的确认后，向服务端发送确认信息，确认号是 ack=y+1 表示服务端可以发送下一个数据包序号从 y+1 开始，此时客户端处于“已建立连接”的状态；</li>
+<li>服务端收到客户端的确认后，也进入“已建立连接”的状态。</li>
+</ul>
+<p>从三次握手的过程可以看出如果只有两次握手，那么客户端的起始序列号可以确认，服务端的起始序列号将得不到确认。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211041345.png"></p>
+<h2 id="15-9-TCP-如何保证可靠性"><a href="#15-9-TCP-如何保证可靠性" class="headerlink" title="15.9 TCP 如何保证可靠性"></a>15.9 TCP 如何保证可靠性</h2><h3 id="15-9-1-序列号和确认号机制"><a href="#15-9-1-序列号和确认号机制" class="headerlink" title="15.9.1 序列号和确认号机制"></a>15.9.1 序列号和确认号机制</h3><p>TCP 发送端发送数据包的时候会选择一个 seq 序列号，接收端收到数据包后会检测数据包的完整性，如果检测通过会响应一个 ack 确认号表示收到了数据包。</p>
+<h3 id="15-9-2-超时重发机制"><a href="#15-9-2-超时重发机制" class="headerlink" title="15.9.2 超时重发机制"></a>15.9.2 超时重发机制</h3><p>TCP 发送端发送了数据包后会启动一个定时器，如果一定时间没有收到接受端的确认后，将会重新发送该数据包。</p>
+<h3 id="15-9-3-对乱序数据包重新排序"><a href="#15-9-3-对乱序数据包重新排序" class="headerlink" title="15.9.3 对乱序数据包重新排序"></a>15.9.3 对乱序数据包重新排序</h3><p>从 IP 网络层传输到 TCP 层的数据包可能会乱序，TCP 层会对数据包重新排序再发给应用层。</p>
+<h3 id="15-9-4-丢弃重复数据"><a href="#15-9-4-丢弃重复数据" class="headerlink" title="15.9.4 丢弃重复数据"></a>15.9.4 丢弃重复数据</h3><p>从 IP 网络层传输到 TCP 层的数据包可能会重复，TCP 层会丢弃重复的数据包。</p>
+<h3 id="15-9-5-流量控制"><a href="#15-9-5-流量控制" class="headerlink" title="15.9.5 流量控制"></a>15.9.5 流量控制</h3><p>TCP 发送端和接收端都有一个固定大小的缓冲空间，为了防止发送端发送数据的速度太快导致接收端缓冲区溢出，发送端只能发送接收端可以接纳的数据，为了达到这种控制效果，TCP 用了流量控制协议（可变大小的滑动窗口协议）来实现。</p>
+<h2 id="15-10-OSI-的七层模型都有哪些"><a href="#15-10-OSI-的七层模型都有哪些" class="headerlink" title="15.10 OSI 的七层模型都有哪些"></a>15.10 OSI 的七层模型都有哪些</h2><p>OSI七层模型一般指开放系统互连参考模型 (Open System Interconnect 简称OSI)是国际标准化组织(ISO)和国际电报电话咨询委员会(CCITT)联合制定的开放系统互连参考模型,为开放式互连信息系统提供了一种功能结构的框架。</p>
+<ul>
+<li>应用层：各种应用程序协议，比如 HTTP、HTTPS、FTP、SOCKS 安全套接字协议、DNS 域名系统、GDP 网关发现协议等等。</li>
+<li>表示层：加密解密、转换翻译、压缩解压缩，比如 LPP 轻量级表示协议。</li>
+<li>会话层：不同机器上的用户建立和管理会话，比如 SSL 安全套接字层协议、TLS 传输层安全协议、RPC 远程过程调用协议等等。</li>
+<li>传输层：接受上一层的数据，在必要的时候对数据进行分割，并将这些数据交给网络层，保证这些数据段有效到达对端，比如 TCP 传输控制协议、UDP 数据报协议。</li>
+<li>网络层：控制子网的运行：逻辑编址、分组传输、路由选择，比如 IP、IPV6、SLIP 等等。</li>
+<li>数据链路层：物理寻址，同时将原始比特流转变为逻辑传输路线，比如 XTP 压缩传输协议、PPTP 点对点隧道协议等等。</li>
+<li>物理层：机械、电子、定时接口通信信道上的原始比特流传输，比如 IEEE802.2 等等。</li>
+</ul>
+<h2 id="15-11-如何实现跨域"><a href="#15-11-如何实现跨域" class="headerlink" title="15.11 如何实现跨域"></a>15.11 如何实现跨域</h2><p>当浏览器执行 JS 脚本的时候，会检测脚本要访问的协议、域名、端口号是不是和当前网址一致，如果不一致就是跨域。跨域是不允许的，这种限制叫做浏览器的同源策略，简单点的说法就是浏览器不允许一个源中加载脚本与其他源中的资源进行交互。那么如何实现跨域呢？主要实现方式有三种：JSONP、CORS方式、代理方式。</p>
+<h3 id="15-11-1-JSONP-方式"><a href="#15-11-1-JSONP-方式" class="headerlink" title="15.11.1 JSONP 方式"></a>15.11.1 JSONP 方式</h3><p>script、img、iframe、link、video、audio 等带有 src 属性的标签可以跨域请求和执行资源，JSONP 利用这一点“漏洞”实现跨域。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+ <span class="token keyword">var</span> scriptTag <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'script'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ scriptTag<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token string">"text/javascript"</span><span class="token punctuation">;</span>
+ scriptTag<span class="token punctuation">.</span>src <span class="token operator">=</span> <span class="token string">"http://10.10.0.101:8899/jsonp?callback=f"</span><span class="token punctuation">;</span>
+ document<span class="token punctuation">.</span>head<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>scriptTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>再看下 jQuery 的写法。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">$<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+ <span class="token comment">// 请求域名</span>
+ <span class="token literal-property property">url</span><span class="token operator">:</span><span class="token string">'http://10.10.0.101:8899/login'</span><span class="token punctuation">,</span>
+ <span class="token comment">// 请求方式</span>
+ <span class="token literal-property property">type</span><span class="token operator">:</span><span class="token string">'GET'</span><span class="token punctuation">,</span>
+ <span class="token comment">// 数据类型选择 jsonp</span>
+ <span class="token literal-property property">dataType</span><span class="token operator">:</span><span class="token string">'jsonp'</span><span class="token punctuation">,</span>
+ <span class="token comment">// 回调方法名</span>
+ <span class="token literal-property property">jsonpCallback</span><span class="token operator">:</span><span class="token string">'callback'</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 回调方法</span>
+<span class="token keyword">function</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token parameter">response</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>JSONP 实现跨域很简单但是只支持 GET 请求方式。而且在服务器端接受到 JSONP 请求后需要设置请求头，添加 <code>Access-Control-Allow-Origin</code>属性，属性值为 * ，表示允许所有域名访问，这样浏览器才会正常解析，否则会报 406 错误。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">response<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Access-Control-Allow-Origin"</span><span class="token punctuation">,</span> <span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="15-11-2-CORS-方式"><a href="#15-11-2-CORS-方式" class="headerlink" title="15.11.2 CORS 方式"></a>15.11.2 CORS 方式</h3><p>CORS（Cross-Origin Resource Sharing）即跨域资源共享，需要浏览器和服务器同时支持，这种请求方式分为简单请求和非简单请求。</p>
+<p>当浏览器发出的 XMLHttpRequest 请求的请求方式是 POST 或者 GET，请求头中只包含 Accept、Accept-Language、Content-Language、Last-Event-ID、Content-Type（applicationx-www-form-urlencoded、multipart/form-data、text/plain）时那么这个请求就是一个简单请求。</p>
+<p>对于简单的请求，浏览器会在请求头中添加 Origin 属性，标明本次请求来自哪个源（协议 + 域名 +端口）。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">GET
+<span class="token comment">// 标明本次请求来自哪个源（协议+域名+端口）</span>
+Origin<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//127.0.0.1:8080</span>
+<span class="token comment">// IP</span>
+Host<span class="token operator">:</span> <span class="token number">127.0</span>.<span class="token number">0.1</span><span class="token operator">:</span><span class="token number">8080</span>
+<span class="token comment">// 长连接</span>
+Connection<span class="token operator">:</span> keep-alive
+Content-Type<span class="token operator">:</span> text/plain<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果 Origin 标明的域名在服务器许可范围内，那么服务器就会给出响应：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token comment">// 该值上文提到过，表示允许浏览器指定的域名访问，要么为浏览器传入的 origin，要么为 * 表示</span>
+所有域名都可以访问
+ Access-Control-Allow-Origin<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//127.0.0.1:8080</span>
+ <span class="token comment">// 表示服务器是否同意浏览器发送 cookie</span>
+ Access-Control-Allow-Credentials<span class="token operator">:</span> <span class="token boolean">true</span>
+ <span class="token comment">// 指定 XMLHttpRequest#getResponseHeader() 方法可以获取到的字段</span>
+ Access-Control-Expose-Headers<span class="token operator">:</span> xxx
+ Content-Type<span class="token operator">:</span> text/html; charset=utf<span class="token number">-8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>Access-Control-Allow-Credentials: true</code>表示服务器同意浏览器发送 cookie，另外浏览器也需要设置支持发送 cookie，否则就算服务器支持浏览器也不会发送。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">var xhr = new XMLHttpRequest();
+<span class="token comment">// 设置发送的请求是否带 cookie</span>
+xhr.withCredentials = <span class="token boolean">true</span>;
+xhr.open('post'<span class="token punctuation">,</span> 'http<span class="token operator">:</span><span class="token comment">//10.10.0.101:8899/login', true);</span>
+xhr.setRequestHeader('Content-Type'<span class="token punctuation">,</span> 'text/plain');<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>另外一种是非简单请求，请求方式是 PUT 或 DELETE，或者请求头中添加了Content-Type:application/json 属性和属性值的请求。</p>
+<p>这种请求在浏览器正式发出 XMLHttpRequest 请求前会先发送一个预检 HTTP 请求，询问服务器当前网页的域名是否在服务器的许可名单之中，只有得到服务器的肯定后才会正式发出通信请求。</p>
+<p>预检请求的头信息：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token comment">// 预检请求的请求方式是 OPTIONS</span>
+OPTIONS
+<span class="token comment">// 标明本次请求来自哪个源（协议+域名+端口）</span>
+Origin<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//127.0.0.1:8080</span>
+<span class="token comment">// 标明接下来的 CORS 请求要使用的请求方式</span>
+Access-Control-Request-Method<span class="token operator">:</span> PUT
+<span class="token comment">// 标明接下来的 CORS 请求要附加发送的头信息属性</span>
+Access-Control-Request-Headers<span class="token operator">:</span> X-Custom-Header
+<span class="token comment">// IP</span>
+Host<span class="token operator">:</span> <span class="token number">127.0</span>.<span class="token number">0.1</span><span class="token operator">:</span><span class="token number">8080</span>
+<span class="token comment">// 长连接</span>
+Connection<span class="token operator">:</span> keep-alive<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果服务器回应预检请求的响应头中没有任何 CORS 相关的头信息的话表示不支持跨域，如果允许跨域就会做出响应，响应头信息如下：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">HTTP/<span class="token number">1.1</span> <span class="token number">200</span> OK
+<span class="token comment">// 该值上文提到过，表示允许浏览器指定的域名访问，要么为浏览器传入的 origin，要么为 * 表示所</span>
+有域名都可以访问
+Access-Control-Allow-Origin<span class="token operator">:</span>http<span class="token operator">:</span><span class="token comment">//127.0.0.1:8080</span>
+<span class="token comment">// 服务器支持的所有跨域请求方式，为了防止浏览器发起多次预检请求把所有的请求方式返回给浏览器</span>
+Access-Control-Allow-Methods<span class="token operator">:</span> GET<span class="token punctuation">,</span> POST<span class="token punctuation">,</span> PUT
+<span class="token comment">// 服务器支持预检请求头信息中的 Access-Control-Request-Headers 属性值</span>
+Access-Control-Allow-Headers<span class="token operator">:</span> X-Custom-Header
+<span class="token comment">// 服务器同意浏览器发送 cookie</span>
+Access-Control-Allow-Credentials<span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token comment">// 指定预检请求的有效期是 20 天，期间不必再次发送另一个预检请求</span>
+Access-Control-Max-Age<span class="token operator">:</span><span class="token number">1728000</span>
+Content-Type<span class="token operator">:</span> text/html; charset=utf<span class="token number">-8</span>
+Keep-Alive<span class="token operator">:</span> timeout=<span class="token number">2</span><span class="token punctuation">,</span> max=<span class="token number">100</span>
+<span class="token comment">// 长连接</span>
+Connection<span class="token operator">:</span> Keep-Alive
+Content-Type<span class="token operator">:</span> text/plain<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接着浏览器会像简单请求一样，发送一个 CORS 请求，请求头中一定包含 Origin 属性，服务器的响应头中也一定得包含 Access-Control-Allow-Origin 属性。</p>
+<h3 id="15-11-3-代理方式（最优方案）"><a href="#15-11-3-代理方式（最优方案）" class="headerlink" title="15.11.3 代理方式（最优方案）"></a>15.11.3 代理方式（最优方案）</h3><p>跨域限制是浏览器的同源策略导致的，使用 nginx 当做服务器访问别的服务的 HTTP 接口是不需要执行 JS 脚步不存在同源策略限制的，所以可以利用 Nginx 创建一个代理服务器，这个代理服务器的域名跟浏览器要访问的域名一致，然后通过这个代理服务器修改 cookie 中的域名为要访问的 HTTP接口的域名，通过反向代理实现跨域。</p>
+<p>Nginx 的配置信息：</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">server {
+   # 代理服务器的端口
+   listen 88;
+   # 代理服务器的域名
+   server_name http://127.0.0.1;
+   location / {
+      # 反向代理服务器的域名+端口
+      proxy_pass http://127.0.0.2:89;
+      # 修改cookie里域名
+      proxy_cookie_domain http://127.0.0.2 http://127.0.0.1;
+      index index.html index.htm;
+      # 设置当前代理服务器允许浏览器跨域
+      add_header Access-Control-Allow-Origin http://127.0.0.1;
+      # 设置当前代理服务器允许浏览器发送 cookie
+      add_header Access-Control-Allow-Credentials true;
+   }
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>前端代码:（正常发送http请求即可）</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 设置浏览器允许发送 cookie</span>
+xhr<span class="token punctuation">.</span>withCredentials <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token comment">// 访问 nginx 代理服务器</span>
+xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">,</span> <span class="token string">'http://127.0.0.1:88'</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="15-12-说说TCP三次握手和四次挥手的全过程"><a href="#15-12-说说TCP三次握手和四次挥手的全过程" class="headerlink" title="15.12 说说TCP三次握手和四次挥手的全过程"></a>15.12 说说TCP三次握手和四次挥手的全过程</h2><h3 id="15-12-1-三次握手"><a href="#15-12-1-三次握手" class="headerlink" title="15.12.1 三次握手"></a>15.12.1 三次握手</h3><p>第一次握手：客户端发送syn包(syn=x)到服务器，并进入SYN_SEND状态，等待服务器确认； 第二次握手：服务器收到syn包，必须确认客户的SYN（ack=x+1），同时自己也发送一个SYN包（syn=y），即SYN+ACK包，此时服务器进入SYN_RECV状态； 第三次握手：客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=y+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。 握手过程中传送的包里不包含数据，三次握手完毕后，客户端与服务器才正式开始传送数据。理想状态下，TCP连接一旦建立，在通信双方中的任何一方主动关闭连接之前，TCP 连接都将被一直保持下去。</p>
+<h3 id="15-12-2-四次挥手"><a href="#15-12-2-四次挥手" class="headerlink" title="15.12.2 四次挥手"></a>15.12.2 四次挥手</h3><p>与建立连接的“三次握手”类似，断开一个TCP连接则需要“四次握手”。 第一次挥手：主动关闭方发送一个FIN，用来关闭主动方到被动关闭方的数据传送，也就是主动关闭方告诉被动关闭方：我已经不会再给你发数据了(当然，在fin包之前发送出去的数据，如果没有收到对应的ack确认报文，主动关闭方依然会重发这些数据)，但是，此时主动关闭方还可 以接受数据。 第二次挥手：被动关闭方收到FIN包后，发送一个ACK给对方，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号）。 第三次挥手：被动关闭方发送一个FIN，用来关闭被动关闭方到主动关闭方的数据传送，也就是告诉主动关闭方，我的数据也发送完了，不会再给你发数据了。 第四次挥手：主动关闭方收到FIN后，发送一个ACK给被动关闭方，确认序号为收到序号+1，至此，完成四次挥手。</p>
+<h2 id="15-13-说说TCP-IP四层网络模型"><a href="#15-13-说说TCP-IP四层网络模型" class="headerlink" title="15.13 说说TCP/IP四层网络模型"></a>15.13 说说TCP/IP四层网络模型</h2><p>TCP/IP分层模型（TCP/IP Layening Model）被称作因特网分层模型(Internet Layering Model)、因特网参考模型(Internet Reference Model)。</p>
+<p>TCP/IP协议被组织成四个概念层，其中有三层对应于ISO参考模型中的相应层。ICP/IP协议族并不包含物理层和数据链路层，因此它不能独立完成整个计算机网络系统的功能，必须与许多其他的协议协同工作。</p>
+<p>TCP/IP分层模型的四个协议层分别完成以下的功能：</p>
+<ul>
+<li>第一层：网络接口层</li>
+</ul>
+<p>网络接口层包括用于协作IP数据在已有网络介质上传输的协议。</p>
+<p>协议：ARP,RARP</p>
+<ul>
+<li>第二层：网间层</li>
+</ul>
+<p>网间层对应于OSI七层参考模型的网络层。负责数据的包装、寻址和路由。同时还包含网间控制报文协议(Internet Control Message Protocol,ICMP)用来提供网络诊断信息。</p>
+<p>协议：本层包含IP协议、RIP协议(Routing Information Protocol，路由信息协议)，ICMP协议。</p>
+<ul>
+<li>第三层：传输层</li>
+</ul>
+<p>传输层对应于OSI七层参考模型的传输层，它提供两种端到端的通信服务。</p>
+<p>其中TCP协议(Transmission Control Protocol)提供可靠的数据流运输服务，UDP协议(UseDatagram Protocol)提供不可靠的用户数据报服务。</p>
+<ul>
+<li>第四层：应用层</li>
+</ul>
+<p>应用层对应于OSI七层参考模型的应用层和表达层。</p>
+<p>因特网的应用层协议包括Finger、Whois、FTP(文件传输协议)、Gopher、HTTP(超文本传输协议)、Telent(远程终端协议)、SMTP(简单邮件传送协议)、IRC(因特网中继会话)、NNTP（网络新闻传输协议）等。</p>
+<h2 id="15-14-说说域名解析详细过程"><a href="#15-14-说说域名解析详细过程" class="headerlink" title="15.14 说说域名解析详细过程"></a>15.14 说说域名解析详细过程</h2><ol>
+<li>浏览器访问 <a target="_blank" rel="noopener" href="http://www.baidu.com,询问本地/">www.baidu.com，询问本地</a> DNS 服务器是否缓存了该网址解析后的 IP 地址。</li>
+<li>如果本地 DNS 服务器没有缓存的话，就去 root-servers.net 根服务器查询该网址对应的 IP 地址。</li>
+<li>根服务器返回顶级域名服务器的网址 gtld-servers.net，然后本地 DNS 服务器去顶级域名服务器查询该网址对应的 IP 地址。</li>
+<li>顶级域名服务器返回 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 主区域服务器的地址，然后本地 DNS 服务器去 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 主区域服务器查询此域名对应的 IP 地址。</li>
+<li>本地 DNS 服务器拿到 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 解析后的 IP 地址后，缓存起来以便备查，然后把解析后的 IP 地址返回给浏览器。</li>
+</ol>
+<h1 id="16-ElasticSearch篇"><a href="#16-ElasticSearch篇" class="headerlink" title="16. ElasticSearch篇"></a>16. ElasticSearch篇</h1><h2 id="16-1-谈谈分词与倒排索引的原理"><a href="#16-1-谈谈分词与倒排索引的原理" class="headerlink" title="16.1 谈谈分词与倒排索引的原理"></a>16.1 谈谈分词与倒排索引的原理</h2><p>首先说分词是给检索用的。</p>
+<ul>
+<li>英文：一个单词一个词，很简单。I am a student，词与词之间空格分隔。</li>
+<li>中文：我是学生，就不能一个字一个字地分，我-是-学生。这是好分的。还有歧义的，使用户放心，使用-户，使-用户。人很容易看出，机器就难多了。所以市面上有各种各样的分词器，一个强调的效率一个强调的准确率。</li>
+</ul>
+<p>倒排索引：倒排针对的是正排。</p>
+<ul>
+<li><p>正排就是我记得我电脑有个文档，讲了 ES 的常见问题总结。那么我就找到文档，从上往下翻页，找到 ES 的部分。通过文档找文档内容。</p>
+</li>
+<li><p>倒排：一个 txt 文件 ES 的常见问题 -&gt; D:/分布式问题总结.doc</p>
+</li>
+</ul>
+<p>所以倒排就是文档内容找文档。当然内容不是全部的，否则也不需要找文档了，内容就是几个分词而已。这里的 txt 就是搜索引擎。</p>
+<h2 id="16-2-说说分段存储的思想"><a href="#16-2-说说分段存储的思想" class="headerlink" title="16.2 说说分段存储的思想"></a>16.2 说说分段存储的思想</h2><p>Lucene 是著名的搜索开源软件，ElasticSearch 和 Solr 底层用的都是它。</p>
+<p>分段存储是 Lucene 的思想。</p>
+<p>早期，都是一个整个文档建立一个大的倒排索引。简单，快速，但是问题随之而来。</p>
+<p>文档有个很小的改动，整个索引需要重新建立，速度慢，成本高，为了提高速度，定期更新那么时效性就差。</p>
+<p>现在一个索引文件，拆分为多个子文件，每个子文件是段。修改的数据不影响的段不必做处理。</p>
+<h2 id="16-3-谈谈你对段合并的策略思想的认识"><a href="#16-3-谈谈你对段合并的策略思想的认识" class="headerlink" title="16.3 谈谈你对段合并的策略思想的认识"></a>16.3 谈谈你对段合并的策略思想的认识</h2><p>分段的思想大大的提高了维护索引的效率。但是随之就有了新的问题。</p>
+<p>每次新增数据就会新增加一个段，时间久了，一个文档对应的段非常多。段多了，也就影响检索性能了。</p>
+<p>检索过程：</p>
+<ol>
+<li>查询所有短中满足条件的数据</li>
+<li>对每个段的结果集合并</li>
+</ol>
+<p>所以，定期的对段进行合理是很必要的。真是天下大势，分久必合合久必分。</p>
+<p>策略：将段按大小排列分组，大到一定程度的不参与合并。小的组内合并。整体维持在一个合理的大小范围。当然这个大到底应该是多少，是用户可配置的。这也符合设计的思想。</p>
+<h2 id="16-4-了解文本相似度-TF-IDF吗"><a href="#16-4-了解文本相似度-TF-IDF吗" class="headerlink" title="16.4 了解文本相似度 TF-IDF吗"></a>16.4 了解文本相似度 TF-IDF吗</h2><p>简单地说，就是你检索一个词，匹配出来的文章，网页太多了。比如 1000 个，这些内容再该怎么呈现，哪些在前面哪些在后面。这需要也有个对匹配度的评分。</p>
+<p>TF-IDF 就是干这个的。</p>
+<ul>
+<li>TF = Term Frequency 词频，一个词在这个文档中出现的频率。值越大，说明这文档越匹配，正向指标。</li>
+<li>IDF = Inverse Document Frequency 反向文档频率，简单点说就是一个词在所有文档中都出现，那么这个词不重要。比如“的、了、我、好”这些词所有文档都出现，对检索毫无帮助。反向指标。</li>
+</ul>
+<blockquote>
+<p>TF-IDF = TF / IDF</p>
+</blockquote>
+<h2 id="16-5-ElasticSearch-写索引的逻辑"><a href="#16-5-ElasticSearch-写索引的逻辑" class="headerlink" title="16.5 ElasticSearch 写索引的逻辑"></a>16.5 ElasticSearch 写索引的逻辑</h2><p>ElasticSearch 是集群的 = 主分片 + 副本分片。</p>
+<p>写索引只能写主分片，然后主分片同步到副本分片上。但主分片不是固定的，可能网络原因，之前还是 Node1 是主分片，后来就变成了 Node2 经过选举成了主分片了。</p>
+<p>客户端如何知道哪个是主分片呢？ 看下面过程。</p>
+<ol>
+<li>客户端向某个节点 NodeX 发送写请求</li>
+<li>NodeX 通过文档信息，请求会转发到主分片的节点上</li>
+<li>主分片处理完，通知到副本分片同步数据，向 Nodex 发送成功信息。</li>
+<li>Nodex 将处理结果返回给客户端。</li>
+</ol>
+<h2 id="16-6-ElasticSearch-集群中搜索数据的过程"><a href="#16-6-ElasticSearch-集群中搜索数据的过程" class="headerlink" title="16.6 ElasticSearch 集群中搜索数据的过程"></a>16.6 ElasticSearch 集群中搜索数据的过程</h2><ol>
+<li>客户端向集群发送请求，集群随机选择一个 NodeX 处理这次请求。</li>
+<li>Nodex 先计算文档在哪个主分片上，比如是主分片 A，它有三个副本 A1，A2，A3。那么请求会轮询三个副本中的一个完成请求。</li>
+<li>如果无法确认分片，比如检索的不是一个文档，就遍历所有分片。</li>
+</ol>
+<p>一个节点的存储量是有限的，于是有了分片的概念。但是分片可能有丢失，于是有了副本的概念。</p>
+<p>比如：ES 集群有 3 个分片，分片 A、分片 B、分片 C，那么分片 A + 分片 B + 分片 C = 所有数据，每个分片只有大概 1/3。分片 A 又有副本 A1 A2 A3，数据都是一样的。</p>
+<h2 id="16-7-ElasticSearch-深翻页的问题及解决"><a href="#16-7-ElasticSearch-深翻页的问题及解决" class="headerlink" title="16.7 ElasticSearch 深翻页的问题及解决"></a>16.7 ElasticSearch 深翻页的问题及解决</h2><p>深翻页：比如我们检索一次，轮询所有分片，汇集结果，根据 TF-IDF 等算法打分，排序后将前 10条数据返回。用户感觉不错，说我看看下一页。ES 依然是轮询所有分片，汇集结果，根据 TF-IDF等算法打分，排序后将前 11-20 条数据返回。</p>
+<p>对用户来说，翻页应该很快啊，但是实际上，第一次检索多复杂，下一次检索就多复杂。</p>
+<p>解决的话，可以把用户的检索结果，存入 Redis 中 10 分钟。这样分页就很快，超过 10 分钟，用户不翻页，也就不会翻页了，数据就可以清除了。</p>
+<h2 id="16-8-ElasticSearch-性能优化"><a href="#16-8-ElasticSearch-性能优化" class="headerlink" title="16.8 ElasticSearch 性能优化"></a>16.8 ElasticSearch 性能优化</h2><h3 id="16-8-1-批量提交"><a href="#16-8-1-批量提交" class="headerlink" title="16.8.1 批量提交"></a>16.8.1 批量提交</h3><p>背景是大量的写操作，每次提交都是一次网络开销。网络永久是优化要考虑的重点。</p>
+<h3 id="16-8-2-优化硬盘"><a href="#16-8-2-优化硬盘" class="headerlink" title="16.8.2 优化硬盘"></a>16.8.2 优化硬盘</h3><p>索引文件需要落地硬盘，段的思想又带来了更多的小文件，磁盘 IO 是 ES 的性能瓶颈。一个固态硬盘比普通硬盘好太多。</p>
+<h3 id="16-8-3-减少副本数量"><a href="#16-8-3-减少副本数量" class="headerlink" title="16.8.3 减少副本数量"></a>16.8.3 减少副本数量</h3><p>副本可以保证集群的可用性，但是严重影响了 写索引的效率。写索引时不只完成写入索引，还要完成索引到副本的同步。ES 不是存储引擎，不要考虑数据丢失，性能更重要。 如果是批量导入，建议就关闭副本。</p>
+<h2 id="16-9-ElasticSearch-查询优化手段"><a href="#16-9-ElasticSearch-查询优化手段" class="headerlink" title="16.9 ElasticSearch 查询优化手段"></a>16.9 ElasticSearch 查询优化手段</h2><h3 id="16-9-1-设计阶段调优"><a href="#16-9-1-设计阶段调优" class="headerlink" title="16.9.1 设计阶段调优"></a>16.9.1 设计阶段调优</h3><ul>
+<li>根据业务增量需求，采取基于日期模板创建索引，通过 roll over API 滚动索引；</li>
+<li>使用别名进行索引管理；</li>
+<li>每天凌晨定时对索引做 force_merge 操作，以释放空间；</li>
+<li>采取冷热分离机制，热数据存储到 SSD，提高检索效率；冷数据定期进行 shrink操作，以缩减存储；</li>
+<li>采取 curator 进行索引的生命周期管理；</li>
+<li>仅针对需要分词的字段，合理的设置分词器；</li>
+<li>Mapping 阶段充分结合各个字段的属性，是否需要检索、是否需要存储等。</li>
+</ul>
+<h3 id="16-9-2-写入调优"><a href="#16-9-2-写入调优" class="headerlink" title="16.9.2 写入调优"></a>16.9.2 写入调优</h3><ul>
+<li>写入前副本数设置为 0；</li>
+<li>写入前关闭 refresh_interval 设置为-1，禁用刷新机制；</li>
+<li>写入过程中：采取 bulk 批量写入；</li>
+<li>写入后恢复副本数和刷新间隔；</li>
+<li>尽量使用自动生成的 id。</li>
+</ul>
+<h3 id="16-9-3-查询调优"><a href="#16-9-3-查询调优" class="headerlink" title="16.9.3 查询调优"></a>16.9.3 查询调优</h3><ul>
+<li>禁用 wildcard；</li>
+<li>禁用批量 terms（成百上千的场景）</li>
+<li>充分利用倒排索引机制，能 keyword 类型尽量 keyword；</li>
+<li>数据量大时候，可以先基于时间敲定索引再检索；</li>
+<li>设置合理的路由机制。</li>
+</ul>
+<h3 id="16-9-4-其他调优"><a href="#16-9-4-其他调优" class="headerlink" title="16.9.4 其他调优"></a>16.9.4 其他调优</h3><p>部署调优，业务调优等。</p>
+<h2 id="16-10-Elasticsearch如何实现master选举"><a href="#16-10-Elasticsearch如何实现master选举" class="headerlink" title="16.10 Elasticsearch如何实现master选举"></a>16.10 Elasticsearch如何实现master选举</h2><p>前置前提：</p>
+<ul>
+<li>只有候选主节点（master：true）的节点才能成为主节点。</li>
+<li>最小主节点数（min_master_nodes）的目的是防止脑裂。</li>
+</ul>
+<p>核对了一下代码，核心入口为 findMaster，选择主节点成功返回对应 Master，否则返回 null。选举流程大致描述如下：</p>
+<p>第一步：确认候选主节点数达标，elasticsearch.yml 设置的值discovery.zen.minimum_master_nodes；</p>
+<p>第二步：比较：先判定是否具备 master 资格，具备候选主节点资格的优先返回；若两节点都为候选主节点，则 id 小的值会主节点。注意这里的 id 为 string 类型。</p>
+<h2 id="16-11-elasticsearch-索引数据多了怎么办，如何调优，部署"><a href="#16-11-elasticsearch-索引数据多了怎么办，如何调优，部署" class="headerlink" title="16.11 elasticsearch 索引数据多了怎么办，如何调优，部署"></a>16.11 elasticsearch 索引数据多了怎么办，如何调优，部署</h2><p>索引数据的规划，应在前期做好规划，正所谓“设计先行，编码在后”，这样才能有效的避免突如其来的数据激增导致集群处理能力不足引发的线上客户检索或者其他业务受到影响。</p>
+<h3 id="16-11-1-动态索引层面"><a href="#16-11-1-动态索引层面" class="headerlink" title="16.11.1 动态索引层面"></a>16.11.1 动态索引层面</h3><p>基于模板+时间+rollover api 滚动创建索引，举例：设计阶段定义：blog 索引的模板格式为：blog_index_时间戳的形式，每天递增数据。这样做的好处：不至于数据量激增导致单个索引数据量非常大，接近于上线 2 的32 次幂-1，索引存储达到了 TB+甚至更大。</p>
+<p>一旦单个索引很大，存储等各种风险也随之而来，所以要提前考虑+及早避免。</p>
+<h3 id="16-11-2-存储层面"><a href="#16-11-2-存储层面" class="headerlink" title="16.11.2 存储层面"></a>16.11.2 存储层面</h3><p>冷热数据分离存储，热数据（比如最近 3 天或者一周的数据），其余为冷数据。</p>
+<p>对于冷数据不会再写入新数据，可以考虑定期 force_merge 加 shrink 压缩操作，节省存储空间和检索效率。</p>
+<h3 id="16-11-3-部署层面"><a href="#16-11-3-部署层面" class="headerlink" title="16.11.3 部署层面"></a>16.11.3 部署层面</h3><p>一旦之前没有规划，这里就属于应急策略。</p>
+<p>结合 ES 自身的支持动态扩展的特点，动态新增机器的方式可以缓解集群压力，注意：如果之前主节点等规划合理，不需要重启集群也能完成动态新增的。</p>
+<h2 id="16-12-ElasticSearch中的集群、节点、索引、文档、类型"><a href="#16-12-ElasticSearch中的集群、节点、索引、文档、类型" class="headerlink" title="16.12 ElasticSearch中的集群、节点、索引、文档、类型"></a>16.12 ElasticSearch中的集群、节点、索引、文档、类型</h2><ul>
+<li>群集是一个或多个节点（服务器）的集合，它们共同保存您的整个数据，并提供跨所有节点的联合索引和搜索功能。群集由唯一名称标识，默认情况下为“elasticsearch”。此名称很重要，因为如果节点设置为按名称加入群集，则该节点只能是群集的一部分。</li>
+<li>节点是属于集群一部分的单个服务器。它存储数据并参与群集索引和搜索功能。</li>
+<li>索引就像关系数据库中的“数据库”。它有一个定义多种类型的映射。索引是逻辑名称空间，映射到一个或多个主分片，并且可以有零个或多个副本分片。 MySQL =&gt;数据库 ElasticSearch=&gt;索引</li>
+<li>文档类似于关系数据库中的一行。不同之处在于索引中的每个文档可以具有不同的结构（字段），但是对于通用字段应该具有相同的数据类型。 MySQL =&gt; Databases =&gt; Tables =&gt;Columns / Rows ElasticSearch =&gt; Indices =&gt; Types =&gt;具有属性的文档</li>
+<li>类型是索引的逻辑类别/分区，其语义完全取决于用户</li>
+</ul>
+<h2 id="16-13-ElasticSearch中的分片是什么"><a href="#16-13-ElasticSearch中的分片是什么" class="headerlink" title="16.13 ElasticSearch中的分片是什么"></a>16.13 ElasticSearch中的分片是什么</h2><p>在大多数环境中，每个节点都在单独的盒子或虚拟机上运行。</p>
+<ul>
+<li>索引-在Elasticsearch中，索引是文档的集合。</li>
+<li>分片-因为Elasticsearch是一个分布式搜索引擎，所以索引通常被分割成分布在多个节点上的<br>被称为分片的元素。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211041501.png"></p>
+<h2 id="16-14-ElasticSearch中的副本是什么"><a href="#16-14-ElasticSearch中的副本是什么" class="headerlink" title="16.14 ElasticSearch中的副本是什么"></a>16.14 ElasticSearch中的副本是什么</h2><p>一个索引被分解成碎片以便于分发和扩展。副本是分片的副本。一个节点是一个属于一个集群的ElasticSearch的运行实例。一个集群由一个或多个共享相同集群名称的节点组成。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211041503.png"></p>
+<h2 id="16-15-ElasticSearch中的分析器是什么"><a href="#16-15-ElasticSearch中的分析器是什么" class="headerlink" title="16.15 ElasticSearch中的分析器是什么"></a>16.15 ElasticSearch中的分析器是什么</h2><p>在ElasticSearch中索引数据时，数据由为索引定义的Analyzer在内部进行转换。 分析器由一个Tokenizer和零个或多个TokenFilter组成。编译器可以在一个或多个CharFilter之前。分析模块允许您在逻辑名称下注册分析器，然后可以在映射定义或某些API中引用它们。</p>
+<p>Elasticsearch附带了许多可以随时使用的预建分析器。或者，您可以组合内置的字符过滤器，编译器和过滤器器来创建自定义分析器。</p>
+<h2 id="16-16-什么是ElasticSearch中的编译器"><a href="#16-16-什么是ElasticSearch中的编译器" class="headerlink" title="16.16 什么是ElasticSearch中的编译器"></a>16.16 什么是ElasticSearch中的编译器</h2><p>编译器用于将字符串分解为术语或标记流。一个简单的编译器可能会将字符串拆分为任何遇到空格或标点的地方。Elasticsearch有许多内置标记器，可用于构建自定义分析器。</p>
+<h2 id="16-17-什么是ElasticSearch中的过滤器"><a href="#16-17-什么是ElasticSearch中的过滤器" class="headerlink" title="16.17 什么是ElasticSearch中的过滤器"></a>16.17 什么是ElasticSearch中的过滤器</h2><p>数据由Tokenizer处理后，在编制索引之前，过滤器会对其进行处理。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211041504.png"></p>
+<h2 id="16-18-启用属性，索引和存储的用途是什么"><a href="#16-18-启用属性，索引和存储的用途是什么" class="headerlink" title="16.18 启用属性，索引和存储的用途是什么"></a>16.18 启用属性，索引和存储的用途是什么</h2><p>enabled属性适用于各类ElasticSearch特定/创建领域，如index和size。用户提供的字段没有“已启用”属性。 存储意味着数据由Lucene存储，如果询问，将返回这些数据。</p>
+<p>存储字段不一定是可搜索的。默认情况下，字段不存储，但源文件是完整的。因为您希望使用默认值(这是有意义的)，所以不要设置store属性 该指数属性用于搜索。</p>
+<p>索引属性只能用于搜索。只有索引域可以进行搜索。差异的原因是在分析期间对索引字段进行了转换，因此如果需要的话，您不能检索原始数据。</p>
+
                 
             </div>
             <hr/>
@@ -2383,7 +2908,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">334.1k</span>
+                        class="white-color">347.4k</span>
             
             
             
