@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Centos 7环境下在线和离线安装PostgreSQL, 程序猿洞晓">
+    <meta name="keywords" content="Centos 7、windows环境下在线和离线安装PostgreSQL, 程序猿洞晓">
     <meta name="description" content="PostgreSQL在线安装和离线安装的区别，主要涉及的是依赖的安装，其他安装步骤离线和在线基本相同，刚好当前的这个项目需要使用到此数据库，需要搭建数据库环境，特此记录。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Centos 7环境下在线和离线安装PostgreSQL | 程序猿洞晓</title>
+    <title>Centos 7、windows环境下在线和离线安装PostgreSQL | 程序猿洞晓</title>
     <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
     
 
@@ -273,12 +273,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Centos 7环境下在线和离线安装PostgreSQL</h1>
+                    <h1 class="description center-align post-title">Centos 7、windows环境下在线和离线安装PostgreSQL</h1>
                 </div>
             </div>
         </div>
@@ -336,14 +336,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    9 分
                 </div>
                 
 
@@ -557,6 +557,7 @@ CREATE DATABASE
 <h3 id="2-2-安装PostgreSQL"><a href="#2-2-安装PostgreSQL" class="headerlink" title="2.2 安装PostgreSQL"></a>2.2 安装PostgreSQL</h3><ul>
 <li>先安装<code>postgresql11-libs-11.17-1PGDG.rhel7.x86_64.rpm</code></li>
 </ul>
+<p>这个安装包主要是安装postgresql的依赖包，在线安装的时候，可以通过<code>yum</code>命令来实现，这里是离线，只能通过手动安装</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost local<span class="token punctuation">]</span><span class="token comment"># rpm -ivh postgresql11-libs-11.17-1PGDG.rhel7.x86_64.rpm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
@@ -569,10 +570,29 @@ CREATE DATABASE
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost local<span class="token punctuation">]</span><span class="token comment"># rpm -ivh postgresql11-server-11.17-1PGDG.rhel7.x86_64.rpm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p>上述安装结束后，会生成一个<code>/usr/pgsql-11</code>目录。</p>
+<h3 id="2-3-初始化"><a href="#2-3-初始化" class="headerlink" title="2.3 初始化"></a>2.3 初始化</h3><p>执行一下命令对postgresql数据库进行初始化</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost local<span class="token punctuation">]</span><span class="token comment"># /usr/pgsql-11/bin/postgresql-11-setup initdb</span>
+Initializing database <span class="token punctuation">..</span>. OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>给出<code>Initializing database ... OK</code>表示初始化成功</p>
+<h3 id="2-4-配置信息"><a href="#2-4-配置信息" class="headerlink" title="2.4 配置信息"></a>2.4 配置信息</h3><p>主要就是修改配置文件<code>postgresql.conf</code>和<code>pg_hba.conf</code></p>
+<p>进入到<code>/var/lib/pgsql/11/data</code>目录，然后对应<code>postgresql.conf</code>和<code>pg_hba.conf</code>文件进行修改，具体修改的内容和在线安装是相同的，不做赘述。</p>
+<h3 id="2-5-启动服务"><a href="#2-5-启动服务" class="headerlink" title="2.5 启动服务"></a>2.5 启动服务</h3><p>在线安装的时候启动服务直接使用<code>service postgresql start</code>，但是在离线安装后不能使用此命令，如果你使用此命令执行后，系统会给予你提示。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost data<span class="token punctuation">]</span><span class="token comment"># service postgresql start</span>
+Redirecting to /bin/systemctl start postgresql.service<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
+<p>提示信息让你用<code>systemctl</code>命令去执行，按照提示来即可，执行一下命令，实现postgresql的启动。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost data<span class="token punctuation">]</span><span class="token comment"># systemctl start postgresql-11</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-
-
+<p><strong>注意：这里的命令不能直接抄去使用，因为版本不同，<code>postgresql-</code>后面的版本号不同，这个时候需要根据版本修改！</strong></p>
+<p>后续的配置数据库访问、开机自动启动、配置开放端口等步骤就和在线安装相同，参考上述的在线安装步骤即可。</p>
+<h2 id="3-postgreSQL在windows环境安装"><a href="#3-postgreSQL在windows环境安装" class="headerlink" title="3. postgreSQL在windows环境安装"></a>3. postgreSQL在windows环境安装</h2><h3 id="3-1-网上下载安装包"><a href="#3-1-网上下载安装包" class="headerlink" title="3.1 网上下载安装包"></a>3.1 网上下载安装包</h3><p>根据自己的需求下载即可。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</a></p>
+<h3 id="3-2-安装"><a href="#3-2-安装" class="headerlink" title="3.2 安装"></a>3.2 安装</h3><p>安装过程很简单，直接双击安装包，点击安装一直往后走即可，中间有一步输入密码，这个密码是对应超级管理员<code>postgres</code>设置的，安装结束后，使用<code>navicat</code>连接就是用此用户名加上你设置的密码接口。</p>
+<h3 id="3-3-启动服务"><a href="#3-3-启动服务" class="headerlink" title="3.3 启动服务"></a>3.3 启动服务</h3><p>安装结束后，服务是自动启动的，无需手动启动，如果没有启动，可以通过<code>ctrl+shift+esc</code>命令，打开任务管理器，找到服务列表，然后找到<code>postgresql-xx</code>或者<code>postgresql-x64-xx</code>服务并右击启动即可。    </p>
+<h3 id="3-4-注意点"><a href="#3-4-注意点" class="headerlink" title="3.4 注意点"></a>3.4 注意点</h3><p>安装前需要了解postgresql在不同windows版本下的支持情况，我这边在windows7安装在高版本就是存在问题，安装到一半一直卡着不动，建议对照你的系统，安装对应版本的postgresql，避免安装不成，再去更换，就要花费大把的时间啦。具体版本对照可以看官网说明。(目前从官网上看，想在windows7、8、10安装，就只能选择postgresql-10及一下的版本，后续根据官网实时更新为准)</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/20221117154953.png"></p>
+<p>官网查看地址：<a target="_blank" rel="noopener" href="https://www.postgresql.org/download/windows/">https://www.postgresql.org/download/windows/</a></p>
 
                 
             </div>
@@ -753,9 +773,9 @@ CREATE DATABASE
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="Centos 7环境下在线和离线安装PostgreSQL">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="Centos 7、windows环境下在线和离线安装PostgreSQL">
                         
-                        <span class="card-title">Centos 7环境下在线和离线安装PostgreSQL</span>
+                        <span class="card-title">Centos 7、windows环境下在线和离线安装PostgreSQL</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1029,7 +1049,7 @@ CREATE DATABASE
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">383.5k</span>
+                        class="white-color">384.2k</span>
             
             
             
