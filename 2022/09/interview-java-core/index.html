@@ -336,14 +336,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    140.2k
+                    172.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    498 分
+                    613 分
                 </div>
                 
 
@@ -2854,7 +2854,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> value<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h1 id="4-Spring篇"><a href="#4-Spring篇" class="headerlink" title="4. Spring篇"></a>4. Spring篇</h1><p>Spring系列文章:<a href="/categories/Spring/">Spring</a></p>
-<h2 id="你们项目中为什么使用Spring框架"><a href="#你们项目中为什么使用Spring框架" class="headerlink" title="你们项目中为什么使用Spring框架"></a>你们项目中为什么使用Spring框架</h2><p>这么问的话，就直接说Spring框架的好处就可以了。比如说Spring有以下特点：</p>
+<h2 id="使用Spring框架的好处是什么？"><a href="#使用Spring框架的好处是什么？" class="headerlink" title="使用Spring框架的好处是什么？"></a>使用Spring框架的好处是什么？</h2><p>这么问的话，就直接说Spring框架的好处就可以了。比如说Spring有以下特点：</p>
 <p><strong>轻量：</strong> Spring 是轻量的，基本的版本大约2MB。</p>
 <p><strong>控制反转：</strong> Spring通过控制反转实现了松散耦合，对象给出它们的依赖，而不是创建或查找依赖的对象。</p>
 <p><strong>面向切面的编程(AOP)：</strong> Spring支持面向切面的编程，并且把应用业务逻辑和系统服务分开。</p>
@@ -2887,10 +2887,78 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>DispatcherServlet根据View进行渲染视图（即将模型数据填充至视图中）。</li>
 <li>DispatcherServlet响应用户。</li>
 </ol>
+<h2 id="简单介绍-Spring-MVC-的核心组件"><a href="#简单介绍-Spring-MVC-的核心组件" class="headerlink" title="简单介绍 Spring MVC 的核心组件"></a>简单介绍 Spring MVC 的核心组件</h2><p>那么接下来就简单介绍一下 <code>DispatcherServlet</code> 和九大组件（按使用顺序排序的）：</p>
+<table>
+<thead>
+<tr>
+<th align="left">组件</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DispatcherServlet</td>
+<td align="left">Spring MVC 的核心组件，是请求的入口，负责协调各个组件工作</td>
+</tr>
+<tr>
+<td align="left">MultipartResolver</td>
+<td align="left">内容类型( <code>Content-Type</code> )为 <code>multipart/*</code> 的请求的解析器，例如解析处理文件上传的请求，便于获取参数信息以及上传的文件</td>
+</tr>
+<tr>
+<td align="left">HandlerMapping</td>
+<td align="left">请求的处理器匹配器，负责为请求找到合适的 <code>HandlerExecutionChain</code> 处理器执行链，包含处理器（<code>handler</code>）和拦截器们（<code>interceptors</code>）</td>
+</tr>
+<tr>
+<td align="left">HandlerAdapter</td>
+<td align="left">处理器的适配器。因为处理器 <code>handler</code> 的类型是 Object 类型，需要有一个调用者来实现 <code>handler</code> 是怎么被执行。Spring 中的处理器的实现多变，比如用户处理器可以实现 Controller 接口、HttpRequestHandler 接口，也可以用 <code>@RequestMapping</code> 注解将方法作为一个处理器等，这就导致 Spring MVC 无法直接执行这个处理器。所以这里需要一个处理器适配器，由它去执行处理器</td>
+</tr>
+<tr>
+<td align="left">HandlerExceptionResolver</td>
+<td align="left">处理器异常解析器，将处理器（ <code>handler</code> ）执行时发生的异常，解析( 转换 )成对应的 ModelAndView 结果</td>
+</tr>
+<tr>
+<td align="left">RequestToViewNameTranslator</td>
+<td align="left">视图名称转换器，用于解析出请求的默认视图名</td>
+</tr>
+<tr>
+<td align="left">LocaleResolver</td>
+<td align="left">本地化（国际化）解析器，提供国际化支持</td>
+</tr>
+<tr>
+<td align="left">ThemeResolver</td>
+<td align="left">主题解析器，提供可设置应用整体样式风格的支持</td>
+</tr>
+<tr>
+<td align="left">ViewResolver</td>
+<td align="left">视图解析器，根据视图名和国际化，获得最终的视图 View 对象</td>
+</tr>
+<tr>
+<td align="left">FlashMapManager</td>
+<td align="left">FlashMap 管理器，负责重定向时，保存参数至临时存储（默认 Session）</td>
+</tr>
+</tbody></table>
+<p>Spring MVC 对各个组件的职责划分的比较清晰。<code>DispatcherServlet</code> 负责协调，其他组件则各自做分内之事，互不干扰。</p>
 <h2 id="谈谈你对Spring的AOP理解"><a href="#谈谈你对Spring的AOP理解" class="headerlink" title="谈谈你对Spring的AOP理解"></a>谈谈你对Spring的AOP理解</h2><p>AOP（Aspect-Oriented Programming，面向切面编程）能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可扩展性和可维护性。<br>Spring AOP是基于动态代理的，如果要代理的对象实现了某个接口，那么Spring AOP就会使用JDK动态代理去创建代理对象；而对于没有实现接口的对象，就无法使用JDK动态代理，转而使用CGlib动态代理生成一个被代理对象的子类来作为代理。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/782654957123684.png"></p>
 <p>注意：图中的implements和extend。即一个是接口，一个是实现类。<br>当然也可以使用AspectJ，Spring AOP中已经集成了AspectJ，AspectJ应该算得上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样可以大大简化代码量。我们需要增加新功能也方便，提高了系统的扩展性。日志功能、事务管理和权限管理等场景都用到了AOP。</p>
-<h2 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别"></a>Spring AOP和AspectJ AOP有什么区别</h2><p>Spring AOP是属于运行时增强，而AspectJ是编译时增强。Spring AOP基于代理（Proxying），而AspectJ基于字节码操作（Bytecode Manipulation）。<br>Spring AOP已经集成了AspectJ，AspectJ应该算得上是Java生态系统中最完整的AOP框架了。<br>AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单。<br>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比SpringAOP快很多。</p>
+<h2 id="AOP-有哪些实现方式？"><a href="#AOP-有哪些实现方式？" class="headerlink" title="AOP 有哪些实现方式？"></a>AOP 有哪些实现方式？</h2><p>实现 AOP 的技术，主要分为两大类：</p>
+<ul>
+<li>静态代理 - 指使用 AOP 框架提供的命令进行编译，从而在编译阶段就可生成 AOP 代理类，因此也称为编译时增强；<ul>
+<li>编译时编织（特殊编译器实现）</li>
+<li>类加载时编织（特殊的类加载器实现）。</li>
+</ul>
+</li>
+<li>动态代理 - 在运行时在内存中“临时”生成 AOP 动态代理类，因此也被称为运行时增强。<ul>
+<li><code>JDK</code> 动态代理：通过反射来接收被代理的类，并且要求被代理的类必须实现一个接口 。JDK 动态代理的核心是 InvocationHandler 接口和 Proxy 类 。</li>
+<li><code>CGLIB</code>动态代理： 如果目标类没有实现接口，那么 <code>Spring AOP</code> 会选择使用 <code>CGLIB</code> 来动态代理目标类 。<code>CGLIB</code> （ Code Generation Library ），是一个代码生成的类库，可以在运行时动态的生成某个类的子类，注意， <code>CGLIB</code> 是通过继承的方式做的动态代理，因此如果某个类被标记为 <code>final</code> ，那么它是无法使用 <code>CGLIB</code> 做动态代理的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别"></a>Spring AOP和AspectJ AOP有什么区别</h2><ul>
+<li>Spring AOP是属于运行时增强，而AspectJ是编译时增强。Spring AOP基于代理（Proxying），而AspectJ基于字节码操作（Bytecode Manipulation）。</li>
+<li>Spring AOP已经集成了AspectJ，AspectJ应该算得上是Java生态系统中最完整的AOP框架了。</li>
+<li>AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单。</li>
+<li>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比SpringAOP快很多。</li>
+</ul>
 <h2 id="在Spring-AOP-中，关注点和横切关注的区别是什么"><a href="#在Spring-AOP-中，关注点和横切关注的区别是什么" class="headerlink" title="在Spring AOP 中，关注点和横切关注的区别是什么"></a>在Spring AOP 中，关注点和横切关注的区别是什么</h2><p>关注点是应用中一个模块的行为，一个关注点可能会被定义成一个我们想实现的一个功能。 横切关注点是一个关注点，此关注点是整个应用都会使用的功能，并影响整个应用，比如日志，安全和数据传输，几乎应用的每个模块都需要的功能。因此这些都属于横切关注点。<br>那什么是连接点呢？连接点代表一个应用程序的某个位置，在这个位置我们可以插入一个AOP切面，它实际上是个应用程序执行Spring AOP的位置。<br>切入点是什么？切入点是一个或一组连接点，通知将在这些位置执行。可以通过表达式或匹配的方式指明切入点。</p>
 <h2 id="面向切面变成中，通知是什么，有哪些类型"><a href="#面向切面变成中，通知是什么，有哪些类型" class="headerlink" title="面向切面变成中，通知是什么，有哪些类型"></a>面向切面变成中，通知是什么，有哪些类型</h2><p>通知是个在方法执行前或执行后要做的动作，实际上是程序执行时要通过SpringAOP框架触发的代码段。<br>Spring切面可以应用五种类型的通知：</p>
 <ul>
@@ -2906,8 +2974,129 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>Spring的IoC有三种注入方式 ：构造器注入、setter方法注入、根据注解注入。</li>
 </ol>
 <p><strong>拓展理解：</strong> IoC让相互协作的组件保持松散的耦合，而AOP编程允许你把遍布于应用各层的功能分离出来形成可重用的功能组件。</p>
-<h2 id="解释一下spring-bean的生命周期"><a href="#解释一下spring-bean的生命周期" class="headerlink" title="解释一下spring bean的生命周期"></a>解释一下spring bean的生命周期</h2><p>Spring上下文中的Bean生命周期也类似，如下：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/3101171-33099411d16ca051.png"></p>
+<h2 id="什么是依赖注入？可以通过多少种方式完成依赖注入？"><a href="#什么是依赖注入？可以通过多少种方式完成依赖注入？" class="headerlink" title="什么是依赖注入？可以通过多少种方式完成依赖注入？"></a>什么是依赖注入？可以通过多少种方式完成依赖注入？</h2><p>在依赖注入中，您不必创建对象，但必须描述如何创建它们。您不是直接在代码中将组件和服务连接在一起，而是描述配置文件中哪些组件需要哪些服务。由 IoC 容器将它们装配在一起。</p>
+<p>通常，依赖注入可以通过三种方式完成，即：</p>
+<ul>
+<li>构造函数注入</li>
+<li>setter 注入</li>
+<li>接口注入</li>
+</ul>
+<p>在 Spring Framework 中，仅使用构造函数和 setter 注入。</p>
+<h2 id="如何理解IoC和DI？"><a href="#如何理解IoC和DI？" class="headerlink" title="如何理解IoC和DI？"></a>如何理解IoC和DI？</h2><p>IOC就是控制反转，通俗的说就是我们不用自己创建实例对象，这些都交给Spring的bean工厂帮我们创建管理。这也是Spring的核心思想，通过面向接口编程的方式来是实现对业务组件的动态依赖。这就意味着IOC是Spring针对解决程序耦合而存在的。在实际应用中，Spring通过配置文件（xml或者properties）指定需要实例化的java类（类名的完整字符串），包括这些java类的一组初始化值，通过加载读取配置文件，用Spring提供的方法（getBean()）就可以获取到我们想要的根据指定配置进行初始化的实例对象。</p>
+<ul>
+<li>优点：IOC或依赖注入减少了应用程序的代码量。它使得应用程序的测试很简单，因为在单元测试中不再需要单例或JNDI查找机制。简单的实现以及较少的干扰机制使得松耦合得以实现。IOC容器支持勤性单例及延迟加载服务。</li>
+</ul>
+<p><strong>DI：DI—Dependency</strong> Injection，即“依赖注入”：组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。</p>
+<h2 id="区分-BeanFactory-和-ApplicationContext？"><a href="#区分-BeanFactory-和-ApplicationContext？" class="headerlink" title="区分 BeanFactory 和 ApplicationContext？"></a>区分 BeanFactory 和 ApplicationContext？</h2><table>
+<thead>
+<tr>
+<th>BeanFactory</th>
+<th>ApplicationContext</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>它使用懒加载</td>
+<td>它使用即时加载</td>
+</tr>
+<tr>
+<td>它使用语法显式提供资源对象</td>
+<td>它自己创建和管理资源对象</td>
+</tr>
+<tr>
+<td>不支持国际化</td>
+<td>支持国际化</td>
+</tr>
+<tr>
+<td>不支持基于依赖的注解</td>
+<td>支持基于依赖的注解</td>
+</tr>
+</tbody></table>
+<p>BeanFactory和ApplicationContext的优缺点分析：</p>
+<p>BeanFactory的优缺点：</p>
+<ul>
+<li>优点：应用启动的时候占用资源很少，对资源要求较高的应用，比较有优势；</li>
+<li>缺点：运行速度会相对来说慢一些。而且有可能会出现空指针异常的错误，而且通过Bean工厂创建的Bean生命周期会简单一些。</li>
+</ul>
+<p>ApplicationContext的优缺点：</p>
+<ul>
+<li>优点：所有的Bean在启动的时候都进行了加载，系统运行的速度快；在系统启动的时候，可以发现系统中的配置问题。</li>
+<li>缺点：把费时的操作放到系统启动中完成，所有的对象都可以预加载，缺点就是内存占用较大。</li>
+</ul>
+<h2 id="区分构造函数注入和-setter-注入"><a href="#区分构造函数注入和-setter-注入" class="headerlink" title="区分构造函数注入和 setter 注入"></a>区分构造函数注入和 setter 注入</h2><table>
+<thead>
+<tr>
+<th>构造函数注入</th>
+<th>setter 注入</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>没有部分注入</td>
+<td>有部分注入</td>
+</tr>
+<tr>
+<td>不会覆盖 setter 属性</td>
+<td>会覆盖 setter 属性</td>
+</tr>
+<tr>
+<td>任意修改都会创建一个新实例</td>
+<td>任意修改不会创建一个新实例</td>
+</tr>
+<tr>
+<td>适用于设置很多属性</td>
+<td>适用于设置少量属性</td>
+</tr>
+</tbody></table>
+<h2 id="spring-提供了哪些配置方式？"><a href="#spring-提供了哪些配置方式？" class="headerlink" title="spring 提供了哪些配置方式？"></a>spring 提供了哪些配置方式？</h2><ul>
+<li>基于 xml 配置</li>
+</ul>
+<p>bean 所需的依赖项和服务在 XML 格式的配置文件中指定。这些配置文件通常包含许多 bean 定义和特定于应用程序的配置选项。它们通常以 bean 标签开头。例如：</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>studentbean<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>org.edureka.firstSpring.StudentBean<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Edureka<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>基于注解配置</li>
+</ul>
+<p>您可以通过在相关的类，方法或字段声明上使用注解，将 bean 配置为组件类本身，而不是使用 XML 来描述 bean 装配。默认情况下，Spring 容器中未打开注解装配。因此，您需要在使用它之前在 Spring 配置文件中启用它。例如：</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">context:</span>annotation-config</span><span class="token punctuation">/&gt;</span></span>
+<span class="token comment">&lt;!-- bean definitions go here --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>基于 Java API 配置</li>
+</ul>
+<p>Spring 的 Java 配置是通过使用 @Bean 和 @Configuration 来实现。</p>
 <ol>
+<li>@Bean 注解扮演与 <code>&lt;bean /&gt;</code> 元素相同的角色。</li>
+<li>@Configuration 类允许通过简单地调用同一个类中的其他 @Bean 方法来定义 bean 间依赖关系。</li>
+</ol>
+<p>例如：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StudentConfig</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">StudentBean</span> <span class="token function">myStudent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">StudentBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Spring-中的-bean-的作用域有哪些"><a href="#Spring-中的-bean-的作用域有哪些" class="headerlink" title="Spring 中的 bean 的作用域有哪些?"></a>Spring 中的 bean 的作用域有哪些?</h2><ul>
+<li>singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
+<li>prototype : 每次请求都会创建一个新的 bean 实例。</li>
+<li>request : 每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。</li>
+<li>session : ：在一个HTTP Session中，一个Bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。</li>
+<li>global-session： 全局session作用域，仅仅在基于portlet的web应用中才有意义，Spring5已经没有了。Portlet是能够生成语义代码(例如：HTML)片段的小型Java Web插件。它们基于portlet容器，可以像servlet一样处理HTTP请求。但是，与 servlet 不同，每个 portlet 都有不同的会话</li>
+</ul>
+<h2 id="将一个类声明为Spring的-bean-的注解有哪些"><a href="#将一个类声明为Spring的-bean-的注解有哪些" class="headerlink" title="将一个类声明为Spring的 bean 的注解有哪些?"></a>将一个类声明为Spring的 bean 的注解有哪些?</h2><p>我们一般使用 @Autowired 注解自动装配 bean，要想把类标识成可用于 @Autowired 注解自动装配的 bean 的类,采用以下注解可实现：</p>
+<ul>
+<li>@Component：通用的注解，可标注任意类为 Spring 组件。如果一个Bean不知道属于哪个层，可以使用@Component 注解标注。 </li>
+<li>@Repository: 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
+<li>@Service: 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao层。</li>
+<li>@Controller: 对应 Spring MVC 控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。</li>
+</ul>
+<h2 id="解释一下spring-bean的生命周期"><a href="#解释一下spring-bean的生命周期" class="headerlink" title="解释一下spring bean的生命周期"></a>解释一下spring bean的生命周期</h2><p>Bean的生命周期是由容器来管理的。主要在创建和销毁两个时期。</p>
+<h3 id="创建过程"><a href="#创建过程" class="headerlink" title="创建过程"></a>创建过程</h3><ol>
 <li>实例化Bean</li>
 </ol>
 <p>对于BeanFactory容器，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用createBean进行实例化。对于ApplicationContext容器，当容器启动结束后，通过获取BeanDefinition对象中的信息，实例化所有的bean。</p>
@@ -2936,15 +3125,17 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>如果这个Bean实现了BeanPostProcessor接口，将会调用postProcessAfterInitialization(Object obj, String s)方法；由于这个方法是在Bean初始化结束时调用的，所以可以被应用于内存或缓存技术。</li>
 </ol>
 <p><strong>以上几个步骤完成后，Bean就已经被正确创建了，之后就可以使用这个Bean了。</strong></p>
-<ol start="7">
+<h3 id="销毁过程"><a href="#销毁过程" class="headerlink" title="销毁过程"></a>销毁过程</h3><ol>
 <li>DisposableBean</li>
 </ol>
 <p>当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用其实现的destroy()方法；</p>
-<ol start="8">
+<ol start="2">
 <li>destroy-method</li>
 </ol>
 <p>最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/848457123698412.png"></p>
+<p><strong>总结</strong></p>
+<p>主要把握创建过程和销毁过程这两个大的方面；<br>创建过程：首先实例化Bean，并设置Bean的属性，根据其实现的Aware接口（主要是BeanFactoryAware接口，BeanFactoryAware，ApplicationContextAware）设置依赖信息，<br>接下来调用BeanPostProcess的postProcessBeforeInitialization方法，完成initial前的自定义逻辑；afterPropertiesSet方法做一些属性被设定后的自定义的事情;调用Bean自身定义的init方法，去做一些初始化相关的工作;然后再调用postProcessAfterInitialization去做一些bean初始化之后的自定义工作。这四个方法的调用有点类似AOP。<br>此时，Bean初始化完成，可以使用这个Bean了。<br>销毁过程：如果实现了DisposableBean的destroy方法，则调用它，如果实现了自定义的销毁方法，则调用之。</p>
 <h2 id="解释Spring支持的几种bean的作用域"><a href="#解释Spring支持的几种bean的作用域" class="headerlink" title="解释Spring支持的几种bean的作用域"></a>解释Spring支持的几种bean的作用域</h2><p>Spring容器中的bean可以分为5个范围：</p>
 <ol>
 <li>singleton：默认，每个容器中只有一个bean的实例，单例的模式由BeanFactory自身来维护。</li>
@@ -2953,6 +3144,59 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>session：与request范围类似，确保每个session中有一个bean的实例，在session过期后，bean会随之失效。</li>
 <li>global-session：全局作用域，global-session和Portlet应用相关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。全局作用域与Servlet中的session作用域效果相同。</li>
 </ol>
+<h2 id="什么是-spring-装配？"><a href="#什么是-spring-装配？" class="headerlink" title="什么是 spring 装配？"></a>什么是 spring 装配？</h2><p>当 bean 在 Spring 容器中组合在一起时，它被称为装配或 bean 装配。 Spring 容器需要知道需要什么 bean 以及容器应该如何使用依赖注入来将 bean 绑定在一起，同时装配 bean。</p>
+<p>Spring 容器能够自动装配 bean。也就是说，可以通过检查 BeanFactory 的内容让 Spring 自动解析 bean 的协作者。</p>
+<p>自动装配的不同模式：</p>
+<ul>
+<li><strong>no</strong> - 这是默认设置，表示没有自动装配。应使用显式 bean 引用进行装配。</li>
+<li><strong>byName</strong> - 它根据 bean 的名称注入对象依赖项。它匹配并装配其属性与 XML 文件中由相同名称定义的 bean。</li>
+<li><strong>byType</strong> - 它根据类型注入对象依赖项。如果属性的类型与 XML 文件中的一个 bean 名称匹配，则匹配并装配属性。</li>
+<li><strong>构造函数</strong> - 它通过调用类的构造函数来注入依赖项。它有大量的参数。</li>
+<li><strong>autodetect</strong> - 首先容器尝试通过构造函数使用 autowire 装配，如果不能，则尝试通过 byType 自动装配。</li>
+</ul>
+<h2 id="自动装配有什么局限？"><a href="#自动装配有什么局限？" class="headerlink" title="自动装配有什么局限？"></a>自动装配有什么局限？</h2><ul>
+<li>覆盖的可能性 - 您始终可以使用 <code>&lt;constructor-arg&gt;</code> 和 <code>&lt;property&gt;</code> 设置指定依赖项，这将覆盖自动装配。</li>
+<li>基本元数据类型 - 简单属性（如原数据类型，字符串和类）无法自动装配。</li>
+<li>令人困惑的性质 - 总是喜欢使用明确的装配，因为自动装配不太精确。</li>
+</ul>
+<h2 id="Spring中出现同名bean怎么办？"><a href="#Spring中出现同名bean怎么办？" class="headerlink" title="Spring中出现同名bean怎么办？"></a>Spring中出现同名bean怎么办？</h2><ul>
+<li>同一个配置文件内同名的Bean，以最上面定义的为准</li>
+<li>不同配置文件中存在同名Bean，后解析的配置文件会覆盖先解析的配置文件</li>
+<li>同文件中ComponentScan和@Bean出现同名Bean。同文件下@Bean的会生效，@ComponentScan扫描进来不会生效。通过@ComponentScan扫描进来的优先级是最低的，原因就是它扫描进来的Bean定义是最先被注册的~ </li>
+</ul>
+<h2 id="Spring-怎么解决循环依赖问题？"><a href="#Spring-怎么解决循环依赖问题？" class="headerlink" title="Spring 怎么解决循环依赖问题？"></a>Spring 怎么解决循环依赖问题？</h2><p>spring对循环依赖的处理有三种情况： </p>
+<ol>
+<li>构造器的循环依赖：这种依赖spring是处理不了的，直 接抛出BeanCurrentlylnCreationException异常。 </li>
+<li>单例模式下的setter循环依赖：通过“三级缓存”处理循环依赖。 </li>
+<li>非单例循环依赖：无法处理。</li>
+</ol>
+<p>下面分析单例模式下的setter循环依赖如何解决</p>
+<p>Spring的单例对象的初始化主要分为三步： </p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1584761413341_12.png"></p>
+<ol>
+<li><p>createBeanInstance：实例化，其实也就是调用对象的构造方法实例化对象</p>
+</li>
+<li><p>populateBean：填充属性，这一步主要是多bean的依赖属性进行填充</p>
+</li>
+<li><p>initializeBean：调用spring xml中的init 方法。</p>
+</li>
+</ol>
+<p>从上面讲述的单例bean初始化步骤我们可以知道，循环依赖主要发生在第一、第二部。也就是构造器循环依赖和field循环依赖。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1584758309616_10.png"></p>
+<p>举例：A的某个field或者setter依赖了B的实例对象，同时B的某个field或者setter依赖了A的实例对象”这种循环依赖的情况。A首先完成了</p>
+<p>初始化的第一步（createBeanINstance实例化），并且将自己提前曝光到singletonFactories中。</p>
+<p>此时进行初始化的第二步，发现自己依赖对象B，此时就尝试去get(B)，发现B还没有被create，所以走create流程，B在初始化第一步的时候发现自己依赖了对象A，于是尝试get(A)，尝试一级缓存singletonObjects(肯定没有，因为A还没初始化完全)，尝试二级缓存earlySingletonObjects（也没有），尝试三级缓存singletonFactories，由于A通过ObjectFactory将自己提前曝光了，所以B能够通过</p>
+<p>ObjectFactory.getObject拿到A对象(虽然A还没有初始化完全，但是总比没有好呀)，B拿到A对象后顺利完成了初始化阶段1、2、3，完全初始化之后将自己放入到一级缓存singletonObjects中。</p>
+<p>此时返回A中，A此时能拿到B的对象顺利完成自己的初始化阶段2、3，最终A也完成了初始化，进去了一级缓存singletonObjects中，而且更加幸运的是，由于B拿到了A的对象引用，所以B现在hold住的A对象完成了初始化。</p>
+<h2 id="Spring-中的单例-bean-的线程安全问题？"><a href="#Spring-中的单例-bean-的线程安全问题？" class="headerlink" title="Spring 中的单例 bean 的线程安全问题？"></a>Spring 中的单例 bean 的线程安全问题？</h2><p>当多个用户同时请求一个服务时，容器会给每一个请求分配一个线程，这时多个线程会并发执行该请求对应的业务逻辑（成员方法），此时就要注意了，如果该处理逻辑中有对单例状态的修改（体现为该单例的成员属性），则必须考虑线程同步问题。 </p>
+<p><strong>线程安全问题都是由全局变量及静态变量引起的。</strong> </p>
+<p>若每个线程中对全局变量、静态变量只有读操作，而无写操作，一般来说，这个全局变量是线程安全的；若有多个线程同时执行写操作，一般都需要考虑线程同步，否则就可能影响线程安全.</p>
+<p><strong>无状态bean和有状态bean</strong></p>
+<ul>
+<li>有状态就是有数据存储功能。有状态对象(Stateful Bean)，就是有实例变量的对象，可以保存数据，是非线程安全的。在不同方法调用间不保留任何状态。</li>
+<li>无状态就是一次操作，不能保存数据。无状态对象(Stateless Bean)，就是没有实例变量的对象 .不能保存数据，是不变类，是线程安全的。</li>
+</ul>
+<p>在spring中无状态的Bean适合用不变模式，就是单例模式，这样可以共享实例提高性能。有状态的Bean在多线程环境下不安全，适合用Prototype原型模式。<br>Spring使用ThreadLocal解决线程安全问题。如果你的Bean有多种状态的话（比如 View Model 对象），就需要自行保证线程安全 。</p>
 <h2 id="Spring框架中都用到了哪些设计模式"><a href="#Spring框架中都用到了哪些设计模式" class="headerlink" title="Spring框架中都用到了哪些设计模式"></a>Spring框架中都用到了哪些设计模式</h2><p>这是一道相对有难度的题目，你不仅要会设计模式，还要知道每个设计模式在Spring中是如何使用的。</p>
 <p><strong>简单工厂模式：</strong> Spring 中的 BeanFactory 就是简单工厂模式的体现。根据传入一个唯一的标识来获得 Bean 对象，但是在传入参数后创建还是传入参数前创建，要根据具体情况来定。</p>
 <p><strong>工厂方法模式：</strong> Spring 中的 FactoryBean 就是典型的工厂方法模式，实现了 FactoryBean 接口的 bean是一类叫做 factory 的 bean。其特点是，spring 在使用 getBean() 调用获得该 bean 时，会自动调用该 bean 的 getObject() 方法，所以返回的不是 factory 这个 bean，而是这个 bean.getOjbect()方法的返回值。</p>
@@ -3072,6 +3316,14 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h3 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h3><p>Spring Boot能根据当前类路径下的类、jar包来自动配置bean，如添加一个spring-boot-starter-web启动器就能拥有web的功能，无需其他配置。</p>
 <h3 id="无代码生成和XML配置"><a href="#无代码生成和XML配置" class="headerlink" title="无代码生成和XML配置"></a>无代码生成和XML配置</h3><p>Spring Boot配置过程中无代码生成，也无需XML配置文件就能完成所有配置工作，这一切都是借助于条件注解完成的，这也是Spring4.x的核心功能之一。</p>
 <h3 id="应用监控"><a href="#应用监控" class="headerlink" title="应用监控"></a>应用监控</h3><p>Spring Boot提供一系列端点可以监控服务及应用，做健康检测。</p>
+<h3 id="容器配置"><a href="#容器配置" class="headerlink" title="容器配置"></a>容器配置</h3><p>在开发web应用程序时，springboot会配置一个嵌入式Tomcat服务器，以便它可以作为独立的应用程序运行。（Tomcat是默认的，当然你也可以配置Jetty或Undertow）</p>
+<p>可以打包成jar文件。可以使用Java-jar命令从命令行将应用程序作为独立的Java应用程序运行。</p>
+<h2 id="Spring-Boot-的核心注解是哪个？它主要由哪几个注解组成的？"><a href="#Spring-Boot-的核心注解是哪个？它主要由哪几个注解组成的？" class="headerlink" title="Spring Boot 的核心注解是哪个？它主要由哪几个注解组成的？"></a>Spring Boot 的核心注解是哪个？它主要由哪几个注解组成的？</h2><p>启动类上面的注解是@SpringBootApplication，它也是 Spring Boot 的核心注解，主要组合包含了以下 3 个注解：</p>
+<ul>
+<li>@SpringBootConfiguration：组合了 @Configuration 注解，实现配置文件的功能。</li>
+<li>@EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能： @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。</li>
+<li>@ComponentScan：Spring组件扫描。</li>
+</ul>
 <h2 id="如何理解-Spring-Boot-中的-Starters"><a href="#如何理解-Spring-Boot-中的-Starters" class="headerlink" title="如何理解 Spring Boot 中的 Starters"></a>如何理解 Spring Boot 中的 Starters</h2><h3 id="Starters是什么"><a href="#Starters是什么" class="headerlink" title="Starters是什么"></a>Starters是什么</h3><p>Starters可以理解为启动器，它包含了一系列可以集成到应用里面的依赖包，你可以一站式集成Spring及其他技术，而不需要到处找示例代码和依赖包。如你想使用Spring JPA访问数据库，只要加入spring-boot-starter-data-jpa启动器依赖就能使用了。Starters包含了许多项目中需要用到的依赖，它们能快速持续的运行，都是一系列得到支持的管理传递性依赖。</p>
 <h3 id="Starters命名"><a href="#Starters命名" class="headerlink" title="Starters命名"></a>Starters命名</h3><p>Spring Boot官方的启动器都是以spring-boot-starter-命名的，代表了一个特定的应用类型。第三方的启动器不能以spring-boot开头命名，它们都被Spring Boot官方保留。一般一个第三方的应该这样命名，像mybatis的mybatis-spring-boot-starter。</p>
 <h3 id="Starters分类"><a href="#Starters分类" class="headerlink" title="Starters分类"></a>Starters分类</h3><ul>
@@ -3080,6 +3332,13 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>Spring Boot技术类启动器，比如spring-boot-starter-json；</li>
 <li>其他第三方启动器，比如mybatis-spring-boot-starter。</li>
 </ul>
+<h2 id="Spring-Boot-Starter-的工作原理是什么？"><a href="#Spring-Boot-Starter-的工作原理是什么？" class="headerlink" title="Spring Boot Starter 的工作原理是什么？"></a>Spring Boot Starter 的工作原理是什么？</h2><p>Spring Boot 在启动的时候会干这几件事情：</p>
+<ul>
+<li>Spring Boot 在启动时会去依赖的 Starter 包中寻找 resources/META-INF/spring.factories 文件，然后根据文件中配置的 Jar 包去扫描项目所依赖的 Jar 包。</li>
+<li>根据 spring.factories 配置加载 AutoConfigure 类</li>
+<li>根据 @Conditional 注解的条件，进行自动配置并将 Bean 注入 Spring Context</li>
+</ul>
+<p>总结一下，其实就是 Spring Boot 在启动的时候，按照约定去读取 Spring Boot Starter 的配置信息，再根据配置信息对资源进行初始化，并注入到 Spring 容器中。这样 Spring Boot 启动完毕后，就已经准备好了一切资源，使用过程中直接注入对应 Bean 资源即可</p>
 <h2 id="如何在Spring-Boot启动的时候运行一些特定的代码"><a href="#如何在Spring-Boot启动的时候运行一些特定的代码" class="headerlink" title="如何在Spring Boot启动的时候运行一些特定的代码"></a>如何在Spring Boot启动的时候运行一些特定的代码</h2><p>如果你想在Spring Boot启动的时候运行一些特定的代码，你可以实现接口ApplicationRunner或者CommandLineRunner，这两个接口实现方式一样，它们都只提供了一个run方法。</p>
 <h2 id="Spring-Boot-需要独立的容器运行吗"><a href="#Spring-Boot-需要独立的容器运行吗" class="headerlink" title="Spring Boot 需要独立的容器运行吗"></a>Spring Boot 需要独立的容器运行吗</h2><p>可以不需要，内置了 Tomcat/ Jetty 等容器。</p>
 <h2 id="Spring-Boot中的监视器是什么"><a href="#Spring-Boot中的监视器是什么" class="headerlink" title="Spring Boot中的监视器是什么"></a>Spring Boot中的监视器是什么</h2><p>Spring boot actuator是spring启动框架中的重要功能之一。Spring boot监视器可帮助您访问生产环境中正在运行的应用程序的当前状态。有几个指标必须在生产环境中进行检查和监控。即使一些外部应用程序可能正在使用这些服务来向相关人员触发警报消息。监视器模块公开了一组可直接作为HTTP URL访问的REST端点来检查状态。</p>
@@ -3098,6 +3357,12 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>一些固定的不能被覆盖的属性；</li>
 <li>一些加密/解密的场景。</li>
 </ul>
+<h2 id="Spring-、Spring-Boot-和-Spring-Cloud-的关系"><a href="#Spring-、Spring-Boot-和-Spring-Cloud-的关系" class="headerlink" title="Spring 、Spring Boot 和 Spring Cloud 的关系?"></a>Spring 、Spring Boot 和 Spring Cloud 的关系?</h2><p>Spring 最初最核心的两大核心功能 Spring Ioc 和 Spring Aop 成就了 Spring，Spring 在这两大核心的功能上不断的发展，才有了 Spring 事务、Spring Mvc 等一系列伟大的产品，最终成就了 Spring 帝国，到了后期 Spring 几乎可以解决企业开发中的所有问题。</p>
+<p>Spring Boot 是在强大的 Spring 帝国生态基础上面发展而来，发明 Spring Boot 不是为了取代 Spring ,是为了让人们更容易的使用 Spring 。</p>
+<p>Spring Cloud 是一系列框架的有序集合。它利用 Spring Boot 的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以用 Spring Boot 的开发风格做到一键启动和部署。</p>
+<p>Spring Cloud 是为了解决微服务架构中服务治理而提供的一系列功能的开发框架，并且 Spring Cloud 是完全基于 Spring Boot 而开发，Spring Cloud 利用 Spring Boot 特性整合了开源行业中优秀的组件，整体对外提供了一套在微服务架构中服务治理的解决方案。</p>
+<p>用一组不太合理的包含关系来表达它们之间的关系。</p>
+<p>Spring ioc/aop &gt; Spring &gt; Spring Boot &gt; Spring Cloud</p>
 <h1 id="7-MySQL篇"><a href="#7-MySQL篇" class="headerlink" title="7. MySQL篇"></a>7. MySQL篇</h1><p>MySQL系列文章：<a href="/categories/MySQL/">MySQL</a></p>
 <h2 id="数据库的三范式是什么"><a href="#数据库的三范式是什么" class="headerlink" title="数据库的三范式是什么"></a>数据库的三范式是什么</h2><p>第一范式：列不可再分</p>
 <p>第二范式：行可以唯一区分，主键约束</p>
@@ -4215,15 +4480,48 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/8624578654267825475.png"></p>
 <h1 id="13-Redis篇"><a href="#13-Redis篇" class="headerlink" title="13. Redis篇"></a>13. Redis篇</h1><p>Redis系列文章：<a href="/categories/Redis/">Redis</a></p>
 <h2 id="为什么要用缓存"><a href="#为什么要用缓存" class="headerlink" title="为什么要用缓存"></a>为什么要用缓存</h2><p>使用缓存的目的就是提升读写性能。而实际业务场景下，更多的是为了提升读性能，带来更好的性能，带来更高的并发量。 Redis 的读写性能比 Mysql 好的多，我们就可以把 Mysql 中的热点数据缓存到 Redis 中，提升读取性能，同时也减轻了 Mysql 的读取压力。</p>
-<h2 id="使用-Redis-有哪些好处"><a href="#使用-Redis-有哪些好处" class="headerlink" title="使用 Redis 有哪些好处"></a>使用 Redis 有哪些好处</h2><p>具有以下好处：</p>
+<h2 id="为什么要用-Redis-做缓存？"><a href="#为什么要用-Redis-做缓存？" class="headerlink" title="为什么要用 Redis 做缓存？"></a>为什么要用 Redis 做缓存？</h2><p><strong>从高并发上来说：</strong></p>
 <ul>
-<li>读取速度快，因为数据存在内存中，所以数据获取快；</li>
-<li>支持多种数据结构，包括字符串、列表、集合、有序集合、哈希等；</li>
-<li>支持事务，且操作遵守原子性，即对数据的操作要么都执行，要么都不支持；</li>
-<li>还拥有其他丰富的功能，队列、主从复制、集群、数据持久化等功能。</li>
+<li>直接操作缓存能够承受的请求是远远大于直接访问数据库的，所以我们可以考虑把数据库中的部分数据转移到缓存中去，这样用户的一部分请求会直接到缓存这里而不用经过数据库。</li>
+</ul>
+<p><strong>从高性能上来说：</strong></p>
+<ul>
+<li>用户第一次访问数据库中的某些数据。 因为是从硬盘上读取的所以这个过程会比较慢。将该用户访问的数据存在缓存中，下一次再访问这些数据的时候就可以直接从缓存中获取了。操作缓存就是直接操作内存，所以速度相当快。如果数据库中的对应数据改变的之后，同步改变缓存中相应的数据。</li>
+</ul>
+<h2 id="使用-Redis-有哪些优缺点"><a href="#使用-Redis-有哪些优缺点" class="headerlink" title="使用 Redis 有哪些优缺点"></a>使用 Redis 有哪些优缺点</h2><p><strong>优点</strong></p>
+<ul>
+<li>读写性能极高， Redis能读的速度是110000次/s，写的速度是81000次/s。</li>
+<li>支持数据持久化，支持AOF和RDB两种持久化方式。</li>
+<li>支持事务， Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。</li>
+<li>数据结构丰富，除了支持string类型的value外，还支持hash、set、zset、list等数据结构。</li>
+<li>支持主从复制，主机会自动将数据同步到从机，可以进行读写分离。</li>
+<li>丰富的特性 – Redis还支持 publish/subscribe， 通知， key 过期等特性。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>数据库容量受到物理内存的限制，不能用作海量数据的高性能读写，因此Redis适合的场景主要局限在较小数据量的高性能操作和运算上。</li>
+<li>主机宕机，宕机前有部分数据未能及时同步到从机，切换IP后还会引入数据不一致的问题，降低了系统的可用性。</li>
 </ul>
 <h2 id="什么是-Redis"><a href="#什么是-Redis" class="headerlink" title="什么是 Redis"></a>什么是 Redis</h2><p>Redis 是一个开源（BSD 许可）、基于内存、支持多种数据结构的存储系统，可以作为数据库、缓存和消息中间件。它支持的数据结构有字符串（strings）、哈希（hashes）、列表（lists）、集合（sets）、有序集合（sorted sets）等，除此之外还支持 bitmaps、hyperloglogs 和地理空间（geospatial ）索引半径查询等功能。</p>
 <p>它内置了复制（Replication）、LUA 脚本（Lua scripting）、LRU 驱动事件（LRU eviction）、事务（Transactions）和不同级别的磁盘持久化（persistence）功能，并通过 Redis 哨兵（哨兵）和集群（Cluster）保证缓存的高可用性（High availability）。</p>
+<p>Redis本质上是一个Key-Value类型的内存数据库，很像Memcached，整个数据库加载在内存当中操作，定期通过异步操作把数据库中的数据flush到硬盘上进行保存。</p>
+<p>因为是纯内存操作，Redis的性能非常出色，每秒可以处理超过 10万次读写操作，是已知性能最快的Key-Value 数据库。</p>
+<h2 id="Redis为什么这么快？"><a href="#Redis为什么这么快？" class="headerlink" title="Redis为什么这么快？"></a>Redis为什么这么快？</h2><ul>
+<li><p>内存存储：Redis是使用内存(in-memeroy)存储，没有磁盘IO上的开销。数据存在内存中，类似于 HashMap，HashMap 的优势就是查找和操作的时间复杂度都是O(1)。</p>
+</li>
+<li><p>单线程实现（ Redis 6.0以前）：Redis使用单个线程处理请求，避免了多个线程之间线程切换和锁资源争用的开销。注意：单线程是指的是在核心网络模型中，网络请求模块使用一个线程来处理，即一个线程处理所有网络请求。</p>
+</li>
+<li><p>非阻塞IO：Redis使用多路复用IO技术，将epoll作为I/O多路复用技术的实现，再加上Redis自身的事件处理模型将epoll中的连接、读写、关闭都转换为事件，不在网络I/O上浪费过多的时间。</p>
+</li>
+<li><p>优化的数据结构：Redis有诸多可以直接应用的优化数据结构的实现，应用层可以直接使用原生的数据结构提升性能。</p>
+</li>
+<li><p>使用底层模型不同：Redis直接自己构建了 VM (虚拟内存)机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求。</p>
+<blockquote>
+<p>Redis的VM(虚拟内存)机制就是暂时把不经常访问的数据(冷数据)从内存交换到磁盘中，从而腾出宝贵的内存空间用于其它需要访问的数据(热数据)。通过VM功能可以实现冷热数据分离，使热数据仍在内存中、冷数据保存到磁盘。这样就可以避免因为内存不足而造成访问速度下降的问题。</p>
+<p>Redis提高数据库容量的办法有两种：一种是可以将数据分割到多个RedisServer上；另一种是使用虚拟内存把那些不经常访问的数据交换到磁盘上。<strong>需要特别注意的是Redis并没有使用OS提供的Swap，而是自己实现。</strong></p>
+</blockquote>
+</li>
+</ul>
 <h2 id="为什么使用-Redis-而不是用-Memcache-呢"><a href="#为什么使用-Redis-而不是用-Memcache-呢" class="headerlink" title="为什么使用 Redis 而不是用 Memcache 呢"></a>为什么使用 Redis 而不是用 Memcache 呢</h2><p>这时候肯定想到的就是做一个 Memcache 与 Redis 区别。</p>
 <ul>
 <li>Redis 和 Memcache 都是将数据存放在内存中，都是内存数据库。不过 Memcache 还可用于缓存其他东西，例如图片、视频等等。</li>
@@ -4236,6 +4534,50 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>Redis 原生就支持集群模式， Redis3.0 版本中，官方便能支持Cluster模式了， Memcached 没有原生的集群模式，需要依赖客户端来实现，然后往集群中分片写入数据。</li>
 <li>Memcached 网络IO模型是多线程，非阻塞IO复用的网络模型，原型上接近于 nignx 。而 Redis使用单线程的IO复用模型，自己封装了一个简单的 AeEvent 事件处理框架，主要实现类epoll，kqueue 和 select ，更接近于Apache早期的模式。</li>
 </ul>
+<h2 id="为什么要用-Redis-而不用-map-guava-做缓存"><a href="#为什么要用-Redis-而不用-map-guava-做缓存" class="headerlink" title="为什么要用 Redis 而不用 map/guava 做缓存?"></a>为什么要用 Redis 而不用 map/guava 做缓存?</h2><p>缓存分为本地缓存和分布式缓存。以java为例，使用自带的map或者guava实现的是本地缓存，最主要的特点是轻量以及快速，生命周期随着jvm的销毁而结束，并且在多实例的情况下，每个实例都需要各自保存一份缓存，缓存不具有一致性。</p>
+<p>使用Redis或memcached之类的称为分布式缓存，在多实例的情况下，各实例共用一份缓存数据，缓存具有一致性。缺点是需要保持Redis或memcached服务的高可用，整个程序架构上较为复杂。</p>
+<p><strong>对比:</strong></p>
+<ul>
+<li>Redis 可以用几十 G 内存来做缓存，Map 不行，一般 JVM 也就分几个 G 数据就够大了；</li>
+<li>Redis 的缓存可以持久化，Map 是内存对象，程序一重启数据就没了；</li>
+<li>Redis 可以实现分布式的缓存，Map 只能存在创建它的程序里；</li>
+<li>Redis 可以处理每秒百万级的并发，是专业的缓存服务，Map 只是一个普通的对象；</li>
+<li>Redis 缓存有过期机制，Map 本身无此功能；Redis 有丰富的 API，Map 就简单太多了；</li>
+<li>Redis可单独部署，多个项目之间可以共享，本地内存无法共享；</li>
+<li>Redis有专门的管理工具可以查看缓存数据。</li>
+</ul>
+<h2 id="6-Redis的常用场景有哪些"><a href="#6-Redis的常用场景有哪些" class="headerlink" title="6. Redis的常用场景有哪些?"></a>6. Redis的常用场景有哪些?</h2><ol>
+<li>缓存</li>
+</ol>
+<p>缓存现在几乎是所有中大型网站都在用的必杀技，合理的利用缓存不仅能够提升网站访问速度，还能大大降低数据库的压力。Redis提供了键过期功能，也提供了灵活的键淘汰策略，所以，现在Redis用在缓存的场合非常多。</p>
+<ol start="2">
+<li>排行榜</li>
+</ol>
+<p>很多网站都有排行榜应用的，如京东的月度销量榜单、商品按时间的上新排行榜等。Redis提供的有序集合数据类构能实现各种复杂的排行榜应用。</p>
+<ol start="3">
+<li>计数器</li>
+</ol>
+<p>什么是计数器，如电商网站商品的浏览量、视频网站视频的播放数等。为了保证数据实时效，每次浏览都得给+1，并发量高时如果每次都请求数据库操作无疑是种挑战和压力。Redis提供的incr命令来实现计数器功能，内存操作，性能非常好，非常适用于这些计数场景。</p>
+<ol start="4">
+<li>分布式会话</li>
+</ol>
+<p>集群模式下，在应用不多的情况下一般使用容器自带的session复制功能就能满足，当应用增多相对复杂的系统中，一般都会搭建以Redis等内存数据库为中心的session服务，session不再由容器管理，而是由session服务及内存数据库管理。</p>
+<ol start="5">
+<li>分布式锁</li>
+</ol>
+<p>在很多互联网公司中都使用了分布式技术，分布式技术带来的技术挑战是对同一个资源的并发访问，如全局ID、减库存、秒杀等场景，并发量不大的场景可以使用数据库的悲观锁、乐观锁来实现，但在并发量高的场合中，利用数据库锁来控制资源的并发访问是不太理想的，大大影响了数据库的性能。可以利用Redis的setnx功能来编写分布式的锁，如果设置返回1说明获取锁成功，否则获取锁失败，实际应用中要考虑的细节要更多。</p>
+<ol start="6">
+<li>社交网络</li>
+</ol>
+<p>点赞、踩、关注/被关注、共同好友等是社交网站的基本功能，社交网站的访问量通常来说比较大，而且传统的关系数据库类型不适合存储这种类型的数据，Redis提供的哈希、集合等数据结构能很方便的的实现这些功能。如在微博中的共同好友，通过Redis的set能够很方便得出。</p>
+<ol start="7">
+<li>最新列表</li>
+</ol>
+<p>Redis列表结构，LPUSH可以在列表头部插入一个内容ID作为关键字，LTRIM可用来限制列表的数量，这样列表永远为N个ID，无需查询最新的列表，直接根据ID去到对应的内容页即可。</p>
+<ol start="8">
+<li>消息系统</li>
+</ol>
+<p>消息队列是大型网站必用中间件，如ActiveMQ、RabbitMQ、Kafka等流行的消息队列中间件，主要用于业务解耦、流量削峰及异步处理实时性低的业务。Redis提供了发布/订阅及阻塞队列功能，能实现一个简单的消息队列系统。另外，这个不能和专业的消息中间件相比。</p>
 <h2 id="为什么-Redis-单线程模型效率也能那么高"><a href="#为什么-Redis-单线程模型效率也能那么高" class="headerlink" title="为什么 Redis 单线程模型效率也能那么高"></a>为什么 Redis 单线程模型效率也能那么高</h2><ul>
 <li>C语言实现，效率高</li>
 <li>纯内存操作</li>
@@ -4265,7 +4607,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h2 id="Redis-的同步机制了解是什么"><a href="#Redis-的同步机制了解是什么" class="headerlink" title="Redis 的同步机制了解是什么"></a>Redis 的同步机制了解是什么</h2><p>Redis 支持主从同步、从从同步。如果是第一次进行主从同步，主节点需要使用 bgsave 命令，再将后续修改操作记录到内存的缓冲区，等 RDB 文件全部同步到复制节点，复制节点接受完成后将RDB 镜像记载到内存中。等加载完成后，复制节点通知主节点将复制期间修改的操作记录同步到复制节点，即可完成同步过程。</p>
 <h2 id="pipeline-有什么好处，为什么要用-pipeline"><a href="#pipeline-有什么好处，为什么要用-pipeline" class="headerlink" title="pipeline 有什么好处，为什么要用 pipeline"></a>pipeline 有什么好处，为什么要用 pipeline</h2><p>使用 pipeline（管道）的好处在于可以将多次 I/O 往返的时间缩短为一次，但是要求管道中执行的指令间没有因果关系。<br>用 pipeline 的原因在于可以实现请求/响应服务器的功能，当客户端尚未读取旧响应时，它也可以处理新的请求。如果客户端存在多个命令发送到服务器时，那么客户端无需等待服务端的每次响应才能执行下个命令，只需最后一步从服务端读取回复即可。</p>
 <h2 id="说一下-Redis-有什么优点和缺点"><a href="#说一下-Redis-有什么优点和缺点" class="headerlink" title="说一下 Redis 有什么优点和缺点"></a>说一下 Redis 有什么优点和缺点</h2><h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul>
-<li>速度快：因为数据存在内存中，类似于 HashMap ， HashMap 的优势就是查找和操作的时间复杂度都是O (1) 。</li>
+<li>速度快：因为数据存在内存中，类似于 HashMap ， HashMap 的优势就是查找和操作的时间复杂度都是O(1) 。</li>
 <li>支持丰富的数据结构：支持 String ，List，Set，Sorted Set，Hash 五种基础的数据结构。</li>
 <li>持久化存储：Redis 提供 RDB 和 AOF 两种数据的持久化存储方案，解决内存数据库最担心的万一 Redis 挂掉，数据会消失掉。</li>
 <li>高可用：内置 Redis Sentinel ，提供高可用方案，实现主从故障自动转移。 内置 Redis Cluster ，提供集群方案，实现基于槽的分片方案，从而支持更大的 Redis 规模。</li>
@@ -4286,22 +4628,153 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>相对于数据集大时，比 AOF 的启动效率更高。</li>
 </ul>
 <h4 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h4><p>数据安全性低。 RDB 是间隔一段时间进行持久化，如果持久化之间 Redis 发生故障，会发生数据丢失。所以这种方式更适合数据要求不严谨的时候。</p>
-<h3 id="AOF（Append-only-file）-持久化方式"><a href="#AOF（Append-only-file）-持久化方式" class="headerlink" title="AOF（Append-only file） 持久化方式"></a>AOF（Append-only file） 持久化方式</h3><p>是指所有的命令行记录以 Redis 命令请求协议的格式完全持久化存储，保存为 AOF 文件。</p>
+<h3 id="AOF（Append-only-file）-持久化方式"><a href="#AOF（Append-only-file）-持久化方式" class="headerlink" title="AOF（Append-only file） 持久化方式"></a>AOF（Append-only file） 持久化方式</h3><p>以日志的形式来记录每个写操作，将Redis执行过的所有写指令记录下来(读操作不记录)，只许追加文件但不可以改写文件，Redis启动之初会读取该文件重新构建数据，换言之，Redis重启的话就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。</p>
+<p>AOF采用文件追加方式，文件会越来越大，为避免出现此种情况，新增了重写机制，当AOF文件的大小超过所设定的阈值时， Redis就会启动AOF文件的内容压缩，只保留可以恢复数据的最小指令集。</p>
 <h4 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h4><ul>
-<li>数据安全， AOF 持久化可以配置 appendfsync 属性，有 always，每进行一次命令操作就记录到 AOF 文件中一次。</li>
+<li>数据安全， AOF 持久化可以配置 appendfsync 属性，有 always，每进行一次命令操作就记录到 AOF 文件中一次。<ul>
+<li>每修改同步：<code>appendfsync always</code> 同步持久化，每次发生数据变更会被立即记录到磁盘，性能较差但数据完整性比较好</li>
+<li>每秒同步：<code>appendfsync everysec</code> 异步操作，每秒记录，如果一秒内宕机，有数据丢失</li>
+<li>不同步：<code>appendfsync no</code>   从不同步</li>
+</ul>
+</li>
 <li>通过 append 模式写文件，即使中途服务器宕机，可以通过 redis-check-aof 工具解决数据一致性问题。</li>
-<li>AOF 机制的 rewrite 模式。 AOF 文件没被 rewrite 之前（文件过大时会对命令进行合并重写），可以删除其中的某些命令（比如误操作的 flushall )。</li>
+<li>AOF 机制的 rewrite 模式。 AOF 文件没被 rewrite 之前（文件过大时会对命令进行合并重写），可以删除其中的某些命令（比如误操作的flushall)。</li>
 </ul>
 <h4 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h4><ul>
-<li>AOF 文件比 RDB 文件大，且恢复速度慢。</li>
+<li>相同数据集的数据而言,AOF 文件比 RDB 文件大，且恢复速度慢。</li>
 <li>数据集大的时候，比 RDB 启动效率低。</li>
 </ul>
-<h2 id="持久化有两种，那应该怎么选择呢"><a href="#持久化有两种，那应该怎么选择呢" class="headerlink" title="持久化有两种，那应该怎么选择呢"></a>持久化有两种，那应该怎么选择呢</h2><ul>
-<li>不要仅仅使用 RDB ，因为那样会导致你丢失很多数据。</li>
-<li>也不要仅仅使用 AOF ，因为那样有两个问题，第一，你通过 AOF 做冷备没有 RDB 做冷备的恢复速度更快; 第二， RDB 每次简单粗暴生成数据快照，更加健壮，可以避免 AOF 这种复杂的备份和恢复机制的 bug 。</li>
-<li>Redis 支持同时开启开启两种持久化方式，我们可以综合使用 AOF 和 RDB 两种持久化机制，用 AOF 来保证数据不丢失，作为数据恢复的第一选择; 用 RDB 来做不同程度的冷备，在 AOF文件都丢失或损坏不可用的时候，还可以使用 RDB 来进行快速的数据恢复。</li>
-<li>如果同时使用 RDB 和 AOF 两种持久化机制，那么在 Redis 重启的时候，会使用 AOF 来重新构建数据，因为 AOF 中的数据更加完整。</li>
+<h2 id="如何选择合适的持久化方式"><a href="#如何选择合适的持久化方式" class="headerlink" title="如何选择合适的持久化方式"></a>如何选择合适的持久化方式</h2><ul>
+<li>如果是数据不那么敏感，且可以从其他地方重新生成补回的，那么可以关闭持久化。</li>
+<li>如果是数据比较重要，不想再从其他地方获取，且可以承受数分钟的数据丢失，比如缓存等，那么可以只使用RDB。</li>
+<li>如果是用做内存数据库，要使用Redis的持久化，建议是RDB和AOF都开启，或者定期执行bgsave做快照备份，RDB方式更适合做数据的备份，AOF可以保证数据的不丢失。</li>
+<li>不要仅仅使用RDB，因为那样会导致你丢失很多数据。</li>
+<li>也不要仅仅使用AOF，因为那样有两个问题<ul>
+<li>第一，你通过AOF做冷备没有RDB做冷备的恢复速度更快; </li>
+<li>第二，RDB每次简单粗暴生成数据快照，更加健壮，可以避免AOF这种复杂的备份和恢复机制的bug。</li>
 </ul>
+</li>
+<li>Redis支持同时开启开启两种持久化方式，我们可以综合使用AOF和RDB两种持久化机制，用AOF来保证数据不丢失，作为数据恢复的第一选择; 用RDB来做不同程度的冷备，在 AOF文件都丢失或损坏不可用的时候，还可以使用RDB来进行快速的数据恢复。</li>
+<li>如果同时使用RDB和AOF两种持久化机制，那么在Redis 启的时候，会使用AOF来重新构建数据，因为AOF中的数据更加完整。</li>
+</ul>
+<p><strong>补充：Redis4.0 对于持久化机制的优化</strong></p>
+<p>Redis4.0相对与3.X版本其中一个比较大的变化是4.0添加了新的混合持久化方式。</p>
+<p>简单的说：新的AOF文件前半段是RDB格式的全量数据后半段是AOF格式的增量数据，如下图：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1075473-20180726181756270-1907770368.png"></p>
+<p><strong>优势：</strong> 混合持久化结合了RDB持久化 和 AOF 持久化的优点， 由于绝大部分都是RDB格式，加载速度快，同时结合AOF，增量的数据以AOF方式保存了，数据更少的丢失。</p>
+<p><strong>劣势：</strong> 兼容性差，一旦开启了混合持久化，在4.0之前版本都不识别该aof文件，同时由于前部分是RDB格式，阅读性较差。</p>
+<h2 id="Redis持久化数据和缓存怎么做扩容？"><a href="#Redis持久化数据和缓存怎么做扩容？" class="headerlink" title="Redis持久化数据和缓存怎么做扩容？"></a>Redis持久化数据和缓存怎么做扩容？</h2><ul>
+<li><p>如果Redis被当做缓存使用，使用一致性哈希实现动态扩容缩容。</p>
+</li>
+<li><p>如果Redis被当做一个持久化存储使用，必须使用固定的keys-to-nodes映射关系，节点的数量一旦确定不能变化。否则的话(即Redis节点需要动态变化的情况），必须使用可以在运行时进行数据再平衡的一套系统，而当前只有Redis集群可以做到这样。</p>
+</li>
+</ul>
+<h2 id="Redis过期键的删除策略"><a href="#Redis过期键的删除策略" class="headerlink" title="Redis过期键的删除策略"></a>Redis过期键的删除策略</h2><p><strong>Redis的过期删除策略就是：惰性删除和定期删除两种策略配合使用。</strong></p>
+<p><strong>惰性删除：</strong> 惰性删除不会去主动删除数据，而是在访问数据的时候，再检查当前键值是否过期，如果过期则执行删除并返回 null 给客户端，如果没有过期则返回正常信息给客户端。它的优点是简单，不需要对过期的数据做额外的处理，只有在每次访问的时候才会检查键值是否过期，缺点是删除过期键不及时，造成了一定的空间浪费。</p>
+<p><strong>定期删除：</strong> Redis会周期性的随机测试一批设置了过期时间的key并进行处理。测试到的已过期的key将被删除。</p>
+<p>附：删除key常见的三种处理方式。</p>
+<ol>
+<li>定时删除</li>
+</ol>
+<p>在设置某个key 的过期时间同时，我们创建一个定时器，让定时器在该过期时间到来时，立即执行对其进行删除的操作。</p>
+<p><strong>优点：</strong>定时删除对内存是最友好的，能够保存内存的key一旦过期就能立即从内存中删除。</p>
+<p><strong>缺点：</strong>对CPU最不友好，在过期键比较多的时候，删除过期键会占用一部分 CPU 时间，对服务器的响应时间和吞吐量造成影响。</p>
+<ol start="2">
+<li>惰性删除</li>
+</ol>
+<p>设置该key 过期时间后，我们不去管它，当需要该key时，我们在检查其是否过期，如果过期，我们就删掉它，反之返回该key。</p>
+<p><strong>优点：</strong>对 CPU友好，我们只会在使用该键时才会进行过期检查，对于很多用不到的key不用浪费时间进行过期检查。</p>
+<p><strong>缺点：</strong>对内存不友好，如果一个键已经过期，但是一直没有使用，那么该键就会一直存在内存中，如果数据库中有很多这种使用不到的过期键，这些键便永远不会被删除，内存永远不会释放。从而造成内存泄漏。</p>
+<ol start="3">
+<li>定期删除</li>
+</ol>
+<p>每隔一段时间，我们就对一些key进行检查，删除里面过期的key。</p>
+<p><strong>优点：</strong>可以通过限制删除操作执行的时长和频率来减少删除操作对 CPU 的影响。另外定期删除，也能有效释放过期键占用的内存。</p>
+<p><strong>缺点：</strong>难以确定删除操作执行的时长和频率。如果执行的太频繁，定期删除策略变得和定时删除策略一样，对CPU不友好。如果执行的太少，那又和惰性删除一样了，过期键占用的内存不会及时得到释放。另外最重要的是，在获取某个键时，如果某个键的过期时间已经到了，但是还没执行定期删除，那么就会返回这个键的值，这是业务不能忍受的错误。</p>
+<h2 id="Redis内存淘汰策略"><a href="#Redis内存淘汰策略" class="headerlink" title="Redis内存淘汰策略"></a>Redis内存淘汰策略</h2><p>Redis是不断的删除一些过期数据，但是很多没有设置过期时间的数据也会越来越多，那么Redis内存不够用的时候是怎么处理的呢？答案就是淘汰策略。此类的</p>
+<p>当Redis的内存超过最大允许的内存之后，Redis会触发内存淘汰策略，删除一些不常用的数据，以保证Redis服务器的正常运行。</p>
+<p><strong>Redisv4.0前提供 6种数据淘汰策略</strong></p>
+<ul>
+<li>volatile-lru：利用LRU算法移除设置过过期时间的key (LRU:最近使用 Least Recently Used )</li>
+<li>allkeys-lru：当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key（这个是最常用的）</li>
+<li>volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰</li>
+<li>volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰</li>
+<li>allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰</li>
+<li>no-eviction：禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。这个应该没人使用吧！ </li>
+</ul>
+<p><strong>Redisv4.0后增加以下两种</strong></p>
+<ul>
+<li>volatile-lfu：从已设置过期时间的数据集(server.db[i].expires)中挑选最不经常使用的数据淘汰(LFU(Least Frequently Used)算法，也就是最频繁被访问的数据将来最有可能被访问到)</li>
+<li>allkeys-lfu：当内存不足以容纳新写入数据时，在键空间中，移除最不经常使用的key。</li>
+</ul>
+<p>内存淘汰策略可以通过配置文件来修改，Redis.conf对应的配置项是maxmemory-policy 修改对应的值就行，默认是noeviction。</p>
+<h2 id="如何保证缓存与数据库双写时的数据一致性？"><a href="#如何保证缓存与数据库双写时的数据一致性？" class="headerlink" title="如何保证缓存与数据库双写时的数据一致性？"></a>如何保证缓存与数据库双写时的数据一致性？</h2><blockquote>
+<p>背景：使用到缓存，无论是本地内存做缓存还是使用 Redis 做缓存，那么就会存在数据同步的问题，因为配置信息缓存在内存中，而内存时无法感知到数据在数据库的修改。这样就会造成数据库中的数据与缓存中数据不一致的问题。</p>
+</blockquote>
+<p>共有四种方案：</p>
+<ol>
+<li>先更新数据库，后更新缓存</li>
+<li>先更新缓存，后更新数据库</li>
+<li>先删除缓存，后更新数据库</li>
+<li>先更新数据库，后删除缓存</li>
+</ol>
+<p>第一种和第二种方案，没有人使用的，因为第一种方案存在问题是：并发更新数据库场景下，会将脏数据刷到缓存。</p>
+<p>第二种方案存在的问题是：如果先更新缓存成功，但是数据库更新失败，则肯定会造成数据不一致。</p>
+<p>目前主要用第三和第四种方案。</p>
+<h2 id="先删除缓存，后更新数据库"><a href="#先删除缓存，后更新数据库" class="headerlink" title="先删除缓存，后更新数据库"></a>先删除缓存，后更新数据库</h2><p>该方案也会出问题，此时来了两个请求，请求 A（更新操作） 和请求 B（查询操作）</p>
+<ol>
+<li>请求A进行写操作，删除缓存</li>
+<li>请求B查询发现缓存不存在</li>
+<li>请求B去数据库查询得到旧值</li>
+<li>请求B将旧值写入缓存</li>
+<li>请求A将新值写入数据库</li>
+</ol>
+<p>上述情况就会导致不一致的情形出现。而且，如果不采用给缓存设置过期时间策略，该数据永远都是脏数据。</p>
+<h3 id="答案一：延时双删"><a href="#答案一：延时双删" class="headerlink" title="答案一：延时双删"></a>答案一：延时双删</h3><p>最简单的解决办法延时双删</p>
+<p>使用伪代码如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token punctuation">,</span><span class="token class-name">Object</span> data<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token class-name">Redis</span><span class="token punctuation">.</span><span class="token function">delKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">updateData</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Redis</span><span class="token punctuation">.</span><span class="token function">delKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>转化为中文描述如下：</p>
+<ol>
+<li>先淘汰缓存</li>
+<li>再写数据库（这两步和原来一样）</li>
+<li>休眠1秒，再次淘汰缓存，这么做，可以将1秒内所造成的缓存脏数据，再次删除。确保读请求结束，写请求可以删除读请求造成的缓存脏数据。自行评估自己的项目的读数据业务逻辑的耗时，写数据的休眠时间则在读数据业务逻辑的耗时基础上，加几百ms即可。</li>
+</ol>
+<p>如果使用的是 Mysql 的读写分离的架构的话，那么其实主从同步之间也会有时间差。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1735bb5881bbb1d4%7Etplv-t2oaga2asx-watermark.awebp"></p>
+<p>此时来了两个请求，请求 A（更新操作） 和请求 B（查询操作）</p>
+<ol>
+<li>请求 A 更新操作，删除了 Redis</li>
+<li>请求主库进行更新操作，主库与从库进行同步数据的操作</li>
+<li>请 B 查询操作，发现 Redis 中没有数据</li>
+<li>去从库中拿去数据</li>
+<li>此时同步数据还未完成，拿到的数据是旧数据</li>
+</ol>
+<p>此时的解决办法就是如果是对 Redis 进行填充数据的查询数据库操作，那么就强制将其指向主库进行查询。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1735bb5881a19fec%7Etplv-t2oaga2asx-watermark.awebp"></p>
+<h3 id="答案二：-更新与读取操作进行异步串行化"><a href="#答案二：-更新与读取操作进行异步串行化" class="headerlink" title="答案二： 更新与读取操作进行异步串行化"></a>答案二： 更新与读取操作进行异步串行化</h3><p>采用<strong>更新与读取操作进行异步串行化</strong></p>
+<p><strong>异步串行化</strong></p>
+<p>我在系统内部维护n个内存队列，更新数据的时候，根据数据的唯一标识，将该操作路由之后，发送到其中一个jvm内部的内存队列中（对同一数据的请求发送到同一个队列）。读取数据的时候，如果发现数据不在缓存中，并且此时队列里有更新库存的操作，那么将重新读取数据+更新缓存的操作，根据唯一标识路由之后，也将发送到同一个jvm内部的内存队列中。然后每个队列对应一个工作线程，每个工作线程串行地拿到对应的操作，然后一条一条的执行。</p>
+<p>这样的话，一个数据变更的操作，先执行删除缓存，然后再去更新数据库，但是还没完成更新的时候，如果此时一个读请求过来，读到了空的缓存，那么可以先将缓存更新的请求发送到队列中，此时会在队列中积压，排在刚才更新库的操作之后，然后同步等待缓存更新完成，再读库。</p>
+<p><strong>读操作去重</strong></p>
+<p>多个读库更新缓存的请求串在同一个队列中是没意义的，因此可以做过滤，如果发现队列中已经有了该数据的更新缓存的请求了，那么就不用再放进去了，直接等待前面的更新操作请求完成即可，待那个队列对应的工作线程完成了上一个操作（数据库的修改）之后，才会去执行下一个操作（读库更新缓存），此时会从数据库中读取最新的值，然后写入缓存中。</p>
+<p>如果请求还在等待时间范围内，不断轮询发现可以取到值了，那么就直接返回；如果请求等待的时间超过一定时长，那么这一次直接从数据库中读取当前的旧值。（返回旧值不是又导致缓存和数据库不一致了么？那至少可以减少这个情况发生，因为等待超时也不是每次都是，几率很小吧。这里我想的是，如果超时了就直接读旧值，这时候仅仅是读库后返回而不放缓存）</p>
+<h2 id="先更新数据库，后删除缓存"><a href="#先更新数据库，后删除缓存" class="headerlink" title="先更新数据库，后删除缓存"></a>先更新数据库，后删除缓存</h2><p>这一种情况也会出现问题，比如更新数据库成功了，但是在删除缓存的阶段出错了没有删除成功，那么此时再读取缓存的时候每次都是错误的数据了。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1735bb5881fb4a1b%7Etplv-t2oaga2asx-watermark.awebp"></p>
+<p>此时解决方案就是利用消息队列进行删除的补偿。具体的业务逻辑用语言描述如下：</p>
+<ol>
+<li>请求 A 先对数据库进行更新操作</li>
+<li>在对 Redis 进行删除操作的时候发现报错，删除失败</li>
+<li>此时将Redis 的 key 作为消息体发送到消息队列中</li>
+<li>系统接收到消息队列发送的消息后再次对 Redis 进行删除操作</li>
+</ol>
+<p>但是这个方案会有一个缺点就是会对业务代码造成大量的侵入，深深的耦合在一起，所以这时会有一个优化的方案，我们知道对 Mysql 数据库更新操作后再 binlog 日志中我们都能够找到相应的操作，那么我们可以订阅 Mysql 数据库的 binlog 日志对缓存进行操作。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1735bb588215b298%7Etplv-t2oaga2asx-watermark.awebp"></p>
 <h2 id="怎么使用-Redis-实现消息队列"><a href="#怎么使用-Redis-实现消息队列" class="headerlink" title="怎么使用 Redis 实现消息队列"></a>怎么使用 Redis 实现消息队列</h2><p>一般使用 list 结构作为队列， rpush 生产消息， lpop 消费消息。当 lpop 没有消息的时候，要适当sleep 一会再重试。</p>
 <ul>
 <li>面试官可能会问可不可以不用 sleep 呢？list 还有个指令叫 blpop ，在没有消息的时候，它会阻塞住直到消息到来。</li>
@@ -4309,13 +4782,31 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>面试官可能还问 pub / sub 有什么缺点？在消费者下线的情况下，生产的消息会丢失，得使用专业的消息队列如 rabbitmq 等。</li>
 <li>面试官可能还问 Redis 如何实现延时队列？我估计现在你很想把面试官一棒打死如果你手上有一根棒球棍的话，怎么问的这么详细。但是你很克制，然后神态自若的回答道：使用sortedset ，拿时间戳作为 score ，消息内容作为 key 调用 zadd 来生产消息，消费者用zrangebyscore 指令获取 N 秒之前的数据轮询进行处理。</li>
 </ul>
+<h2 id="Redis事务的概念"><a href="#Redis事务的概念" class="headerlink" title="Redis事务的概念"></a>Redis事务的概念</h2><p>Redis的事务并不是我们传统意义上理解的事务，我们都知道 单个 Redis 命令的执行是原子性的，但 Redis 没有在事务上增加任何维持原子性的机制，所以 Redis <strong>事务的执行并不是原子性的</strong>。</p>
+<p>事务可以理解为一个<strong>打包的批量执行脚本</strong>，但<strong>批量指令并非原子化</strong>的操作，中间某条指令的失败不会导致前面已做指令的回滚，也不会造成后续的指令不做。</p>
+<p><strong>总结：</strong></p>
+<ol>
+<li><p>Redis事务中如果有某一条命令执行失败，之前的命令不会回滚，其后的命令仍然会被继续执行。<strong>鉴于这个原因，所以说Redis的事务严格意义上来说是不具备原子性的</strong>。</p>
+</li>
+<li><p>Redis事务中所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。</p>
+</li>
+<li><p>在事务开启之前，如果客户端与服务器之间出现通讯故障并导致网络断开，其后所有待执行的语句都将不会被服务器执行。然而如果网络中断事件是发生在客户端执行EXEC命令之后，那么该事务中的所有命令都会被服务器执行。</p>
+</li>
+</ol>
+<blockquote>
+<p> 当使用Append-Only模式时，Redis会通过调用系统函数write将该事务内的所有写操作在本次调用中全部写入磁盘。然而如果在写入的过程中出现系统崩溃，如电源故障导致的宕机，那么此时也许只有部分数据被写入到磁盘，而另外一部分数据却已经丢失。Redis服务器会在重新启动时执行一系列必要的一致性检测，一旦发现类似问题，就会立即退出并给出相应的错误提示。此时，我们就要充分利用Redis工具包中提供的Redis-check-aof工具，该工具可以帮助我们定位到数据不一致的错误，并将已经写入的部分数据进行回滚。修复之后我们就可以再次重新启动Redis服务器了。</p>
+</blockquote>
 <h2 id="说说你对Redis事务的理解"><a href="#说说你对Redis事务的理解" class="headerlink" title="说说你对Redis事务的理解"></a>说说你对Redis事务的理解</h2><h3 id="什么是-Redis-事务？原理是什么？"><a href="#什么是-Redis-事务？原理是什么？" class="headerlink" title="什么是 Redis 事务？原理是什么？"></a>什么是 Redis 事务？原理是什么？</h3><p>Redis 中的事务是一组命令的集合，是 Redis 的最小执行单位。它可以保证一次执行多个命令，每个事务是一个单独的隔离操作，事务中的所有命令都会序列化、按顺序地执行。服务端在执行事务的过程中，不会被其他客户端发送来的命令请求打断。</p>
 <p>它的原理是先将属于一个事务的命令发送给 Redis，然后依次执行这些命令。</p>
 <h3 id="Redis-事务的注意点有哪些？"><a href="#Redis-事务的注意点有哪些？" class="headerlink" title="Redis 事务的注意点有哪些？"></a>Redis 事务的注意点有哪些？</h3><ul>
 <li>Redis 事务是不支持回滚的，不像 MySQL 的事务一样，要么都执行要么都不执行；</li>
 <li>Redis 服务端在执行事务的过程中，不会被其他客户端发送来的命令请求打断。直到事务命令全部执行完毕才会执行其他客户端的命令。</li>
 </ul>
-<h3 id="Redis-事务为什么不支持回滚？"><a href="#Redis-事务为什么不支持回滚？" class="headerlink" title="Redis 事务为什么不支持回滚？"></a>Redis 事务为什么不支持回滚？</h3><p>Redis 的事务不支持回滚，但是执行的命令有语法错误，Redis 会执行失败，这些问题可以从程序层面捕获并解决。但是如果出现其他问题，则依然会继续执行余下的命令。这样做的原因是因为回滚需要增加很多工作，而不支持回滚则可以保持简单、快速的特性。</p>
+<h3 id="Redis事务支持隔离性吗"><a href="#Redis事务支持隔离性吗" class="headerlink" title="Redis事务支持隔离性吗?"></a>Redis事务支持隔离性吗?</h3><p>Redis 是单进程程序，并且它保证在执行事务时，不会对事务进行中断，事务可以运行直到执行完所有事务队列中的命令为止。因此，<strong>Redis 的事务是总是带有隔离性的</strong>。</p>
+<h3 id="Redis-事务为什么不支持回滚？"><a href="#Redis-事务为什么不支持回滚？" class="headerlink" title="Redis 事务为什么不支持回滚？"></a>Redis 事务为什么不支持回滚？</h3><ul>
+<li>Redis 命令只会因为错误的语法而失败，或是命令用在了错误类型的键上面，这些问题不能在入队时发现，这也就是说，从实用性的角度来说，失败的命令是由编程错误造成的，而这些错误应该在开发的过程中被发现，而不应该出现在生产环境中.</li>
+<li>因为不需要对回滚进行支持，所以 Redis 的内部可以保持简单且快速。</li>
+</ul>
 <h3 id="Redis事务命令和特点"><a href="#Redis事务命令和特点" class="headerlink" title="Redis事务命令和特点"></a>Redis事务命令和特点</h3><p>Redis事务功能是通过MULTI、EXEC、DISCARD和WATCH 四个原语实现的 Redis会将一个事务中的所有命令序列化，然后按顺序执行。</p>
 <ol>
 <li>redis 不支持回滚“Redis 在事务失败时不进行回滚，而是继续执行余下的命令”， 所以 Redis 的内部可以保持简单且快速。</li>
@@ -4328,7 +4819,120 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>通过调用DISCARD，客户端可以清空事务队列，并放弃执行事务， 并且客户端会从事务状态中退出。</li>
 <li>WATCH 命令可以为 Redis 事务提供 check-and-set （CAS）行为。 可以监控一个或多个键，一旦其中有一个键被修改（或删除），之后的事务就不会执行，监控一直持续到EXEC命令。</li>
 </ol>
-<h2 id="Redis-为什么设计成单线程的"><a href="#Redis-为什么设计成单线程的" class="headerlink" title="Redis 为什么设计成单线程的"></a>Redis 为什么设计成单线程的</h2><p>多线程处理会涉及到锁，并且多线程处理会涉及到线程切···换而消耗 CPU。采用单线程，避免了不必要的上下文切换和竞争条件。其次 CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是机器内存或者网络带宽。</p>
+<p>事务执行过程中，如果服务端收到有EXEC、DISCARD、WATCH、MULTI之外的请求，将会把请求放入队列中排队。</p>
+<h2 id="Redis事务相关命令"><a href="#Redis事务相关命令" class="headerlink" title="Redis事务相关命令"></a>Redis事务相关命令</h2><p>Redis事务功能是通过MULTI、EXEC、DISCARD和WATCH 四个原语实现的</p>
+<ul>
+<li>WATCH 命令是一个乐观锁，可以为 Redis 事务提供 check-and-set （CAS）行为。 可以监控一个或多个键，一旦其中有一个键被修改（或删除），之后的事务就不会执行，监控一直持续到EXEC命令。</li>
+<li>MULTI命令用于开启一个事务，它总是返回OK。 MULTI执行之后，客户端可以继续向服务器发送任意多条命令，这些命令不会立即被执行，而是被放到一个队列中，当EXEC命令被调用时，所有队列中的命令才会被执行。</li>
+<li>EXEC：执行所有事务块内的命令。返回事务块内所有命令的返回值，按命令执行的先后顺序排列。 当操作被打断时，返回空值 nil 。<br>通过调用DISCARD，客户端可以清空事务队列，并放弃执行事务， 并且客户端会从事务状态中退出。</li>
+<li>UNWATCH命令可以取消watch对所有key的监控。</li>
+</ul>
+<h2 id="Redis事务其他实现"><a href="#Redis事务其他实现" class="headerlink" title="Redis事务其他实现"></a>Redis事务其他实现</h2><ul>
+<li>基于Lua脚本，Redis可以保证脚本内的命令一次性、按顺序地执行，<br>其同时也不提供事务运行错误的回滚，执行过程中如果部分命令运行错误，剩下的命令还是会继续运行完。</li>
+<li>基于中间标记变量，通过另外的标记变量来标识事务是否执行完成，读取数据时先读取该标记变量判断是否事务执行完成。但这样会需要额外写代码实现，比较繁琐。</li>
+</ul>
+<h2 id="Redis为何选择单线程？"><a href="#Redis为何选择单线程？" class="headerlink" title="Redis为何选择单线程？"></a>Redis为何选择单线程？</h2><p>在Redis 6.0以前，Redis的核心网络模型选择用单线程来实现。先来看下官方的回答：</p>
+<blockquote>
+<p>It’s not very frequent that CPU becomes your bottleneck with Redis， as usually Redisis either memory or network bound. For instance， using pipelining Redisrunning on an average Linux system can deliver even 1 million requests per second， so if your application mainly uses O(N) or O(log(N)) commands， it is hardly going to use too much CPU.</p>
+</blockquote>
+<p>核心意思就是，对于一个 DB 来说，CPU 通常不会是瓶颈，因为大多数请求不会是 CPU 密集型的，而是 I/O 密集型。具体到 Redis的话，如果不考虑 RDB/AOF 等持久化方案，Redis是完全的纯内存操作，执行速度是非常快的，因此这部分操作通常不会是性能瓶颈，Redis真正的性能瓶颈在于网络 I/O，也就是客户端和服务端之间的网络传输延迟，因此 Redis选择了单线程的 I/O 多路复用来实现它的核心网络模型。</p>
+<p>实际上更加具体的选择单线程的原因如下：</p>
+<ul>
+<li>避免过多的上下文切换开销：如果是单线程则可以规避进程内频繁的线程切换开销，因为程序始终运行在进程中单个线程内，没有多线程切换的场景。</li>
+<li>避免同步机制的开销：如果 Redis选择多线程模型，又因为 Redis是一个数据库，那么势必涉及到底层数据同步的问题，则必然会引入某些同步机制，比如锁，而我们知道 Redis不仅仅提供了简单的 key-value 数据结构，还有 list、set 和 hash 等等其他丰富的数据结构，而不同的数据结构对同步访问的加锁粒度又不尽相同，可能会导致在操作数据过程中带来很多加锁解锁的开销，增加程序复杂度的同时还会降低性能。</li>
+<li>简单可维护：如果 Redis使用多线程模式，那么所有的底层数据结构都必须实现成线程安全的，这无疑又使得 Redis的实现变得更加复杂。</li>
+</ul>
+<p>总而言之，Redis选择单线程可以说是多方博弈之后的一种权衡：在保证足够的性能表现之下，使用单线程保持代码的简单和可维护性。</p>
+<h2 id="Redis真的是单线程？"><a href="#Redis真的是单线程？" class="headerlink" title="Redis真的是单线程？"></a>Redis真的是单线程？</h2><p>讨论 这个问题前，先看下 Redis的版本中两个重要的节点：</p>
+<ol>
+<li>Redisv4.0（引入多线程处理异步任务）</li>
+<li>Redis 6.0（在网络模型中实现多线程 I/O ）</li>
+</ol>
+<p>所以，网络上说的Redis是单线程，通常是指在Redis 6.0之前，其核心网络模型使用的是单线程。</p>
+<p>且Redis6.0引入<strong>多线程I/O</strong>，只是用来<strong>处理网络数据的读写和协议的解析</strong>，而<strong>执行命令依旧是单线程</strong>。</p>
+<blockquote>
+<p>Redis在 v4.0 版本的时候就已经引入了的多线程来做一些异步操作，此举主要针对的是那些非常耗时的命令，通过将这些命令的执行进行异步化，避免阻塞单线程的事件循环。</p>
+<p>在 Redisv4.0 之后增加了一些的非阻塞命令如 <code>UNLINK</code>、<code>FLUSHALL ASYNC</code>、<code>FLUSHDB ASYNC</code>。</p>
+</blockquote>
+<h2 id="Redis-6-0为何引入多线程？"><a href="#Redis-6-0为何引入多线程？" class="headerlink" title="Redis 6.0为何引入多线程？"></a>Redis 6.0为何引入多线程？</h2><p>很简单，就是 Redis的网络 I/O 瓶颈已经越来越明显了。</p>
+<p>随着互联网的飞速发展，互联网业务系统所要处理的线上流量越来越大，Redis的单线程模式会导致系统消耗很多 CPU 时间在网络 I/O 上从而降低吞吐量，要提升 Redis的性能有两个方向：</p>
+<ul>
+<li>优化网络 I/O 模块</li>
+<li>提高机器内存读写的速度</li>
+</ul>
+<p>后者依赖于硬件的发展，暂时无解。所以只能从前者下手，网络 I/O 的优化又可以分为两个方向：</p>
+<ul>
+<li>零拷贝技术或者 DPDK 技术</li>
+<li>利用多核优势</li>
+</ul>
+<p>零拷贝技术有其局限性，无法完全适配 Redis这一类复杂的网络 I/O 场景，更多网络 I/O 对 CPU 时间的消耗和 Linux 零拷贝技术。而 DPDK 技术通过旁路网卡 I/O 绕过内核协议栈的方式又太过于复杂以及需要内核甚至是硬件的支持。</p>
+<p>总结起来，Redis支持多线程主要就是两个原因：</p>
+<ul>
+<li><p>可以充分利用服务器 CPU 资源，目前主线程只能利用一个核</p>
+</li>
+<li><p>多线程任务可以分摊 Redis 同步 IO 读写负荷</p>
+</li>
+</ul>
+<h2 id="Redis-6-0-采用多线程后，性能的提升效果如何？"><a href="#Redis-6-0-采用多线程后，性能的提升效果如何？" class="headerlink" title="Redis 6.0 采用多线程后，性能的提升效果如何？"></a>Redis 6.0 采用多线程后，性能的提升效果如何？</h2><p>Redis 作者 antirez 在 RedisConf 2019 分享时曾提到：Redis 6 引入的多线程 IO 特性对性能提升至少是一倍以上。</p>
+<p>国内也有大牛曾使用 unstable 版本在阿里云 esc 进行过测试，GET/SET 命令在 4 线程 IO 时性能相比单线程是几乎是翻倍了。</p>
+<h2 id="介绍下Redis的线程模型"><a href="#介绍下Redis的线程模型" class="headerlink" title="介绍下Redis的线程模型"></a>介绍下Redis的线程模型</h2><p>Redis的线程模型包括Redis 6.0之前和Redis 6.0。</p>
+<p>下面介绍的是Redis 6.0之前。</p>
+<p>Redis 是基于 reactor 模式开发了网络事件处理器，这个处理器叫做文件事件处理器（file event handler）。由于这个文件事件处理器是单线程的，所以 Redis 才叫做单线程的模型。采用 IO 多路复用机制同时监听多个 Socket，根据 socket 上的事件来选择对应的事件处理器来处理这个事件。</p>
+<blockquote>
+<p>IO多路复用是 IO 模型的一种，有时也称为异步阻塞 IO，是基于经典的 Reactor 设计模式设计的。多路指的是多个 Socket 连接，复用指的是复用一个线程。多路复用主要有三种技术：Select，Poll，Epoll。</p>
+<p>Epoll 是最新的也是目前最好的多路复用技术。</p>
+</blockquote>
+<p>模型如下图：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202105092153018231.png"></p>
+<p>文件事件处理器的结构包含了四个部分：</p>
+<ul>
+<li>多个 Socket。Socket 会产生 AE_READABLE 和 AE_WRITABLE 事件：<ul>
+<li>当 socket 变得可读时或者有新的可以应答的 socket 出现时，socket 就会产生一个 AE_READABLE 事件</li>
+<li>当 socket 变得可写时，socket 就会产生一个 AE_WRITABLE 事件。</li>
+</ul>
+</li>
+<li>IO 多路复用程序</li>
+<li>文件事件分派器</li>
+<li>事件处理器。事件处理器包括：连接应答处理器、命令请求处理器、命令回复处理器，每个处理器对应不同的 socket 事件：<ul>
+<li>如果是客户端要连接 Redis，那么会为 socket 关联连接应答处理器</li>
+<li>如果是客户端要写数据到 Redis（读、写请求命令），那么会为 socket 关联命令请求处理器</li>
+<li>如果是客户端要从 Redis 读数据，那么会为 socket 关联命令回复处理器</li>
+</ul>
+</li>
+</ul>
+<p>多个 socket 会产生不同的事件，不同的事件对应着不同的操作，IO 多路复用程序监听着这些 Socket，当这些 Socket 产生了事件，IO 多路复用程序会将这些事件放到一个队列中，通过这个队列，以有序、同步、每次一个事件的方式向文件时间分派器中传送。当事件处理器处理完一个事件后，IO 多路复用程序才会继续向文件分派器传送下一个事件。</p>
+<p>下图是客户端与 Redis 通信的一次完整的流程：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202105092153019692.png"></p>
+<ol>
+<li>Redis 启动初始化的时候，Redis 会将连接应答处理器与 AE_READABLE 事件关联起来。</li>
+<li>如果一个客户端跟 Redis 发起连接，此时 Redis 会产生一个 AE_READABLE 事件，由于开始之初 AE_READABLE 是与连接应答处理器关联，所以由连接应答处理器来处理该事件，这时连接应答处理器会与客户端建立连接，创建客户端响应的 socket，同时将这个 socket 的 AE_READABLE 事件与命令请求处理器关联起来。</li>
+<li>如果这个时间客户端向 Redis 发送一个命令（set k1 v1），这时 socket 会产生一个 AE_READABLE 事件，IO 多路复用程序会将该事件压入队列中，此时事件分派器从队列中取得该事件，由于该 socket 的 AE_READABLE 事件已经和命令请求处理器关联了，因此事件分派器会将该事件交给命令请求处理器处理，命令请求处理器读取事件中的命令并完成。操作完成后，Redis 会将该 socket 的 AE_WRITABLE 事件与命令回复处理器关联。</li>
+<li>如果客户端已经准备好接受数据后，Redis 中的该 socket 会产生一个 AE_WRITABLE 事件，同样会压入队列然后被事件派发器取出交给相对应的命令回复处理器，由该命令回复处理器将准备好的响应数据写入 socket 中，供客户端读取。</li>
+<li>命令回复处理器写完后，就会删除该 socket 的 AE_WRITABLE 事件与命令回复处理器的关联关系。</li>
+</ol>
+<h2 id="Redis-6-0-多线程的实现机制？"><a href="#Redis-6-0-多线程的实现机制？" class="headerlink" title="Redis 6.0 多线程的实现机制？"></a>Redis 6.0 多线程的实现机制？</h2><p><strong>流程简述如下：</strong></p>
+<ul>
+<li>主线程负责接收建立连接请求，获取 Socket 放入全局等待读处理队列。</li>
+<li>主线程处理完读事件之后，通过 RR（Round Robin）将这些连接分配给这些 IO 线程。</li>
+<li>主线程阻塞等待 IO 线程读取 Socket 完毕。</li>
+<li>主线程通过单线程的方式执行请求命令，请求数据读取并解析完成，但并不执行。</li>
+<li>主线程阻塞等待 IO 线程将数据回写 Socket 完毕。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210828175543973.png"></p>
+<p><strong>该设计有如下特点：</strong></p>
+<ul>
+<li>IO 线程要么同时在读 Socket，要么同时在写，不会同时读或写。</li>
+<li>IO 线程只负责读写 Socket 解析命令，不负责命令处理。</li>
+</ul>
+<h2 id="Redis-6-0开启多线程后，是否会存在线程并发安全问题？"><a href="#Redis-6-0开启多线程后，是否会存在线程并发安全问题？" class="headerlink" title="Redis 6.0开启多线程后，是否会存在线程并发安全问题？"></a>Redis 6.0开启多线程后，是否会存在线程并发安全问题？</h2><p>从实现机制可以看出，Redis 的多线程部分只是用来处理网络数据的读写和协议解析，执行命令仍然是单线程顺序执行。</p>
+<p>所以我们不需要去考虑控制 Key、Lua、事务，LPUSH/LPOP 等等的并发及线程安全问题。</p>
+<h2 id="Redis-6-0-与-Memcached-多线程模型的对比"><a href="#Redis-6-0-与-Memcached-多线程模型的对比" class="headerlink" title="Redis 6.0 与 Memcached 多线程模型的对比"></a>Redis 6.0 与 Memcached 多线程模型的对比</h2><ul>
+<li><p><strong>相同点：</strong>都采用了 Master 线程 -Worker 线程的模型。</p>
+</li>
+<li><p><strong>不同点：</strong>Memcached 执行主逻辑也是在 Worker 线程里，模型更加简单，实现了真正的线程隔离，符合我们对线程隔离的常规理解。</p>
+<p>而 Redis 把处理逻辑交还给 Master 线程，虽然一定程度上增加了模型复杂度，但也解决了线程并发安全等问题。</p>
+</li>
+</ul>
 <h2 id="什么是-bigkey？会存在什么影响？"><a href="#什么是-bigkey？会存在什么影响？" class="headerlink" title="什么是 bigkey？会存在什么影响？"></a>什么是 bigkey？会存在什么影响？</h2><p>bigkey 是指键值占用内存空间非常大的 key。例如一个字符串 a 存储了 200M 的数据。</p>
 <p>bigkey 的主要影响有：</p>
 <ul>
@@ -4336,6 +4940,19 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>超时阻塞；因为 bigkey 占用的空间比较大，所以操作起来效率会比较低，导致出现阻塞的可能性增加。</li>
 <li>导致内存空间不平衡；一个 bigkey 存储数据量比较大，同一个 key 在同一个节点或服务器中存储，会造成一定影响。</li>
 </ul>
+<h2 id="36-Redis常见使用方式有哪些？"><a href="#36-Redis常见使用方式有哪些？" class="headerlink" title="36. Redis常见使用方式有哪些？"></a>36. Redis常见使用方式有哪些？</h2><p>Redis的几种常见使用方式包括：</p>
+<ul>
+<li> Redis单副本；</li>
+<li> Redis多副本（主从）；</li>
+<li> Redis Sentinel（哨兵）；</li>
+<li> Redis Cluster；</li>
+<li> Redis自研。</li>
+</ul>
+<p>使用场景：</p>
+<p><strong>Redis单副本：</strong>如果数据量很少，主要是承载高并发高性能的场景，比如缓存一般就几个G的话，单机足够了。</p>
+<p><strong>主从模式：</strong>master 节点挂掉后，需要手动指定新的 master，可用性不高，基本不用。</p>
+<p><strong>哨兵模式：</strong>master 节点挂掉后，哨兵进程会主动选举新的 master，可用性高，但是每个节点存储的数据是一样的，浪费内存空间。数据量不是很多，集群规模不是很大，需要自动容错容灾的时候使用。</p>
+<p><strong>Redis cluster：</strong>主要是针对海量数据+高并发+高可用的场景，如果是海量数据，如果你的数据量很大，那么建议就用Redis cluster，所有master的容量总和就是Redis cluster可缓存的数据容量。</p>
 <h2 id="熟悉哪些-Redis-集群模式"><a href="#熟悉哪些-Redis-集群模式" class="headerlink" title="熟悉哪些 Redis 集群模式"></a>熟悉哪些 Redis 集群模式</h2><h3 id="Redis-Sentinel"><a href="#Redis-Sentinel" class="headerlink" title="Redis Sentinel"></a>Redis Sentinel</h3><p>体量较小时，选择 Redis Sentinel ，单主 Redis 足以支撑业务。</p>
 <h3 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h3><p>Redis 官方提供的集群化方案，体量较大时，选择 Redis Cluster ，通过分片，使用更多内存。</p>
 <h3 id="Twemprox"><a href="#Twemprox" class="headerlink" title="Twemprox"></a>Twemprox</h3><p>Twemprox 是 Twtter 开源的一个 Redis 和 Memcached 代理服务器，主要用于管理 Redis 和Memcached 集群，减少与Cache 服务器直接连接的数量。</p>
@@ -4353,6 +4970,202 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>可以相对平滑扩/缩容节点。</li>
 </ul>
 <p>Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对key 使用 crc16 算法算出一个结果，然后把结果对 16384 求余数，这样每个 key 都会对应一个编号在 0~16383 之间的哈希槽，redis 会根据节点数量大致均等的将哈希槽映射到不同的节点。</p>
+<h2 id="介绍下Redis单副本"><a href="#介绍下Redis单副本" class="headerlink" title="介绍下Redis单副本"></a>介绍下Redis单副本</h2><p>Redis单副本，采用单个Redis节点部署架构，没有备用节点实时同步数据，不提供数据持久化和备份策略，适用于数据可靠性要求不高的纯缓存业务场景。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210829103307048.png"></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>架构简单，部署方便；</li>
+<li>高性价比：缓存使用时无需备用节点（单实例可用性可以用supervisor或crontab保证），当然为了满足业务的高可用性，也可以牺牲一个备用节点，但同时刻只有一个实例对外提供服务；</li>
+<li>高性能。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>不保证数据的可靠性；</li>
+<li>在缓存使用，进程重启后，数据丢失，即使有备用的节点解决高可用性，但是仍然不能解决缓存预热问题，因此不适用于数据可靠性要求高的业务；</li>
+<li>高性能受限于单核CPU的处理能力（Redis是单线程机制），CPU为主要瓶颈，所以适合操作命令简单，排序、计算较少的场景。也可以考虑用Memcached替代。</li>
+</ul>
+<h2 id="介绍下Redis多副本（主从）"><a href="#介绍下Redis多副本（主从）" class="headerlink" title="介绍下Redis多副本（主从）"></a>介绍下Redis多副本（主从）</h2><p>Redis多副本，采用主从（replication）部署结构，相较于单副本而言最大的特点就是主从实例间数据实时同步，并且提供数据持久化和备份策略。主从实例部署在不同的物理服务器上，根据公司的基础环境配置，可以实现同时对外提供服务和读写分离策略。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210829103327631.png"></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li> 高可靠性：一方面，采用双机主备架构，能够在主库出现故障时自动进行主备切换，从库提升为主库提供服务，保证服务平稳运行；另一方面，开启数据持久化功能和配置合理的备份策略，能有效的解决数据误操作和数据异常丢失的问题；</li>
+<li> 读写分离策略：从节点可以扩展主库节点的读能力，有效应对大并发量的读操作。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li><p>故障恢复复杂，如果没有RedisHA系统（需要开发），当主库节点出现故障时，需要手动将一个从节点晋升为主节点，同时需要通知业务方变更配置，并且需要让其它从库节点去复制新主库节点，整个过程需要人为干预，比较繁琐；</p>
+</li>
+<li><p>主库的写能力受到单机的限制，可以考虑分片；</p>
+</li>
+<li><p>主库的存储能力受到单机的限制，可以考虑Pika；</p>
+</li>
+<li><p>原生复制的弊端在早期的版本中也会比较突出，如：Redis复制中断后，Slave会发起psync，此时如果同步不成功，则会进行全量同步，主库执行全量备份的同时可能会造成毫秒或秒级的卡顿；又由于COW机制，导致极端情况下的主库内存溢出，程序异常退出或宕机；主库节点生成备份文件导致服务器磁盘IO和CPU（压缩）资源消耗；发送数GB大小的备份文件导致服务器出口带宽暴增，阻塞请求，建议升级到最新版本。</p>
+</li>
+</ul>
+<h2 id="介绍下Redis-Sentinel（哨兵）"><a href="#介绍下Redis-Sentinel（哨兵）" class="headerlink" title="介绍下Redis Sentinel（哨兵）"></a>介绍下Redis Sentinel（哨兵）</h2><blockquote>
+<p>主从模式下，当主服务器宕机后，需要手动把一台从服务器切换为主服务器，这就需要人工干预，费事费力，还会造成一段时间内服务不可用。这种方式并不推荐，实际生产中，我们优先考虑哨兵模式。这种模式下，master 宕机，哨兵会自动选举 master 并将其他的 slave 指向新的 master。</p>
+</blockquote>
+<p>Redis Sentinel是社区版本推出的原生高可用解决方案，其部署架构主要包括两部分：Redis Sentinel集群和Redis数据集群。</p>
+<p>其中Redis Sentinel集群是由若干Sentinel节点组成的分布式集群，可以实现故障发现、故障自动转移、配置中心和客户端通知。Redis Sentinel的节点数量要满足2n+1（n&gt;=1）的奇数个。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210829103343110.png"></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>Redis Sentinel集群部署简单；</li>
+<li>能够解决Redis主从模式下的高可用切换问题；</li>
+<li>很方便实现Redis数据节点的线形扩展，轻松突破Redis自身单线程瓶颈，可极大满足Redis大容量或高性能的业务需求；</li>
+<li>可以实现一套Sentinel监控一组Redis数据节点或多组数据节点。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>部署相对Redis主从模式要复杂一些，原理理解更繁琐；</li>
+<li>资源浪费，Redis数据节点中slave节点作为备份节点不提供服务；</li>
+<li>Redis Sentinel主要是针对Redis数据节点中的主节点的高可用切换，对Redis的数据节点做失败判定分为主观下线和客观下线两种，对于Redis的从节点有对节点做主观下线操作，并不执行故障转移。</li>
+<li>不能解决读写分离问题，实现起来相对复杂。</li>
+</ul>
+<h2 id="介绍下Redis-Cluster"><a href="#介绍下Redis-Cluster" class="headerlink" title="介绍下Redis Cluster"></a>介绍下Redis Cluster</h2><blockquote>
+<p>Redis 的哨兵模式基本已经可以实现高可用，读写分离 ，但是在这种模式下每台 Redis 服务器都存储相同的数据，很浪费内存，所以在 Redis3.0 上加入了 Cluster 集群模式，实现了 Redis 的分布式存储，对数据进行分片，也就是说每台 Redis 节点上存储不同的内容。</p>
+</blockquote>
+<p>Redis Cluster是社区版推出的Redis分布式集群解决方案，主要解决Redis分布式方面的需求，比如，当遇到单机内存，并发和流量等瓶颈的时候，Redis Cluster能起到很好的负载均衡的目的。</p>
+<p>Redis Cluster集群节点最小配置6个节点以上（3主3从），其中主节点提供读写操作，从节点作为备用节点，不提供请求，只作为故障转移使用。</p>
+<p>Redis Cluster采用虚拟槽分区，所有的键根据哈希函数映射到0～16383个整数槽内，每个节点负责维护一部分槽以及槽所印映射的键值数据。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210829103444245.png"></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>无中心架构；</li>
+<li>数据按照slot存储分布在多个节点，节点间数据共享，可动态调整数据分布；</li>
+<li>可扩展性：可线性扩展到1000多个节点，节点可动态添加或删除；</li>
+<li>高可用性：部分节点不可用时，集群仍可用。通过增加Slave做standby数据副本，能够实现故障自动failover，节点之间通过gossip协议交换状态信息，用投票机制完成Slave到Master的角色提升；</li>
+<li>降低运维成本，提高系统的扩展性和可用性。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>Client实现复杂，驱动要求实现Smart Client，缓存slots mapping信息并及时更新，提高了开发难度，客户端的不成熟影响业务的稳定性。目前仅JedisCluster相对成熟，异常处理部分还不完善，比如常见的“max redirect exception”。</li>
+<li>节点会因为某些原因发生阻塞（阻塞时间大于clutser-node-timeout），被判断下线，这种failover是没有必要的。</li>
+<li>数据通过异步复制，不保证数据的强一致性。</li>
+<li>多个业务使用同一套集群时，无法根据统计区分冷热数据，资源隔离性较差，容易出现相互影响的情况。</li>
+<li>Slave在集群中充当“冷备”，不能缓解读压力，当然可以通过SDK的合理设计来提高Slave资源的利用率。</li>
+<li>Key批量操作限制，如使用mset、mget目前只支持具有相同slot值的Key执行批量操作。对于映射为不同slot值的Key由于Keys不支持跨slot查询，所以执行mset、mget、sunion等操作支持不友好。</li>
+<li>Key事务操作支持有限，只支持多key在同一节点上的事务操作，当多个Key分布于不同的节点上时无法使用事务功能。</li>
+<li>Key作为数据分区的最小粒度，不能将一个很大的键值对象如hash、list等映射到不同的节点。</li>
+<li>不支持多数据库空间，单机下的Redis可以支持到16个数据库，集群模式下只能使用1个数据库空间，即db 0。</li>
+<li>复制结构只支持一层，从节点只能复制主节点，不支持嵌套树状复制结构。</li>
+<li>避免产生hot-key，导致主库节点成为系统的短板。</li>
+<li>避免产生big-key，导致网卡撑爆、慢查询等。</li>
+<li>重试时间应该大于cluster-node-time时间。</li>
+<li>Redis Cluster不建议使用pipeline和multi-keys操作，减少max redirect产生的场景。</li>
+</ul>
+<h2 id="介绍下Redis自研"><a href="#介绍下Redis自研" class="headerlink" title="介绍下Redis自研"></a>介绍下Redis自研</h2><p>Redis自研的高可用解决方案，主要体现在配置中心、故障探测和failover的处理机制上，通常需要根据企业业务的实际线上环境来定制化。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210829103426922.png"></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>高可靠性、高可用性；</li>
+<li>自主可控性高；</li>
+<li>贴切业务实际需求，可缩性好，兼容性好。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>实现复杂，开发成本高；</li>
+<li>需要建立配套的周边设施，如监控，域名服务，存储元数据信息的数据库等；</li>
+<li>维护成本高。</li>
+</ul>
+<h2 id="Redis高可用方案具体怎么实施？"><a href="#Redis高可用方案具体怎么实施？" class="headerlink" title="Redis高可用方案具体怎么实施？"></a>Redis高可用方案具体怎么实施？</h2><p>使用官方推荐的哨兵(sentinel)机制就能实现，当主节点出现故障时，由Sentinel自动完成故障发现和转移，并通知应用方，实现高可用性。它有四个主要功能：</p>
+<ul>
+<li>集群监控，负责监控Redis master和slave进程是否正常工作。</li>
+<li>消息通知，如果某个Redis实例有故障，那么哨兵负责发送消息作为报警通知给管理员。</li>
+<li>故障转移，如果master node挂掉了，会自动转移到slave node上。</li>
+<li>配置中心，如果故障转移发生了，通知client客户端新的master地址。</li>
+</ul>
+<h2 id="了解主从复制的原理吗？"><a href="#了解主从复制的原理吗？" class="headerlink" title="了解主从复制的原理吗？"></a>了解主从复制的原理吗？</h2><ol>
+<li>主从架构的核心原理</li>
+</ol>
+<p>当启动一个slave node的时候，它会发送一个PSYNC命令给master node</p>
+<p>如果这是slave node重新连接master node，那么master node仅仅会复制给slave部分缺少的数据; 否则如果是slave node第一次连接master node，那么会触发一次full resynchronization</p>
+<p>开始full resynchronization的时候，master会启动一个后台线程，开始生成一份RDB快照文件，同时还会将从客户端收到的所有写命令缓存在内存中。RDB文件生成完毕之后，master会将这个RDB发送给slave，slave会先写入本地磁盘，然后再从本地磁盘加载到内存中。然后master会将内存中缓存的写命令发送给slave，slave也会同步这些数据。</p>
+<p>slave node如果跟master node有网络故障，断开了连接，会自动重连。master如果发现有多个slave node都来重新连接，仅仅会启动一个rdb save操作，用一份数据服务所有slave node。</p>
+<ol start="2">
+<li>主从复制的断点续传</li>
+</ol>
+<p>从Redis 2.8开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份</p>
+<p>master node会在内存中常见一个backlog，master和slave都会保存一个replica offset还有一个master id，offset就是保存在backlog中的。如果master和slave网络连接断掉了，slave会让master从上次的replica offset开始继续复制</p>
+<p>但是如果没有找到对应的offset，那么就会执行一次resynchronization</p>
+<ol start="3">
+<li>无磁盘化复制</li>
+</ol>
+<p>master在内存中直接创建rdb，然后发送给slave，不会在自己本地落地磁盘了</p>
+<p>repl-diskless-sync repl-diskless-sync-delay，等待一定时长再开始复制，因为要等更多slave重新连接过来</p>
+<ol start="4">
+<li>过期key处理</li>
+</ol>
+<p>slave不会过期key，只会等待master过期key。如果master过期了一个key，或者通过LRU淘汰了一个key，那么会模拟一条del命令发送给slave。</p>
+<h2 id="由于主从延迟导致读取到过期数据怎么处理？"><a href="#由于主从延迟导致读取到过期数据怎么处理？" class="headerlink" title="由于主从延迟导致读取到过期数据怎么处理？"></a>由于主从延迟导致读取到过期数据怎么处理？</h2><ol>
+<li>通过scan命令扫库：当Redis中的key被scan的时候，相当于访问了该key，同样也会做过期检测，充分发挥Redis惰性删除的策略。这个方法能大大降低了脏数据读取的概率，但缺点也比较明显，会造成一定的数据库压力，否则影响线上业务的效率。</li>
+<li>Redis加入了一个新特性来解决主从不一致导致读取到过期数据问题，增加了key是否过期以及对主从库的判断，如果key已过期，当前访问的master则返回null；当前访问的是从库，且执行的是只读命令也返回null。</li>
+</ol>
+<h2 id="主从复制的过程中如果因为网络原因停止复制了会怎么样？"><a href="#主从复制的过程中如果因为网络原因停止复制了会怎么样？" class="headerlink" title="主从复制的过程中如果因为网络原因停止复制了会怎么样？"></a>主从复制的过程中如果因为网络原因停止复制了会怎么样？</h2><p>如果出现网络故障断开连接了，会自动重连的，从Redis 2.8开始，就支持主从复制的断点续传，可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
+<p>master如果发现有多个slave node都来重新连接，仅仅会启动一个rdb save操作，用一份数据服务所有slave node。</p>
+<p>master node会在内存中创建一个<code>backlog</code>，master和slave都会保存一个<code>replica offset</code>，还有一个<code>master id</code>，offset就是保存在backlog中的。如果master和slave网络连接断掉了，slave会让master从上次的replica offset开始继续复制。</p>
+<p>但是如果没有找到对应的offset，那么就会执行一次<code>resynchronization</code>全量复制。</p>
+<h2 id="Redis主从架构数据会丢失吗，为什么？"><a href="#Redis主从架构数据会丢失吗，为什么？" class="headerlink" title="Redis主从架构数据会丢失吗，为什么？"></a>Redis主从架构数据会丢失吗，为什么？</h2><p>有两种数据丢失的情况：</p>
+<ol>
+<li>异步复制导致的数据丢失：因为master -&gt; slave的复制是异步的，所以可能有部分数据还没复制到slave，master就宕机了，此时这些部分数据就丢失了。</li>
+<li>脑裂导致的数据丢失：某个master所在机器突然脱离了正常的网络，跟其他slave机器不能连接，但是实际上master还运行着，此时哨兵可能就会认为master宕机了，然后开启选举，将其他slave切换成了master。这个时候，集群里就会有两个master，也就是所谓的脑裂。此时虽然某个slave被切换成了master，但是可能client还没来得及切换到新的master，还继续写向旧master的数据可能也丢失了。因此旧master再次恢复的时候，会被作为一个slave挂到新的master上去，自己的数据会清空，重新从新的master复制数据。</li>
+</ol>
+<h2 id="如何解决主从架构数据丢失的问题？"><a href="#如何解决主从架构数据丢失的问题？" class="headerlink" title="如何解决主从架构数据丢失的问题？"></a>如何解决主从架构数据丢失的问题？</h2><p>数据丢失的问题是不可避免的，但是我们可以尽量减少。</p>
+<p>在Redis的配置文件里设置参数</p>
+<pre class="line-numbers language-none"><code class="language-none">min-slaves-to-write 1
+min-slaves-max-lag 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><code>min-slaves-to-write</code>默认情况下是0，<code>min-slaves-max-lag</code>默认情况下是10。</p>
+<p>上面的配置的意思是要求至少有1个slave，数据复制和同步的延迟不能超过10秒。如果说一旦所有的slave，数据复制和同步的延迟都超过了10秒钟，那么这个时候，master就不会再接收任何请求了。</p>
+<p>减小<code>min-slaves-max-lag</code>参数的值，这样就可以避免在发生故障时大量的数据丢失，一旦发现延迟超过了该值就不会往master中写入数据。</p>
+<p>那么对于client，我们可以采取降级措施，将数据暂时写入本地缓存和磁盘中，在一段时间后重新写入master来保证数据不丢失；也可以将数据写入kafka消息队列，隔一段时间去消费kafka中的数据。</p>
+<h2 id="Redis哨兵是怎么工作的？"><a href="#Redis哨兵是怎么工作的？" class="headerlink" title="Redis哨兵是怎么工作的？"></a>Redis哨兵是怎么工作的？</h2><ol>
+<li><p>每个Sentinel以每秒钟一次的频率向它所知的Master，Slave以及其他 Sentinel 实例发送一个 PING 命令。</p>
+</li>
+<li><p>如果一个实例（instance）距离最后一次有效回复 PING 命令的时间超过 down-after-milliseconds 选项所指定的值， 则这个实例会被当前 Sentinel 标记为主观下线。</p>
+</li>
+<li><p>如果一个Master被标记为主观下线，则正在监视这个Master的所有 Sentinel 要以每秒一次的频率确认Master的确进入了主观下线状态。</p>
+</li>
+<li><p>当有足够数量的 Sentinel（大于等于配置文件指定的值）在指定的时间范围内确认Master的确进入了主观下线状态， 则Master会被标记为客观下线 。</p>
+</li>
+<li><p>当Master被 Sentinel 标记为客观下线时，Sentinel 向下线的 Master 的所有 Slave 发送 INFO 命令的频率会从 10 秒一次改为每秒一次 （在一般情况下， 每个 Sentinel 会以每 10 秒一次的频率向它已知的所有Master，Slave发送 INFO 命令 ）。</p>
+</li>
+<li><p>若没有足够数量的 Sentinel 同意 Master 已经下线， Master 的客观下线状态就会变成主观下线。若 Master 重新向 Sentinel 的 PING 命令返回有效回复， Master 的主观下线状态就会被移除。</p>
+</li>
+<li><p>sentinel节点会与其他sentinel节点进行“沟通”，投票选举一个sentinel节点进行故障处理，在从节点中选取一个主节点，其他从节点挂载到新的主节点上自动复制新主节点的数据。</p>
+</li>
+</ol>
+<h2 id="故障转移时会从剩下的slave选举一个新的master，被选举为master的标准是什么？"><a href="#故障转移时会从剩下的slave选举一个新的master，被选举为master的标准是什么？" class="headerlink" title="故障转移时会从剩下的slave选举一个新的master，被选举为master的标准是什么？"></a>故障转移时会从剩下的slave选举一个新的master，被选举为master的标准是什么？</h2><p>如果一个master被认为odown了，而且majority哨兵都允许了主备切换，那么某个哨兵就会执行主备切换操作，此时首先要选举一个slave来，会考虑slave的一些信息。</p>
+<ul>
+<li>跟master断开连接的时长。<br>如果一个slave跟master断开连接已经超过了down-after-milliseconds的10倍，外加master宕机的时长，那么slave就被认为不适合选举为master.</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">( down-after-milliseconds * 10) + milliseconds_since_master_is_in_SDOWN_state<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li><p>slave优先级。<br>按照slave优先级进行排序，slave priority越低，优先级就越高</p>
+</li>
+<li><p>复制offset。<br>如果slave priority相同，那么看replica offset，哪个slave复制了越多的数据，offset越靠后，优先级就越高</p>
+</li>
+<li><p>run id<br>如果上面两个条件都相同，那么选择一个run id比较小的那个slave。</p>
+</li>
+</ul>
+<h2 id="同步配置的时候其他哨兵根据什么更新自己的配置呢？"><a href="#同步配置的时候其他哨兵根据什么更新自己的配置呢？" class="headerlink" title="同步配置的时候其他哨兵根据什么更新自己的配置呢？"></a>同步配置的时候其他哨兵根据什么更新自己的配置呢？</h2><p>执行切换的那个哨兵，会从要切换到的新master（salve-&gt;master）那里得到一个configuration epoch，这就是一个version号，每次切换的version号都必须是唯一的。</p>
+<p>如果第一个选举出的哨兵切换失败了，那么其他哨兵，会等待failover-timeout时间，然后接替继续执行切换，此时会重新获取一个新的configuration epoch 作为新的version号。</p>
+<p>这个version号就很重要了，因为各种消息都是通过一个channel去发布和监听的，所以一个哨兵完成一次新的切换之后，新的master配置是跟着新的version号的，其他的哨兵都是根据版本号的大小来更新自己的master配置的。</p>
+<h2 id="为什么Redis哨兵集群只有2个节点无法正常工作？"><a href="#为什么Redis哨兵集群只有2个节点无法正常工作？" class="headerlink" title="为什么Redis哨兵集群只有2个节点无法正常工作？"></a>为什么Redis哨兵集群只有2个节点无法正常工作？</h2><p>哨兵集群必须部署2个以上节点。</p>
+<p>如果两个哨兵实例，即两个Redis实例，一主一从的模式。</p>
+<p>则Redis的配置quorum=1，表示一个哨兵认为master宕机即可认为master已宕机。</p>
+<p>但是如果是机器1宕机了，那哨兵1和master都宕机了，虽然哨兵2知道master宕机了，但是这个时候，需要majority，也就是大多数哨兵都是运行的，2个哨兵的majority就是2（2的majority=2，3的majority=2，5的majority=3，4的majority=2），2个哨兵都运行着，就可以允许执行故障转移。</p>
+<p>但此时哨兵1没了就只有1个哨兵了了，此时就没有majority来允许执行故障转移，所以故障转移不会执行。</p>
+<h2 id="Redis-cluster中是如何实现数据分布的？这种方式有什么优点？"><a href="#Redis-cluster中是如何实现数据分布的？这种方式有什么优点？" class="headerlink" title="Redis cluster中是如何实现数据分布的？这种方式有什么优点？"></a>Redis cluster中是如何实现数据分布的？这种方式有什么优点？</h2><p>Redis cluster有固定的16384个hash slot（哈希槽），对每个key计算CRC16值，然后对16384取模，可以获取key对应的hash slot。</p>
+<p>Redis cluster中每个master都会持有部分slot（槽），比如有3个master，那么可能每个master持有5000多个hash slot。</p>
+<p>hash slot让node的增加和移除很简单，增加一个master，就将其他master的hash slot移动部分过去，减少一个master，就将它的hash slot移动到其他master上去。每次增加或减少master节点都是对16384取模，而不是根据master数量，这样原本在老的master上的数据不会因master的新增或减少而找不到。并且增加或减少master时Redis cluster移动hash slot的成本是非常低的。</p>
+<h2 id="Redis-cluster节点间通信是什么机制？"><a href="#Redis-cluster节点间通信是什么机制？" class="headerlink" title="Redis cluster节点间通信是什么机制？"></a>Redis cluster节点间通信是什么机制？</h2><p>Redis cluster节点间采取gossip协议进行通信，所有节点都持有一份元数据，不同的节点如果出现了元数据的变更之后U不断地i将元数据发送给其他节点让其他节点进行数据变更。</p>
+<blockquote>
+<p>节点互相之间不断通信，保持整个集群所有节点的数据是完整的。<br>主要交换故障信息、节点的增加和移除、hash slot信息等。</p>
+</blockquote>
+<p>这种机制的好处在于，元数据的更新比较分散，不是集中在一个地方，更新请求会陆陆续续，打到所有节点上去更新，有一定的延时，降低了压力;</p>
+<p>缺点，元数据更新有延时，可能导致集群的一些操作会有一些滞后。</p>
 <h2 id="Redis-Cluster-集群方案什么情况下会导致整个集群不可用"><a href="#Redis-Cluster-集群方案什么情况下会导致整个集群不可用" class="headerlink" title="Redis Cluster 集群方案什么情况下会导致整个集群不可用"></a>Redis Cluster 集群方案什么情况下会导致整个集群不可用</h2><p>Redis 没有使用哈希一致性算法，而是使用哈希槽。Redis 中的哈希槽一共有 16384 个，计算给定密钥的哈希槽，我们只需要对密钥的 CRC16 取摸 16384。假设集群中有 A、B、C 三个集群节点，不存在复制模式下，每个集群的节点包含的哈希槽如下：</p>
 <ul>
 <li>节点 A 包含从 0 到 5500 的哈希槽；</li>
@@ -4393,26 +5206,92 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>设置缓存淘汰策略，提高内存的使用效率；</li>
 <li>使用 Redis 集群模式，提高存储量。</li>
 </ul>
-<h2 id="缓存雪崩、缓存穿透、缓存预热、缓存更新、缓存降级等问题"><a href="#缓存雪崩、缓存穿透、缓存预热、缓存更新、缓存降级等问题" class="headerlink" title="缓存雪崩、缓存穿透、缓存预热、缓存更新、缓存降级等问题"></a>缓存雪崩、缓存穿透、缓存预热、缓存更新、缓存降级等问题</h2><h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p><strong>我们可以简单的理解为：</strong> 由于原有缓存失效，新缓存未到期间 (例如：我们设置缓存时采用了相同的过期时间，在同一时刻出现大面积的缓存过期)，所有原本应该访问缓存的请求都去查询数据库了，而对数据库CPU和内存造成巨大压力，严重的会造成数据库宕机。从而形成一系列连锁反应，造成整个系统崩溃。 </p>
-<p><strong>解决办法：</strong> 大多数系统设计者考虑用加锁（ 最多的解决方案）或者队列的方式保证来保证不会有大量的线程对数据库一次性进行读写，从而避免失效时大量的并发请求落到底层存储系统上。还有一个简单方案就时讲缓存失效时间分散开。</p>
-<h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p>缓存穿透是指用户查询数据，在数据库没有，自然在缓存中也不会有。这样就导致用户查询的时候，在缓存中找不到，每次都要去数据库再查询一遍，然后返回空（相当于进行了两次无用的查询）。这样请求就绕过缓存直接查数据库，这也是经常提的缓存命中率问题。</p>
-<p><strong>解决办法：</strong>最常见的则是采用布隆过滤器，将所有可能存在的数据哈希到一个足够大的bitmap中，一个一定不存在的数据会被这个bitmap拦截掉，从而避免了对底层存储系统的查询压力。 另外也有一个更为简单粗暴的方法，如果一个查询返回的数据为空（不管是数据不存在，还是系统故障），我们仍然把这个空结果进行缓存，但它的过期时间会很短，最长不超过五分钟。通过这个直接设置的默认值存放到缓存，这样第二次到缓冲中获取就有值了，而不会继续访问数据库，这种办法最简单粗暴。5TB的硬盘上放满了数据，请写一个算法将这些数据进行排重。如果这些数据是一些32bit大小的数据该如何解决？如果是64bit的呢？</p>
-<p>对于空间的利用到达了一种极致，那就是Bitmap和布隆过滤器(Bloom Filter)。 Bitmap： 典型的就是哈希表缺点是，Bitmap对于每个元素只能记录1bit信息，如果还想完成额外的功能，恐怕只能靠牺牲更多的空间、时间来完成了。</p>
-<p><strong>布隆过滤器（推荐）</strong> 就是引入了k(k&gt;1)k(k&gt;1)个相互独立的哈希函数，保证在给定的空间、误判率下，完成元素判重的过程。 它的优点是空间效率和查询时间都远远超过一般的算法，缺点是有一定的误识别率和删除困难。 Bloom-Filter算法的核心思想就是利用多个不同的Hash函数来解决“冲突”。 Hash存在一个冲突（碰撞）的问题，用同一个Hash得到的两个URL的值有可能相同。为了减少冲突，我们可以多引入几个Hash，如果通过其中的一个Hash值我们得出某元素不在集合中，那么该元素肯定不在集合中。只有在所有的Hash函数告诉我们该元素在集合中时，才能确定该元素存在于集合中。这便是Bloom-Filter的基本思想。 Bloom-Filter一般用于在大数据量的集合中判定某元素是否存在。</p>
-<h3 id="缓存预热"><a href="#缓存预热" class="headerlink" title="缓存预热"></a>缓存预热</h3><p>缓存预热这个应该是一个比较常见的概念，相信很多小伙伴都应该可以很容易的理解，缓存预热就是系统上线后，将相关的缓存数据直接加载到缓存系统。这样就可以避免在用户请求的时候，先查询数据库，然后再将数据缓存的问题！用户直接查询事先被预热的缓存数据！</p>
-<p><strong>解决思路：</strong></p>
-<ol>
-<li>直接写个缓存刷新页面，上线时手工操作下； </li>
-<li>数据量不大，可以在项目启动的时候自动进行加载； </li>
-<li>定时刷新缓存。</li>
-</ol>
-<h3 id="缓存更新"><a href="#缓存更新" class="headerlink" title="缓存更新"></a>缓存更新</h3><p>除了缓存服务器自带的缓存失效策略之外（Redis默认的有6中策略可供选择），我们还可以根据具体的业务需求进行自定义的缓存淘汰，<br>常见的策略有两种： </p>
+<h2 id="什么是缓存击穿"><a href="#什么是缓存击穿" class="headerlink" title="什么是缓存击穿?"></a>什么是缓存击穿?</h2><p>缓存击穿跟缓存雪崩有点类似，缓存雪崩是大规模的key失效，而缓存击穿是某个热点的key失效，大并发集中对其进行请求，就会造成大量请求读缓存没读到数据，从而导致高并发访问数据库，引起数据库压力剧增。这种现象就叫做缓存击穿。</p>
+<p>从两个方面解决，第一是否可以考虑热点key不设置过期时间，第二是否可以考虑降低打在数据库上的请求数量。</p>
+<p>解决方案：</p>
+<ul>
+<li><p>在缓存失效后，通过互斥锁或者队列来控制读数据写缓存的线程数量，比如某个key只允许一个线程查询数据和写缓存，其他线程等待。这种方式会阻塞其他的线程，此时系统的吞吐量会下降</p>
+</li>
+<li><p>热点数据缓存永远不过期。永不过期实际包含两层意思：</p>
+<ul>
+<li>物理不过期，针对热点key不设置过期时间</li>
+<li>逻辑过期，把过期时间存在key对应的value里，如果发现要过期了，通过一个后台的异步线程进行缓存的构建</li>
+</ul>
+</li>
+</ul>
+<h2 id="什么是缓存穿透"><a href="#什么是缓存穿透" class="headerlink" title="什么是缓存穿透?"></a>什么是缓存穿透?</h2><p>缓存穿透是指用户请求的数据在缓存中不存在即没有命中，同时在数据库中也不存在，导致用户每次请求该数据都要去数据库中查询一遍。如果有恶意攻击者不断请求系统中不存在的数据，会导致短时间大量请求落在数据库上，造成数据库压力过大，甚至导致数据库承受不住而宕机崩溃。</p>
+<blockquote>
+<p> 缓存穿透的关键在于在Redis中查不到key值，它和缓存击穿的根本区别在于传进来的key在Redis中是不存在的。假如有黑客传进大量的不存在的key，那么大量的请求打在数据库上是很致命的问题，所以在日常开发中要对参数做好校验，一些非法的参数，不可能存在的key就直接返回错误提示。</p>
+</blockquote>
+<p><img src="http://blog-img.coolsen.cn/img/2021013117512340.png" alt="img"></p>
+<p>解决方法：</p>
+<ul>
+<li>将无效的key存放进Redis中：</li>
+</ul>
+<p>当出现Redis查不到数据，数据库也查不到数据的情况，我们就把这个key保存到Redis中，设置value=”null”，并设置其过期时间极短，后面再出现查询这个key的请求的时候，直接返回null，就不需要再查询数据库了。但这种处理方式是有问题的，假如传进来的这个不存在的Key值每次都是随机的，那存进Redis也没有意义。</p>
+<ul>
+<li>使用布隆过滤器：</li>
+</ul>
+<p>如果布隆过滤器判定某个 key 不存在布隆过滤器中，那么就一定不存在，如果判定某个 key 存在，那么很大可能是存在(存在一定的误判率)。于是我们可以在缓存之前再加一个布隆过滤器，将数据库中的所有key都存储在布隆过滤器中，在查询Redis前先去布隆过滤器查询 key 是否存在，如果不存在就直接返回，不让其访问数据库，从而避免了对底层存储系统的查询压力。</p>
+<blockquote>
+<p>如何选择：针对一些恶意攻击，攻击带过来的大量key是随机，那么我们采用第一种方案就会缓存大量不存在key的数据。那么这种方案就不合适了，我们可以先对使用布隆过滤器方案进行过滤掉这些key。所以，针对这种key异常多、请求重复率比较低的数据，优先使用第二种方案直接过滤掉。而对于空数据的key有限的，重复率比较高的，则可优先采用第一种方式进行缓存。</p>
+</blockquote>
+<h2 id="什么是缓存雪崩"><a href="#什么是缓存雪崩" class="headerlink" title="什么是缓存雪崩?"></a>什么是缓存雪崩?</h2><p>如果缓在某一个时刻出现大规模的key失效，那么就会导致大量的请求打在了数据库上面，导致数据库压力巨大，如果在高并发的情况下，可能瞬间就会导致数据库宕机。这时候如果运维马上又重启数据库，马上又会有新的流量把数据库打死。这就是缓存雪崩。</p>
+<p>造成缓存雪崩的关键在于同一时间的大规模的key失效，主要有两种可能：第一种是Redis宕机，第二种可能就是采用了相同的过期时间。</p>
+<p>解决方案：</p>
+<p>1、事前：</p>
+<ul>
+<li><p>均匀过期：设置不同的过期时间，让缓存失效的时间尽量均匀，避免相同的过期时间导致缓存雪崩，造成大量数据库的访问。如把每个Key的失效时间都加个随机值，<code>setRedis（Key，value，time + Math.random() * 10000）；</code>，保证数据不会在同一时间大面积失效。</p>
+</li>
+<li><p>分级缓存：第一级缓存失效的基础上，访问二级缓存，每一级缓存的失效时间都不同。</p>
+</li>
+<li><p>热点数据缓存永远不过期。永不过期实际包含两层意思：</p>
+<ul>
+<li>物理不过期，针对热点key不设置过期时间</li>
+<li>逻辑过期，把过期时间存在key对应的value里，如果发现要过期了，通过一个后台的异步线程进行缓存的构建</li>
+</ul>
+</li>
+<li><p>保证Redis缓存的高可用，防止Redis宕机导致缓存雪崩的问题。可以使用 主从+ 哨兵，Redis集群来避免 Redis 全盘崩溃的情况。</p>
+</li>
+</ul>
+<p>2、事中：</p>
+<ul>
+<li><p>互斥锁：在缓存失效后，通过互斥锁或者队列来控制读数据写缓存的线程数量，比如某个key只允许一个线程查询数据和写缓存，其他线程等待。这种方式会阻塞其他的线程，此时系统的吞吐量会下降</p>
+</li>
+<li><p>使用熔断机制，限流降级。当流量达到一定的阈值，直接返回“系统拥挤”之类的提示，防止过多的请求打在数据库上将数据库击垮，至少能保证一部分用户是可以正常使用，其他用户多刷新几次也能得到结果。</p>
+</li>
+</ul>
+<p>3、事后：</p>
+<p>开启Redis持久化机制，尽快恢复缓存数据，一旦重启，就能从磁盘上自动加载数据恢复内存中的数据。</p>
+<h2 id="什么是缓存预热"><a href="#什么是缓存预热" class="headerlink" title="什么是缓存预热?"></a>什么是缓存预热?</h2><p>缓存预热是指系统上线后，提前将相关的缓存数据加载到缓存系统。避免在用户请求的时候，先查询数据库，然后再将数据缓存的问题，用户直接查询事先被预热的缓存数据。</p>
+<p>如果不进行预热，那么Redis初始状态数据为空，系统上线初期，对于高并发的流量，都会访问到数据库中， 对数据库造成流量的压力。</p>
+<p>缓存预热解决方案：</p>
+<ul>
+<li><p>数据量不大的时候，工程启动的时候进行加载缓存动作；</p>
+</li>
+<li><p>数据量大的时候，设置一个定时任务脚本，进行缓存的刷新；</p>
+</li>
+<li><p>数据量太大的时候，优先保证热点数据进行提前加载到缓存。</p>
+</li>
+</ul>
+<h2 id="什么是缓存降级？"><a href="#什么是缓存降级？" class="headerlink" title="什么是缓存降级？"></a>什么是缓存降级？</h2><p>缓存降级是指缓存失效或缓存服务器挂掉的情况下，不去访问数据库，直接返回默认数据或访问服务的内存数据。降级一般是有损的操作，所以尽量减少降级对于业务的影响程度。</p>
+<p>在进行降级之前要对系统进行梳理，看看系统是不是可以丢卒保帅；从而梳理出哪些必须誓死保护，哪些可降级；比如可以参考日志级别设置预案：</p>
+<ul>
+<li><p>一般：比如有些服务偶尔因为网络抖动或者服务正在上线而超时，可以自动降级；</p>
+</li>
+<li><p>警告：有些服务在一段时间内成功率有波动（如在95~100%之间），可以自动降级或人工降级，并发送告警；</p>
+</li>
+<li><p>错误：比如可用率低于90%，或者数据库连接池被打爆了，或者访问量突然猛增到系统能承受的最大阀值，此时可以根据情况自动降级或者人工降级；</p>
+</li>
+<li><p>严重错误：比如因为特殊原因数据错误了，此时需要紧急人工降级。</p>
+</li>
+</ul>
+<h2 id="什么是缓存更新？"><a href="#什么是缓存更新？" class="headerlink" title="什么是缓存更新？"></a>什么是缓存更新？</h2><p>除了缓存服务器自带的缓存失效策略之外（Redis默认的有6中策略可供选择），我们还可以根据具体的业务需求进行自定义的缓存淘汰，<br>常见的策略有两种： </p>
 <ol>
 <li>定时去清理过期的缓存；</li>
 <li>当有用户请求过来时，再判断这个请求所用到的缓存是否过期，过期的话就去底层系统得到新数据并更新缓存。两者各有优劣，第一种的缺点是维护大量缓存的key是比较麻烦的，第二种的缺点就是每次用户请求过来都要判断缓存失效，逻辑相对比较复杂！具体用哪种方案，大家可以根据自己的应用场景来权衡。</li>
 </ol>
-<h3 id="缓存降级"><a href="#缓存降级" class="headerlink" title="缓存降级"></a>缓存降级</h3><p>当访问量剧增、服务出现问题（如响应时间慢或不响应）或非核心服务影响到核心流程的性能时，仍然需要保证服务还是可用的，即使是有损服务。系统可以根据一些关键数据进行自动降级，也可以配置开关实现人工降级。 降级的最终目的是保证核心服务可用，即使是有损的。而且有些服务是无法降级的（如加入购物车、结算）。</p>
-<h3 id="以参考日志级别设置预案"><a href="#以参考日志级别设置预案" class="headerlink" title="以参考日志级别设置预案"></a>以参考日志级别设置预案</h3><ol>
+<h2 id="以参考日志级别设置预案"><a href="#以参考日志级别设置预案" class="headerlink" title="以参考日志级别设置预案"></a>以参考日志级别设置预案</h2><ol>
 <li>一般：比如有些服务偶尔因为网络抖动或者服务正在上线而超时，可以自动降级；</li>
 <li>警告：有些服务在一段时间内成功率有波动（如在95~100%之间），可以自动降级或人工降级，并发送告警；</li>
 <li>错误：比如可用率低于90%，或者数据库连接池被打爆了，或者访问量突然猛增到系统能承受的最大阀值，此时可以根据情况自动降级或者人工降级；</li>
@@ -4421,11 +5300,22 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <p>服务降级的目的，是为了防止Redis服务故障，导致数据库跟着一起发生雪崩问题。因此，对于不重要的缓存数据，可以采取服务降级策略，例如一个比较常见的做法就是，Redis出现问题，不去数据库查询，而是直接返回默认值给用户。</p>
 <h2 id="热点数据和冷数据是什么"><a href="#热点数据和冷数据是什么" class="headerlink" title="热点数据和冷数据是什么"></a>热点数据和冷数据是什么</h2><p><strong>热点数据，缓存才有价值</strong>对于冷数据而言，大部分数据可能还没有再次访问到就已经被挤出内存，不仅占用内存，而且价值不大。频繁修改的数据，看情况考虑使用缓存 对于上面两个例子，寿星列表、导航信息都存在一个特点，就是信息修改频率不高，读取通常非常高的场景。 对于热点数据，比如我们的某IM产品，生日祝福模块，当天的寿星列表，缓存以后可能读取数十万次。再举个例子，某导航产品，我们将导航信息，缓存以后可能读取数百万次。 <strong>数据更新前至少读取两次</strong>，缓存才有意义。这个是最基本的策略，如果缓存还没有起作用就失效了，那就没有太大价值了。 那存不存在，修改频率很高，但是又不得不考虑缓存的场景呢？有！比如，这个读取接口对数据库的压力很大，但是又是热点数据，这个时候就需要考虑通过缓存手段，减少数据库的压力，比如我们的某助手产品的，点赞数，收藏数，分享数等是非常典型的热点数据，但是又不断变化，此时就需要将数据同步保存到Redis缓存，减少数据库压力。</p>
 <h2 id="Redis的数据类型，以及每种数据类型的使用场景"><a href="#Redis的数据类型，以及每种数据类型的使用场景" class="headerlink" title="Redis的数据类型，以及每种数据类型的使用场景"></a>Redis的数据类型，以及每种数据类型的使用场景</h2><ol>
-<li>String 这个其实没啥好说的，最常规的set/get操作，value可以是String也可以是数字。一般做一些复杂的计数功能的缓存。 </li>
-<li>hash 这里value存放的是结构化的对象，比较方便的就是操作其中的某个字段。博主在做单点登录的时候，就是用这种数据结构存储用户信息，以cookieId作为key，设置30分钟为缓存过期时间，能很好的模拟出类似session的效果。</li>
-<li>list 使用List的数据结构，可以做简单的消息队列的功能。另外还有一个就是，可以利用lrange命令，做基于redis的分页功能，性能极佳，用户体验好。本人还用一个场景，很合适—取行情信息。就也是个生产者和消费者的场景。LIST可以很好的完成排队，先进先出的原则。 </li>
-<li>set 因为set堆放的是一堆不重复值的集合。所以可以做全局去重的功能。为什么不用JVM自带的Set进行去重？因为我们的系统一般都是集群部署，使用JVM自带的Set，比较麻烦，难道为了一个做一个全局去重，再起一个公共服务，太麻烦了。 另外，就是利用交集、并集、差集等操作，可以计算共同喜好，全部的喜好，自己独有的喜好等功能。</li>
-<li>sorted set sorted set多了一个权重参数score,集合中的元素能够按score进行排列。可以做排行榜应用，取TOP N操作。</li>
+<li><strong>String：</strong> 这个其实没啥好说的，最常规的set/get操作，value可以是String也可以是数字。一般做一些复杂的计数功能的缓存。 </li>
+<li><strong>hash：</strong> 这里value存放的是结构化的对象，比较方便的就是操作其中的某个字段。博主在做单点登录的时候，就是用这种数据结构存储用户信息，以cookieId作为key，设置30分钟为缓存过期时间，能很好的模拟出类似session的效果。</li>
+<li><strong>list：</strong> 使用List的数据结构，可以做简单的消息队列的功能。另外还有一个就是，可以利用lrange命令，做基于redis的分页功能，性能极佳，用户体验好。本人还用一个场景，很合适—取行情信息。就也是个生产者和消费者的场景。LIST可以很好的完成排队，先进先出的原则。 </li>
+<li><strong>set：</strong> 因为set堆放的是一堆不重复值的集合。所以可以做全局去重的功能。为什么不用JVM自带的Set进行去重？因为我们的系统一般都是集群部署，使用JVM自带的Set，比较麻烦，难道为了一个做一个全局去重，再起一个公共服务，太麻烦了。 另外，就是利用交集、并集、差集等操作，可以计算共同喜好，全部的喜好，自己独有的喜好等功能。</li>
+<li><strong>sorted set：</strong> sorted set多了一个权重参数score,集合中的元素能够按score进行排列。可以做排行榜应用，取TOP N操作。</li>
+</ol>
+<p><strong>三种特殊的数据类型</strong></p>
+<ol>
+<li><p><strong>Bitmap：</strong>位图，Bitmap想象成一个以位为单位数组，数组中的每个单元只能存0或者1，数组的下标在Bitmap中叫做偏移量。使用Bitmap实现统计功能，更省空间。如果只需要统计数据的二值状态，例如商品有没有、用户在不在等，就可以使用 Bitmap，因为它只用一个 bit 位就能表示 0 或 1。</p>
+</li>
+<li><p><strong>Hyperloglog：</strong>HyperLogLog 是一种用于统计基数的数据集合类型，HyperLogLog 的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定 的、并且是很小的。每个 HyperLogLog 键只需要花费 12 KB 内存，就可以计算接近 2^64 个不同元素的基 数。场景：统计网页的UV（即Unique Visitor，不重复访客，一个人访问某个网站多次，但是还是只计算为一次）。</p>
+</li>
+</ol>
+<p>要注意，HyperLogLog 的统计规则是基于概率完成的，所以它给出的统计结果是有一定误差的，标准误算率是 0.81%。</p>
+<ol start="3">
+<li><strong>Geospatial：</strong>主要用于存储地理位置信息，并对存储的信息进行操作，适用场景如朋友的定位、附近的人、打车距离计算等。</li>
 </ol>
 <h2 id="Redis的过期策略以及内存淘汰机制"><a href="#Redis的过期策略以及内存淘汰机制" class="headerlink" title="Redis的过期策略以及内存淘汰机制"></a>Redis的过期策略以及内存淘汰机制</h2><p>redis采用的是定期删除+惰性删除策略。 为什么不用定时删除策略? 定时删除,用一个定时器来负责监视key,过期则自动删除。虽然内存及时释放，但是十分消耗CPU资源。在大并发请求下，CPU要将时间应用在处理请求，而不是删除key,因此没有采用这一策略. 定期删除+惰性删除是如何工作的呢? 定期删除，redis默认每个100ms检查，是否有过期的key,有过期key则删除。需要说明的是，redis不是每个100ms将所有的key检查一次，而是随机抽取进行检查(如果每隔100ms,全部key进行检查，redis岂不是卡死)。因此，如果只采用定期删除策略，会导致很多key到时间没有删除。 于是，惰性删除派上用场。也就是说在你获取某个key的时候，redis会检查一下，这个key如果设置了过期时间那么是否过期了？如果过期了此时就会删除。 采用定期删除+惰性删除就没其他问题了么?不是的，如果定期删除没删除key。然后你也没即时去请求key，也就是说惰性删除也没生效。这样，redis的内存会越来越高。那么就应该采用内存淘汰机制。 在redis.conf中有一行配置（maxmemory-policy volatile-lru）。</p>
 <p><strong>内存淘汰策略</strong></p>
@@ -4439,6 +5329,159 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 </ul>
 <p>如果没有设置 expire 的key, 不满足先决条件(prerequisites); 那么 <code>volatile-lru</code>, <code>volatile-random</code> 和 <code>volatile-ttl</code>策略的行为, 和 noeviction(不删除) 基本上一致。</p>
 <h2 id="为什么Redis的操作是原子性的，怎么保证原子性的"><a href="#为什么Redis的操作是原子性的，怎么保证原子性的" class="headerlink" title="为什么Redis的操作是原子性的，怎么保证原子性的"></a>为什么Redis的操作是原子性的，怎么保证原子性的</h2><p>对于Redis而言，命令的原子性指的是：一个操作的不可以再分，操作要么执行，要么不执行。Redis的操作之所以是原子性的，是因为Redis是单线程的。 Redis本身提供的所有API都是原子操作，Redis中的事务其实是要保证批量操作的原子性。 多个命令在并发中也是原子性的吗？ 不一定，将get和set改成单命令操作，incr 。使用Redis的事务，或者使用Redis+Lua的方式实现。</p>
+<h2 id="什么是分布式锁？为什么用分布式锁？"><a href="#什么是分布式锁？为什么用分布式锁？" class="headerlink" title="什么是分布式锁？为什么用分布式锁？"></a>什么是分布式锁？为什么用分布式锁？</h2><p>锁在程序中的作用就是同步工具，保证共享资源在同一时刻只能被一个线程访问，Java中的锁我们都很熟悉了，像synchronized 、Lock都是我们经常使用的，但是Java的锁只能保证单机的时候有效，分布式集群环境就无能为力了，这个时候我们就需要用到分布式锁。</p>
+<p>分布式锁，顾名思义，就是分布式项目开发中用到的锁，可以用来控制分布式系统之间同步访问共享资源。</p>
+<p>思路是：在整个系统提供一个<strong>全局、唯一</strong>的获取锁的“东西”，然后每个系统在需要加锁时，都去问这个“东西”拿到一把锁，这样不同的系统拿到的就可以认为是同一把锁。至于这个“东西”，可以是Redis、Zookeeper，也可以是数据库。</p>
+<p>一般来说，分布式锁需要满足的特性有这么几点：</p>
+<ol>
+<li><p>互斥性：在任何时刻，对于同一条数据，只有一台应用可以获取到分布式锁；</p>
+</li>
+<li><p>高可用性：在分布式场景下，一小部分服务器宕机不影响正常使用，这种情况就需要将提供分布式锁的服务以集群的方式部署；</p>
+</li>
+<li><p>防止锁超时：如果客户端没有主动释放锁，服务器会在一段时间之后自动释放锁，防止客户端宕机或者网络不可达时产生死锁；</p>
+</li>
+<li><p>独占性：加锁解锁必须由同一台服务器进行，也就是锁的持有者才可以释放锁，不能出现你加的锁，别人给你解锁了。</p>
+</li>
+</ol>
+<h2 id="常见的分布式锁有哪些解决方案？"><a href="#常见的分布式锁有哪些解决方案？" class="headerlink" title="常见的分布式锁有哪些解决方案？"></a>常见的分布式锁有哪些解决方案？</h2><p>实现分布式锁目前有三种流行方案，即基于关系型数据库、Redis、ZooKeeper 的方案</p>
+<ol>
+<li>基于关系型数据库，如MySQL<br>基于关系型数据库实现分布式锁，是依赖数据库的唯一性来实现资源锁定，比如主键和唯一索引等。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>这把锁强依赖数据库的可用性，数据库是一个单点，一旦数据库挂掉，会导致业务系统不可用。</li>
+<li>这把锁没有失效时间，一旦解锁操作失败，就会导致锁记录一直在数据库中，其他线程无法再获得到锁。</li>
+<li>这把锁只能是非阻塞的，因为数据的insert操作，一旦插入失败就会直接报错。没有获得锁的线程并不会进入排队队列，要想再次获得锁就要再次触发获得锁操作。</li>
+<li>这把锁是非重入的，同一个线程在没有释放锁之前无法再次获得该锁。因为数据中数据已经存在了。</li>
+</ul>
+<ol start="2">
+<li>基于Redis实现</li>
+</ol>
+<p>优点：</p>
+<p>Redis 锁实现简单，理解逻辑简单，性能好，可以支撑高并发的获取、释放锁操作。</p>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>Redis 容易单点故障，集群部署，并不是强一致性的，锁的不够健壮；</li>
+<li>key 的过期时间设置多少不明确，只能根据实际情况调整；</li>
+<li>需要自己不断去尝试获取锁，比较消耗性能。</li>
+</ul>
+<ol start="3">
+<li>基于zookeeper</li>
+</ol>
+<p><strong>优点：</strong></p>
+<p>zookeeper 天生设计定位就是分布式协调，强一致性，锁很健壮。如果获取不到锁，只需要添加一个监听器就可以了，不用一直轮询，性能消耗较小。</p>
+<p><strong>缺点：</strong></p>
+<p>在高请求高并发下，系统疯狂的加锁释放锁，最后 zk 承受不住这么大的压力可能会存在宕机的风险。</p>
+<h2 id="Redis实现分布式锁"><a href="#Redis实现分布式锁" class="headerlink" title="Redis实现分布式锁"></a>Redis实现分布式锁</h2><h3 id="分布式锁的三个核心要素"><a href="#分布式锁的三个核心要素" class="headerlink" title="分布式锁的三个核心要素"></a>分布式锁的三个核心要素</h3><ol>
+<li>加锁</li>
+</ol>
+<p>使用setnx来加锁。key是锁的唯一标识，按业务来决定命名，value这里设置为test。</p>
+<pre class="line-numbers language-none"><code class="language-none">setx key test<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>当一个线程执行setnx返回1，说明key原本不存在，该线程成功得到了锁；当一个线程执行setnx返回0，说明key已经存在，该线程抢锁失败；</p>
+<ol start="2">
+<li>解锁</li>
+</ol>
+<p>有加锁就得有解锁。当得到的锁的线程执行完任务，需要释放锁，以便其他线程可以进入。释放锁的最简单方式就是执行del指令。</p>
+<pre class="line-numbers language-none"><code class="language-none">del key<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>释放锁之后，其他线程就可以继续执行setnx命令来获得锁。</p>
+<ol start="3">
+<li>锁超时</li>
+</ol>
+<p>锁超时知道的是：如果一个得到锁的线程在执行任务的过程中挂掉，来不及显式地释放锁，这块资源将会永远被锁住，别的线程北向进来。</p>
+<p>所以，setnx的key必须设置一个超时时间，以保证即使没有被显式释放，这把锁也要在一段时间后自动释放。setnx不支持超时参数，所以需要额外指令，</p>
+<pre class="line-numbers language-none"><code class="language-none">expire key 30<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="上述分布式锁存在的问题"><a href="#上述分布式锁存在的问题" class="headerlink" title="上述分布式锁存在的问题"></a>上述分布式锁存在的问题</h3><p><strong>通过上述<code>setnx</code> 、<code>del</code>和<code>expire</code>实现的分布式锁还是存在着一些问题。</strong></p>
+<ol>
+<li>SETNX 和 EXPIRE 非原子性</li>
+</ol>
+<p>假设一个场景中，某一个线程刚执行setnx，成功得到了锁。此时setnx刚执行成功，还未来得及执行expire命令，节点就挂掉了。此时这把锁就没有设置过期时间，别的线程就再也无法获得该锁。</p>
+<p><strong>解决措施:</strong></p>
+<p>由于<code>setnx</code>指令本身是不支持传入超时时间的，而在Redis2.6.12版本上为<code>set</code>指令增加了可选参数, 用法如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">SET key value [EX seconds][PX milliseconds] [NX|XX]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>EX second: 设置键的过期时间为second秒；</li>
+<li>PX millisecond：设置键的过期时间为millisecond毫秒；</li>
+<li>NX：只在键不存在时，才对键进行设置操作；</li>
+<li>XX：只在键已经存在时，才对键进行设置操作；</li>
+<li>SET操作完成时，返回OK，否则返回nil。</li>
+</ul>
+<ol start="2">
+<li>锁误解除</li>
+</ol>
+<p>如果线程 A 成功获取到了锁，并且设置了过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁；随后 A 执行完成，线程 A 使用 DEL 命令来释放锁，但此时线程 B 加的锁还没有执行完成，线程 A 实际释放的线程 B 加的锁。</p>
+<p><strong>解决办法：</strong></p>
+<p>在del释放锁之前加一个判断，验证当前的锁是不是自己加的锁。</p>
+<p>具体在加锁的时候把当前线程的id当做value，可生成一个 UUID 标识当前线程，在删除之前验证key对应的value是不是自己线程的id。</p>
+<p>还可以使用 lua 脚本做验证标识和解锁操作。</p>
+<ol start="3">
+<li>超时解锁导致并发</li>
+</ol>
+<p>如果线程 A 成功获取锁并设置过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁，线程 A 和线程 B 并发执行。</p>
+<p>A、B 两个线程发生并发显然是不被允许的，一般有两种方式解决该问题：</p>
+<ul>
+<li>将过期时间设置足够长，确保代码逻辑在锁释放之前能够执行完成。</li>
+<li>为获取锁的线程增加守护线程，为将要过期但未释放的锁增加有效时间。</li>
+</ul>
+<ol start="4">
+<li>不可重入</li>
+</ol>
+<p>当线程在持有锁的情况下再次请求加锁，如果一个锁支持一个线程多次加锁，那么这个锁就是可重入的。如果一个不可重入锁被再次加锁，由于该锁已经被持有，再次加锁会失败。Redis 可通过对锁进行重入计数，加锁时加 1，解锁时减 1，当计数归 0 时释放锁。</p>
+<ol start="5">
+<li>无法等待锁释放</li>
+</ol>
+<p>上述命令执行都是立即返回的，如果客户端可以等待锁释放就无法使用。</p>
+<ul>
+<li>可以通过客户端轮询的方式解决该问题，当未获取到锁时，等待一段时间重新获取锁，直到成功获取锁或等待超时。这种方式比较消耗服务器资源，当并发量比较大时，会影响服务器的效率。</li>
+<li>另一种方式是使用 Redis 的发布订阅功能，当获取锁失败时，订阅锁释放消息，获取锁成功后释放时，发送锁释放消息。</li>
+</ul>
+<h2 id="了解RedLock吗？"><a href="#了解RedLock吗？" class="headerlink" title="了解RedLock吗？"></a>了解RedLock吗？</h2><p>Redlock是一种算法，Redlock也就是 Redis Distributed Lock，可用实现多节点Redis的分布式锁。</p>
+<p>RedLock官方推荐，Redisson完成了对Redlock算法封装。</p>
+<p>此种方式具有以下特性：</p>
+<ul>
+<li>互斥访问：即永远只有一个 client 能拿到锁</li>
+<li>避免死锁：最终 client 都可能拿到锁，不会出现死锁的情况，即使锁定资源的服务崩溃或者分区，仍然能释放锁。</li>
+<li>容错性：只要大部分 Redis 节点存活（一半以上），就可以正常提供服务</li>
+</ul>
+<h2 id="RedLock的原理"><a href="#RedLock的原理" class="headerlink" title="RedLock的原理"></a>RedLock的原理</h2><p>假设有5个完全独立的Redis主服务器</p>
+<ol>
+<li><p>获取当前时间戳</p>
+</li>
+<li><p>client尝试按照顺序使用相同的key,value获取所有Redis服务的锁，在获取锁的过程中的获取时间比锁过期时间短很多，这是为了不要过长时间等待已经关闭的Redis服务。并且试着获取下一个Redis实例。</p>
+</li>
+</ol>
+<p>  比如：TTL为5s,设置获取锁最多用1s，所以如果一秒内无法获取锁，就放弃获取这个锁，从而尝试获取下个锁</p>
+<ol start="3">
+<li><p>client通过获取所有能获取的锁后的时间减去第一步的时间，这个时间差要小于TTL时间并且至少有3个Redis实例成功获取锁，才算真正的获取锁成功</p>
+</li>
+<li><p>如果成功获取锁，则锁的真正有效时间是 TTL减去第三步的时间差 的时间；比如：TTL 是5s,获取所有锁用了2s,则真正锁有效时间为3s(其实应该再减去时钟漂移);</p>
+</li>
+<li><p>如果客户端由于某些原因获取锁失败，便会开始解锁所有Redis实例；因为可能已经获取了小于3个锁，必须释放，否则影响其他client获取锁</p>
+</li>
+</ol>
+<p>算法示意图如下：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210829131128229.png"></p>
+<h2 id="Redis如何做内存优化？"><a href="#Redis如何做内存优化？" class="headerlink" title="Redis如何做内存优化？"></a>Redis如何做内存优化？</h2><ul>
+<li><p> <strong>控制key的数量</strong>。当使用Redis存储大量数据时，通常会存在大量键，过多的键同样会消耗大量内存。Redis本质是一个数据结构服务器，它为我们提供多种数据结构，如hash，list，set，zset 等结构。使用Redis时不要进入一个误区，大量使用get/set这样的API，把Redis当成Memcached使用。对于存储相同的数据内容利用Redis的数据结构降低外层键的数量，也可以节省大量内存。</p>
+</li>
+<li><p><strong>缩减键值对象</strong>。降低Redis内存使用最直接的方式就是缩减键（key）和值（value）的长度。</p>
+<ul>
+<li>key长度：如在设计键时，在完整描述业务情况下，键值越短越好。</li>
+<li>value长度：值对象缩减比较复杂，常见需求是把业务对象序列化成二进制数组放入Redis。首先应该在业务上精简业务对象，去掉不必要的属性避免存储无效数据。其次在序列化工具选择上，应该选择更高效的序列化工具来降低字节数组大小。</li>
+</ul>
+</li>
+<li><p> <strong>编码优化</strong>。Redis对外提供了string,list,hash,set,zet等类型，但是Redis内部针对不同类型存在编码的概念，所谓编码就是具体使用哪种底层数据结构来实现。编码不同将直接影响数据的内存占用和读写效率。</p>
+</li>
+</ul>
+<h2 id="如果现在有个读超高并发的系统，用Redis来抗住大部分读请求，你会怎么设计？"><a href="#如果现在有个读超高并发的系统，用Redis来抗住大部分读请求，你会怎么设计？" class="headerlink" title="如果现在有个读超高并发的系统，用Redis来抗住大部分读请求，你会怎么设计？"></a>如果现在有个读超高并发的系统，用Redis来抗住大部分读请求，你会怎么设计？</h2><p>如果是读高并发的话，先看读并发的数量级是多少，因为Redis单机的读QPS在万级，每秒几万没问题，使用一主多从+哨兵集群的缓存架构来承载每秒10W+的读并发，主从复制，读写分离。</p>
+<p>使用哨兵集群主要是提高缓存架构的可用性，解决单点故障问题。主库负责写，多个从库负责读，支持水平扩容，根据读请求的QPS来决定加多少个Redis从实例。如果读并发继续增加的话，只需要增加Redis从实例就行了。</p>
+<p>如果需要缓存1T+的数据，选择Redis cluster模式，每个主节点存一部分数据，假设一个master存32G，那只需要n*32G&gt;=1T，n个这样的master节点就可以支持1T+的海量数据的存储了。</p>
+<blockquote>
+<p>Redis单主的瓶颈不在于读写的并发，而在于内存容量，即使是一主多从也是不能解决该问题，因为一主多从架构下，多个slave的数据和master的完全一样。假如master是10G那slave也只能存10G数据。所以数据量受单主的影响。<br>而这个时候又需要缓存海量数据，那就必须得有多主了，并且多个主保存的数据还不能一样。Redis官方给出的 Redis cluster 模式完美的解决了这个问题。</p>
+</blockquote>
 <h1 id="14-分布式篇"><a href="#14-分布式篇" class="headerlink" title="14. 分布式篇"></a>14. 分布式篇</h1><h2 id="分布式幂等性如何设计"><a href="#分布式幂等性如何设计" class="headerlink" title="分布式幂等性如何设计"></a>分布式幂等性如何设计</h2><p>在高并发场景的架构里，幂等性是必须得保证的。比如说支付功能，用户发起支付，如果后台没有做幂等校验，刚好用户手抖多点了几下，于是后台就可能多次受到同一个订单请求，不做幂等很容易就让用户重复支付了，这样用户是肯定不能忍的。</p>
 <p><strong>解决方案：</strong></p>
 <ol>
@@ -4736,6 +5779,15 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>503：服务不可用，服务器停机。</li>
 <li>504：网关超时。</li>
 </ul>
+<p>状态码开头代表类型：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210525114439748.png"></p>
+<h2 id="状态码301和302的区别是什么？"><a href="#状态码301和302的区别是什么？" class="headerlink" title="状态码301和302的区别是什么？"></a>状态码301和302的区别是什么？</h2><p><strong>共同点</strong>：301和302状态码都表示重定向，就是说浏览器在拿到服务器返回的这个状态码后会自动跳转到一个新的URL地址，这个地址可以从响应的Location首部中获取（<strong>用户看到的效果就是他输入的地址A瞬间变成了另一个地址B</strong>）。<br><strong>不同点</strong>：301表示旧地址A的资源已经被永久地移除了(这个资源不可访问了)，搜索引擎在抓取新内容的同时也将旧的网址交换为重定向之后的网址；302表示旧地址A的资源还在（仍然可以访问），这个重定向只是临时地从旧地址A跳转到地址B，搜索引擎会抓取新的内容而保存旧的网址。 SEO中302好于301。</p>
+<p><strong>补充，重定向原因</strong>：</p>
+<ol>
+<li>网站调整（如改变网页目录结构）；</li>
+<li>网页被移到一个新地址；</li>
+<li>网页扩展名改变(如应用需要把.php改成.Html或.shtml)。 </li>
+</ol>
 <h2 id="Forward-和-Redirect-的区别"><a href="#Forward-和-Redirect-的区别" class="headerlink" title="Forward 和 Redirect 的区别"></a>Forward 和 Redirect 的区别</h2><ul>
 <li>浏览器 URL 地址：Forward 是服务器内部的重定向，服务器内部请求某个 servlet，然后获取响应的内容，浏览器的 URL 地址是不会变化的；Redirect 是客户端请求服务器，然后服务给客户端返回了一个 302 状态码和新的 location，客户端重新发起 HTTP 请求，服务器给客户端响应 location 对应的 URL 地址，浏览器的 URL 地址发生了变化。</li>
 <li>数据的共享：Forward 是服务器内部的重定向，request 在整个重定向过程中是不变的，request 中的信息在 servlet 间是共享的。Redirect 发起了两次 HTTP 请求分别使用不同的request。</li>
@@ -4746,7 +5798,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>post 请求用来向服务器提交数据</li>
 </ul>
 <h3 id="表单的提交方式"><a href="#表单的提交方式" class="headerlink" title="表单的提交方式"></a>表单的提交方式</h3><ul>
-<li>get 请求直接将表单数据以 name1=value1&amp;name2=value2 的形式拼接到 URL 上（<a target="_blank" rel="noopener" href="http://www.baidu.com/action?name1=value1&amp;name2=value2%EF%BC%89%EF%BC%8C%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E5%8F%82%E6%95%B0%E5%80%BC%E9%9C%80%E8%A6%81%E7%94%A8">http://www.baidu.com/action?name1=value1&amp;name2=value2），多个参数参数值需要用</a> &amp; 连接起来并且用 ? 拼接到 action 后面；</li>
+<li>get 请求直接将表单数据以 name1=value1&amp;name2=value2 的形式拼接到 URL 上<code>http://www.baidu.com/action?name1=value1&amp;name2=value2</code>，多个参数参数值需要用 &amp; 连接起来并且用 ? 拼接到 action 后面；</li>
 <li>post 请求将表单数据放到请求头或者请求的消息体中。</li>
 </ul>
 <h3 id="传输数据的大小限制"><a href="#传输数据的大小限制" class="headerlink" title="传输数据的大小限制"></a>传输数据的大小限制</h3><ul>
@@ -4768,6 +5820,69 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信。</li>
 <li>TCP对系统资源要求较多，UDP对系统资源要求较少。</li>
 </ul>
+<p><strong>总结如表：</strong></p>
+<p>TCP 用于在传输层有必要实现可靠传输的情况，UDP 用于对高速传输和实时性有较高要求的通信。TCP 和 UDP 应该根据应用目的按需使用。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">UDP</th>
+<th align="left">TCP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">是否连接</td>
+<td align="left">无连接</td>
+<td align="left">面向连接</td>
+</tr>
+<tr>
+<td align="left">是否可靠</td>
+<td align="left">不可靠传输，不使用流量控制和拥塞控制</td>
+<td align="left">可靠传输，使用流量控制和拥塞控制</td>
+</tr>
+<tr>
+<td align="left">是否有序</td>
+<td align="left">无序</td>
+<td align="left">有序，消息在传输过程中可能会乱序，TCP 会重新排序</td>
+</tr>
+<tr>
+<td align="left">传输速度</td>
+<td align="left">快</td>
+<td align="left">慢</td>
+</tr>
+<tr>
+<td align="left">连接对象个数</td>
+<td align="left">支持一对一，一对多，多对一和多对多交互通信</td>
+<td align="left">只能是一对一通信</td>
+</tr>
+<tr>
+<td align="left">传输方式</td>
+<td align="left">面向报文</td>
+<td align="left">面向字节流</td>
+</tr>
+<tr>
+<td align="left">首部开销</td>
+<td align="left">首部开销小，仅8字节</td>
+<td align="left">首部最小20字节，最大60字节</td>
+</tr>
+<tr>
+<td align="left">适用场景</td>
+<td align="left">适用于实时应用（IP电话、视频会议、直播等）</td>
+<td align="left">适用于要求可靠传输的应用，例如文件传输</td>
+</tr>
+</tbody></table>
+<h2 id="UDP-和-TCP-对应的应用场景是什么？"><a href="#UDP-和-TCP-对应的应用场景是什么？" class="headerlink" title="UDP 和 TCP 对应的应用场景是什么？"></a>UDP 和 TCP 对应的应用场景是什么？</h2><p> TCP 是面向连接，能保证数据的可靠性交付，因此经常用于：</p>
+<ul>
+<li>FTP文件传输</li>
+<li>HTTP / HTTPS</li>
+</ul>
+<p>UDP 面向无连接，它可以随时发送数据，再加上UDP本身的处理既简单又高效，因此经常用于：</p>
+<ul>
+<li>包总量较少的通信，如 DNS 、SNMP等</li>
+<li>视频、音频等多媒体通信</li>
+<li>广播通信</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210519180008296.png"></p>
 <h2 id="说一下-HTTP-和-HTTPS-的区别"><a href="#说一下-HTTP-和-HTTPS-的区别" class="headerlink" title="说一下 HTTP 和 HTTPS 的区别"></a>说一下 HTTP 和 HTTPS 的区别</h2><p>端口不同：HTTP和 HTTPS 的连接方式不同没用的端口也不一样，HTTP是80， HTTPS 用的是443。</p>
 <p>消耗资源：和HTTP相比，HTTPS通信会因为加解密的处理消耗更多的CPU和内存资源。</p>
 <p>开销： HTTPS 通信需要证书，这类证书通常需要向认证机构申请或者付费购买。</p>
@@ -4783,32 +5898,216 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>HTTP 基于 TCP 协议，所以可以使用 Socket 去建立一个 TCP 连接。</li>
 </ul>
 <h2 id="说一下HTTP的长连接与短连接的区别"><a href="#说一下HTTP的长连接与短连接的区别" class="headerlink" title="说一下HTTP的长连接与短连接的区别"></a>说一下HTTP的长连接与短连接的区别</h2><p>HTTP协议的长连接和短连接，实质上是TCP协议的长连接和短连接。</p>
-<h3 id="短连接"><a href="#短连接" class="headerlink" title="短连接"></a>短连接</h3><p>在HTTP/1.0中默认使用短链接,也就是说，浏览器和服务器每进行一次HTTP操作，就建立一次连接，但任务结束就中断连接。如果客户端访问的某个HTML或其他类型的Web资源，如 JavaScript文件、图像文件、 CSS 文件等。当浏览器每遇到这样一个Web资源，就会建立一个HTTP会话。</p>
-<h3 id="长连接"><a href="#长连接" class="headerlink" title="长连接"></a>长连接</h3><p>从HTTP/1.1起，默认使用长连接，用以保持连接特性。在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭。如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。</p>
-<h2 id="TCP-为什么要三次握手，两次不行吗？为什么？"><a href="#TCP-为什么要三次握手，两次不行吗？为什么？" class="headerlink" title="TCP 为什么要三次握手，两次不行吗？为什么？"></a>TCP 为什么要三次握手，两次不行吗？为什么？</h2><ul>
-<li>TCP 客户端和服务端建立连接需要三次握手，首先服务端需要开启监听，等待客户端的连接请求，这个时候服务端处于“收听”状态；</li>
-<li>客户端向服务端发起连接，选择 seq=x 的初始序列号，此时客户端处于“同步已发送”的状态；</li>
-<li>服务端收到客户端的连接请求，同意连接并向客户端发送确认，确认号是 ack=x+1 表示客户端可以发送下一个数据包序号从 x+1 开始，同时选择 seq=y 的初始序列号，此时服务端处于“同步收到”状态；</li>
-<li>客户端收到服务端的确认后，向服务端发送确认信息，确认号是 ack=y+1 表示服务端可以发送下一个数据包序号从 y+1 开始，此时客户端处于“已建立连接”的状态；</li>
-<li>服务端收到客户端的确认后，也进入“已建立连接”的状态。</li>
+<h3 id="短连接"><a href="#短连接" class="headerlink" title="短连接"></a>短连接</h3><p><strong>在HTTP/1.0中默认使用短链接</strong>，也就是说，浏览器和服务器每进行一次HTTP操作，就建立一次连接，但任务结束就中断连接。如果客户端访问的某个HTML或其他类型的Web资源，如 JavaScript文件、图像文件、 CSS 文件等。当浏览器每遇到这样一个Web资源，就会建立一个HTTP会话。</p>
+<h3 id="长连接"><a href="#长连接" class="headerlink" title="长连接"></a>长连接</h3><p>从<strong>HTTP/1.1起，默认使用长连接</strong>，用以保持连接特性。在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭。如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。</p>
+<h2 id="HTTP请求报文和响应报文的格式？"><a href="#HTTP请求报文和响应报文的格式？" class="headerlink" title="HTTP请求报文和响应报文的格式？"></a>HTTP请求报文和响应报文的格式？</h2><p><strong>请求报文格式</strong>：</p>
+<ol>
+<li>请求行（请求方法+URI协议+版本）</li>
+<li>请求头部</li>
+<li>空行</li>
+<li>请求主体</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">GET/sample.jspHTTP/1.1 请求行
+Accept:image/gif.image/jpeg, 请求头部
+Accept-Language:zh-cn
+Connection:Keep-Alive
+Host:localhost
+User-Agent:Mozila/4.0(compatible;MSIE5.01;Window NT5.0)
+Accept-Encoding:gzip,deflate
+
+username=jinqiao&amp;password=1234 请求主体<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>响应报文</strong>：</p>
+<ol>
+<li>状态行（版本+状态码+原因短语）</li>
+<li>响应首部</li>
+<li>空行</li>
+<li>响应主体</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">HTTP/1.1 200 OK
+Server:Apache Tomcat/5.0.12
+Date:Mon,6Oct2003 13:23:42 GMT
+Content-Length:112
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>HTTP响应示例<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+        Hello HTTP!
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="HTTP1-0和HTTP1-1的区别"><a href="#HTTP1-0和HTTP1-1的区别" class="headerlink" title="HTTP1.0和HTTP1.1的区别?"></a>HTTP1.0和HTTP1.1的区别?</h2><ul>
+<li><p><strong>长连接</strong>：HTTP 1.1支持长连接（Persistent Connection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟，在HTTP1.1中默认开启<code>Connection： keep-alive</code>，一定程度上弥补了HTTP1.0每次请求都要创建连接的缺点。</p>
+</li>
+<li><p><strong>缓存处理</strong>：在HTTP1.0中主要使用header里的If-Modified-Since,Expires来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略，可供选择的缓存头来控制缓存策略。</p>
+</li>
+<li><p><strong>带宽优化及网络连接的使用</strong>：HTTP1.0中，存在一些浪费带宽的现象，例如客户端只是需要某个对象的一部分，而服务器却将整个对象送过来了，并且不支持断点续传功能，HTTP1.1则在请求头引入了range头域，它允许只请求资源的某个部分，即返回码是206（Partial Content），这样就方便了开发者自由的选择以便于充分利用带宽和连接。</p>
+</li>
+<li><p><strong>错误通知的管理</strong>：在HTTP1.1中新增了24个错误状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</p>
+</li>
+<li><p><strong>Host头处理</strong>：在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个IP地址。HTTP1.1的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。</p>
+</li>
 </ul>
-<p>从三次握手的过程可以看出如果只有两次握手，那么客户端的起始序列号可以确认，服务端的起始序列号将得不到确认。</p>
-<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211041345.png"></p>
-<h2 id="TCP-如何保证可靠性"><a href="#TCP-如何保证可靠性" class="headerlink" title="TCP 如何保证可靠性"></a>TCP 如何保证可靠性</h2><h3 id="序列号和确认号机制"><a href="#序列号和确认号机制" class="headerlink" title="序列号和确认号机制"></a>序列号和确认号机制</h3><p>TCP 发送端发送数据包的时候会选择一个 seq 序列号，接收端收到数据包后会检测数据包的完整性，如果检测通过会响应一个 ack 确认号表示收到了数据包。</p>
+<h2 id="HTTP1-1和-HTTP2-0的区别？"><a href="#HTTP1-1和-HTTP2-0的区别？" class="headerlink" title="HTTP1.1和 HTTP2.0的区别？"></a>HTTP1.1和 HTTP2.0的区别？</h2><p>HTTP2.0相比HTTP1.1支持的特性：</p>
+<ul>
+<li><p><strong>新的二进制格式</strong>：HTTP1.1的解析是基于文本。基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，要做到健壮性考虑的场景必然很多，二进制则不同，只认0和1的组合。基于这种考虑HTTP2.0的协议解析决定采用二进制格式，实现方便且健壮。</p>
+</li>
+<li><p><strong>多路复用</strong>，即连接共享，即每一个request都是用作连接共享机制的。一个request对应一个id，这样一个连接上可以有多个request，每个连接的request可以随机的混杂在一起，接收方可以根据request的 id将request再归属到各自不同的服务端请求里面。</p>
+</li>
+<li><p><strong>头部压缩</strong>，HTTP1.1的头部（header）带有大量信息，而且每次都要重复发送；HTTP2.0使用encoder来减少需要传输的header大小，通讯双方各自cache一份header fields表，既避免了重复header的传输，又减小了需要传输的大小。</p>
+</li>
+<li><p><strong>服务端推送</strong>：服务器除了对最初请求的响应外，服务器还可以额外的向客户端推送资源，而无需客户端明确的请求。</p>
+</li>
+</ul>
+<h2 id="HTTP-与-HTTPS-的区别？"><a href="#HTTP-与-HTTPS-的区别？" class="headerlink" title="HTTP 与 HTTPS 的区别？"></a>HTTP 与 HTTPS 的区别？</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">HTTP</th>
+<th>HTTPS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">端口</td>
+<td align="center">80</td>
+<td>443</td>
+</tr>
+<tr>
+<td align="center">安全性</td>
+<td align="center">无加密，安全性较差</td>
+<td>有加密机制，安全性较高</td>
+</tr>
+<tr>
+<td align="center">资源消耗</td>
+<td align="center">较少</td>
+<td>由于加密处理，资源消耗更多</td>
+</tr>
+<tr>
+<td align="center">是否需要证书</td>
+<td align="center">不需要</td>
+<td>需要</td>
+</tr>
+<tr>
+<td align="center">协议</td>
+<td align="center">运行在TCP协议之上</td>
+<td>运行在SSL协议之上，SSL运行在TCP协议之上</td>
+</tr>
+</tbody></table>
+<h2 id="HTTPS-的优缺点"><a href="#HTTPS-的优缺点" class="headerlink" title="HTTPS 的优缺点?"></a>HTTPS 的优缺点?</h2><p><strong>优点：</strong></p>
+<ul>
+<li><p>安全性：</p>
+<ul>
+<li><p>使用HTTPS协议可认证用户和服务器，确保数据发送到正确的客户机和服务器；</p>
+</li>
+<li><p>HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全，可防止数据在传输过程中不被窃取、改变，确保数据的完整性。</p>
+</li>
+<li><p>HTTPS是现行架构下最安全的解决方案，虽然不是绝对安全，但它大幅增加了中间人攻击的成本。</p>
+</li>
+</ul>
+</li>
+<li><p>SEO方面：谷歌曾在2014年8月份调整搜索引擎算法，并称“比起同等HTTP网站，采用HTTPS加密的网站在搜索结果中的排名将会更高”。</p>
+</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>在相同网络环境中，HTTPS 相比 HTTP 无论是响应时间还是耗电量都有大幅度上升。</li>
+<li>HTTPS 的安全是有范围的，在黑客攻击、服务器劫持等情况下几乎起不到作用。</li>
+<li>在现有的证书机制下，中间人攻击依然有可能发生。</li>
+<li>HTTPS 需要更多的服务器资源，也会导致成本的升高。</li>
+</ul>
+<h2 id="讲一讲HTTPS-的原理？"><a href="#讲一讲HTTPS-的原理？" class="headerlink" title="讲一讲HTTPS 的原理？"></a>讲一讲HTTPS 的原理？</h2><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210525160006424.png"></p>
+<p>加密流程按图中的序号分为：</p>
+<ol>
+<li><p>客户端请求 HTTPS 网址，然后连接到 server 的 443 端口 (HTTPS 默认端口，类似于 HTTP 的80端口)。</p>
+</li>
+<li><p>采用 HTTPS 协议的服务器必须要有一套数字 CA (Certification Authority)证书。颁发证书的同时会产生一个私钥和公钥。私钥由服务端自己保存，不可泄漏。公钥则是附带在证书的信息中，可以公开的。证书本身也附带一个证书电子签名，这个签名用来验证证书的完整性和真实性，可以防止证书被篡改。</p>
+</li>
+<li><p>服务器响应客户端请求，将证书传递给客户端，证书包含公钥和大量其他信息，比如证书颁发机构信息，公司信息和证书有效期等。</p>
+</li>
+<li><p>客户端解析证书并对其进行验证。如果证书不是可信机构颁布，或者证书中的域名与实际域名不一致，或者证书已经过期，就会向访问者显示一个警告，由其选择是否还要继续通信。</p>
+<p>如果证书没有问题，客户端就会从服务器证书中取出服务器的公钥A。然后客户端还会生成一个随机码 KEY，并使用公钥A将其加密。</p>
+</li>
+<li><p>客户端把加密后的随机码 KEY 发送给服务器，作为后面对称加密的密钥。</p>
+</li>
+<li><p>服务器在收到随机码 KEY 之后会使用私钥B将其解密。经过以上这些步骤，客户端和服务器终于建立了安全连接，完美解决了对称加密的密钥泄露问题，接下来就可以用对称加密愉快地进行通信了。</p>
+</li>
+<li><p>服务器使用密钥 (随机码 KEY)对数据进行对称加密并发送给客户端，客户端使用相同的密钥 (随机码 KEY)解密数据。</p>
+</li>
+<li><p>双方使用对称加密愉快地传输所有数据。</p>
+</li>
+</ol>
+<h2 id="TCP-如何保证可靠性"><a href="#TCP-如何保证可靠性" class="headerlink" title="TCP 如何保证可靠性"></a>TCP 如何保证可靠性</h2><h3 id="检验和"><a href="#检验和" class="headerlink" title="检验和"></a>检验和</h3><p>通过检验和的方式，接收端可以检测出来数据是否有差错和异常，假如有差错就会直接丢弃TCP段，重新发送。</p>
+<h3 id="序列号和确认号机制"><a href="#序列号和确认号机制" class="headerlink" title="序列号和确认号机制"></a>序列号和确认号机制</h3><p>序列号的作用不仅仅是应答的作用，有了序列号能够将接收到的数据根据序列号排序，并且去掉重复序列号的数据。</p>
+<p>TCP传输的过程中，每次接收方收到数据后，都会对传输方进行确认应答。也就是发送ACK报文，这个ACK报文当中带有对应的确认序列号，告诉发送方，接收到了哪些数据，下一次的数据从哪里发。</p>
 <h3 id="超时重发机制"><a href="#超时重发机制" class="headerlink" title="超时重发机制"></a>超时重发机制</h3><p>TCP 发送端发送了数据包后会启动一个定时器，如果一定时间没有收到接受端的确认后，将会重新发送该数据包。</p>
 <h3 id="对乱序数据包重新排序"><a href="#对乱序数据包重新排序" class="headerlink" title="对乱序数据包重新排序"></a>对乱序数据包重新排序</h3><p>从 IP 网络层传输到 TCP 层的数据包可能会乱序，TCP 层会对数据包重新排序再发给应用层。</p>
 <h3 id="丢弃重复数据"><a href="#丢弃重复数据" class="headerlink" title="丢弃重复数据"></a>丢弃重复数据</h3><p>从 IP 网络层传输到 TCP 层的数据包可能会重复，TCP 层会丢弃重复的数据包。</p>
-<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><p>TCP 发送端和接收端都有一个固定大小的缓冲空间，为了防止发送端发送数据的速度太快导致接收端缓冲区溢出，发送端只能发送接收端可以接纳的数据，为了达到这种控制效果，TCP 用了流量控制协议（可变大小的滑动窗口协议）来实现。</p>
+<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><p>如果主机A 一直向主机B发送数据，不考虑主机B的接受能力，则可能导致主机B的接受缓冲区满了而无法再接受数据，从而会导致大量的数据丢包，引发重传机制。而在重传的过程中，若主机B的接收缓冲区情况仍未好转，则会将大量的时间浪费在重传数据上，降低传送数据的效率。所以引入流量控制机制，主机B通过告诉主机A自己接收缓冲区的大小，来使主机A控制发送的数据量。流量控制与TCP协议报头中的窗口大小有关。</p>
+<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><p>在数据传输过程中，可能由于网络状态的问题，造成网络拥堵，此时引入拥塞控制机制，在保证TCP可靠性的同时，提高性能。</p>
+<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><p>滑动窗口既提高了报文传输的效率，也避免了发送方发送过多的数据而导致接收方无法正常处理的异常。</p>
+<h2 id="详细讲一下TCP的滑动窗口？"><a href="#详细讲一下TCP的滑动窗口？" class="headerlink" title="详细讲一下TCP的滑动窗口？"></a>详细讲一下TCP的滑动窗口？</h2><p>在进行数据传输时，如果传输的数据比较大，就需要拆分为多个数据包进行发送。TCP 协议需要对数据进行确认后，才可以发送下一个数据包。这样一来，就会在等待确认应答包环节浪费时间。</p>
+<p>为了避免这种情况，TCP引入了窗口概念。窗口大小指的是不需要等待确认应答包而可以继续发送数据包的最大值。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210520214432214.png"></p>
+<p>从上面的图可以看到滑动窗口左边的是已发送并且被确认的分组，滑动窗口右边是还没有轮到的分组。</p>
+<p>滑动窗口里面也分为两块，一块是已经发送但是未被确认的分组，另一块是窗口内等待发送的分组。随着已发送的分组不断被确认，窗口内等待发送的分组也会不断被发送。整个窗口就会往右移动，让还没轮到的分组进入窗口内。</p>
+<p>可以看到滑动窗口起到了一个限流的作用，也就是说当前滑动窗口的大小决定了当前 TCP 发送包的速率，而滑动窗口的大小取决于拥塞控制窗口和流量控制窗口的两者间的最小值。</p>
+<h2 id="详细讲一下拥塞控制？"><a href="#详细讲一下拥塞控制？" class="headerlink" title="详细讲一下拥塞控制？"></a>详细讲一下拥塞控制？</h2><p>TCP 一共使用了四种算法来实现拥塞控制：</p>
+<ul>
+<li><p>慢开始 (slow-start)；</p>
+</li>
+<li><p>拥塞避免 (congestion avoidance)；</p>
+</li>
+<li><p>快速重传 (fast retransmit)；</p>
+</li>
+<li><p>快速恢复 (fast recovery)。</p>
+</li>
+</ul>
+<p>发送方维持一个叫做拥塞窗口cwnd（congestion window）的状态变量。当cwndssthresh时，改用拥塞避免算法。</p>
+<p><strong>慢开始：</strong>不要一开始就发送大量的数据，由小到大逐渐增加拥塞窗口的大小。</p>
+<p><strong>拥塞避免：</strong>拥塞避免算法让拥塞窗口缓慢增长，即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1而不是加倍。这样拥塞窗口按线性规律缓慢增长。</p>
+<p><strong>快重传：</strong>我们可以剔除一些不必要的拥塞报文，提高网络吞吐量。比如接收方在<strong>收到一个失序的报文段后就立即发出重复确认，而不要等到自己发送数据时捎带确认。</strong>快重传规定：发送方只要<strong>一连收到三个</strong>重复确认就应当立即重传对方尚未收到的报文段，而不必继续等待设置的重传计时器时间到期。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210520214123058.png"></p>
+<p><strong>快恢复：</strong>主要是配合快重传。当发送方连续收到三个重复确认时，就执行“乘法减小”算法，把ssthresh门限减半（为了预防网络发生拥塞），但<strong>接下来并不执行慢开始算法</strong>，因为如果网络出现拥塞的话就不会收到好几个重复的确认，收到三个重复确认说明网络状况还可以。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210520214146324.png"></p>
 <h2 id="OSI-的七层模型都有哪些"><a href="#OSI-的七层模型都有哪些" class="headerlink" title="OSI 的七层模型都有哪些"></a>OSI 的七层模型都有哪些</h2><p>OSI七层模型一般指开放系统互连参考模型 (Open System Interconnect 简称OSI)是国际标准化组织(ISO)和国际电报电话咨询委员会(CCITT)联合制定的开放系统互连参考模型,为开放式互连信息系统提供了一种功能结构的框架。</p>
 <ul>
 <li>应用层：各种应用程序协议，比如 HTTP、HTTPS、FTP、SOCKS 安全套接字协议、DNS 域名系统、GDP 网关发现协议等等。</li>
 <li>表示层：加密解密、转换翻译、压缩解压缩，比如 LPP 轻量级表示协议。</li>
 <li>会话层：不同机器上的用户建立和管理会话，比如 SSL 安全套接字层协议、TLS 传输层安全协议、RPC 远程过程调用协议等等。</li>
-<li>传输层：接受上一层的数据，在必要的时候对数据进行分割，并将这些数据交给网络层，保证这些数据段有效到达对端，比如 TCP 传输控制协议、UDP 数据报协议。</li>
+<li>传输层：接受上一层的数据，在必要的时候对数据进行分割，并将这些数据交给网络层，保证这些数据段有效到达对端，比如 TCP 传输控制协议、UDP 数据报协议。<ul>
+<li>TCP：提供面向连接的、可靠的数据传输服务；</li>
+<li>UDP：提供无连接的、尽最大努力的数据传输服务，但不保证数据传输的可靠性。</li>
+</ul>
+</li>
 <li>网络层：控制子网的运行：逻辑编址、分组传输、路由选择，比如 IP、IPV6、SLIP 等等。</li>
 <li>数据链路层：物理寻址，同时将原始比特流转变为逻辑传输路线，比如 XTP 压缩传输协议、PPTP 点对点隧道协议等等。</li>
 <li>物理层：机械、电子、定时接口通信信道上的原始比特流传输，比如 IEEE802.2 等等。</li>
 </ul>
+<h2 id="说说TCP-IP四层网络模型"><a href="#说说TCP-IP四层网络模型" class="headerlink" title="说说TCP/IP四层网络模型"></a>说说TCP/IP四层网络模型</h2><p>TCP/IP分层模型（TCP/IP Layening Model）被称作因特网分层模型(Internet Layering Model)、因特网参考模型(Internet Reference Model)。</p>
+<p>TCP/IP协议被组织成四个概念层，其中有三层对应于ISO参考模型中的相应层。ICP/IP协议族并不包含物理层和数据链路层，因此它不能独立完成整个计算机网络系统的功能，必须与许多其他的协议协同工作。</p>
+<p>TCP/IP分层模型的四个协议层分别完成以下的功能：</p>
+<ul>
+<li>第一层：网络接口层</li>
+</ul>
+<p>网络接口层包括用于协作IP数据在已有网络介质上传输的协议。</p>
+<p>协议：ARP,RARP</p>
+<ul>
+<li>第二层：网间层</li>
+</ul>
+<p>网间层对应于OSI七层参考模型的网络层。负责数据的包装、寻址和路由。同时还包含网间控制报文协议(Internet Control Message Protocol,ICMP)用来提供网络诊断信息。</p>
+<p>协议：本层包含IP协议、RIP协议(Routing Information Protocol，路由信息协议)，ICMP协议。</p>
+<ul>
+<li>第三层：传输层</li>
+</ul>
+<p>传输层对应于OSI七层参考模型的传输层，它提供两种端到端的通信服务。</p>
+<p>其中TCP协议(Transmission Control Protocol)提供可靠的数据流运输服务，UDP协议(UseDatagram Protocol)提供不可靠的用户数据报服务。</p>
+<ul>
+<li>第四层：应用层</li>
+</ul>
+<p>应用层对应于OSI七层参考模型的应用层和表达层。</p>
+<p>因特网的应用层协议包括Finger、Whois、FTP(文件传输协议)、Gopher、HTTP(超文本传输协议)、Telent(远程终端协议)、SMTP(简单邮件传送协议)、IRC(因特网中继会话)、NNTP（网络新闻传输协议）等。</p>
 <h2 id="如何实现跨域"><a href="#如何实现跨域" class="headerlink" title="如何实现跨域"></a>如何实现跨域</h2><p>当浏览器执行 JS 脚本的时候，会检测脚本要访问的协议、域名、端口号是不是和当前网址一致，如果不一致就是跨域。跨域是不允许的，这种限制叫做浏览器的同源策略，简单点的说法就是浏览器不允许一个源中加载脚本与其他源中的资源进行交互。那么如何实现跨域呢？主要实现方式有三种：JSONP、CORS方式、代理方式。</p>
 <h3 id="JSONP-方式"><a href="#JSONP-方式" class="headerlink" title="JSONP 方式"></a>JSONP 方式</h3><p>script、img、iframe、link、video、audio 等带有 src 属性的标签可以跨域请求和执行资源，JSONP 利用这一点“漏洞”实现跨域。</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
@@ -4927,38 +6226,201 @@ xhr<span class="token punctuation">.</span>withCredentials <span class="token op
 xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">,</span> <span class="token string">'http://127.0.0.1:88'</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="说说TCP三次握手和四次挥手的全过程"><a href="#说说TCP三次握手和四次挥手的全过程" class="headerlink" title="说说TCP三次握手和四次挥手的全过程"></a>说说TCP三次握手和四次挥手的全过程</h2><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p>第一次握手：客户端发送syn包(syn=x)到服务器，并进入SYN_SEND状态，等待服务器确认； 第二次握手：服务器收到syn包，必须确认客户的SYN（ack=x+1），同时自己也发送一个SYN包（syn=y），即SYN+ACK包，此时服务器进入SYN_RECV状态； 第三次握手：客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=y+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。 握手过程中传送的包里不包含数据，三次握手完毕后，客户端与服务器才正式开始传送数据。理想状态下，TCP连接一旦建立，在通信双方中的任何一方主动关闭连接之前，TCP 连接都将被一直保持下去。</p>
-<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>与建立连接的“三次握手”类似，断开一个TCP连接则需要“四次握手”。 第一次挥手：主动关闭方发送一个FIN，用来关闭主动方到被动关闭方的数据传送，也就是主动关闭方告诉被动关闭方：我已经不会再给你发数据了(当然，在fin包之前发送出去的数据，如果没有收到对应的ack确认报文，主动关闭方依然会重发这些数据)，但是，此时主动关闭方还可 以接受数据。 第二次挥手：被动关闭方收到FIN包后，发送一个ACK给对方，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号）。 第三次挥手：被动关闭方发送一个FIN，用来关闭被动关闭方到主动关闭方的数据传送，也就是告诉主动关闭方，我的数据也发送完了，不会再给你发数据了。 第四次挥手：主动关闭方收到FIN后，发送一个ACK给被动关闭方，确认序号为收到序号+1，至此，完成四次挥手。</p>
-<h2 id="说说TCP-IP四层网络模型"><a href="#说说TCP-IP四层网络模型" class="headerlink" title="说说TCP/IP四层网络模型"></a>说说TCP/IP四层网络模型</h2><p>TCP/IP分层模型（TCP/IP Layening Model）被称作因特网分层模型(Internet Layering Model)、因特网参考模型(Internet Reference Model)。</p>
-<p>TCP/IP协议被组织成四个概念层，其中有三层对应于ISO参考模型中的相应层。ICP/IP协议族并不包含物理层和数据链路层，因此它不能独立完成整个计算机网络系统的功能，必须与许多其他的协议协同工作。</p>
-<p>TCP/IP分层模型的四个协议层分别完成以下的功能：</p>
+<h2 id="说说TCP三次握手和四次挥手的全过程"><a href="#说说TCP三次握手和四次挥手的全过程" class="headerlink" title="说说TCP三次握手和四次挥手的全过程"></a>说说TCP三次握手和四次挥手的全过程</h2><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210520161056918.png"></p>
 <ul>
-<li>第一层：网络接口层</li>
+<li><p>第一次握手：客户端请求建立连接，向服务端发送一个同步报文（SYN=1），同时选择一个随机数 seq = x 作为初始序列号，并进入SYN_SENT状态，等待服务器确认。</p>
+</li>
+<li><p>第二次握手：服务端收到连接请求报文后，如果同意建立连接，则向客户端发送同步确认报文（SYN=1，ACK=1），确认号为 ack = x + 1，同时选择一个随机数 seq = y 作为初始序列号，此时服务器进入SYN_RECV状态。</p>
+</li>
+<li><p>第三次握手：客户端收到服务端的确认后，向服务端发送一个确认报文（ACK=1），确认号为 ack = y + 1，序列号为 seq = x + 1，客户端和服务器进入ESTABLISHED状态，完成三次握手。</p>
+</li>
 </ul>
-<p>网络接口层包括用于协作IP数据在已有网络介质上传输的协议。</p>
-<p>协议：ARP,RARP</p>
+<p>理想状态下，TCP连接一旦建立，在通信双方中的任何一方主动关闭连接之前，TCP 连接都将被一直保持下去。</p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210520180127547.png"></p>
 <ul>
-<li>第二层：网间层</li>
-</ul>
-<p>网间层对应于OSI七层参考模型的网络层。负责数据的包装、寻址和路由。同时还包含网间控制报文协议(Internet Control Message Protocol,ICMP)用来提供网络诊断信息。</p>
-<p>协议：本层包含IP协议、RIP协议(Routing Information Protocol，路由信息协议)，ICMP协议。</p>
+<li><p>第一次挥手：客户端向服务端发送连接释放报文（FIN=1，ACK=1），主动关闭连接，同时等待服务端的确认。</p>
 <ul>
-<li>第三层：传输层</li>
+<li>序列号 seq = u，即客户端上次发送的报文的最后一个字节的序号 + 1</li>
+<li>确认号 ack = k, 即服务端上次发送的报文的最后一个字节的序号 + 1</li>
 </ul>
-<p>传输层对应于OSI七层参考模型的传输层，它提供两种端到端的通信服务。</p>
-<p>其中TCP协议(Transmission Control Protocol)提供可靠的数据流运输服务，UDP协议(UseDatagram Protocol)提供不可靠的用户数据报服务。</p>
+</li>
+<li><p>第二次挥手：服务端收到连接释放报文后，立即发出<strong>确认报文</strong>（ACK=1），序列号 seq = k，确认号 ack = u + 1。</p>
+<p>这时 TCP 连接处于半关闭状态，即客户端到服务端的连接已经释放了，但是服务端到客户端的连接还未释放。这表示客户端已经没有数据发送了，但是服务端可能还要给客户端发送数据。</p>
+</li>
+<li><p>第三次挥手：服务端向客户端发送连接释放报文（FIN=1，ACK=1），主动关闭连接，同时等待 A 的确认。</p>
 <ul>
-<li>第四层：应用层</li>
+<li>序列号 seq = w，即服务端上次发送的报文的最后一个字节的序号 + 1。</li>
+<li>确认号 ack = u + 1，与第二次挥手相同，因为这段时间客户端没有发送数据</li>
 </ul>
-<p>应用层对应于OSI七层参考模型的应用层和表达层。</p>
-<p>因特网的应用层协议包括Finger、Whois、FTP(文件传输协议)、Gopher、HTTP(超文本传输协议)、Telent(远程终端协议)、SMTP(简单邮件传送协议)、IRC(因特网中继会话)、NNTP（网络新闻传输协议）等。</p>
-<h2 id="说说域名解析详细过程"><a href="#说说域名解析详细过程" class="headerlink" title="说说域名解析详细过程"></a>说说域名解析详细过程</h2><ol>
-<li>浏览器访问 <a target="_blank" rel="noopener" href="http://www.baidu.com,询问本地/">www.baidu.com，询问本地</a> DNS 服务器是否缓存了该网址解析后的 IP 地址。</li>
-<li>如果本地 DNS 服务器没有缓存的话，就去 root-servers.net 根服务器查询该网址对应的 IP 地址。</li>
-<li>根服务器返回顶级域名服务器的网址 gtld-servers.net，然后本地 DNS 服务器去顶级域名服务器查询该网址对应的 IP 地址。</li>
-<li>顶级域名服务器返回 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 主区域服务器的地址，然后本地 DNS 服务器去 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 主区域服务器查询此域名对应的 IP 地址。</li>
-<li>本地 DNS 服务器拿到 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 解析后的 IP 地址后，缓存起来以便备查，然后把解析后的 IP 地址返回给浏览器。</li>
+</li>
+<li><p>第四次挥手：客户端收到服务端的连接释放报文后，立即发出<strong>确认报文</strong>（ACK=1），序列号 seq = u + 1，确认号为 ack = w + 1。</p>
+</li>
+</ul>
+<p>此时，客户端就进入了 <code>TIME-WAIT</code> 状态。注意此时客户端到 TCP 连接还没有释放，必须经过 2*MSL（最长报文段寿命）的时间后，才进入 <code>CLOSED</code> 状态。而服务端只要收到客户端发出的确认，就立即进入 <code>CLOSED</code> 状态。可以看到，服务端结束 TCP 连接的时间要比客户端早一些。</p>
+<h2 id="为什么需要三次握手，而不是两次？"><a href="#为什么需要三次握手，而不是两次？" class="headerlink" title="为什么需要三次握手，而不是两次？"></a>为什么需要三次握手，而不是两次？</h2><p>主要有三个原因：</p>
+<ol>
+<li><p>防止已过期的连接请求报文突然又传送到服务器，因而产生错误和资源浪费。</p>
+<p>在双方两次握手即可建立连接的情况下，假设客户端发送 A 报文段请求建立连接，由于网络原因造成 A 暂时无法到达服务器，服务器接收不到请求报文段就不会返回确认报文段。</p>
+<p>客户端在长时间得不到应答的情况下重新发送请求报文段 B，这次 B 顺利到达服务器，服务器随即返回确认报文并进入 ESTABLISHED 状态，客户端在收到 确认报文后也进入 ESTABLISHED 状态，双方建立连接并传输数据，之后正常断开连接。</p>
+<p>此时姗姗来迟的 A 报文段才到达服务器，服务器随即返回确认报文并进入 ESTABLISHED 状态，但是已经进入 CLOSED 状态的客户端无法再接受确认报文段，更无法进入 ESTABLISHED 状态，这将导致服务器长时间单方面等待，造成资源浪费。</p>
+</li>
+<li><p>三次握手才能让双方均确认自己和对方的发送和接收能力都正常。</p>
+<p>第一次握手：客户端只是发送处请求报文段，什么都无法确认，而服务器可以确认自己的接收能力和对方的发送能力正常；</p>
+<p>第二次握手：客户端可以确认自己发送能力和接收能力正常，对方发送能力和接收能力正常；</p>
+<p>第三次握手：服务器可以确认自己发送能力和接收能力正常，对方发送能力和接收能力正常；</p>
+<p>可见三次握手才能让双方都确认自己和对方的发送和接收能力全部正常，这样就可以愉快地进行通信了。</p>
+</li>
+<li><p>告知对方自己的初始序号值，并确认收到对方的初始序号值。</p>
+<p>TCP 实现了可靠的数据传输，原因之一就是 TCP 报文段中维护了序号字段和确认序号字段，通过这两个字段双方都可以知道在自己发出的数据中，哪些是已经被对方确认接收的。这两个字段的值会在初始序号值得基础递增，如果是两次握手，只有发起方的初始序号可以得到确认，而另一方的初始序号则得不到确认。</p>
+</li>
 </ol>
+<h2 id="为什么要三次握手，而不是四次？"><a href="#为什么要三次握手，而不是四次？" class="headerlink" title="为什么要三次握手，而不是四次？"></a>为什么要三次握手，而不是四次？</h2><p>因为三次握手已经可以确认双方的发送接收能力正常，双方都知道彼此已经准备好，而且也可以完成对双方初始序号值得确认，也就无需再第四次握手了。</p>
+<ul>
+<li>第一次握手：服务端确认“自己收、客户端发”报文功能正常。</li>
+<li>第二次握手：客户端确认“自己发、自己收、服务端收、客户端发”报文功能正常，客户端认为连接已建立。</li>
+<li>第三次握手：服务端确认“自己发、客户端收”报文功能正常，此时双方均建立连接，可以正常通信。</li>
+</ul>
+<h2 id="为什么连接的时候是三次握手，关闭的时候却是四次握手？"><a href="#为什么连接的时候是三次握手，关闭的时候却是四次握手？" class="headerlink" title="为什么连接的时候是三次握手，关闭的时候却是四次握手？"></a>为什么连接的时候是三次握手，关闭的时候却是四次握手？</h2><p>服务器在收到客户端的 FIN 报文段后，可能还有一些数据要传输，所以不能马上关闭连接，但是会做出应答，返回 ACK 报文段.</p>
+<p>接下来可能会继续发送数据，在数据发送完后，服务器会向客户单发送 FIN 报文，表示数据已经发送完毕，请求关闭连接。服务器的<strong>ACK和FIN一般都会分开发送</strong>，从而导致多了一次，因此一共需要四次挥手。</p>
+<h2 id="为什么客户端的-TIME-WAIT-状态必须等待-2MSL-？"><a href="#为什么客户端的-TIME-WAIT-状态必须等待-2MSL-？" class="headerlink" title="为什么客户端的 TIME-WAIT 状态必须等待 2MSL ？"></a>为什么客户端的 TIME-WAIT 状态必须等待 2MSL ？</h2><p>主要有两个原因：</p>
+<ol>
+<li>确保 ACK 报文能够到达服务端，从而使服务端正常关闭连接。</li>
+</ol>
+<p>第四次挥手时，客户端第四次挥手的 ACK 报文不一定会到达服务端。服务端会超时重传 FIN/ACK 报文，此时如果客户端已经断开了连接，那么就无法响应服务端的二次请求，这样服务端迟迟收不到 FIN/ACK 报文的确认，就无法正常断开连接。</p>
+<p>MSL 是报文段在网络上存活的最长时间。客户端等待 2MSL 时间，即「客户端 ACK 报文 1MSL 超时 + 服务端 FIN 报文 1MSL 传输」，就能够收到服务端重传的 FIN/ACK 报文，然后客户端重传一次 ACK 报文，并重新启动 2MSL 计时器。如此保证服务端能够正常关闭。</p>
+<p>如果服务端重发的 FIN 没有成功地在 2MSL 时间里传给客户端，服务端则会继续超时重试直到断开连接。</p>
+<ol start="2">
+<li> 防止已失效的连接请求报文段出现在之后的连接中。</li>
+</ol>
+<p>TCP 要求在 2MSL 内不使用相同的序列号。客户端在发送完最后一个 ACK 报文段后，再经过时间 2MSL，就可以保证本连接持续的时间内产生的所有报文段都从网络中消失。这样就可以使下一个连接中不会出现这种旧的连接请求报文段。或者即使收到这些过时的报文，也可以不处理它。</p>
+<h2 id="如果已经建立了连接，但是客户端出现故障了怎么办？"><a href="#如果已经建立了连接，但是客户端出现故障了怎么办？" class="headerlink" title="如果已经建立了连接，但是客户端出现故障了怎么办？"></a>如果已经建立了连接，但是客户端出现故障了怎么办？</h2><p>或者说，如果三次握手阶段、四次挥手阶段的包丢失了怎么办？如“服务端重发 FIN丢失”的问题。</p>
+<p>简而言之，通过<strong>定时器 + 超时重试机制</strong>，尝试获取确认，直到最后会自动断开连接。</p>
+<p>具体而言，TCP 设有一个保活计时器。服务器每收到一次客户端的数据，都会重新复位这个计时器，时间通常是设置为 2 小时。若 2 小时还没有收到客户端的任何数据，服务器就开始重试：每隔 75 分钟发送一个探测报文段，若一连发送 10 个探测报文后客户端依然没有回应，那么服务器就认为连接已经断开了。</p>
+<h2 id="TIME-WAIT-状态过多会产生什么后果？怎样处理？"><a href="#TIME-WAIT-状态过多会产生什么后果？怎样处理？" class="headerlink" title="TIME-WAIT 状态过多会产生什么后果？怎样处理？"></a>TIME-WAIT 状态过多会产生什么后果？怎样处理？</h2><p>从服务器来讲，短时间内关闭了大量的Client连接，就会造成服务器上出现大量的TIME_WAIT连接，严重消耗着服务器的资源，此时部分客户端就会显示连接不上。</p>
+<p>从客户端来讲，客户端TIME_WAIT过多，就会导致端口资源被占用，因为端口就65536个，被占满就会导致无法创建新的连接。</p>
+<p><strong>解决办法：</strong></p>
+<ul>
+<li><p>服务器可以设置 SO_REUSEADDR 套接字选项来避免 TIME_WAIT状态，此套接字选项告诉内核，即使此端口正忙（处于<br>TIME_WAIT状态），也请继续并重用它。</p>
+</li>
+<li><p>调整系统内核参数，修改/etc/sysctl.conf文件，即修改<code>net.ipv4.tcp_tw_reuse 和 tcp_timestamps</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">net.ipv4.tcp_tw_reuse <span class="token operator">=</span> <span class="token number">1</span> 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
+net.ipv4.tcp_tw_recycle <span class="token operator">=</span> <span class="token number">1</span> 表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><p>强制关闭，发送 RST 包越过TIME_WAIT状态，直接进入CLOSED状态。</p>
+</li>
+</ul>
+<h2 id="TIME-WAIT-是服务器端的状态-还是客户端的状态"><a href="#TIME-WAIT-是服务器端的状态-还是客户端的状态" class="headerlink" title="TIME_WAIT 是服务器端的状态?还是客户端的状态?"></a>TIME_WAIT 是服务器端的状态?还是客户端的状态?</h2><p>TIME_WAIT 是主动断开连接的一方会进入的状态，一般情况下，都是客户端所处的状态;服务器端一般设置不主动关闭连接。</p>
+<p>TIME_WAIT 需要等待 2MSL，在大量短连接的情况下，TIME_WAIT会太多，这也会消耗很多系统资源。对于服务器来说，在 HTTP 协议里指定 KeepAlive（浏览器重用一个 TCP 连接来处理多个 HTTP 请求），由浏览器来主动断开连接，可以一定程度上减少服务器的这个问题。</p>
+<h2 id="什么是-SYN洪泛攻击？如何防范？"><a href="#什么是-SYN洪泛攻击？如何防范？" class="headerlink" title="什么是 SYN洪泛攻击？如何防范？"></a>什么是 SYN洪泛攻击？如何防范？</h2><p>SYN洪泛攻击属于 DOS 攻击的一种，它利用 TCP 协议缺陷，通过发送大量的半连接请求，耗费 CPU 和内存资源。</p>
+<p><strong>原理：</strong></p>
+<ul>
+<li>在三次握手过程中，服务器发送 <code>[SYN/ACK]</code> 包（第二个包）之后、收到客户端的 <code>[ACK]</code> 包（第三个包）之前的 TCP 连接称为半连接（half-open connect），此时服务器处于 <code>SYN_RECV</code>（等待客户端响应）状态。如果接收到客户端的 <code>[ACK]</code>，则 TCP 连接成功，如果未接受到，则会<strong>不断重发请求</strong>直至成功。</li>
+<li>SYN 攻击的攻击者在短时间内<strong>伪造大量不存在的 IP 地址</strong>，向服务器不断地发送 <code>[SYN]</code> 包，服务器回复 <code>[SYN/ACK]</code> 包，并等待客户的确认。由于源地址是不存在的，服务器需要不断的重发直至超时。</li>
+<li>这些伪造的 <code>[SYN]</code> 包将长时间占用未连接队列，影响了正常的 SYN，导致目标系统运行缓慢、网络堵塞甚至系统瘫痪。</li>
+</ul>
+<p><strong>检测：</strong></p>
+<p>当在服务器上看到大量的半连接状态时，特别是源 IP 地址是随机的，基本上可以断定这是一次 SYN 攻击。</p>
+<p><strong>防范：</strong></p>
+<ul>
+<li>通过防火墙、路由器等过滤网关防护。</li>
+<li>通过加固 TCP/IP 协议栈防范，如增加最大半连接数，缩短超时时间。</li>
+<li>SYN cookies技术。SYN Cookies 是对 TCP 服务器端的三次握手做一些修改，专门用来防范 SYN 洪泛攻击的一种手段。</li>
+</ul>
+<h2 id="三次握手连接阶段，最后一次ACK包丢失，会发生什么？"><a href="#三次握手连接阶段，最后一次ACK包丢失，会发生什么？" class="headerlink" title="三次握手连接阶段，最后一次ACK包丢失，会发生什么？"></a>三次握手连接阶段，最后一次ACK包丢失，会发生什么？</h2><p><strong>服务端：</strong></p>
+<ul>
+<li>第三次的ACK在网络中丢失，那么服务端该TCP连接的状态为SYN_RECV,并且会根据 TCP的超时重传机制，会等待3秒、6秒、12秒后重新发送SYN+ACK包，以便客户端重新发送ACK包。</li>
+<li>如果重发指定次数之后，仍然未收到 客户端的ACK应答，那么一段时间后，服务端自动关闭这个连接。</li>
+</ul>
+<p><strong>客户端：</strong></p>
+<p>客户端认为这个连接已经建立，如果客户端向服务端发送数据，服务端将以RST包（Reset，标示复位，用于异常的关闭连接）响应。此时，客户端知道第三次握手失败。</p>
+<h2 id="说说域名解析详细过程"><a href="#说说域名解析详细过程" class="headerlink" title="说说域名解析详细过程"></a>说说域名解析详细过程</h2><ol>
+<li>域名解析（域名 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com </a>变为 ip 地址）。</li>
+</ol>
+<p><strong>浏览器搜索自己的DNS缓存</strong>（维护一张域名与IP的对应表）；若没有，则搜索<strong>操作系统的DNS缓存</strong>（维护一张域名与IP的对应表）；若没有，则搜索操作系统的<strong>hosts文件</strong>（维护一张域名与IP的对应表）。</p>
+<p>若都没有，则找 tcp/ip 参数中设置的首选 dns 服务器，即<strong>本地 dns 服务器</strong>（递归查询），<strong>本地域名服务器查询自己的dns缓存</strong>，如果没有，则进行迭代查询。将本地dns服务器将IP返回给操作系统，同时缓存IP。</p>
+<ol start="2">
+<li><p>发起 tcp 的三次握手，建立 tcp 连接。浏览器会以一个随机端口（1024-65535）向服务端的 web 程序 <strong>80</strong> 端口发起 tcp 的连接。</p>
+</li>
+<li><p>建立 tcp 连接后发起 http 请求。</p>
+</li>
+<li><p>服务器响应 http 请求，客户端得到 html 代码。服务器 web 应用程序收到 http 请求后，就开始处理请求，处理之后就返回给浏览器 html 文件。</p>
+</li>
+<li><p>浏览器解析 html 代码，并请求 html 中的资源。</p>
+</li>
+<li><p>浏览器对页面进行渲染，并呈现给用户。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210525172545204.png"></p>
+<h2 id="什么是-Cookie-和-Session"><a href="#什么是-Cookie-和-Session" class="headerlink" title="什么是 Cookie 和 Session ?"></a>什么是 Cookie 和 Session ?</h2><p><strong>什么是 Cookie</strong></p>
+<p>HTTP Cookie（也叫 Web Cookie或浏览器 Cookie）是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。通常，它用于告知服务端两个请求是否来自同一浏览器，如保持用户的登录状态。Cookie 使基于无状态的 HTTP 协议记录稳定的状态信息成为了可能。</p>
+<p>Cookie 主要用于以下三个方面：</p>
+<ul>
+<li>会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）</li>
+<li>个性化设置（如用户自定义设置、主题等）</li>
+<li>浏览器行为跟踪（如跟踪分析用户行为等）</li>
+</ul>
+<p><strong>什么是 Session</strong></p>
+<p>Session 代表着服务器和客户端一次会话的过程。Session 对象存储特定用户会话所需的属性及配置信息。这样，当用户在应用程序的 Web 页之间跳转时，存储在 Session 对象中的变量将不会丢失，而是在整个用户会话中一直存在下去。当客户端关闭会话，或者 Session 超时失效时会话结束。</p>
+<h2 id="Cookie和Session的区别？"><a href="#Cookie和Session的区别？" class="headerlink" title="Cookie和Session的区别？"></a>Cookie和Session的区别？</h2><ul>
+<li>作用范围不同，Cookie 保存在客户端（浏览器），Session 保存在服务器端。</li>
+<li>存取方式的不同，Cookie 只能保存 ASCII，Session 可以存任意数据类型，一般情况下我们可以在 Session 中保持一些常用变量信息，比如说 UserId 等。</li>
+<li>有效期不同，Cookie 可设置为长时间保持，比如我们经常使用的默认登录功能，Session 一般失效时间较短，客户端关闭或者 Session 超时都会失效。</li>
+<li>隐私策略不同，Cookie 存储在客户端，比较容易遭到不法获取，早期有人将用户的登录名和密码存储在 Cookie 中导致信息被窃取；Session 存储在服务端，安全性相对 Cookie 要好一些。</li>
+<li>存储大小不同， 单个 Cookie 保存的数据不能超过 4K，Session 可存储数据远高于 Cookie。</li>
+</ul>
+<h2 id="Cookie-和-Session-是如何配合的呢？"><a href="#Cookie-和-Session-是如何配合的呢？" class="headerlink" title="Cookie 和 Session 是如何配合的呢？"></a>Cookie 和 Session 是如何配合的呢？</h2><p>用户第一次请求服务器的时候，服务器根据用户提交的相关信息，创建对应的 Session ，请求返回时将此 Session 的唯一标识信息 SessionID 返回给浏览器，浏览器接收到服务器返回的 SessionID 信息后，会将此信息存入到 Cookie 中，同时 Cookie 记录此 SessionID 属于哪个域名。</p>
+<p>当用户第二次访问服务器的时候，请求会自动判断此域名下是否存在 Cookie 信息，如果存在自动将 Cookie 信息也发送给服务端，服务端会从 Cookie 中获取 SessionID，再根据 SessionID 查找对应的 Session 信息，如果没有找到说明用户没有登录或者登录失效，如果找到 Session 证明用户已经登录可执行后面操作。</p>
+<p>根据以上流程可知，SessionID 是连接 Cookie 和 Session 的一道桥梁，大部分系统也是根据此原理来验证用户登录状态。</p>
+<h2 id="如何考虑分布式-Session-问题？"><a href="#如何考虑分布式-Session-问题？" class="headerlink" title="如何考虑分布式 Session 问题？"></a>如何考虑分布式 Session 问题？</h2><p>在互联网公司为了可以支撑更大的流量，后端往往需要多台服务器共同来支撑前端用户请求，那如果用户在 A 服务器登录了，第二次请求跑到服务 B 就会出现登录失效问题。</p>
+<p>分布式 Session 一般会有以下几种解决方案：</p>
+<ul>
+<li><strong>客户端存储</strong>：直接将信息存储在cookie中，cookie是存储在客户端上的一小段数据，客户端通过http协议和服务器进行cookie交互，通常用来存储一些不敏感信息</li>
+</ul>
+<ul>
+<li><strong>Nginx ip_hash 策略</strong>：服务端使用 Nginx 代理，每个请求按访问 IP 的 hash 分配，这样来自同一 IP 固定访问一个后台服务器，避免了在服务器 A 创建 Session，第二次分发到服务器 B 的现象。</li>
+<li><strong>Session 复制</strong>：任何一个服务器上的 Session 发生改变（增删改），该节点会把这个 Session 的所有内容序列化，然后广播给所有其它节点。</li>
+<li><strong>共享 Session</strong>：服务端无状态话，将用户的 Session 等信息使用缓存中间件（如Redis）来统一管理，保障分发到每一个服务器的响应结果都一致。</li>
+</ul>
+<p>建议采用共享 Session的方案。</p>
+<h2 id="什么是DDos攻击？"><a href="#什么是DDos攻击？" class="headerlink" title="什么是DDos攻击？"></a>什么是DDos攻击？</h2><p>DDos全称Distributed Denial of Service，分布式拒绝服务攻击。最基本的DOS攻击过程如下：</p>
+<ol>
+<li>客户端向服务端发送请求链接数据包。</li>
+<li>服务端向客户端发送确认数据包。</li>
+<li>客户端不向服务端发送确认数据包，服务器一直等待来自客户端的确认</li>
+</ol>
+<p>DDoS则是采用分布式的方法，通过在网络上占领多台“肉鸡”，用多台计算机发起攻击。</p>
+<p>DOS攻击现在基本没啥作用了，因为服务器的性能都很好，而且是多台服务器共同作用，1V1的模式黑客无法占上风。</p>
+<p>对于DDOS攻击，预防方法有：</p>
+<ul>
+<li><strong>减少SYN timeout时间</strong>。在握手的第三步，服务器会等待30秒-120秒的时间，减少这个等待时间就能释放更多的资源。</li>
+<li><strong>限制同时打开的SYN半连接数目。</strong></li>
+</ul>
+<h2 id="什么是XSS攻击？"><a href="#什么是XSS攻击？" class="headerlink" title="什么是XSS攻击？"></a>什么是XSS攻击？</h2><p>XSS也称 cross-site scripting，<strong>跨站脚本</strong>。这种攻击是<strong>由于服务器将攻击者存储的数据原原本本地显示给其他用户所致的</strong>。比如一个存在XSS漏洞的论坛，用户发帖时就可以引入<strong>带有＜script＞标签的代码</strong>，导致恶意代码的执行。</p>
+<p>预防措施有：</p>
+<ul>
+<li>前端：过滤。</li>
+<li>后端：转义，比如go自带的处理器就具有转义功能。</li>
+</ul>
+<h2 id="SQL注入是什么，如何避免SQL注入？"><a href="#SQL注入是什么，如何避免SQL注入？" class="headerlink" title="SQL注入是什么，如何避免SQL注入？"></a>SQL注入是什么，如何避免SQL注入？</h2><p>SQL 注入就是在用户输入的字符串中加入 SQL 语句，如果在设计不良的程序中忽略了检查，那么这些注入进去的 SQL 语句就会被数据库服务器误认为是正常的 SQL 语句而运行，攻击者就可以执行计划外的命令或访问未被授权的数据。</p>
+<p><strong>SQL注入的原理主要有以下4点</strong></p>
+<ul>
+<li>恶意拼接查询</li>
+<li>利用注释执行非法命令</li>
+<li>传入非法参数</li>
+<li>添加额外条件</li>
+</ul>
+<p><strong>避免SQL注入的一些方法：</strong></p>
+<ul>
+<li>限制数据库权限，给用户提供仅仅能够满足其工作的最低权限。</li>
+<li>对进入数据库的特殊字符（’”\尖括号&amp;*;等）转义处理。</li>
+<li>提供参数化查询接口，不要直接使用原生SQL。</li>
+</ul>
+<h2 id="负载均衡算法有哪些？"><a href="#负载均衡算法有哪些？" class="headerlink" title="负载均衡算法有哪些？"></a>负载均衡算法有哪些？</h2><p>多台服务器以对称的方式组成一个服务器集合，每台服务器都具有等价的地位，能互相分担负载。</p>
+<ul>
+<li>轮询法：将请求按照顺序轮流的分配到服务器上。大锅饭，不能发挥某些高性能服务器的优势。</li>
+<li>随机法：随机获取一台，和轮询类似。</li>
+<li>哈希法：通过ip地址哈希化来确定要选择的服务器编号。好处是,每次客户端访问的服务器都是同一个服务器，能很好地利用session或者cookie。</li>
+<li>加权轮询：根据服务器性能不同加权。</li>
+</ul>
 <h1 id="16-ElasticSearch篇"><a href="#16-ElasticSearch篇" class="headerlink" title="16. ElasticSearch篇"></a>16. ElasticSearch篇</h1><h2 id="谈谈分词与倒排索引的原理"><a href="#谈谈分词与倒排索引的原理" class="headerlink" title="谈谈分词与倒排索引的原理"></a>谈谈分词与倒排索引的原理</h2><p>首先说分词是给检索用的。</p>
 <ul>
 <li>英文：一个单词一个词，很简单。I am a student，词与词之间空格分隔。</li>
@@ -5767,7 +7229,7 @@ jhsdb jmap  <span class="token operator">--</span>binaryheap <span class="token 
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">408.7k</span>
+                        class="white-color">441.2k</span>
             
             
             
