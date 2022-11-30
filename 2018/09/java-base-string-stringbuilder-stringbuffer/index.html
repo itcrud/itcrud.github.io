@@ -374,7 +374,7 @@
     <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">(</span>endTime1 <span class="token operator">-</span> startTime<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"ms"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这段代码运行的结果用时是30<del>40毫秒，如果将循环的次数由1000变为10000，扩大了10倍，运行时间远远大于原来时间的10倍，基本在1300</del>1500毫秒之间，可见随着拼接次数的变多，效率会变得很低。这是为什么呢？</p>
+<p>这段代码运行的结果用时是30到40毫秒，如果将循环的次数由1000变为10000，扩大了10倍，运行时间远远大于原来时间的10倍，基本在1300到1500毫秒之间，可见随着拼接次数的变多，效率会变得很低。这是为什么呢？</p>
 <p>在JVM中，String字符串的值是存储在常量池中，但是String字符串一旦创建，就不可变得，当需要拼接字符串的时候，就需要将原有的字符串复制出来和需要拼接的部分组成一个新的字符串，然后在常量池中开辟新的空间存储，在这个过程中，每次拼接都是对象的创建，方法中str的引用指针也会随之改变，另外创建过程会存在很多失去引用的值，无用的数据占用大量的空间，就会触发JVM进行频繁的GC回收，也是一个性能的开销。因此在多字符串拼接的时候，极其的不建议直接用String的拼接方式。</p>
 <p>存在问题总结：</p>
 <ul>
@@ -898,7 +898,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">453.7k</span>
+                        class="white-color">452.6k</span>
             
             
             
