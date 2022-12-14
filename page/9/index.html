@@ -328,32 +328,36 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/09/java-jvm-series-class-load-time/">
+                    <a href="/2018/10/java-thread-connect-message/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/7.jpg" class="responsive-img" alt="Java虚拟机那些事儿(十)：类加载的时机">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="Java并发编程：如何实现线程间通信的N种场景和对应的实现方式">
                             
-                            <span class="card-title">Java虚拟机那些事儿(十)：类加载的时机</span>
+                            <span class="card-title">Java并发编程：如何实现线程间通信的N种场景和对应的实现方式</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                加载、验证、准备、初始化和卸载这 5 个阶段的顺序是确定的，类的加载过程必须按照这种顺序按部就班地开始（注意是“开始”，而不是“进行”或“完成”），而解析阶段则不一定：它在某些情况下可以在初始化后再开始，这是为了支持 Java 语言的运行时绑定。Java 虚拟机规范没有强制约束类加载过程的第一阶段（即：加载）什么时候开始，但对于……
+                                正常情况下，每个子线程完成各自的任务就可以结束了。不过有的时候，我们希望多个线程协同工作来完成某个任务，这时就涉及到了线程间通信了。
+1. 文前说明1.1 本文涉及到的知识点
+thread.join()
+object.wait()
+obje
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-09-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-21
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-category">
-                                    Java虚拟机
+                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    并发编程
                                 </a>
                                 
                                 
@@ -364,8 +368,12 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA/">
-                            <span class="chip bg-color">类加载时机</span>
+                        <a href="/tags/%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/">
+                            <span class="chip bg-color">线程间通信</span>
+                        </a>
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">
+                            <span class="chip bg-color">并发编程</span>
                         </a>
                         
                     </div>
@@ -377,32 +385,32 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/09/java-jvm-series-class-structure/">
+                    <a href="/2018/10/concurrenthashmap-understand-by-pic/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="Java虚拟机那些事儿(九)：类文件结构">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="ConcurrentHashMap简单的实现思想理解">
                             
-                            <span class="card-title">Java虚拟机那些事儿(九)：类文件结构</span>
+                            <span class="card-title">ConcurrentHashMap简单的实现思想理解</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                JVM 只认识 .class 文件，它不关心是何种语言生成了 .class 文件，只要 .class 文件符合 JVM 的规范就能运行。 目前已经有 JRuby、Jython、Scala 等语言能够在 JVM 上运行。它们有各自的语法规则，不过它们的编译器 都能将各自的源码编译成符合 JVM 规范的 .class 文件，从而……
+                                关于说ConcurrentHashMap的文章很多，本博客也有转载这样的文章，但是总体觉得都是过于偏重源码的说明。没有很明确的结构图来让我们从整体上理解源码的实现过程。毕竟人都是偏向于懒，博客中源码过于太多，理解起来困难，再加上这种源码分析的篇幅很长，因此能真正看完理解的确不多(个人理解)。所以这篇文章里面将不贴出源码，完全……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-09-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-18
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-category">
-                                    Java虚拟机
+                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    并发编程
                                 </a>
                                 
                                 
@@ -413,8 +421,8 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/">
-                            <span class="chip bg-color">类文件结构</span>
+                        <a href="/tags/ConcurrentHashMap/">
+                            <span class="chip bg-color">ConcurrentHashMap</span>
                         </a>
                         
                     </div>
@@ -426,32 +434,32 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/09/java-base-string-stringbuilder-stringbuffer/">
+                    <a href="/2018/10/mysql-index-principle/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="拼接字符串String、StringBuilder、StringBuffer你用对了吗">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="MySQL数据库系列(六)：MySQL之索引数据结构分析">
                             
-                            <span class="card-title">拼接字符串String、StringBuilder、StringBuffer你用对了吗</span>
+                            <span class="card-title">MySQL数据库系列(六)：MySQL之索引数据结构分析</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                字符串拼接，很简单的一个操作，JDK给出了几种不同的拼接方法，还提供了对应封装类。早在JDK1.0的时候就提供了StringBuffer这个类用来做字符串的拼接，为了多线程下的线程安全问题，在StringBuffer类中的方法上都加了synchronized锁，这种考虑是没有问题的。后续为了提高单线程下(不存在线程安全问题)提……
+                                数据库查询是数据库的最主要功能之一。我们都希望查询数据的速度能尽可能的快，因此数据库系统的设计者会从查询算法的角度进行优化。最基本的查询算法当然是顺序查找（linear search），这种复杂度为O(n)的算法在数据量很大时显然是糟糕的，好在计算机科学的发展提供了很多更优秀的查找算法，例如二分查找（binary search）……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-09-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-16
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/Java%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    Java基础
+                                <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
                                 </a>
                                 
                                 
@@ -462,8 +470,12 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-                            <span class="chip bg-color">字符串</span>
+                        <a href="/tags/MySQL/">
+                            <span class="chip bg-color">MySQL</span>
+                        </a>
+                        
+                        <a href="/tags/%E7%B4%A2%E5%BC%95%E5%8E%9F%E7%90%86/">
+                            <span class="chip bg-color">索引原理</span>
                         </a>
                         
                     </div>
@@ -475,25 +487,445 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/08/orm-mybatis-basic-resultmap/">
+                    <a href="/2018/10/mybatis-mapper-mvn-dependency/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="ORM框架之Mybatis(四)：映射文件resultMap标签详解">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="Mybatis中mapper别名问题和maven依赖问题">
                             
-                            <span class="card-title">ORM框架之Mybatis(四)：映射文件resultMap标签详解</span>
+                            <span class="card-title">Mybatis中mapper别名问题和maven依赖问题</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Mybatis的映射文件中顶级的标签并不多，之前有说过select、update、delete、insert、sql等标签，resultMap在之前的文章也有提过，但是当时也是简单的提过，其实这个标签里面的内容很多，可简单可复杂。正常开发中简单的基本都在使用，但是涉及到复杂的用的就少啦。resultMap内和关联查询有关的标签分别是……
+                                又到一期挖坑填坑的时候啦，前段时间在开发一个新的项目，项目的框架逃不过三大件:Spring+Mybatis+Spring Boot。现在Spring Boot可谓是很有热度，如果是新开的项目基本都会是这个框架结构，用Spring MVC的已经很少(如果你说你们自己还在用，反驳我的说法，那我只能喊你一声杠精大哥啦)。之所以介绍一下这个……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-13
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Mybatis/" class="post-category">
+                                    Mybatis
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/mybatis/">
+                            <span class="chip bg-color">mybatis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/10/mysql-optimization-sql/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="MySQL数据库系列(五)：MySQL之SQL优化十大口诀了解一下">
+                            
+                            <span class="card-title">MySQL数据库系列(五)：MySQL之SQL优化十大口诀了解一下</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                SQL优化，心中永远的痛，同事写的各种复杂SQL，各种坑，有时候想拿出来优化一下，但是总感觉力不从心，不知从哪里下手。……。全值匹配是最优，最左前缀原则要注意，乱在索引列上操作惹祸害，范围查询记得放后面，不等于使用要小心，空和非空要注意，模糊查询通配符勿乱放，字符串查询加引号，OR变UNION效率会更高，记得覆盖索引尽量用。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-11
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/MySQL/">
+                            <span class="chip bg-color">MySQL</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">
+                            <span class="chip bg-color">执行计划</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/10/mysql-execute-plain/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="MySQL数据库系列(四)：MySQL数据库的执行计划怎么看">
+                            
+                            <span class="card-title">MySQL数据库系列(四)：MySQL数据库的执行计划怎么看</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                在写执行计划之前需要先了解一下数据库有哪些索引。其中组合索引有一个特性就是最左前缀原则，组合索引的最左列被使用到才会让整个组合索引生效。比如一个索引idx_name_phone，在索引列中name在前面，phone在后，当单纯是使用phone来查询的时候，是不会走idx_name_phone索引的，只有在name被使用的时候，才会让整个索引起作用。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-08
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/MySQL/">
+                            <span class="chip bg-color">MySQL</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">
+                            <span class="chip bg-color">执行计划</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/10/mysql-acid-isolation/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="MySQL数据库系列(三)：MySQL数据库的ACID事务特性和隔离性级别">
+                            
+                            <span class="card-title">MySQL数据库系列(三)：MySQL数据库的ACID事务特性和隔离性级别</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                事务的特性主要有四种，简称为ACID。分别如下：原子性(atomicity)：一个事务内是一个最小的操作单元，在此单元里操作成功或者失败都是相同的，不会存在部分成功部分失败的问题。隔离性(isolation)：多个事务之间是隔离开的，事务之间对数据的操作是不会互相影响的。但是对于数据库来说有不同的隔离级别，事务之间的影响也是不同的。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-06
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Mybatis/">
+                            <span class="chip bg-color">Mybatis</span>
+                        </a>
+                        
+                        <a href="/tags/ACID%E4%BA%8B%E5%8A%A1%E7%89%B9%E6%80%A7/">
+                            <span class="chip bg-color">ACID事务特性</span>
+                        </a>
+                        
+                        <a href="/tags/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">
+                            <span class="chip bg-color">事务隔离级别</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/10/mysql-engine-transaction/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="MySQL数据库系列(二)：MySQL数据库的存储引擎">
+                            
+                            <span class="card-title">MySQL数据库系列(二)：MySQL数据库的存储引擎</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                mysql存储引擎熟知的主要是myISAM、InnoDB。myISAM和InnoDB到底有什么区别呢，都常说如果项目上使用到事务就用InnoDB，如果对事务无要求就用myISAM，查询速度更快。除了这两个存储引擎还有那些呢，虽然不常用，但是还是要做个了解，万一遇到合适的场景，到时候就没有那么慌啦。这篇内容主在了解，不做详细原理解释。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-04
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Mybatis/">
+                            <span class="chip bg-color">Mybatis</span>
+                        </a>
+                        
+                        <a href="/tags/%E4%BA%8B%E5%8A%A1/">
+                            <span class="chip bg-color">事务</span>
+                        </a>
+                        
+                        <a href="/tags/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">
+                            <span class="chip bg-color">存储引擎</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/10/mysql-lock/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="MySQL数据库系列(一)：MySQL数据库中锁">
+                            
+                            <span class="card-title">MySQL数据库系列(一)：MySQL数据库中锁</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                锁是计算机协调多个进程或纯线程并发访问某一资源的机制。在数据库中，除传统的计算资源（CPU、RAM、I/O）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所在有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-02
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                            <span class="chip bg-color">MySQL数据库</span>
+                        </a>
+                        
+                        <a href="/tags/MySQL%E9%94%81/">
+                            <span class="chip bg-color">MySQL锁</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/09/java-design-builder/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="一起谈谈设计模式(二)：建造者模式">
+                            
+                            <span class="card-title">一起谈谈设计模式(二)：建造者模式</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                建造者模式是一种常用的设计模式，你可能每时每刻都在用只是你没有察觉到。比如我们常用的lambok内的@Builder注解，就是使用了建造者模式，业务代码中只要调用.builder方法，然后设置属性，最后调用.build就得到了最终的目标对象。这篇文章首先讲建造者模式内的几种角色，已经他们之间是如何配合完成一个对象的创建，最后……
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-09-29
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">
+                            <span class="chip bg-color">建造者模式</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/09/orm-mybatis-source-second-cache/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="ORM框架之Mybatis(九)：二级缓存源码的装饰器模式应用">
+                            
+                            <span class="card-title">ORM框架之Mybatis(九)：二级缓存源码的装饰器模式应用</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                mybatis的缓存有一级和二级两个缓存，在默认的情况下一级缓存是开启的，但是二级缓存是关闭的需要自己去配置，首先是在mybatis-config.xml配置文件中打开二级缓存的总开关，然后就是在每个Mapper.xml文件中开启对应的二级缓存，因为二级缓存是基于命名空间，也可以变相的理解为基于一个Mapper.xml文件。在cache……
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-09-24
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Mybatis/" class="post-category">
+                                    Mybatis
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Mybatis%E6%BA%90%E7%A0%81/">
+                            <span class="chip bg-color">Mybatis源码</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/09/mybatis-base-code/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="ORM框架之Mybatis(八)：mybatis基础代码的了解和源码跟踪">
+                            
+                            <span class="card-title">ORM框架之Mybatis(八)：mybatis基础代码的了解和源码跟踪</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                mybatis使用在日常开发中很简单，基本没有门槛，都是和Spring直接集成，然后把之前的一些配置copy到spring的配置文件中就可以使用。具体mybatis的配置文件加载代码，已经SqlSession执行的细节都被封装到了框架中，符合面向对象编程，但是存在一个问题就是那些细节的代码慢慢都被遗忘。写这个博客就是记录……
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-09-19
                             </span>
                             <span class="publish-author">
                                 
@@ -513,430 +945,6 @@
                         
                         <a href="/tags/Mybatis/">
                             <span class="chip bg-color">Mybatis</span>
-                        </a>
-                        
-                        <a href="/tags/resultMap/">
-                            <span class="chip bg-color">resultMap</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/08/orm-mybatis-basic-003/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="ORM框架之Mybatis(三)：动态SQL和批处理">
-                            
-                            <span class="card-title">ORM框架之Mybatis(三)：动态SQL和批处理</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                看着标题感觉很高大上，实际上的确不算low。动态SQL是一些标签对动态拼接SQL操作的优化，使代码更加的优雅、简洁。再就是批处理，常用的就是foreach标签，但是还有另一种方式也是可以了解一下的，虽然在实际开发上不怎么用，但是知道还是必须滴，从功利来说，面试要是被问到可以用来做加分项，从心理上来说，同事间聊起来可以……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-28
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Mybatis/" class="post-category">
-                                    Mybatis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Mybatis/">
-                            <span class="chip bg-color">Mybatis</span>
-                        </a>
-                        
-                        <a href="/tags/ORM/">
-                            <span class="chip bg-color">ORM</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/08/java-jvm-series-jvm-optimize/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="Java虚拟机那些事儿(八)：JVM 性能调优">
-                            
-                            <span class="card-title">Java虚拟机那些事儿(八)：JVM 性能调优</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                垃圾收集进行时，虚拟机虽然会对直接内存进行回收， 但是直接内存却不能像新生代、老年代那样，发现空间不足了就通知收集器进行垃圾回收， 它只能等老年代满了后 Full GC，然后“顺便”帮它清理掉内存的废弃对象。 否则只能一直等到抛出内存溢出异常时，先catch掉，再在catch块里大喊 “System.gc()”。要是虚拟……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-category">
-                                    Java虚拟机
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/JVM%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/">
-                            <span class="chip bg-color">JVM性能调优</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/08/orm-mybatis-basic-002/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="ORM框架之Mybatis(二)：映射文件">
-                            
-                            <span class="card-title">ORM框架之Mybatis(二)：映射文件</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Mybatis的mapper映射文件中有很多常用的标签，如insert、update、delete、select、resultMap、sql等，也会有很多属性，如resultType、reusltMap、parameterType、parameterMap、useGeneratedKeys、keyProperty等。相信这些在项目都有使用，但是这里还是要梳理一下(知识体系都是在不断梳理中完善和获得新知)。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Mybatis/" class="post-category">
-                                    Mybatis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Mybatis/">
-                            <span class="chip bg-color">Mybatis</span>
-                        </a>
-                        
-                        <a href="/tags/ORM/">
-                            <span class="chip bg-color">ORM</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/08/java-jvm-series-memory-reback-principle/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/8.jpg" class="responsive-img" alt="Java虚拟机那些事儿(七)：内存分配与回收策略">
-                            
-                            <span class="card-title">Java虚拟机那些事儿(七)：内存分配与回收策略</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                对象的内存分配，就是在堆上分配（也可能经过 JIT 编译后被拆散为标量类型并间接在栈上分配），对象主要分配在新生代的 Eden 区上，少数情况下可能直接分配在老年代，分配规则不固定，取决于当前使用的垃圾收集器组合以及相关的参数配置。大多数情况下，对象在新生代 Eden 区中分配。当 Eden 区没有足够空间进行分配时，虚拟机……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-20
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-category">
-                                    Java虚拟机
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">
-                            <span class="chip bg-color">内存分配</span>
-                        </a>
-                        
-                        <a href="/tags/%E5%9B%9E%E6%94%B6%E7%AD%96%E7%95%A5/">
-                            <span class="chip bg-color">回收策略</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/08/orm-mybatis-basic-001/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="ORM框架之Mybatis(一)：基础配置">
-                            
-                            <span class="card-title">ORM框架之Mybatis(一)：基础配置</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                对象关系映射(ORM Obeject Relational Mapping)，ORM模型就是数据库的表与简单Java对象 (POJO)的映射模型，它主要解决数据库数据和POJO对象的相互映射。早期的时候Hibernate使用的比较多，但是由于过于笨重，近几年慢慢的被Mybatis替代了。可以说现在百分之九十以上的公司都是用的Mybatis。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Mybatis/" class="post-category">
-                                    Mybatis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Mybatis/">
-                            <span class="chip bg-color">Mybatis</span>
-                        </a>
-                        
-                        <a href="/tags/ORM/">
-                            <span class="chip bg-color">ORM</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/08/network-http-base-001/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="http基础知识点了解一下">
-                            
-                            <span class="card-title">http基础知识点了解一下</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                在 OSI 七层模型中，HTTP协议位于最顶层的应用层中。通过浏览器访问网页就直接使用了 HTTP 协议。使用 HTTP 协议时，客户端首先与服务端的 80 端口建立一个 TCP 连接，然后在这个连接的基础上进行请求和应答，以及数据的交换。HTTP 有两个常用版本，分别是 1.0 和 1.1。主要区别在于 HTTP 1.0 中……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-13
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Java%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    Java基础
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/network/">
-                            <span class="chip bg-color">network</span>
-                        </a>
-                        
-                        <a href="/tags/http/">
-                            <span class="chip bg-color">http</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/08/java-jvm-series-hotspot-gc-param-consist/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/5.jpg" class="responsive-img" alt="Java虚拟机那些事儿(六)：HotSpot垃圾收集器参数和组合方式">
-                            
-                            <span class="card-title">Java虚拟机那些事儿(六)：HotSpot垃圾收集器参数和组合方式</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                图中你可能也注意到了CMS和Serial Old也有连线，因为CMS收集器过程经历了四个阶段分别是初始标记、并发标记、重新标记和并发清除。在经历这四个阶段的时候，如果新的垃圾出现在标记之后，就会无法被清理，会导致浮动垃圾的堆积，只能等待下一次GC过程清理。在CMS的收集过程会预留一部分空间给用户线程运行，这个时候如果出现……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-11
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-category">
-                                    Java虚拟机
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/">
-                            <span class="chip bg-color">垃圾回收器</span>
-                        </a>
-                        
-                        <a href="/tags/JVM%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0/">
-                            <span class="chip bg-color">JVM主要参数</span>
-                        </a>
-                        
-                        <a href="/tags/%E5%88%86%E4%BB%A3%E6%94%B6%E9%9B%86%E7%BB%84%E5%90%88/">
-                            <span class="chip bg-color">分代收集组合</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/08/java-jvm-series-hotspot-gc/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="Java虚拟机那些事儿(五)：HotSpot垃圾收集器">
-                            
-                            <span class="card-title">Java虚拟机那些事儿(五)：HotSpot垃圾收集器</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                G1是一款面向服务端应用的垃圾收集器，它没有新生代和老年代的概念，而是将堆划分为一块块独立的Region。当要进行垃圾收集时，首先估计每个Region 中垃圾的数量，每次都从垃圾回收价值最大的Region开始回收，因此可以获得最大的回收效率。从整体上看，G1是基于“标记-整理”算法实现的收集器，从局部（两个Region之间）上看到……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-08-10
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-category">
-                                    Java虚拟机
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/">
-                            <span class="chip bg-color">垃圾回收器</span>
                         </a>
                         
                     </div>
@@ -962,7 +970,7 @@
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">9 / 12</div>
+            <div class="center-align b-text-gray">9 / 13</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -1048,7 +1056,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">452.6k</span>
+                        class="white-color">644.8k</span>
             
             
             

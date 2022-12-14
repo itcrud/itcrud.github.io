@@ -328,221 +328,25 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/12/threadlocal-threadpool-question/">
+                    <a href="/2019/05/validation-original/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/3.jpg" class="responsive-img" alt="ThreadLocal遇到线程池出现数据问题和解决方案">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="参数校验之Hibernate-validator的基本使用">
                             
-                            <span class="card-title">ThreadLocal遇到线程池出现数据问题和解决方案</span>
+                            <span class="card-title">参数校验之Hibernate-validator的基本使用</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                ThreadLocal开发中常用，通过ThreadLocal操作数据实现线程之间的隔离，保证线程之间不会因为操作同一数据导致数据安全问题。但是这种隔离是有适用范围的，也就是说在某些特定的情况下还是会出现数据安全问题的。这种特定情况下就是使用到线程池，并且在ThreadLocal使用前后没有做数据清理，就会导致安全问题，下面来看看出现的情况和具体……
+                                validation-api在开发过程中是经常使用到的，特别是参数校验，刚开始做开发工作的时候，都是在Service层用if…else…来判断参数的合法性，这个会使代码显得很臃肿，后来接触validation，真的是很好用的。这里分享出来，也是做个笔记，以后用到可以作为参考资料。
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-12-02
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    并发编程
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/ThreadLocal/">
-                            <span class="chip bg-color">ThreadLocal</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/11/spring-jpa-base-using-methodname-sql/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="Spring Data JPA使用必备(二)：Spring Data JPA方法命名规则实现SQL自动生成">
-                            
-                            <span class="card-title">Spring Data JPA使用必备(二)：Spring Data JPA方法命名规则实现SQL自动生成</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Spring data JPA是一个好东西，但是对于很多习惯于写SQL，直接怼数据库的人来说，这个真的用不习惯，还被一致认为是一个不易于程序员发展的技术。因为JPA提供了标准的封装，在操作数据库的时候，不需要写SQL，完全通过操作对象即可完成。久而久之，SQL就会被慢慢的遗忘，生疏，等以后面试的时候，也许这就是上升的一个短板。现在……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-11-05
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Spring-Data-JPA/" class="post-category">
-                                    Spring Data JPA
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Spring-Data-JPA/">
-                            <span class="chip bg-color">Spring Data JPA</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/11/project-exception-unify-handler/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="面向切面思想实现项目全局异常处理(简单切面+Spring提供的封装)">
-                            
-                            <span class="card-title">面向切面思想实现项目全局异常处理(简单切面+Spring提供的封装)</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                以前写项目的时候所谓，异常直接在各个层里面捕捉处理后向外返回错误信息，但是实际上有些运行时异常很容易被忽略，这样就会导致这些异常出现后会直接返回给调用方。当时的解决方案就是在Controller层的每个方法加try-catch块，捕捉所有的异常并处理后返回给调用方，但是这样处理起来比较麻烦，因为每个方法上都要加……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-11-02
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Spring/" class="post-category">
-                                    Spring
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
-                            <span class="chip bg-color">异常处理</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/10/spring-jpa-base-sping-using/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="Spring Data JPA使用必备(一)：Spring Data JPA整合Spring以及简单的使用">
-                            
-                            <span class="card-title">Spring Data JPA使用必备(一)：Spring Data JPA整合Spring以及简单的使用</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                最近公司部分新开的项目需要使用Spring data JPA技术，作为一个从来没有用过JPA的小白来说，需要重新的学习。N年前简单的看过JPA，这么多年没用过，完全忘记了有木有。接下来的系列文章就一起来整理一下。使用了@Entity注解后会默认映射到数据库的表，按照驼峰规则，如类名是CustomerBaseInfo，那么就会对应到表名为……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-31
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Spring-Data-JPA/" class="post-category">
-                                    Spring Data JPA
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Spring-Data-JPA/">
-                            <span class="chip bg-color">Spring Data JPA</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/10/javamail-spring-mailsender-compare/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="发送邮件的JavaMail和Spring提供的MailSender，以及比较">
-                            
-                            <span class="card-title">发送邮件的JavaMail和Spring提供的MailSender，以及比较</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                发邮件，项目的必备功能之一，如果一个稍微模块化一点的公司，一般会单独出来一个项目专用来做公司的发送信息的功能，当然这个发送信息中不止包含发邮件，还会有短信、APP push等。这篇聊聊推送邮件。在以前的开发中，公司用Java mail的比较多，由自己来写邮件的组装和发送功能，但是Java mail使用操作比较繁杂，后来渐渐……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-05-03
                             </span>
                             <span class="publish-author">
                                 
@@ -560,12 +364,8 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/JavaMail/">
-                            <span class="chip bg-color">JavaMail</span>
-                        </a>
-                        
-                        <a href="/tags/JavaMailSender/">
-                            <span class="chip bg-color">JavaMailSender</span>
+                        <a href="/tags/Hibernate-validator/">
+                            <span class="chip bg-color">Hibernate-validator</span>
                         </a>
                         
                     </div>
@@ -577,25 +377,25 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/java-stream-close-methods/">
+                    <a href="/2019/04/java-lambda-api-original/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="Java输入和输出流关闭的顺序和关闭的姿势对比理解">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="轻松了解jdk8之lambda表达式常用API（持续更新……）">
                             
-                            <span class="card-title">Java输入和输出流关闭的顺序和关闭的姿势对比理解</span>
+                            <span class="card-title">轻松了解jdk8之lambda表达式常用API（持续更新……）</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Java的流操作在实际应用中使用的很多，但是流的关闭顺序到底有没有要求，关闭流的顺序和节点流与处理流有什么关系，输出流和输入流又有什么区别，然后就是关闭流可以通过哪几种方式。这篇文章将会和大家讨论一下。……。整个篇幅说了节点流和处理流的区别，然后根据输出流和输入流讨论流的关闭顺序问题，然后就是流不同的关闭姿势说明，最后比较流不同关闭姿势的优缺点。
+                                这两年，基本所有的公司都由之前的JDK7转战JDK8，还记得上次去饿了么面试给的面试题，第一题就是用lambda实现一个功能，当时对lambda表达式基本是零了解，然后……。现在随着慢慢的使用，也慢慢了解lambda表达式真的是一个好东西，可以大大的简化以前的代码，下面在说常用lambda表达式的时候，会附上对应之前需要的代码量。相信你也会喜欢上它的。
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-30
                             </span>
                             <span class="publish-author">
                                 
@@ -613,12 +413,8 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/Java%E6%B5%81/">
-                            <span class="chip bg-color">Java流</span>
-                        </a>
-                        
-                        <a href="/tags/%E6%B5%81%E5%85%B3%E9%97%AD%E9%A1%BA%E5%BA%8F/">
-                            <span class="chip bg-color">流关闭顺序</span>
+                        <a href="/tags/lambda/">
+                            <span class="chip bg-color">lambda</span>
                         </a>
                         
                     </div>
@@ -630,36 +426,32 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/java-thread-connect-message/">
+                    <a href="/2019/02/iot-mqtt-mosquitto-original/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="Java并发编程：如何实现线程间通信的N种场景和对应的实现方式">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="物联网（IoT）常用协议MQTT及MQTT Broker之mosquitto的基础使用">
                             
-                            <span class="card-title">Java并发编程：如何实现线程间通信的N种场景和对应的实现方式</span>
+                            <span class="card-title">物联网（IoT）常用协议MQTT及MQTT Broker之mosquitto的基础使用</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                正常情况下，每个子线程完成各自的任务就可以结束了。不过有的时候，我们希望多个线程协同工作来完成某个任务，这时就涉及到了线程间通信了。
-1. 文前说明1.1 本文涉及到的知识点
-thread.join()
-object.wait()
-obje
+                                大数据、人工智能、物联网，这些都是互联网将来重点发展的规划方向。大数据分析你的行为，如在淘宝、京东上经常看或者搜一类产品，他就会在首页智能的向你推这类的丰富产品。人工智能让生活更有趣，但是人工智能目前更多的是一个噱头，发展还是有待走向成熟化的。至于物联网，现在很多公司都是有雏形产品的，一些巨头公司已经提供了对应的处理方案，如阿里……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-02-11
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    并发编程
+                                <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
                                 </a>
                                 
                                 
@@ -670,12 +462,8 @@ obje
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/">
-                            <span class="chip bg-color">线程间通信</span>
-                        </a>
-                        
-                        <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">
-                            <span class="chip bg-color">并发编程</span>
+                        <a href="/tags/MQTT/">
+                            <span class="chip bg-color">MQTT</span>
                         </a>
                         
                     </div>
@@ -687,32 +475,32 @@ obje
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/concurrenthashmap-understand-by-pic/">
+                    <a href="/2019/01/nginx-keepalived-original/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="ConcurrentHashMap简单的实现思想理解">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="nginx基础学习(七)：nginx+keepalived搭建主备nginx高可用服务">
                             
-                            <span class="card-title">ConcurrentHashMap简单的实现思想理解</span>
+                            <span class="card-title">nginx基础学习(七)：nginx+keepalived搭建主备nginx高可用服务</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                关于说ConcurrentHashMap的文章很多，本博客也有转载这样的文章，但是总体觉得都是过于偏重源码的说明。没有很明确的结构图来让我们从整体上理解源码的实现过程。毕竟人都是偏向于懒，博客中源码过于太多，理解起来困难，再加上这种源码分析的篇幅很长，因此能真正看完理解的确不多(个人理解)。所以这篇文章里面将不贴出源码，完全……
+                                目前最后一篇关于nginx的文章，这篇文章是做一个知识的了解，在实际生产中基本不使用，因为这种方式有更好的替代方案，但是为什么要说一下呢。面试的时候问到nginx的内容肯定都会问关于nginx的宕机问题，然后如何去防治，提高nginx服务的高可用性。nginx+keepalived可以作为装X的内容。如果在回答上首先说了nginx+keepalived的……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-11
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    并发编程
+                                <a href="/categories/Nginx/" class="post-category">
+                                    Nginx
                                 </a>
                                 
                                 
@@ -723,8 +511,8 @@ obje
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/ConcurrentHashMap/">
-                            <span class="chip bg-color">ConcurrentHashMap</span>
+                        <a href="/tags/nginx/">
+                            <span class="chip bg-color">nginx</span>
                         </a>
                         
                     </div>
@@ -736,32 +524,32 @@ obje
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/mysql-index-principle/">
+                    <a href="/2019/01/nginx-https-original/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="MySQL数据库系列(六)：MySQL之索引数据结构分析">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="nginx基础学习(六)：nginx之https的配置">
                             
-                            <span class="card-title">MySQL数据库系列(六)：MySQL之索引数据结构分析</span>
+                            <span class="card-title">nginx基础学习(六)：nginx之https的配置</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                数据库查询是数据库的最主要功能之一。我们都希望查询数据的速度能尽可能的快，因此数据库系统的设计者会从查询算法的角度进行优化。最基本的查询算法当然是顺序查找（linear search），这种复杂度为O(n)的算法在数据量很大时显然是糟糕的，好在计算机科学的发展提供了很多更优秀的查找算法，例如二分查找（binary search）……
+                                如果你们平时使用百度细心的话会发现，当输入http://www.baidu.com的时候，浏览器上的地址会自动变换成https://www.baidu.com。通过浏览器的控制台可以看到当请求http的百度时会返回一个状态码307 Internal Redirect，然后响应头里面的location对应的地址是https的百度地址，接着浏览器……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-09
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/MySQL/" class="post-category">
-                                    MySQL
+                                <a href="/categories/Nginx/" class="post-category">
+                                    Nginx
                                 </a>
                                 
                                 
@@ -772,12 +560,8 @@ obje
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/MySQL/">
-                            <span class="chip bg-color">MySQL</span>
-                        </a>
-                        
-                        <a href="/tags/%E7%B4%A2%E5%BC%95%E5%8E%9F%E7%90%86/">
-                            <span class="chip bg-color">索引原理</span>
+                        <a href="/tags/nginx/">
+                            <span class="chip bg-color">nginx</span>
                         </a>
                         
                     </div>
@@ -789,32 +573,32 @@ obje
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/mybatis-mapper-mvn-dependency/">
+                    <a href="/2019/01/nginx-cross-domain-hotlink-original/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="Mybatis中mapper别名问题和maven依赖问题">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="nginx基础学习(五)：nginx实现防盗链、跨域、缓存、压缩功能介绍">
                             
-                            <span class="card-title">Mybatis中mapper别名问题和maven依赖问题</span>
+                            <span class="card-title">nginx基础学习(五)：nginx实现防盗链、跨域、缓存、压缩功能介绍</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                又到一期挖坑填坑的时候啦，前段时间在开发一个新的项目，项目的框架逃不过三大件:Spring+Mybatis+Spring Boot。现在Spring Boot可谓是很有热度，如果是新开的项目基本都会是这个框架结构，用Spring MVC的已经很少(如果你说你们自己还在用，反驳我的说法，那我只能喊你一声杠精大哥啦)。之所以介绍一下这个……
+                                nginx除了三大主功能，还有很多其它实用的功能，系列文章的第五篇就让我们一起看看nginx的防盗链、跨域、缓存、压缩等功能。……。通过blog.itcrud.com访问本博客的网站，在返回的js脚本文件里面又发出了ajax请求获取文章列表，但是这个ajax请求的域名不是blog.itcrud.com/list，而是请求的……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-07
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/Mybatis/" class="post-category">
-                                    Mybatis
+                                <a href="/categories/Nginx/" class="post-category">
+                                    Nginx
                                 </a>
                                 
                                 
@@ -825,8 +609,8 @@ obje
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/mybatis/">
-                            <span class="chip bg-color">mybatis</span>
+                        <a href="/tags/nginx/">
+                            <span class="chip bg-color">nginx</span>
                         </a>
                         
                     </div>
@@ -838,32 +622,32 @@ obje
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/mysql-optimization-sql/">
+                    <a href="/2019/01/nginx-upstream-original/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="MySQL数据库系列(五)：MySQL之SQL优化十大口诀了解一下">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="nginx基础学习(四)：nginx的upstream实现负载均衡">
                             
-                            <span class="card-title">MySQL数据库系列(五)：MySQL之SQL优化十大口诀了解一下</span>
+                            <span class="card-title">nginx基础学习(四)：nginx的upstream实现负载均衡</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                SQL优化，心中永远的痛，同事写的各种复杂SQL，各种坑，有时候想拿出来优化一下，但是总感觉力不从心，不知从哪里下手。……。全值匹配是最优，最左前缀原则要注意，乱在索引列上操作惹祸害，范围查询记得放后面，不等于使用要小心，空和非空要注意，模糊查询通配符勿乱放，字符串查询加引号，OR变UNION效率会更高，记得覆盖索引尽量用。
+                                根据不同的场景来适用不同的方式，一般使用默认即可。在多台机器性能有差异的情况下，可以考虑设置不同的权重，让性能好的机器不浪费，性能差的机器不超负荷。ip_hash一般用的比较少，不能保证负载的均衡性，要是运气衰的时候，有可能导致一台机器瞬时命中过多被弄死。个人感觉ip_hash更适用于一个小的应用，单台机器本身就是可以承载所有……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-05
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/MySQL/" class="post-category">
-                                    MySQL
+                                <a href="/categories/Nginx/" class="post-category">
+                                    Nginx
                                 </a>
                                 
                                 
@@ -874,12 +658,8 @@ obje
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/MySQL/">
-                            <span class="chip bg-color">MySQL</span>
-                        </a>
-                        
-                        <a href="/tags/%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">
-                            <span class="chip bg-color">执行计划</span>
+                        <a href="/tags/nginx/">
+                            <span class="chip bg-color">nginx</span>
                         </a>
                         
                     </div>
@@ -891,32 +671,32 @@ obje
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/mysql-execute-plain/">
+                    <a href="/2019/01/nginx-rewrite-if-original/">
                         <div class="card-image">
                             
                             
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="MySQL数据库系列(四)：MySQL数据库的执行计划怎么看">
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="nginx基础学习(三)：nginx的rewrite重定向和if判断使用">
                             
-                            <span class="card-title">MySQL数据库系列(四)：MySQL数据库的执行计划怎么看</span>
+                            <span class="card-title">nginx基础学习(三)：nginx的rewrite重定向和if判断使用</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                在写执行计划之前需要先了解一下数据库有哪些索引。其中组合索引有一个特性就是最左前缀原则，组合索引的最左列被使用到才会让整个组合索引生效。比如一个索引idx_name_phone，在索引列中name在前面，phone在后，当单纯是使用phone来查询的时候，是不会走idx_name_phone索引的，只有在name被使用的时候，才会让整个索引起作用。
+                                nginx的安装、启动关闭退出重启基本操作命令、nginx.conf配置文件了解、location的root、alias、proxy系列的数据都已经写过了，有兴趣了解的可以看看文末的推荐文章。location里面的东西真的很多，也是非常重要的。可以说在配置nginx过程中90%都是在配置location。这一篇文章的目的是写location中的另一个……
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-03
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/MySQL/" class="post-category">
-                                    MySQL
+                                <a href="/categories/Nginx/" class="post-category">
+                                    Nginx
                                 </a>
                                 
                                 
@@ -927,12 +707,204 @@ obje
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/MySQL/">
-                            <span class="chip bg-color">MySQL</span>
+                        <a href="/tags/nginx/">
+                            <span class="chip bg-color">nginx</span>
                         </a>
                         
-                        <a href="/tags/%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">
-                            <span class="chip bg-color">执行计划</span>
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/12/nginx-location-original/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="nginx基础学习(二)：nginx的location内部属性的详细说明和介绍">
+                            
+                            <span class="card-title">nginx基础学习(二)：nginx的location内部属性的详细说明和介绍</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                上一篇文章写的nginx的基础安装，以及nginx配置文件的整体结构。这篇文章将会一起来看一下nginx中的一个重要属性location，location是放在server里面的，用于匹配访问的域名后的path路径。location匹配的规则很复杂，内容也是非常多，这里只做简单的介绍。location的匹配规则有三种，分别是精准匹配……
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-12-31
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Nginx/" class="post-category">
+                                    Nginx
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/nginx/">
+                            <span class="chip bg-color">nginx</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/12/itcrud-ssm-template-original/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="spring Boot+Spring+Mybatis项目构建模板介绍和分享">
+                            
+                            <span class="card-title">spring Boot+Spring+Mybatis项目构建模板介绍和分享</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                创建一个新的项目，引入依赖包，建模块，复制粘贴各种模板、工具类，数据库配置等，想起来都是一件头疼的事，看了这篇文章，也许可以治你的头疼病。本次分享的是项目的构建过程和构建完成的项目模板分享。以后需要构建项目只要来复制一下就可以啦，超简单省事，你值的拥有。内部包含异常的统一处理、请求入参出参的日志输出、Redis的工具类、线程池的创建……
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-12-29
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Spring-Boot/" class="post-category">
+                                    Spring Boot
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/SSM/">
+                            <span class="chip bg-color">SSM</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/12/json-web-token-jjwt-copy/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/7.jpg" class="responsive-img" alt="JWT学习(二)：Json Web Token JWT的Java使用 (JJWT)">
+                            
+                            <span class="card-title">JWT学习(二)：Json Web Token JWT的Java使用 (JJWT)</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                JJWT是一个提供端到端的JWT创建和验证的Java库。永远免费和开源(Apache License，版本2.0)，JJWT很容易使用和理解。它被设计成一个以建筑为中心的流畅界面，隐藏了它的大部分复杂性。JJWT的目标是最容易使用和理解用于在JVM上创建和验证JSON Web令牌(JWTs)的库。JJWT是基于JWT、JWS、……
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-12-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/JWT/" class="post-category">
+                                    JWT
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/JWT/">
+                            <span class="chip bg-color">JWT</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/12/json-web-token-introduce-copy/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="JWT学习(一)：什么是JWT？- JSON WEB TOKEN">
+                            
+                            <span class="card-title">JWT学习(一)：什么是JWT？- JSON WEB TOKEN</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                1. JWT是什么？Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-12-25
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/JWT/" class="post-category">
+                                    JWT
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/JWT/">
+                            <span class="chip bg-color">JWT</span>
                         </a>
                         
                     </div>
@@ -958,7 +930,7 @@ obje
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">7 / 12</div>
+            <div class="center-align b-text-gray">7 / 13</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -1044,7 +1016,7 @@ obje
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">452.6k</span>
+                        class="white-color">644.8k</span>
             
             
             

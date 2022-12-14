@@ -336,14 +336,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    184.1k
+                    186.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    653 分
+                    662 分
                 </div>
                 
 
@@ -1736,7 +1736,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <p>J.U.C包下的容器都是安全失败，可以在多线程下并发使用，并发修改，比如：ConcurrentHashMap。</p>
 <h1 id="2-JVM篇"><a href="#2-JVM篇" class="headerlink" title="2. JVM篇"></a>2. JVM篇</h1><p>JVM系列文章：<a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/">Java虚拟机</a></p>
 <h2 id="什么是JVM内存结构？"><a href="#什么是JVM内存结构？" class="headerlink" title="什么是JVM内存结构？"></a>什么是JVM内存结构？</h2><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images3/202211111633.png"></p>
-<p>jvm将虚拟机分为5大区域，程序计数器、虚拟机栈、本地方法栈、java堆、方法区；</p>
+<p>JVM将虚拟机分为5大区域，程序计数器、虚拟机栈、本地方法栈、java堆、方法区：</p>
 <ul>
 <li>程序计数器：线程私有的，是一块很小的内存空间，作为当前线程的行号指示器，用于记录当前虚拟机正在执行的线程指令地址；</li>
 <li>虚拟机栈：线程私有的，每个方法执行的时候都会创建一个栈帧，用于存储局部变量表、操作数、动态链接和方法返回等信息，当线程请求的栈深度超过了虚拟机允许的最大深度时，就会抛出StackOverFlowError；</li>
@@ -1744,7 +1744,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>堆：java堆是所有线程共享的一块内存，几乎所有对象的实例和数组都要在堆上分配内存，因此该区域经常发生垃圾回收的操作；</li>
 <li>方法区：存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码数据。即永久代，在jdk1.8中不存在方法区了，被元数据区替代了，原方法区被分成两部分；1：加载的类信息；2：运行时常量池；加载的类信息被保存在元数据区中，运行时常量池保存在堆中。</li>
 </ul>
-<h2 id="什么是JVM内存模型？"><a href="#什么是JVM内存模型？" class="headerlink" title="什么是JVM内存模型？"></a>什么是JVM内存模型？</h2><p><strong>Java 内存模型</strong>（下文简称 <strong>JMM</strong>）就是在底层处理器内存模型的基础上，定义自己的多线程语义。它明确指定了一组排序规则，来保证线程间的可见性。</p>
+<h2 id="什么是Java内存模型？"><a href="#什么是Java内存模型？" class="headerlink" title="什么是Java内存模型？"></a>什么是Java内存模型？</h2><p><strong>Java 内存模型</strong>（下文简称 <strong>JMM</strong>）就是在底层处理器内存模型的基础上，定义自己的多线程语义。它明确指定了一组排序规则，来保证线程间的可见性。</p>
 <p>这一组规则被称为 <strong>Happens-Before</strong>, JMM 规定，要想保证 B 操作能够看到 A 操作的结果（无论它们是否在同一个线程），那么 A 和 B 之间必须满足 <strong>Happens-Before 关系</strong>：</p>
 <ul>
 <li><strong>单线程规则</strong>：一个线程中的每个动作都 happens-before 该线程中后续的每个动作</li>
@@ -1759,7 +1759,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <p>Java 提供了几种语言结构，包括 <em>volatile</em>, <em>final</em> 和 <em>synchronized</em>, 它们旨在帮助程序员向<strong>编译器</strong>描述程序的并发要求，其中：</p>
 <ul>
 <li><strong>volatile</strong> - 保证<strong>可见性</strong>和<strong>有序性</strong></li>
-<li><strong>synchronized</strong> - 保证<strong>可见性</strong>和<strong>有序性</strong>; 通过**管程（Monitor）*<em>保证一组动作的*<em>原子性</em></em></li>
+<li><strong>synchronized</strong> - 保证<strong>可见性</strong>和<strong>有序性</strong>; 通过<strong>管程（Monitor）</strong>保证一组动作的<strong>原子性</strong></li>
 <li><strong>final</strong> - 通过禁止<strong>在构造函数初始化</strong>和<strong>给 final 字段赋值</strong>这两个动作的重排序，保证<strong>可见性</strong>（如果 <strong>this 引用逃逸</strong>就不好说可见性了）</li>
 </ul>
 <p>编译器在遇到这些关键字时，会插入相应的内存屏障，保证语义的正确性。</p>
@@ -1768,8 +1768,8 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h2 id="heap-和stack-有什么区别？"><a href="#heap-和stack-有什么区别？" class="headerlink" title="heap 和stack 有什么区别？"></a>heap 和stack 有什么区别？</h2><ol>
 <li>申请方式</li>
 </ol>
-<p>stack:由系统自动分配。例如，声明在函数中一个局部变量 int b; 系统自动在栈中为 b 开辟空间</p>
-<p>heap:需要程序员自己申请，并指明大小，在 c 中 malloc 函数，对于Java 需要手动 new Object()的形式开辟</p>
+<p>stack：由系统自动分配。例如，声明在函数中一个局部变量 int b; 系统自动在栈中为 b 开辟空间</p>
+<p>heap：需要程序员自己申请，并指明大小，在 c 中 malloc 函数，对于Java 需要手动 new Object()的形式开辟</p>
 <ol start="2">
 <li>申请后系统的响应</li>
 </ol>
@@ -1790,7 +1790,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 </ol>
 <p>stack：在函数调用时，第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址， 然后是函数的各个参数，在大多数的 C 编译器中，参数是由右往左入栈的，然后是函数中的局部变量。注意静态变量是不入栈的。</p>
 <p>当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。</p>
-<p>heap：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容有程序员安排。</p>
+<p>heap：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容由程序员安排。</p>
 <h2 id="谈谈对-OOM-的认识？如何排查-OOM-的问题？"><a href="#谈谈对-OOM-的认识？如何排查-OOM-的问题？" class="headerlink" title="谈谈对 OOM 的认识？如何排查 OOM 的问题？"></a>谈谈对 OOM 的认识？如何排查 OOM 的问题？</h2><p>除了程序计数器，其他内存区域都有 OOM 的风险。</p>
 <ul>
 <li>栈一般经常会发生 StackOverflowError，比如 32 位的 windows 系统单进程限制 2G 内存，无限创建线程就会发生栈的 OOM</li>
@@ -1810,7 +1810,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li><strong>Class文件常量池</strong>。class文件是一组以字节为单位的二进制数据流，在java代码的编译期间，我们编写的java文件就被编译为.class文件格式的二进制数据存放在磁盘中，其中就包括class文件常量池。</li>
 <li><strong>运行时常量池</strong>：运行时常量池相对于class常量池一大特征就是具有动态性，java规范并不要求常量只能在运行时才产生，也就是说运行时常量池的内容并不全部来自class常量池，在运行时可以通过代码生成常量并将其放入运行时常量池中，这种特性被用的最多的就是String.intern()。</li>
 <li><strong>全局字符串常量池</strong>：字符串常量池是JVM所维护的一个字符串实例的引用表，在HotSpot VM中，它是一个叫做StringTable的全局表。在字符串常量池中维护的是字符串实例的引用，底层C++实现就是一个Hashtable。这些被维护的引用所指的字符串实例，被称作”被驻留的字符串”或”interned string”或通常所说的”进入了字符串常量池的字符串”。 </li>
-<li>基本类型包装类对象常量池：java中基本类型的包装类的大部分都实现了常量池技术，这些类是Byte,Short,Integer,Long,Character,Boolean,另外两种浮点数类型的包装类则没有实现。另外上面这5种整型的包装类也只是在对应值小于等于127时才可使用对象池，也即对象不负责创建和管理大于127的这些类的对象。</li>
+<li><strong>基本类型包装类对象常量池：</strong>java中基本类型的包装类的大部分都实现了常量池技术，这些类是Byte,Short,Integer,Long,Character,Boolean,另外两种浮点数类型的包装类则没有实现。另外上面这5种整型的包装类也只是在对应值小于等于127时才可使用对象池，也即对象不负责创建和管理大于127的这些类的对象。</li>
 </ul>
 <h2 id="OOM和SOF在什么情况下会引起"><a href="#OOM和SOF在什么情况下会引起" class="headerlink" title="OOM和SOF在什么情况下会引起"></a>OOM和SOF在什么情况下会引起</h2><h3 id="OOM（OutOfMemoryError异常）"><a href="#OOM（OutOfMemoryError异常）" class="headerlink" title="OOM（OutOfMemoryError异常）"></a>OOM（OutOfMemoryError异常）</h3><p>除了程序计数器外，虚拟机内存的其他几个运行是区域都有发生OutOfMemoryError（OOM）异常的可能。</p>
 <h4 id="Java-Heap-溢出"><a href="#Java-Heap-溢出" class="headerlink" title="Java Heap 溢出"></a>Java Heap 溢出</h4><p>一般的异常信息：java.lang.OutOfMemoryError:Java heap spacess<br>Java堆用于存储对象实例，我们只要不断的创建对象，并且保证GC Roots到对象之间有可达路径来避免垃圾回收机制清除对象，就会在对象数量达到最大堆容量限制后产生内存溢出异常。<br>出现这种异常，一般手段是先通过内存映像分析工具对dump出来的堆转存快照进行分析，重点是确认内存中的对象是否是必要的，先分清是因为内存泄漏还是内存溢出引起的。<br>如果是内存泄漏，可进一步通过工具查看泄漏对象到GC Roots的应用链。于是就能找到泄漏对象是通过怎样的路径与GC Roots相关联并导致垃圾收集器无法自动回收。<br>如果不存在泄漏，那几应该检查虚拟机的参数（-Xmx和-Xms）的设置是否适当。</p>
@@ -1838,9 +1838,9 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h2 id="对象的分配规则"><a href="#对象的分配规则" class="headerlink" title="对象的分配规则"></a>对象的分配规则</h2><p>对象优先分配在Eden区，如果Eden区没有足够的空间时，虚拟机执行一次Minor GC；</p>
 <ul>
 <li><strong>大对象直接进入老年代（大对象是指需要大量连续内存空间的对象）</strong> ，这样做的目的是避免在Eden区和两个Survivor区之间发生大量的内存拷贝（新生代采用复制算法收集内存）。</li>
-<li><strong>长期存活的对象进入老年代</strong> ，虚拟机为每个对象定义了一个年龄计数器，如果对象经过了1次Minor GC那么对象会进入Survivor区，之后每经过一次Minor GC那么对象的年龄加1，直到达到阀值对象进入老年代。</li>
+<li><strong>长期存活的对象进入老年代</strong> ，虚拟机为每个对象定义了一个年龄计数器，如果对象经过了1次Minor GC那么对象会进入Survivor区，之后每经过一次Minor GC那么对象的年龄加1，直到达到阀值对象进入老年代。（默认年龄阈值是15）</li>
 <li><strong>动态判断对象的年龄</strong> ，如果Survivor区中相同年龄的所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象可以直接进入老年代。</li>
-<li><strong>空间分配担保</strong> ，每次进行Minor GC时，JVM会计算Survivor区移至老年区的对象的平均大小，如果这个值大于老年区的剩余值大小则进行一次Full GC，如果小于检查HandlePromotionFailure设置，如果true则只进行Monitor GC,如果false则进行Full GC。</li>
+<li><strong>空间分配担保</strong> ，每次进行Minor GC时，JVM会计算Survivor区移至老年区的对象的平均大小，如果这个值大于老年区的剩余值大小则进行一次Full GC，如果小于，则检查HandlePromotionFailure设置，如果true则只进行Minor GC,如果false则进行Full GC。</li>
 </ul>
 <h2 id="JVM加载class文件的原理机制"><a href="#JVM加载class文件的原理机制" class="headerlink" title="JVM加载class文件的原理机制"></a>JVM加载class文件的原理机制</h2><p>JVM中类的装载是由类加载器（ClassLoader）和它的子类来实现的，Java中的类加载器是一个重要的Java运行时系统组件，它负责在运行时查找和装入类文件中的类。 由于Java的跨平台性，经过编译的Java源程序并不是一个可执行程序，而是一个或多个类文件。当Java程序需要使用某个类时，JVM会确保这个类已经被加载、连接（验证、准备和解析）和初始化。类的加载是指把类的.class文件中的数据读入到内存中，通常是创建一个字节数组读入.class文件，然后产生与所加载类对应的Class对象。加载完成后，Class对象还不完整，所以此时的类还不可用。当类被加载后就进入连接阶段，这一阶段包括验证、准备（为静态变量分配内存并设置默认的初始值）和解析（将符号引用替换为直接引用）三个步骤。最后JVM对类进行初始化。</p>
 <h3 id="初始化内容"><a href="#初始化内容" class="headerlink" title="初始化内容"></a>初始化内容</h3><ol>
@@ -1849,41 +1849,41 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 </ol>
 <h3 id="类加载器分类"><a href="#类加载器分类" class="headerlink" title="类加载器分类"></a>类加载器分类</h3><p>类加载器包括：根加载器（BootStrap）、扩展加载器（Extension）、系统加载器（System）和用户自定义类加载器（java.lang.ClassLoader的子类）。类加载过程采取了双亲委托机制（PDM）。PDM更好的保证了Java平台的安全性，在该机制中，JVM自带的Bootstrap是根加载器，其他的加载器都有且仅有一个父类加载器。类的加载首先请求父类加载器加载，父类加载器无能为力时才由其子类加载器自行加载。JVM不会向Java程序提供对Bootstrap的引用。下面是关于几个类加载器的说明：</p>
 <ol>
-<li>Bootstrap：一般用本地代码实现，负责加载JVM基础核心类库（rt.jar）；</li>
-<li>Extension：从java.ext.dirs系统属性所指定的目录中加载类库，它的父加载器是Bootstrap；</li>
-<li>System：又叫应用类加载器，其父类是Extension。它是应用最广泛的类加载器。它从环境变量classpath或者系统属性java.class.path所指定的目录中记载类，是用户自定义加载器的默认父加载器。</li>
+<li><strong>Bootstrap：</strong>一般用本地代码实现，负责加载JVM基础核心类库（rt.jar）；</li>
+<li><strong>Extension：</strong>从java.ext.dirs系统属性所指定的目录中加载类库，它的父加载器是Bootstrap；</li>
+<li><strong>System：</strong>又叫应用类加载器，其父类是Extension。它是应用最广泛的类加载器。它从环境变量classpath或者系统属性java.class.path所指定的目录中记载类，是用户自定义加载器的默认父加载器。</li>
 </ol>
 <h2 id="类的生命周期"><a href="#类的生命周期" class="headerlink" title="类的生命周期"></a>类的生命周期</h2><p>类的生命周期包括这几个部分，加载、连接、初始化、使用和卸载，其中前三部是类的加载的过程，如下图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%BF%87%E7%A8%8B.png"></p>
 <ul>
-<li>加载：查找并加载类的二进制数据，在Java堆中也创建一个java.lang.Class类的对象；</li>
-<li>连接：连接又包含三块内容：验证、准备、初始化；<ul>
+<li><strong>加载：</strong>查找并加载类的二进制数据，在Java堆中也创建一个java.lang.Class类的对象；</li>
+<li><strong>连接：</strong>连接又包含三块内容：验证、准备、初始化；<ul>
 <li>验证，文件格式、元数据、字节码、符号引用验证；</li>
 <li>准备，为类的静态变量分配内存，并将其初始化为默认值，如果类变量被final修饰，不会设置初始值，而是将其进行实际赋值；</li>
 <li>解析，把类中的符号引用转换为直接引用（换句话说，解析是在引用转换的时候触发，无转换无解析）。</li>
 </ul>
 </li>
-<li>初始化：为类的静态变量赋予正确的初始值（初始化过程是单线程的，如果存在多线程，由一个线程执行，其他线程自旋）；</li>
-<li>使用：new出对象程序中使用；</li>
-<li>卸载：执行垃圾回收。</li>
+<li><strong>初始化：</strong>为类的静态变量赋予正确的初始值（初始化过程是单线程的，如果存在多线程，由一个线程执行，其他线程自旋）；</li>
+<li><strong>使用：</strong>new出对象程序中使用；</li>
+<li><strong>卸载：</strong>执行垃圾回收。</li>
 </ul>
 <h2 id="Java的对象结构"><a href="#Java的对象结构" class="headerlink" title="Java的对象结构"></a>Java的对象结构</h2><p>Java对象由三个部分组成：对象头、实例数据、对齐填充。<br><strong>对象头：</strong> 由两部分组成，第一部分存储对象自身的运行时数据：哈希码、GC分代年龄、锁标识状态、线程持有的锁、偏向线程ID（一般占32/64 bit）。第二部分是指针类型，指向对象的类元数据类型（即对象代表哪个类）。如果是数组对象，则对象头中还有一部分用来记录数组长度。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/vbfdghklubgnfg44546.png"></p>
 <p><strong>实例数据：</strong> 用来存储对象真正的有效信息（包括父类继承下来的和自己定义的）。<br><strong>对齐填充：</strong> JVM要求对象起始地址必须是8字节的整数倍（8字节对齐）。</p>
 <h2 id="如何判断对象可以被回收"><a href="#如何判断对象可以被回收" class="headerlink" title="如何判断对象可以被回收"></a>如何判断对象可以被回收</h2><p>判断对象是否存活一般有两种方式：</p>
 <ol>
-<li>引用计数：每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题；（对象的循环引用会引发内存的泄露问题）</li>
-<li>可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的，不可达对象。</li>
+<li><strong>引用计数：</strong>每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题；（对象的循环引用会引发内存的泄露问题）</li>
+<li><strong>可达性分析（Reachability Analysis）：</strong>从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的，不可达对象。</li>
 </ol>
 <h2 id="在可达性分析算法和引用计数法中被标记的对象就一定会被回收吗"><a href="#在可达性分析算法和引用计数法中被标记的对象就一定会被回收吗" class="headerlink" title="在可达性分析算法和引用计数法中被标记的对象就一定会被回收吗"></a>在可达性分析算法和引用计数法中被标记的对象就一定会被回收吗</h2><p>不一定，此两种算法标记这些可被回收对象后，虚拟机会对其进行最后的判定。</p>
 <ol>
-<li> 首先判定当前对象是否有必要执行finalize方法，即这个类有没有重写finalize方法；</li>
+<li>首先判定当前对象是否有必要执行finalize方法，即这个类有没有重写finalize方法；</li>
 <li>如果没有重写，则最终判定此对象死亡；</li>
 <li>如果重写，会判定此方法是否已经被JVM执行过，如果执行过，则被判定为对象死亡；</li>
 <li>如果没有执行，会将对象加入到F-Queue队列中，JVM会自动创建低优先级的Finalizer线程去执行F-Queue队列中的对象；</li>
 <li>如果此对象的finalize方法中重新与引用链上的对象关联，就可以不被回收，获得重生，否则被判定为对象死亡。</li>
 </ol>
-<p>需要注意：</p>
+<p><strong>需要注意：</strong></p>
 <ol>
 <li>finalize方法如果存在死循环或者其他复杂逻辑，会导致F-Queue队列其他对象永久等待，会导致内存回收系统崩溃，JVM不保证等待finalize方法执行结束；</li>
 <li>finalize方法运行代价较高，不确定性大，不建议使用该方法。</li>
@@ -1900,7 +1900,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h3 id="标记-整理法"><a href="#标记-整理法" class="headerlink" title="标记-整理法"></a>标记-整理法</h3><p><strong>步骤：</strong></p>
 <ul>
 <li>第一步：利用可达性去遍历内存，把存活对象和垃圾对象进行标记； </li>
-<li>第二步：将所有的存活的对象向一段移动，将端边界以外的对象都回收掉； </li>
+<li>第二步：将所有的存活的对象向一端移动，将端边界以外的对象都回收掉； </li>
 </ul>
 <p><strong>特点：</strong></p>
 <p>适用于存活对象多，垃圾少的情况；需要整理的过程，无空间碎片产生。</p>
@@ -1908,12 +1908,12 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h3 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h3><p>将内存按照容量大小分为大小相等的两块，每次只使用一块，当一块使用完了，就将还存活的对象移到另一块上，然后在把使用过的内存空间移除。</p>
 <p><strong>特点：</strong></p>
 <p>不会产生空间碎片；内存使用率极低。</p>
-<h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>根据内存对象的存活周期不同，将内存划分成几块，java虚拟机一般将内存分成新生代和老生代，在新生代中，有大量对象死去和少量对象存活，所以采用复制算法，只需要付出少量存活对象的复制成本就可以完成收集；老年代中因为对象的存活率极高，没有额外的空间对他进行分配担保，所以采用标记清理或者标记整理算法进行回收。</p>
+<h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>根据内存对象的存活周期不同，将内存划分成几块，java虚拟机一般将内存分成新生代和老生代，在新生代中，有大量对象死去和少量对象存活，所以采用复制算法，只需要付出少量存活对象的复制成本就可以完成收集；老年代中因为对象的存活率高，没有额外的空间对他进行分配担保，所以采用标记清理或者标记整理算法进行回收。</p>
 <h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211101143.png"></p>
 <h2 id="JVM调优命令有哪些"><a href="#JVM调优命令有哪些" class="headerlink" title="JVM调优命令有哪些"></a>JVM调优命令有哪些</h2><p>Sun JDK监控和故障处理命令有<code>jps</code> 、<code>jstat</code> 、<code>jmap</code> 、<code>jhat</code> 、<code>jstack</code> 、<code>jinfo</code>。</p>
 <h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。<br>命令格式：<code>jps [options] [hostid]</code></p>
 <ol>
-<li><code>-l</code>：输出应用程序main class的完成package名或者应用程序的jar文件完整路径名；</li>
+<li><code>-l</code>：输出应用程序main class的完整package名或者应用程序的jar文件完整路径名；</li>
 <li><code>-m</code>：输出传递给main方法的参数，在嵌入式jvm上可能是null；</li>
 <li><code>-v</code>：输出传递给JVM的参数；</li>
 <li><code>-V</code>：隐藏传递给JVM的参数；</li>
@@ -1941,7 +1941,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li><code>-histo</code>：显示堆中对象的统计信息，包括类、实例数量、合计数量；</li>
 <li><code>-clstats</code>：打印类加载器信息；</li>
 <li><code>-finalizerinfo</code>：显示在F-Queue队列等待Finalizer线程执行finalizer方法的对象；</li>
-<li><code>-dump</code>：生成堆转储快照。（jmap -dump:file=filename,format=b）</li>
+<li><code>-dump</code>：生成堆转储快照。（<code>jmap -dump:file=filename,format=b</code>）</li>
 </ol>
 <h3 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h3><p>JVM Heap Analysis Tool命令是与jmap搭配使用，用来分析jmap生成的dump，jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看。<br>命令：<code>jhat [filename]</code><br>此命令一般不会使用的原因：</p>
 <ul>
@@ -1974,7 +1974,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li><code>-Xmx</code>：堆内存最大限制；</li>
 <li><code>-Xms</code>：堆内存的初始大小</li>
 </ul>
-<h3 id="设定新生代大小"><a href="#设定新生代大小" class="headerlink" title="设定新生代大小"></a>设定新生代大小</h3><p>新生代不宜太小，否则会出现频繁的Minor GC，不断刷新对象进入老年代，一遍新生代占堆内存的2/8为宜，也是官方推荐的比率。</p>
+<h3 id="设定新生代大小"><a href="#设定新生代大小" class="headerlink" title="设定新生代大小"></a>设定新生代大小</h3><p>新生代不宜太小，否则会出现频繁的Minor GC，不断刷新对象进入老年代，一般新生代占堆内存的2/8为宜，也是官方推荐的比率。</p>
 <ul>
 <li><code>-XX:NewSize</code>：新生代大小；</li>
 <li><code>-XX:NewRatio</code> ：新生代和老生代占比；</li>
@@ -1987,9 +1987,9 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h2 id="对象一定分配在堆内吗，为什么？"><a href="#对象一定分配在堆内吗，为什么？" class="headerlink" title="对象一定分配在堆内吗，为什么？"></a>对象一定分配在堆内吗，为什么？</h2><p>对象不是一定分配在堆内的，Java通过<strong>逃逸分析</strong>，那些逃不出方法的对象会在栈上分配。</p>
 <h3 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h3><p>逃逸分析(Escape Analysis)，是一种可以有效减少Java 程序中同步负载和内存堆分配压力的跨函数全局数据流分析算法。通过逃逸分析，Java Hotspot编译器能够分析出一个新的对象的引用的使用范围，从而决定是否要将这个对象分配到堆上。</p>
 <h3 id="逃逸分析的好处"><a href="#逃逸分析的好处" class="headerlink" title="逃逸分析的好处"></a>逃逸分析的好处</h3><ul>
-<li>栈上分配：可以降低垃圾收集器运行的频率；</li>
-<li>同步消除：如果发现某个对象只能从一个线程可访问，那么在这个对象上的操作可以不需要同步；</li>
-<li>标量替换：把对象分解成一个个基本类型，并且内存分配不再是分配在堆上，而是分配在栈上。这样的好处有，第一减少内存使用，因为不用生成对象头。第二程序内存回收效率高，并且GC频率也会减少。</li>
+<li><strong>栈上分配：</strong>可以降低垃圾收集器运行的频率；</li>
+<li><strong>同步消除：</strong>如果发现某个对象只能从一个线程可访问，那么在这个对象上的操作可以不需要同步；</li>
+<li><strong>标量替换：</strong>把对象分解成一个个基本类型，并且内存分配不再是分配在堆上，而是分配在栈上。这样的好处有，第一减少内存使用，因为不用生成对象头。第二程序内存回收效率高，并且GC频率也会减少。</li>
 </ul>
 <h3 id="详细内容文章"><a href="#详细内容文章" class="headerlink" title="详细内容文章"></a>详细内容文章</h3><p><a href="/2022/09/java-jvm-just-in-time/">Java的即时编译（Just In Time, JIT）及其优化</a></p>
 <p><a href="/2022/09/java-jvm-jit-escape-analysis/">Java中JIT优化中最重要的逃逸分析</a></p>
@@ -2003,7 +2003,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <p>这些位置就叫作安全点(safepoint)。用户程序执行时并非在代码指令流的任意位置都能够在停顿下来开始垃圾收集，而是必须是执行到安全点才能够暂停。</p>
 <h2 id="安全点、安全区域和中断方式"><a href="#安全点、安全区域和中断方式" class="headerlink" title="安全点、安全区域和中断方式"></a>安全点、安全区域和中断方式</h2><p>在Stop The World的时候，会涉及安全点、安全区域以及中断方式的概念。</p>
 <h3 id="安全点（safe-point）"><a href="#安全点（safe-point）" class="headerlink" title="安全点（safe point）"></a>安全点（safe point）</h3><ul>
-<li>HotSpot通过OoMap来记录安全点，安全点是定在指令上，但不是没一条指令都可以作为安全点；</li>
+<li>HotSpot通过OoMap来记录安全点，安全点是定在指令上，但不是每一条指令都可以作为安全点；</li>
 <li>当指令让程序运行时间较长，此指令不会被定为安全点。</li>
 </ul>
 <h3 id="安全区域（safe-region）"><a href="#安全区域（safe-region）" class="headerlink" title="安全区域（safe region）"></a>安全区域（safe region）</h3><ul>
@@ -2011,14 +2011,14 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>在此区域中引用关系不会发生变化，可以安全进行GC。</li>
 </ul>
 <h3 id="中断方式"><a href="#中断方式" class="headerlink" title="中断方式"></a>中断方式</h3><ul>
-<li>抢先式中断：不需要线程执行代码主动配合，直接中断全部线程，如果线程执行在非安全点位置，等待其执行到安全点后中断；</li>
-<li>主动式中断：需要线程执行代码主动配合，GC开始时设置一个标志，每个线程主动轮询标志，发现标志为true，主动中断，轮询的动作是在线程执行到每个安全点时触发。</li>
+<li><strong>抢先式中断：</strong>不需要线程执行代码主动配合，直接中断全部线程，如果线程执行在非安全点位置，等待其执行到安全点后中断；</li>
+<li><strong>主动式中断：</strong>需要线程执行代码主动配合，GC开始时设置一个标志，每个线程主动轮询标志，发现标志为true，主动中断，轮询的动作是在线程执行到每个安全点时触发。</li>
 </ul>
 <h2 id="指针碰撞和空闲列表"><a href="#指针碰撞和空闲列表" class="headerlink" title="指针碰撞和空闲列表"></a>指针碰撞和空闲列表</h2><h3 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h3><p>一般情况下，JVM的对象都放在堆内存中（发生逃逸分析除外）。当类加载检查通过后，Java虚拟机开始为新生对象分配内存。如果Java堆中内存是绝对规整的，所有被使用过的的内存都被放到一边，空闲的内存放到另外一边，中间放着一个指针作为分界点的指示器，所分配内存仅仅是把那个指针向空闲空间方向挪动一段与对象大小相等的实例，这种分配方式就是指针碰撞。</p>
-<h3 id="空闲列表"><a href="#空闲列表" class="headerlink" title="空闲列表"></a>空闲列表</h3><p>如果Java堆内存中的内存并不是规整的，已被使用的内存和空闲的内存相互交错在一起，不可以进行指针碰撞了，虚拟机必须维护一个列表，记录哪些内存是可用的，在分配的时候从列表找到一块大的空间分配给对象实例，并更新列表上的记录，这种分配方式就是空闲列表。</p>
+<h3 id="空闲列表"><a href="#空闲列表" class="headerlink" title="空闲列表"></a>空闲列表</h3><p>如果Java堆内存中的内存并不是规整的，已被使用的内存和空闲的内存相互交错在一起，不可以进行指针碰撞了，虚拟机必须维护一个列表，记录哪些内存是可用的，在分配的时候从列表找到一块大小匹配的空间分配给对象实例，并更新列表上的记录，这种分配方式就是空闲列表。</p>
 <h2 id="如何判断一个对象是否存活？"><a href="#如何判断一个对象是否存活？" class="headerlink" title="如何判断一个对象是否存活？"></a>如何判断一个对象是否存活？</h2><p>判断一个对象是否存活，分为两种算法1：引用计数法；2：可达性分析算法；</p>
 <p><strong>引用计数法</strong></p>
-<p>给每一个对象设置一个引用计数器，当有一个地方引用该对象的时候，引用计数器就+1，引用失效时，引用计数器就-1；当引用计数器为0的时候，就说明这个对象没有被引用，也就是垃圾对象，等待回收；<br>缺点：无法解决循环引用的问题，当A引用B，B也引用A的时候，此时AB对象的引用都不为0，此时也就无法垃圾回收，所以一般主流虚拟机都不采用这个方法；</p>
+<p>给每一个对象设置一个引用计数器，当有一个地方引用该对象的时候，引用计数器就+1，引用失效时，引用计数器就-1；当引用计数器为0的时候，就说明这个对象没有被引用，也就是垃圾对象，等待回收；<br>缺点：无法解决循环引用的问题，当A引用B，B也引用A的时候，此时AB对象的引用都不为0，此时也就无法垃圾回收，所以一般主流虚拟机都不采用这个方法。（容易导致内存泄漏问题）</p>
 <p><strong>可达性分析法</strong></p>
 <p>从一个被称为GC Roots的对象向下搜索，如果一个对象到GC Roots没有任何引用链相连接时，说明此对象不可用，在java中可以作为GC Roots的对象有以下几种：</p>
 <ul>
@@ -2089,7 +2089,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <ol start="3">
 <li><strong>并发失败（Concurrent Mode Failure）</strong></li>
 </ol>
-<p>由于在垃圾回收阶段用户线程还在并发运行，那就还需要预留足够的内存空间提供给用户线程使用，因此CMS不能像其他回收器那样等到老年代几乎完全被填满了再进行回收，必须预留一部分空间供并发回收时的程序运行使用。默认情况下，当老年代使用了 92% 的空间后就会触发 CMS 垃圾回收，这个值可以通过 -XX**:** CMSInitiatingOccupancyFraction 参数来设置。</p>
+<p>由于在垃圾回收阶段用户线程还在并发运行，那就还需要预留足够的内存空间提供给用户线程使用，因此CMS不能像其他回收器那样等到老年代几乎完全被填满了再进行回收，必须预留一部分空间供并发回收时的程序运行使用。默认情况下，当老年代使用了 92% 的空间后就会触发 CMS 垃圾回收，这个值可以通过 -XX: CMSInitiatingOccupancyFraction 参数来设置。</p>
 <p>这里会有一个风险：要是CMS运行期间预留的内存无法满足程序分配新对象的需要，就会出现一次“并发失败”（Concurrent Mode Failure），这时候虚拟机将不得不启动后备预案：Stop The World，临时启用 Serial Old 来重新进行老年代的垃圾回收，这样一来停顿时间就很长了。</p>
 <ol start="4">
 <li><strong>内存碎片问题</strong></li>
@@ -2151,7 +2151,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 </li>
 <li><p>大对象直接进入老年代，大对象就是需要大量连续内存空间的对象（比如：字符串、数组），为了避免为大对象分配内存时由于分配担保机制带来的复制而降低效率。</p>
 </li>
-<li><p>老年代满了而无法容纳更多的对象，Minor GC 之后通常就会进行Full GC，Full GC 清理整个内存堆 – 包括年轻代和老年代。</p>
+<li><p>老年代满了而无法容纳更多的对象，Minor GC 之后通常就会进行Full GC，Full GC 清理整个内存堆 – 包括年轻代、老年代和永久代。</p>
 </li>
 </ul>
 <h2 id="Minor-GC-和-Full-GC-有什么不同"><a href="#Minor-GC-和-Full-GC-有什么不同" class="headerlink" title="Minor GC 和 Full GC 有什么不同"></a>Minor GC 和 Full GC 有什么不同</h2><p><strong>Minor GC：</strong> 只收集新生代的GC。</p>
@@ -2184,17 +2184,20 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <p>加载、验证、准备、初始化和卸载这5个阶段的顺序是确定的，类的加载过程必须按照这种顺序按部就班地开始，而解析阶段则不一定：它在某些情况下可以在初始化阶段之后再开始，这是为了支持Java语言的运行时绑定（也称为动态绑定或晚期绑定）</p>
 <p>类加载过程如下：</p>
 <ul>
-<li>加载，加载分为三步：</li>
-</ul>
-<p>1、通过类的全限定性类名获取该类的二进制流；<br>2、将该二进制流的静态存储结构转为方法区的运行时数据结构；<br>3、在堆中为该类生成一个class对象；</p>
-<ul>
+<li><p>加载，加载分为三步：</p>
+<ol>
+<li>通过类的全限定性类名获取该类的二进制流；</li>
+<li>将该二进制流的静态存储结构转为方法区的运行时数据结构；</li>
+<li>在堆中为该类生成一个class对象；</li>
+</ol>
+</li>
 <li><p>验证：验证该class文件中的字节流信息复合虚拟机的要求，不会威胁到jvm的安全；</p>
 </li>
 <li><p>准备：为class对象的静态变量分配内存，初始化其初始值；</p>
 </li>
 <li><p>解析：该阶段主要完成符号引用转化成直接引用；</p>
 </li>
-<li><p>初始化：到了初始化阶段，才开始执行类中定义的java代码；初始化阶段是调用类构造器的过程；</p>
+<li><p>初始化：到了初始化阶段，才开始执行类中定义的java代码；初始化阶段是调用类构造器的过程。</p>
 </li>
 </ul>
 <h2 id="什么是类加载器，常见的类加载器有哪些？"><a href="#什么是类加载器，常见的类加载器有哪些？" class="headerlink" title="什么是类加载器，常见的类加载器有哪些？"></a>什么是类加载器，常见的类加载器有哪些？</h2><p>类加载器是指：通过一个类的全限定性类名获取该类的二进制字节流叫做类加载器；类加载器分为以下四种：</p>
@@ -2205,7 +2208,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 </li>
 <li><p>系统类加载器（AppClassLoader）：它根据java的类路径来加载类，一般来说，java应用的类都是通过它来加载的；</p>
 </li>
-<li><p>自定义类加载器：由java语言实现，继承自ClassLoader；</p>
+<li><p>自定义类加载器：由java语言实现，继承自ClassLoader。</p>
 </li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211111649.png"></p>
@@ -2253,7 +2256,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 </ol>
 <p><strong>优势</strong>：</p>
 <p>线程类只是实现了Runnable接口或Callable接口，还可以继承其他类。</p>
-<p>在这种方式下，多个线程可以共享同一个target对象，所以非常适合多个相同线程来处理同一份资源的情况，从而可以将CPU. 代码和数据分开，形成清晰的模型，较好地体现了面向对象的思想。</p>
+<p>在这种方式下，多个线程可以共享同一个target对象，所以非常适合多个相同线程来处理同一份资源的情况，从而可以将CPU、代码和数据分开，形成清晰的模型，较好地体现了面向对象的思想。</p>
 <p><strong>劣势：</strong></p>
 <p>编程稍微复杂，如果要访问当前线程，则必须使用Thread.currentThread()方法。</p>
 <ol start="3">
@@ -2267,36 +2270,40 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li> Call方法可以抛出异常，run方法不可以。</li>
 <li> 运行Callable任务可以拿到一个Future对象，表示异步计算的结果。它提供了检查计算是否完成的方法，以等待计算的完成，并检索计算的结果。通过Future对象可以了解任务执行情况，可取消任务的执行，还可获取执行结果。</li>
 </ul>
-<h3 id="采用继承Thread类的方式创建线程的优缺点"><a href="#采用继承Thread类的方式创建线程的优缺点" class="headerlink" title="采用继承Thread类的方式创建线程的优缺点"></a>采用继承Thread类的方式创建线程的优缺点</h3><p><strong>优点：</strong> 编写简单，如果需要访问当前线程，则无需使用 Thread.currentThread() 方法，直接使用this即可获取当前线程。<br><strong>缺点：</strong> 因为线程类已经继承了Thread类，Java语言是单继承的，所以就不能再继承其他父类了。</p>
 <h2 id="为什么要使用多线程呢"><a href="#为什么要使用多线程呢" class="headerlink" title="为什么要使用多线程呢?"></a>为什么要使用多线程呢?</h2><ul>
 <li>从计算机底层来说： 线程可以比作是轻量级的进程，是程序执行的最小单位,<strong>线程间的切换和调度的成本远远小于进程</strong>。另外，多核 CPU 时代意味着多个线程可以同时运行，这减少了线程上下文切换的开销。</li>
 <li>从当代互联网发展趋势来说： 现在的系统动不动就要求百万级甚至千万级的并发量，而<strong>多线程并发编程正是开发高并发系统的基础</strong>，利用好多线程机制可以大大提高系统整体的并发能力以及性能。</li>
 </ul>
 <p>从计算机底层来说：</p>
 <ul>
-<li>单核时代： <strong>在单核时代多线程主要是为了提高 CPU 和 IO 设备的综合利用率</strong>。举个例子：当只有一个线程的时候会导致 CPU 计算时，IO 设备空闲；进行 IO 操作时，CPU 空闲。我们可以简单地说这两者的利用率目前都是 50%左右。但是当有两个线程的时候就不一样了，当一个线程执行 CPU 计算时，另外一个线程可以进行 IO 操作，这样两个的利用率就可以在理想情况下达到 100%了。</li>
-<li>多核时代:<strong>多核时代多线程主要是为了提高 CPU 利用率</strong>。举个例子：假如我们要计算一个复杂的任务，我们只用一个线程的话，CPU 只会一个 CPU 核心被利用到，而创建多个线程就可以让多个 CPU 核心被利用到，这样就提高了 CPU 的利用率。</li>
+<li><strong>单核时代： 在单核时代多线程主要是为了提高 CPU 和 IO 设备的综合利用率</strong>。举个例子：当只有一个线程的时候会导致 CPU 计算时，IO 设备空闲；进行 IO 操作时，CPU 空闲。我们可以简单地说这两者的利用率目前都是 50%左右。但是当有两个线程的时候就不一样了，当一个线程执行 CPU 计算时，另外一个线程可以进行 IO 操作，这样两个的利用率就可以在理想情况下达到 100%了。</li>
+<li><strong>多核时代：多核时代多线程主要是为了提高 CPU 利用率</strong>。举个例子：假如我们要计算一个复杂的任务，我们只用一个线程的话，CPU 只会一个 CPU 核心被利用到，而创建多个线程就可以让多个 CPU 核心被利用到，这样就提高了 CPU 的利用率。</li>
 </ul>
 <h2 id="线程的状态流转"><a href="#线程的状态流转" class="headerlink" title="线程的状态流转"></a>线程的状态流转</h2><p>线程的生命周期及五种基本状态：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/20190801212341_70574.jpg"></p>
 <p><strong>Java线程具有五中基本状态</strong></p>
-<p><strong>1）新建状态（New）</strong>：当线程对象对创建后，即进入了新建状态，如：Thread t = new MyThread();</p>
+<p><strong>1）新建状态（New）</strong>：当线程对象创建后，即进入了新建状态，如：Thread t = new MyThread();</p>
 <p><strong>2）就绪状态（Runnable）</strong>：当调用线程对象的start()方法（t.start();），线程即进入就绪状态。处于就绪状态的线程，只是说明此线程已经做好了准备，随时等待CPU调度执行，并不是说执行了t.start()此线程立即就会执行；</p>
-<p><strong>3）运行状态（Running）</strong>：当CPU开始调度处于就绪状态的线程时，此时线程才得以真正执行，即进入到运行状态。注：就 绪状态是进入到运行状态的唯一入口，也就是说，线程要想进入运行状态执行，首先必须处于就绪状态中；</p>
-<p><strong>4）阻塞状态（Blocked）</strong>：处于运行状态中的线程由于某种原因，暂时放弃对CPU的使用权，停止执行，此时进入阻塞状态，直到其进入到就绪状态，才 有机会再次被CPU调用以进入到运行状态。根据阻塞产生的原因不同，阻塞状态又可以分为三种：</p>
-<p>1.等待阻塞：运行状态中的线程执行wait()方法，使本线程进入到等待阻塞状态；</p>
-<p>2.同步阻塞 — 线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态；</p>
-<p>3.其他阻塞 — 通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时. join()等待线程终止或者超时. 或者I/O处理完毕时，线程重新转入就绪状态。</p>
+<p><strong>3）运行状态（Running）</strong>：当CPU开始调度处于就绪状态的线程时，此时线程才得以真正执行，即进入到运行状态。注：就绪状态是进入到运行状态的唯一入口，也就是说，线程要想进入运行状态执行，首先必须处于就绪状态中；</p>
+<p><strong>4）阻塞状态（Blocked）</strong>：处于运行状态中的线程由于某种原因，暂时放弃对CPU的使用权，停止执行，此时进入阻塞状态，直到其进入到就绪状态，才有机会再次被CPU调用以进入到运行状态。根据阻塞产生的原因不同，阻塞状态又可以分为三种：</p>
+<ol>
+<li><p>等待阻塞：运行状态中的线程执行wait()方法，使本线程进入到等待阻塞状态；</p>
+</li>
+<li><p>同步阻塞：线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态；</p>
+</li>
+<li><p>其他阻塞：通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时. join()等待线程终止或者超时. 或者I/O处理完毕时，线程重新转入就绪状态。</p>
+</li>
+</ol>
 <p><strong>5）死亡状态（Dead）</strong>：线程执行完了或者因异常退出了run()方法，该线程结束生命周期。</p>
 <h2 id="什么是线程死锁-如何避免死锁"><a href="#什么是线程死锁-如何避免死锁" class="headerlink" title="什么是线程死锁?如何避免死锁?"></a>什么是线程死锁?如何避免死锁?</h2><h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><ul>
 <li>多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放。由于线程被无限期地阻塞，因此程序不可能正常终止。 </li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1583327022365_13.png"></p>
 <h3 id="死锁必须具备以下四个条件"><a href="#死锁必须具备以下四个条件" class="headerlink" title="死锁必须具备以下四个条件"></a>死锁必须具备以下四个条件</h3><ul>
-<li>互斥条件：该资源任意一个时刻只由一个线程占用。</li>
-<li>请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
-<li>不剥夺条件:线程已获得的资源在末使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。</li>
-<li>循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。</li>
+<li><strong>互斥条件：</strong>该资源任意一个时刻只由一个线程占用。</li>
+<li><strong>请求与保持条件：</strong>一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
+<li><strong>不剥夺条件：</strong>线程已获得的资源在末使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。</li>
+<li><strong>循环等待条件：</strong>若干进程之间形成一种头尾相接的循环等待资源关系。</li>
 </ul>
 <h3 id="如何避免线程死锁"><a href="#如何避免线程死锁" class="headerlink" title="如何避免线程死锁?"></a>如何避免线程死锁?</h3><p>只要破坏产生死锁的四个条件中的其中一个就可以了</p>
 <ul>
@@ -2304,46 +2311,47 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>破坏请求与保持条件<br>一次性申请所有的资源。</li>
 <li>破坏不剥夺条件<br>占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源。</li>
 <li>破坏循环等待条件<br>靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件。</li>
-<li>锁排序法：（必须回答出来的点）<br>指定获取锁的顺序，比如某个线程只有获得A锁和B锁，才能对某资源进行操作，在多线程条件下，如何避免死锁？<br>通过指定锁的获取顺序，比如规定，只有获得A锁的线程才有资格获取B锁，按顺序获取锁就可以避免死锁。这通常被认为是解决死锁很好的一种方法。</li>
+<li><strong>锁排序法：（必须回答出来的点）</strong><br>指定获取锁的顺序，比如某个线程只有获得A锁和B锁，才能对某资源进行操作，在多线程条件下，如何避免死锁？<br>通过指定锁的获取顺序，比如规定，只有获得A锁的线程才有资格获取B锁，按顺序获取锁就可以避免死锁。这通常被认为是解决死锁很好的一种方法。</li>
 <li>使用显式锁中的ReentrantLock.try(long,TimeUnit)来申请锁</li>
 </ul>
 <h2 id="常见的对比"><a href="#常见的对比" class="headerlink" title="常见的对比"></a>常见的对比</h2><h3 id="Runnable-VS-Callable"><a href="#Runnable-VS-Callable" class="headerlink" title="Runnable VS Callable"></a>Runnable VS Callable</h3><ul>
-<li>Callable仅在 Java 1.5 中引入,目的就是为了来处理Runnable不支持的用例。Callable 接口可以返回结果或抛出检查异常</li>
-<li>Runnable 接口不会返回结果或抛出检查异常，</li>
-<li>如果任务不需要返回结果或抛出异常推荐使用 Runnable接口，这样代码看起来会更加简洁</li>
-<li>工具类 Executors 可以实现 Runnable 对象和 Callable 对象之间的相互转换。（Executors.callable（Runnable task）或 Executors.callable（Runnable task，Object resule））</li>
+<li>Callable仅在 Java 1.5 中引入,目的就是为了来处理Runnable不支持的用例。Callable 接口可以返回结果或抛出检查异常；</li>
+<li>Runnable 接口不会返回结果或抛出检查异常；</li>
+<li>如果任务不需要返回结果或抛出异常推荐使用Runnable接口，这样代码看起来会更加简洁；</li>
+<li>工具类 Executors 可以实现 Runnable 对象和 Callable 对象之间的相互转换。</li>
 </ul>
 <h3 id="shutdown-VS-shutdownNow"><a href="#shutdown-VS-shutdownNow" class="headerlink" title="shutdown() VS shutdownNow()"></a>shutdown() VS shutdownNow()</h3><ul>
-<li>shutdown（） :关闭线程池，线程池的状态变为 SHUTDOWN。线程池不再接受新任务了，但是队列里的任务得执行完毕。</li>
-<li>shutdownNow（） :关闭线程池，线程的状态变为 STOP。线程池会终止当前正在运行的任务，并停止处理排队的任务并返回正在等待执行的 List。<br>shutdownNow的原理是遍历线程池中的工作线程，然后逐个调用线程的interrupt方法来中断线程，所以无法响应中断的任务可能永远无法终</li>
+<li>shutdown()：关闭线程池，线程池的状态变为 SHUTDOWN。线程池不再接受新任务了，但是队列里的任务得执行完毕。</li>
+<li>shutdownNow()：关闭线程池，线程的状态变为 STOP。线程池会终止当前正在运行的任务，并停止处理排队的任务并返回正在等待执行的 List。shutdownNow的原理是遍历线程池中的工作线程，然后逐个调用线程的interrupt方法来中断线程，所以无法响应中断的任务可能永远无法终止。</li>
 </ul>
 <h3 id="isTerminated-VS-isShutdown"><a href="#isTerminated-VS-isShutdown" class="headerlink" title="isTerminated() VS isShutdown()"></a>isTerminated() VS isShutdown()</h3><ul>
-<li>isShutDown 当调用 shutdown() 方法后返回为 true。</li>
-<li>isTerminated 当调用 shutdown() 方法后，并且所有提交的任务完成后返回为 true</li>
+<li>isShutDown()：当调用 shutdown() 方法后返回为 true。</li>
+<li>isTerminated()：当调用 shutdown() 方法后，并且所有提交的任务完成后返回为 true</li>
 </ul>
 <h2 id="sleep-方法和-wait-方法区别和共同点"><a href="#sleep-方法和-wait-方法区别和共同点" class="headerlink" title="sleep() 方法和 wait() 方法区别和共同点?"></a>sleep() 方法和 wait() 方法区别和共同点?</h2><h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
-<li>sleep方法：是Thread类的静态方法，当前线程将睡眠n毫秒，线程进入阻塞状态。当睡眠时间到了，会解除阻塞，进入可运行状态，等待CPU的到来。睡眠不释放锁（如果有的话）。</li>
-<li>wait方法：是Object的方法，必须与synchronized关键字一起使用，线程进入阻塞状态，当notify或者notifyall被调用后，会解除阻塞。但是，只有重新占用互斥锁之后才会进入可运行状态。睡眠时，会释放互斥锁。</li>
-<li>sleep 方法没有释放锁，而 wait 方法释放了锁 。</li>
-<li>sleep 通常被用于暂停执行Wait 通常被用于线程间交互/通信</li>
-<li>sleep() 方法执行完成后，线程会自动苏醒。或者可以使用 wait(long timeout)超时后线程会自动苏醒。wait() 方法被调用后，线程不会自动苏醒，需要别的线程调用同一个对象上的 notify() 或者 notifyAll() 方法</li>
+<li><code>sleep()</code>方法：是Thread类的静态方法，当前线程将睡眠n毫秒，线程进入阻塞状态。当睡眠时间到了，会解除阻塞，进入可运行状态，等待CPU的到来。睡眠不释放锁（如果有的话）。</li>
+<li><code>wait()</code>方法：是Object的方法，<strong>必须与<code>synchronized</code>关键字一起使用</strong>，线程进入阻塞状态，当<code>notify()</code>或者<code>notifyall()</code>被调用后，会解除阻塞。但是，只有重新占用互斥锁之后才会进入可运行状态。睡眠时，会释放互斥锁。</li>
+<li><code>sleep()</code>方法没有释放锁，而<code>wait()</code>方法释放了锁 。</li>
+<li><code>sleep()</code>通常被用于暂停执行，<code>wait()</code>通常被用于线程间交互/通信（暂时释放锁）</li>
+<li><code>sleep()</code>方法执行完成后，线程会自动苏醒。或者可以使用<code>wait(long timeout)</code>超时后线程会自动苏醒。<code>wait()</code>方法被调用后，线程不会自动苏醒，需要别的线程调用同一个对象上的<code>notify()</code>或者<code>notifyAll()</code>方法</li>
 </ul>
 <h3 id="相同"><a href="#相同" class="headerlink" title="相同"></a>相同</h3><ul>
 <li>两者都可以暂停线程的执行。</li>
 </ul>
 <h2 id="为什么我们调用-start-方法时会执行-run-方法，为什么我们不能直接调用-run-方法"><a href="#为什么我们调用-start-方法时会执行-run-方法，为什么我们不能直接调用-run-方法" class="headerlink" title="为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法"></a>为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法</h2><ul>
-<li>new 一个 Thread，线程进入了新建状态; 调用start() 会执行线程的相应准备工作，然后自动执行 run() 方法的内容，（调用 start() 方法，会启动一个线程并使线程进入了就绪状态，当分配到时间片后就可以开始运行了。）这是真正的多线程工作。</li>
-<li>直接执行 run() 方法，会把 run 方法当成一个 main 线程下的普通方法去执行，并不会在某个线程中执行它，所以这并不是多线程工作。<br><strong>调用 start 方法方可启动线程并使线程进入就绪状态，而 run 方法只是 thread 的一个普通方法调用，还是在主线程里执行。</strong></li>
+<li>new 一个 Thread，线程进入了新建状态; 调用<code>start()</code>会执行线程的相应准备工作，然后自动执行<code>run()</code>方法的内容，（调用<code>start()</code>方法，会启动一个线程并使线程进入了就绪状态，当分配到时间片后就可以开始运行了）这是真正的多线程工作。</li>
+<li>直接执行<code>run()</code>方法，会把<code>run()</code>方法当成一个普通方法去执行，并不会在某个线程中执行它，所以这并不是多线程工作。 </li>
 </ul>
+<p><strong>调用<code>start()</code>方法方可启动线程并使线程进入就绪状态，而<code>run()</code>方法只是thread的一个普通方法调用，还是在主线程里执行。</strong></p>
 <h2 id="Thread类中的yield方法有什么作用？"><a href="#Thread类中的yield方法有什么作用？" class="headerlink" title="Thread类中的yield方法有什么作用？"></a>Thread类中的yield方法有什么作用？</h2><p>yield方法可以暂停当前正在执行的线程对象，让其它有相同优先级的线程执行。它是一个静态方法而且只保证当前线程放弃CPU占用而不能保证使其它线程一定能占用CPU，执行yield()的线程有可能在进入到暂停状态后马上又被执行。</p>
-<h2 id="谈谈volatile的使用及其原理"><a href="#谈谈volatile的使用及其原理" class="headerlink" title="谈谈volatile的使用及其原理"></a>谈谈volatile的使用及其原理</h2><p><strong>volatile的两层语义：</strong></p>
+<h2 id="谈谈volatile的使用及其原理"><a href="#谈谈volatile的使用及其原理" class="headerlink" title="谈谈volatile的使用及其原理"></a>谈谈volatile的使用及其原理</h2><p><strong>volatile的两层语义</strong></p>
 <ol>
 <li><p>volatile保证变量对所有线程的可见性：当volatile变量被修改，新值对所有线程会立即更新。或者理解为多线程环境下使用volatile修饰的变量的值一定是最新的。</p>
 </li>
-<li><p>jdk1.5以后volatile完全避免了指令重排优化，实现了有序性。</p>
+<li><p>JDK1.5以后volatile完全避免了指令重排优化，实现了有序性。</p>
 </li>
 </ol>
-<p><strong>volatile的原理：</strong></p>
+<p><strong>volatile的原理</strong></p>
 <p>获取JIT（即时Java编译器，把字节码解释为机器语言发送给处理器）的汇编代码，发现volatile多加了lock addl指令，这个操作相当于一个内存屏障，使得lock指令后的指令不能重排序到内存屏障前的位置。这也是为什么JDK1.5以后可以使用双锁检测实现单例模式。</p>
 <p>lock前缀的另一层意义是使得本线程工作内存中的volatile变量值立即写入到主内存中，并且使得其他线程共享的该volatile变量无效化，这样其他线程必须重新从主内存中读取变量值。</p>
 <h2 id="线程阻塞的三种情况"><a href="#线程阻塞的三种情况" class="headerlink" title="线程阻塞的三种情况"></a>线程阻塞的三种情况</h2><p>当线程因为某种原因放弃 CPU 使用权后，即让出了 CPU 时间片，暂时就会停止运行，知道线程进入可运行状态（<code>Runnable</code>），才有机会再次获得 CPU 时间片转入 <code>RUNNING</code> 状态。一般来讲，阻塞的情况可以分为如下三种：</p>
@@ -2403,7 +2411,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>ABA 问题</li>
 </ol>
 <p>并发环境下，假设初始条件是A，去修改数据时，发现是A就会执行修改。但是看到的虽然是A，中间可能发生了A变B，B又变回A的情况。此时A已经非彼A，数据即使成功修改，也可能有问题。</p>
-<p>可以通过AtomicStampedReference<strong>解决ABA问题</strong>，它，一个带有标记的原子引用类，通过控制变量值的版本来保证CAS的正确性。</p>
+<p>可以通过AtomicStampedReference<strong>解决ABA问题</strong>，它是一个带有标记的原子引用类，通过控制变量值的版本来保证CAS的正确性。</p>
 <ol start="2">
 <li>循环时间长开销</li>
 </ol>
@@ -2420,7 +2428,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 </ul>
 <p>具体可参考CAS详细分析文章：<a href="/2018/06/cas-principle/">原子操作CAS和相关原子操作类的实现原理</a></p>
 <h2 id="synchronized-和-volatile-的区别是什么？"><a href="#synchronized-和-volatile-的区别是什么？" class="headerlink" title="synchronized 和 volatile 的区别是什么？"></a>synchronized 和 volatile 的区别是什么？</h2><p><code>volatile</code> 解决的是内存可见性问题，会使得所有对 <code>volatile</code> 变量的读写都直接写入主存，即 <strong>保证了变量的可见性</strong>。</p>
-<p><code>synchronized</code> 解决的事执行控制的问题，它会阻止其他线程获取当前对象的监控锁，这样一来就让当前对象中被 <code>synchronized</code> 关键字保护的代码块无法被其他线程访问，也就是无法并发执行。而且，<code>synchronized</code> 还会创建一个 <strong>内存屏障</strong>，内存屏障指令保证了所有 CPU 操作结果都会直接刷到主存中，从而 <strong>保证操作的内存可见性</strong>，同时也使得这个锁的线程的所有操作都 <code>happens-before</code> 于随后获得这个锁的线程的操作。</p>
+<p><code>synchronized</code> 解决的是执行控制的问题，它会阻止其他线程获取当前对象的监控锁，这样一来就让当前对象中被 <code>synchronized</code> 关键字保护的代码块无法被其他线程访问，也就是无法并发执行。而且，<code>synchronized</code> 还会创建一个 <strong>内存屏障</strong>，内存屏障指令保证了所有 CPU 操作结果都会直接刷到主存中，从而 <strong>保证操作的内存可见性</strong>，同时也使得这个锁的线程的所有操作都 <code>happens-before</code> 于随后获得这个锁的线程的操作。</p>
 <p>两者的区别主要有如下：</p>
 <ol>
 <li>volatile 本质是在告诉 JVM 当前变量在寄存器（工作内存）中的值是不确定的，需要从主存中读取； synchronized 则是锁定当前变量，只有当前线程可以访问该变量，其他线程被阻塞住。 </li>
@@ -2430,7 +2438,7 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>volatile 标记的变量不会被编译器优化；synchronized 标记的变量可以被编译器优化。</li>
 </ol>
 <h2 id="synchronized-和-Lock-有什么区别？"><a href="#synchronized-和-Lock-有什么区别？" class="headerlink" title="synchronized 和 Lock 有什么区别？"></a>synchronized 和 Lock 有什么区别？</h2><ul>
-<li> synchronized 可以给类. 方法. 代码块加锁；而 lock 只能给代码块加锁。 </li>
+<li> synchronized 可以给类、方法、代码块加锁；而 lock 只能给代码块加锁。 </li>
 <li> synchronized 不需要手动获取锁和释放锁，使用简单，发生异常会自动释放锁，不会造成死锁；而 lock 需要自己加锁和释放锁，如果使用不当没有 unLock()去释放锁就会造成死锁。 </li>
 <li> 通过 Lock 可以知道有没有成功获取锁，而 synchronized 却无法办到。</li>
 </ul>
@@ -2438,7 +2446,8 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h2 id="Java中synchronized-和-ReentrantLock-有什么不同"><a href="#Java中synchronized-和-ReentrantLock-有什么不同" class="headerlink" title="Java中synchronized 和 ReentrantLock 有什么不同"></a>Java中synchronized 和 ReentrantLock 有什么不同</h2><ol>
 <li>两者都是可重入锁</li>
 </ol>
-<p>可重入锁：重入锁，也叫做递归锁，可重入锁指的是在一个线程中可以多次获取同一把锁，比如：<br>一个线程在执行一个带锁的方法，该方法中又调用了另一个需要相同锁的方法，则该线程可以直接执行调用的方法，而无需重新获得锁，<br>两者都是同一个线程每进入一次，锁的计数器都自增1，所以要等到锁的计数器下降为0时才能释放锁。</p>
+<p>可重入锁：重入锁，也叫做<strong>递归锁</strong>，可重入锁指的是在一个线程中可以多次获取同一把锁，比如： </p>
+<p>一个线程在执行一个带锁的方法，该方法中又调用了另一个需要相同锁的方法，则该线程可以直接执行调用的方法，而无需重新获得锁，两者都是同一个线程每进入一次，锁的计数器都自增1，所以要等到锁的计数器下降为0时才能释放锁。</p>
 <ol start="2">
 <li>synchronized 依赖于 JVM 而 ReentrantLock 依赖于 API</li>
 </ol>
@@ -2446,10 +2455,10 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>synchronized 是依赖于 JVM 实现的，前面我们也讲到了 虚拟机团队在 JDK1.6 为 synchronized 关键字进行了很多优化，但是这些优化都是在虚拟机层面实现的</li>
 <li>ReentrantLock 是 JDK 层面实现的（也就是 API 层面，需要 lock() 和 unlock() 方法配合 try/finally 语句块来完成）</li>
 </ul>
-<p>3.ReentrantLock 比 synchronized 增加了一些高级功能**</p>
+<p>3.ReentrantLock 比 synchronized 增加了一些高级功能</p>
 <p>相比synchronized，ReentrantLock增加了一些高级功能。主要来说主要有三点：①等待可中断；②可实现公平锁；③可实现选择性通知（锁可以绑定多个条件）</p>
 <ul>
-<li>等待可中断.通过lock.lockInterruptibly()来实现这个机制。也就是说正在等待的线程可以选择放弃等待，改为处理其他事情。</li>
+<li>等待可中断。通过lock.lockInterruptibly()来实现这个机制。也就是说正在等待的线程可以选择放弃等待，改为处理其他事情。</li>
 <li>ReentrantLock可以指定是公平锁还是非公平锁。而synchronized只能是非公平锁。所谓的公平锁就是先等待的线程先获得锁。 ReentrantLock默认情况是非公平的，可以通过 ReentrantLock类的ReentrantLock(boolean fair)构造方法来制定是否是公平的。</li>
 <li>ReentrantLock类线程对象可以注册在指定的Condition中，从而可以有选择性的进行线程通知，在调度线程上更加灵活。 在使用notify()/notifyAll()方法进行通知时，被通知的线程是由 JVM 选择的，<strong>用ReentrantLock类结合Condition实例可以实现“选择性通知”</strong></li>
 </ul>
@@ -2461,9 +2470,9 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 ReentrantLock 不是所有的 JDK 版本都支持。并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放</li>
 </ul>
 <h2 id="synchronized的用法有哪些"><a href="#synchronized的用法有哪些" class="headerlink" title="synchronized的用法有哪些?"></a>synchronized的用法有哪些?</h2><ul>
-<li>修饰普通方法:作用于当前对象实例，进入同步代码前要获得当前对象实例的锁</li>
-<li>修饰静态方法:作用于当前类，进入同步代码前要获得当前类对象的锁,synchronized 关键字加到 static 静态方法和 synchronized(class)代码块上都是是给 Class 类上锁</li>
-<li>修饰代码块:指定加锁对象，对给定对象加锁，进入同步代码库前要获得给定对象的锁</li>
+<li><strong>修饰普通方法：</strong>作用于当前对象实例，进入同步代码前要获得当前对象实例的锁</li>
+<li><strong>修饰静态方法：</strong>作用于当前类，进入同步代码前要获得当前类对象的锁，synchronized 关键字加到 static 静态方法和 synchronized(class)代码块上都是在 Class 类上锁</li>
+<li><strong>修饰代码块：</strong>指定加锁对象，对给定对象加锁，进入同步代码块前要获得给定对象的锁</li>
 </ul>
 <p>特别注意：</p>
 <ol>
@@ -2472,11 +2481,11 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li><p>尽量不要使用 synchronized(String s) ,因为JVM中，字符串常量池具有缓冲功能</p>
 </li>
 </ol>
-<h2 id="说一下-synchronized-底层实现原理？"><a href="#说一下-synchronized-底层实现原理？" class="headerlink" title="说一下 synchronized 底层实现原理？"></a>说一下 synchronized 底层实现原理？</h2><p>synchronized 同步代码块的实现是通过 monitorenter 和 monitorexit 指令，其中 monitorenter 指令指向同步代码块的开始位置，monitorexit 指令则指明同步代码块的结束位置。当执行 monitorenter 指令时，线程试图获取锁也就是获取 monitor(monitor对象存在于每个Java对象的对象头中，synchronized 锁便是通过这种方式获取锁的，也是为什么Java中任意对象可以作为锁的原因) 的持有权。</p>
+<h2 id="说一下-synchronized-底层实现原理？"><a href="#说一下-synchronized-底层实现原理？" class="headerlink" title="说一下 synchronized 底层实现原理？"></a>说一下 synchronized 底层实现原理？</h2><p><strong>synchronized 同步代码块的实现是通过 monitorenter 和 monitorexit 指令</strong>，其中 monitorenter 指令指向同步代码块的开始位置，monitorexit 指令则指明同步代码块的结束位置。当执行 monitorenter 指令时，线程试图获取锁也就是获取 monitor(monitor对象存在于每个Java对象的对象头中，synchronized 锁便是通过这种方式获取锁的，也是为什么Java中任意对象可以作为锁的原因) 的持有权。</p>
 <p>其内部包含一个计数器，当计数器为0则可以成功获取，获取后将锁计数器设为1也就是加1。相应的在执行 monitorexit 指令后，将锁计数器设为0，表明锁被释放。如果获取对象锁失败，那当前线程就要阻塞等待，直到锁被另外一个线程释放为止</p>
-<p>synchronized 修饰的方法并没有 monitorenter 指令和 monitorexit 指令，取得代之的确实是 ACC_SYNCHRONIZED 标识，该标识指明了该方法是一个同步方法，JVM 通过该 ACC_SYNCHRONIZED 访问标志来辨别一个方法是否声明为同步方法，从而执行相应的同步调用。</p>
-<h2 id="多线程中-synchronized-锁升级的原理是什么？"><a href="#多线程中-synchronized-锁升级的原理是什么？" class="headerlink" title="多线程中 synchronized 锁升级的原理是什么？"></a>多线程中 synchronized 锁升级的原理是什么？</h2><p> synchronized 锁升级原理：在锁对象的对象头里面有一个 threadid 字段，在第一次访问的时候 threadid 为空，jvm 让其持有偏向锁，并将 threadid 设置为其线程 id，再次进入的时候会先判断 threadid 是否与其线程 id 一致，如果一致则可以直接使用此对象，如果不一致，则升级偏向锁为轻量级锁，通过自旋循环一定次数来获取锁，执行一定次数之后，如果还没有正常获取到要使用的对象，此时就会把锁从轻量级升级为重量级锁，此过程就构成了 synchronized 锁的升级。 </p>
-<p> 锁的升级的目的：锁升级是为了减低了锁带来的性能消耗。在 Java 6 之后优化 synchronized 的实现方式，使用了偏向锁升级为轻量级锁再升级到重量级锁的方式，从而减低了锁带来的性能消耗。</p>
+<p><strong>synchronized 修饰的方法并没有 monitorenter 指令和 monitorexit 指令，取得代之的确实是 ACC_SYNCHRONIZED 标识</strong>，该标识指明了该方法是一个同步方法，JVM 通过该 ACC_SYNCHRONIZED 访问标志来辨别一个方法是否声明为同步方法，从而执行相应的同步调用。</p>
+<h2 id="多线程中-synchronized-锁升级的原理是什么？"><a href="#多线程中-synchronized-锁升级的原理是什么？" class="headerlink" title="多线程中 synchronized 锁升级的原理是什么？"></a>多线程中 synchronized 锁升级的原理是什么？</h2><p> <strong><code>synchronized</code>锁升级原理：</strong>在锁对象的对象头里面有一个 threadid 字段，在第一次访问的时候 threadid 为空，JVM 让其持有偏向锁，并将 threadid 设置为其线程 id，再次进入的时候会先判断 threadid 是否与其线程 id 一致，如果一致则可以直接使用此对象，如果不一致，则升级偏向锁为轻量级锁，通过自旋循环一定次数来获取锁，执行一定次数之后，如果还没有正常获取到要使用的对象，此时就会把锁从轻量级升级为重量级锁，此过程就构成了 synchronized 锁的升级。 </p>
+<p>** 锁的升级的目的：**锁升级是为了减低了锁带来的性能消耗。在 Java 6 之后优化 synchronized 的实现方式，使用了偏向锁升级为轻量级锁再升级到重量级锁的方式，从而减低了锁带来的性能消耗。</p>
 <h2 id="synchronized-为什么是非公平锁？非公平体现在哪些地方？"><a href="#synchronized-为什么是非公平锁？非公平体现在哪些地方？" class="headerlink" title="synchronized 为什么是非公平锁？非公平体现在哪些地方？"></a>synchronized 为什么是非公平锁？非公平体现在哪些地方？</h2><p>synchronized 的非公平其实在源码中应该有不少地方，因为设计者就没按公平锁来设计，核心有以下几个点：</p>
 <ul>
 <li><p>当持有锁的线程释放锁时，该线程会执行以下两个重要操作：</p>
@@ -2490,23 +2499,23 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <ul>
 <li>当线程尝试获取锁失败，进入阻塞时，放入链表的顺序，和最终被唤醒的顺序是不一致的，也就是说你先进入链表，不代表你就会先被唤醒。</li>
 </ul>
-<h2 id="JVM对synchronized的优化有哪些？"><a href="#JVM对synchronized的优化有哪些？" class="headerlink" title="JVM对synchronized的优化有哪些？"></a>JVM对synchronized的优化有哪些？</h2><p>从最近几个jdk版本中可以看出，Java的开发团队一直在对synchronized优化，其中最大的一次优化就是在jdk6的时候，新增了两个锁状态，通过锁消除、锁粗化、自旋锁等方法使用各种场景，给synchronized性能带来了很大的提升。</p>
-<h3 id="锁膨胀"><a href="#锁膨胀" class="headerlink" title="锁膨胀"></a>锁膨胀</h3><p>上面讲到锁有四种状态，并且会因实际情况进行膨胀升级，其膨胀方向是：<strong>无锁——&gt;偏向锁——&gt;轻量级锁——&gt;重量级锁</strong>，并且膨胀方向不可逆。</p>
+<h2 id="JVM对synchronized的优化有哪些？"><a href="#JVM对synchronized的优化有哪些？" class="headerlink" title="JVM对synchronized的优化有哪些？"></a>JVM对synchronized的优化有哪些？</h2><p>从最近几个JDK版本中可以看出，Java的开发团队一直在对synchronized优化，其中最大的一次优化就是在JDK6的时候，新增了两个锁状态，通过锁消除、锁粗化、自旋锁等方法使用各种场景，给synchronized性能带来了很大的提升。</p>
+<h3 id="锁膨胀"><a href="#锁膨胀" class="headerlink" title="锁膨胀"></a>锁膨胀</h3><p>上面讲到锁有四种状态，并且会因实际情况进行膨胀升级，其膨胀方向是：<strong>无锁——&gt;偏向锁——&gt;轻量级锁——&gt;重量级锁</strong>，并且<strong>膨胀方向不可逆</strong>。</p>
 <h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>一句话总结它的作用：<strong>减少统一线程获取锁的代价</strong>。在大多数情况下，锁不存在多线程竞争，总是由同一线程多次获得，那么此时就是偏向锁。</p>
 <p><strong>核心思想：</strong></p>
-<p>如果一个线程获得了锁，那么锁就进入偏向模式，此时<code>Mark Word</code>的结构也就变为偏向锁结构，<strong>当该线程再次请求锁时，无需再做任何同步操作，即获取锁的过程只需要检查</strong><code>**Mark Word**</code><strong>的锁标记位为偏向锁以及当前线程ID等于</strong><code>**Mark Word**</code><strong>的ThreadID即可</strong>，这样就省去了大量有关锁申请的操作。</p>
+<p>如果一个线程获得了锁，那么锁就进入偏向模式，此时<code>Mark Word</code>的结构也就变为偏向锁结构，<strong>当该线程再次请求锁时，无需再做任何同步操作，即获取锁的过程只需要检查</strong><code>Mark Word</code><strong>的锁标记位为偏向锁以及当前线程ID等于</strong><code>Mark Word</code><strong>的ThreadID即可</strong>，这样就省去了大量有关锁申请的操作。</p>
 <h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>轻量级锁是由偏向锁升级而来，当存在第二个线程申请同一个锁对象时，偏向锁就会立即升级为轻量级锁。注意这里的第二个线程只是申请锁，不存在两个线程同时竞争锁，可以是一前一后地交替执行同步块。</p>
 <h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p>重量级锁是由轻量级锁升级而来，当<strong>同一时间</strong>有多个线程竞争锁时，锁就会被升级成重量级锁，此时其申请锁带来的开销也就变大。</p>
 <p>重量级锁一般使用场景会在追求吞吐量，同步块或者同步方法执行时间较长的场景。</p>
 <h3 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h3><p>消除锁是虚拟机另外一种锁的优化，这种优化更彻底，在JIT编译时，对运行上下文进行扫描，去除不可能存在竞争的锁。比如下面代码的method1和method2的执行效率是一样的，因为object锁是私有变量，不存在所得竞争关系。</p>
-<p><img src="http://blog-img.coolsen.cn/img/image-20210822141520951.png" alt="image-20210822141520951"></p>
+<p><img src="http://blog-img.coolsen.cn/img/image-20210822141520951.png"></p>
 <h3 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h3><p>锁粗化是虚拟机对另一种极端情况的优化处理，通过扩大锁的范围，避免反复加锁和释放锁。比如下面method3经过锁粗化优化之后就和method4执行效率一样了。</p>
-<p><img src="http://blog-img.coolsen.cn/img/image-20210822141439642.png" alt="image-20210822141439642"></p>
+<p><img src="http://blog-img.coolsen.cn/img/image-20210822141439642.png"></p>
 <h3 id="自旋锁与自适应自旋锁"><a href="#自旋锁与自适应自旋锁" class="headerlink" title="自旋锁与自适应自旋锁"></a>自旋锁与自适应自旋锁</h3><p>轻量级锁失败后，虚拟机为了避免线程真实地在操作系统层面挂起，还会进行一项称为自旋锁的优化手段。</p>
-<p>自旋锁：许多情况下，共享数据的锁定状态持续时间较短，切换线程不值得，通过让线程执行循环等待锁的释放，不让出CPU。如果得到锁，就顺利进入临界区。如果还不能获得锁，那就会将线程在操作系统层面挂起，这就是自旋锁的优化方式。但是它也存在缺点：如果锁被其他线程长时间占用，一直不释放CPU，会带来许多的性能开销。</p>
+<p><strong>自旋锁：</strong>许多情况下，共享数据的锁定状态持续时间较短，切换线程不值得(内核态和用户态切换)，通过让线程执行循环等待锁的释放，不让出CPU。如果得到锁，就顺利进入临界区。如果还不能获得锁，那就会将线程在操作系统层面挂起，这就是自旋锁的优化方式。但是它也存在缺点：如果锁被其他线程长时间占用，一直不释放CPU，会带来许多的性能开销。</p>
 <p><strong>自适应自旋锁</strong>：这种相当于是对上面自旋锁优化方式的进一步优化，它的自旋的次数不再固定，其自旋的次数由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定，这就解决了自旋锁带来的缺点。</p>
 <p><strong>为什么要引入偏向锁和轻量级锁？为什么重量级锁开销大？</strong></p>
-<p>重量级锁底层依赖于系统的同步函数来实现，在 linux 中使用 pthread_mutex_t（互斥锁）来实现。</p>
+<p>重量级锁底层依赖于系统的同步函数来实现，在 linux 中使用 <code>pthread_mutex_t</code>（互斥锁）来实现。</p>
 <p>这些底层的同步函数操作会涉及到：操作系统用户态和内核态的切换、进程的上下文切换，而这些操作都是比较耗时的，因此重量级锁操作的开销比较大。</p>
 <p>而在很多情况下，可能获取锁时只有一个线程，或者是多个线程交替获取锁，在这种情况下，使用重量级锁就不划算了，因此引入了偏向锁和轻量级锁来降低没有并发竞争时的锁开销。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/46535650434234765654.png"></p>
@@ -2536,7 +2545,20 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <p>这个就没什么好说的了，ArrayList、LinkedList、HashMap等都是线程非安全的类。</p>
 <h2 id="说一说自己对于-synchronized-关键字的了解"><a href="#说一说自己对于-synchronized-关键字的了解" class="headerlink" title="说一说自己对于 synchronized 关键字的了解"></a>说一说自己对于 synchronized 关键字的了解</h2><p>synchronized关键字解决的是多个线程之间访问资源的同步性，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。 另外，在 Java 早期版本中，synchronized属于重量级锁，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的Mutex Lock 来实现的，Java 的线程是映射到操作系统的原生线程之上的。如果要挂起或者唤醒一个线程，都需要操作系统帮忙完成，而操作系统实现线程之间的切换时需要从用户态转换到内核态，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是为什么早期的synchronized 效率低的原因。庆幸的是在 Java 6 之后 Java 官方对从 JVM 层面对synchronized 较大优化，所以现在的 synchronized 锁效率也优化得很不错了。JDK1.6对锁的实现引入了大量的优化，如自旋锁、适应性自旋锁、锁消除、锁粗化、偏向锁、轻量级锁等技术来减少锁操作的开销。</p>
 <p>参考文章：<a href="/2018/07/java-synchronized-principle/">死磕Java并发：深入分析synchronized的实现原理</a></p>
-<h2 id="说说自己是怎么使用-synchronized-关键字"><a href="#说说自己是怎么使用-synchronized-关键字" class="headerlink" title="说说自己是怎么使用 synchronized 关键字"></a>说说自己是怎么使用 synchronized 关键字</h2><p><strong>修饰实例方法:</strong> 作用于当前对象实例加锁，进入同步代码前要获得当前对象实例的锁<br><strong>修饰静态方法：</strong> 也就是给当前类加锁，会作用于类的所有对象实例，因为静态成员不属于任何一个实例对象，是类成员（ static 表明这是该类的一个静态资源，不管new了多少个对象，只有一份）。<br><strong>对比：</strong> 如果一个线程A调用一个实例对象的非静态 synchronized 方法，而线程B需要调用这个实例对象所属类的静态 synchronized 方法，是允许的，不会发生互斥现象，因为访问静态 synchronized 方法占用的锁是当前类的锁，而访问非静态 synchronized 方法占用的锁是当前实例对象锁。<br><strong>修饰代码块:</strong> 指定加锁对象，对给定对象加锁，进入同步代码库前要获得给定对象的锁。<br><strong>总结：</strong> synchronized 关键字加到 static 静态方法和 synchronized(class)代码块上都是是给 Class 类上锁。synchronized关键字加到实例方法上是给对象实例上锁。<strong>尽量不要使用 synchronized(String a) 因为JVM中，字符串常量池具有缓存功能</strong>！</p>
+<h2 id="volatile关键字的作用"><a href="#volatile关键字的作用" class="headerlink" title="volatile关键字的作用"></a>volatile关键字的作用</h2><p>一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义：</p>
+<ul>
+<li>保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。</li>
+<li>禁止进行指令重排序。</li>
+<li>volatile本质是在告诉JVM当前变量在寄存器（工作内存）中的值是不确定的，需要从主存中读取；synchronized则是锁定当前变量，只有当前线程可以访问该变量，其他线程被阻塞住。</li>
+<li>volatile仅能使用在变量级别；synchronized则可以使用在变量、方法、和类级别的。</li>
+<li>volatile仅能实现变量的修改可见性，并不能保证原子性；synchronized则可以保证变量的修改可见性和原子性。</li>
+<li>volatile不会造成线程的阻塞；synchronized可能会造成线程的阻塞。</li>
+</ul>
+<p>volatile标记的变量不会被编译器优化；synchronized标记的变量可以被编译器优化。</p>
+<h2 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a>如何避免死锁</h2><p>这个问题个人觉得需要从两个方面来回答，首先需要说明产生死锁的原因，以及产生死锁的场景，然后根据不同的死锁场景给出避免死锁的解决方案。</p>
+<h3 id="场景一：静态死锁"><a href="#场景一：静态死锁" class="headerlink" title="场景一：静态死锁"></a>场景一：静态死锁</h3><p>两个固定的锁对象，锁A和锁B，线程1、2都需要同时获取A、B锁才能执行业务逻辑，但是出现线程1先获取锁A，线程2先获取锁B，当线程1再去获取B锁的时候，发现A锁已经被占用，处于阻塞状态，同时线程2获取A锁的时候也无法获取，最终导致两个线程都处于等待对方释放锁，形成死锁的情况。这种情况主要是因为多个线程获取锁的顺序不同导致的，因此调整顺序相同即可。</p>
+<h3 id="场景二：动态死锁"><a href="#场景二：动态死锁" class="headerlink" title="场景二：动态死锁"></a>场景二：动态死锁</h3><p>锁是不固定的，比如用户A给用户B转账，用户B同时也在给用户A转账。此时如果设置锁的顺序都是先锁自己再锁对方，从代码角度来看是没有问题的，但是从实际角度来看，锁的顺序已经发生变化。此时可以通过对两个动态锁取hash值，根据hash值的比较，确定锁的顺序。若出现hash值相同，引入第三方锁，实现双层加锁，达到避免死锁的情况发生。</p>
+<p>参考文章：<a href="/2018/07/java-deadlock/">死锁的两种体现形式分析和解决方案</a></p>
 <h2 id="为什么要用线程池？"><a href="#为什么要用线程池？" class="headerlink" title="为什么要用线程池？"></a>为什么要用线程池？</h2><p>线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。</p>
 <p>使用线程池的好处：</p>
 <ul>
@@ -2545,41 +2567,42 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li><strong>提高线程的可管理性。</strong> 线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</li>
 </ul>
 <h2 id="执行execute-方法和submit-方法的区别是什么呢？"><a href="#执行execute-方法和submit-方法的区别是什么呢？" class="headerlink" title="执行execute()方法和submit()方法的区别是什么呢？"></a>执行execute()方法和submit()方法的区别是什么呢？</h2><ul>
-<li><p><strong><code>execute()</code> 方法用于提交不需要返回值的任务，所以无法判断任务是否被线程池执行成功与否；</strong></p>
+<li><p><strong><code>execute()</code>方法用于提交不需要返回值的任务，所以无法判断任务是否被线程池执行成功与否；</strong></p>
 </li>
-<li><p><strong>submit()方法用于提交需要返回值的任务。线程池会返回一个future类型的对象，通过这个future对象可以判断任务是否执行成功</strong>，并且可以通过future的get()方法来获取返回值，get()方法会阻塞当前线程直到任务完成，而使用 <code>get（long timeout，TimeUnit unit）</code>方法则会阻塞当前线程一段时间后立即返回，这时候有可能任务没有执行完。</p>
+<li><p><strong><code>submit()</code>方法用于提交需要返回值的任务。线程池会返回一个future类型的对象，通过这个future对象可以判断任务是否执行成功</strong>，并且可以通过future的get()方法来获取返回值，<code>get()</code>方法会阻塞当前线程直到任务完成，而使用 <code>get（long timeout，TimeUnit unit）</code>方法则会阻塞当前线程一段时间后立即返回，这时候有可能任务没有执行完。</p>
 </li>
 </ul>
-<h2 id="线程池的主要参数有哪些，以及其之间的关系"><a href="#线程池的主要参数有哪些，以及其之间的关系" class="headerlink" title="线程池的主要参数有哪些，以及其之间的关系"></a>线程池的主要参数有哪些，以及其之间的关系</h2><p>涉及的主要参数：corePoolSize、maximumPoolSize、keepAliveTime、unit、workQueue、threadFactory、handler。</p>
-<h3 id="核心线程数：corePoolSize"><a href="#核心线程数：corePoolSize" class="headerlink" title="核心线程数：corePoolSize"></a>核心线程数：corePoolSize</h3><p>表示线程池的核心线程数量，当线程池中的线程数量小于这个值得时候，再有新任务进来时，会直接创建新的线程去执行，当线程数量达到corePoolSize时，就会将溢出的任务放到workQueue中，等待执行。<br>这里需要注意的是，很多小伙伴都认为设置这个参数后，线程池启动就会创建corePoolSize数量的线程，并放在线程池中等待使用，但事实并非如此，而是有任务进来的时候才会创建线程，初始的线程池是空的，如果需要线程池拥有corePoolSize数量的线程被创建，那就在初始化的时候调用prestartAllCoreThreads()方法。</p>
-<h3 id="最大线程数：maximumPoolSize"><a href="#最大线程数：maximumPoolSize" class="headerlink" title="最大线程数：maximumPoolSize"></a>最大线程数：maximumPoolSize</h3><p>表示允许最大线程数，上一个参数中说多余的任务会放到workQueue中，当workQueue也满了以后，就会判断当前线程池中线程数量是不是小于maximumPoolSize，如果小于，那就接着创建线程，执行任务。</p>
-<h3 id="最大存活时间：keepAliveTime"><a href="#最大存活时间：keepAliveTime" class="headerlink" title="最大存活时间：keepAliveTime"></a>最大存活时间：keepAliveTime</h3><p>线程空闲下来后存活的时间，这个存活时间只对线程池中线程数量超过corePoolSize的时候才会生效。也就是说，当线程池中的线程数量小于corePoolSize，空闲的线程是不会根据这个时间销毁，而是一直存在于线程池中。</p>
-<h3 id="时间单位：unit"><a href="#时间单位：unit" class="headerlink" title="时间单位：unit"></a>时间单位：unit</h3><p>很简单，就是指定keepAliveTime的时间单位。</p>
-<h3 id="工作缓存队列：workQueue"><a href="#工作缓存队列：workQueue" class="headerlink" title="工作缓存队列：workQueue"></a>工作缓存队列：workQueue</h3><p>保存任务的阻塞队列，是在线程数达到corePoolSize后，新进来的任务会被保存到workQueue中，这里使用的是有界的队列(<code>BlockingQueue&lt;Runnable&gt; workQueue</code>)。</p>
-<h3 id="线程制造工厂：threadFactory"><a href="#线程制造工厂：threadFactory" class="headerlink" title="线程制造工厂：threadFactory"></a>线程制造工厂：threadFactory</h3><p>采用工厂模式，用于创建线程的工厂，并给线程设定线程名。<br>饱和策略：RejectedExecutionHandler</p>
+<h2 id="线程池的主要参数有哪些，以及其之间的关系"><a href="#线程池的主要参数有哪些，以及其之间的关系" class="headerlink" title="线程池的主要参数有哪些，以及其之间的关系"></a>线程池的主要参数有哪些，以及其之间的关系</h2><p>涉及的主要参数：<code>corePoolSize</code>、<code>maximumPoolSize</code>、<code>keepAliveTime</code>、<code>unit</code>、<code>workQueue</code>、<code>threadFactory</code>、<code>handler</code>。</p>
+<h3 id="核心线程数：corePoolSize"><a href="#核心线程数：corePoolSize" class="headerlink" title="核心线程数：corePoolSize"></a>核心线程数：corePoolSize</h3><p>表示线程池的核心线程数量，当线程池中的线程数量小于这个值得时候，再有新任务进来时，会直接创建新的线程去执行，当线程数量达到<code>corePoolSize</code>时，就会将溢出的任务放到<code>workQueue</code>中，等待执行。<br>这里需要注意的是，很多小伙伴都认为设置这个参数后，线程池启动就会创建<code>corePoolSize</code>数量的线程，并放在线程池中等待使用，但事实并非如此，而是有任务进来的时候才会创建线程，初始的线程池是空的，如果需要线程池拥有<code>corePoolSize</code>数量的线程被创建，那就在初始化的时候调用<code>prestartAllCoreThreads()</code>方法。</p>
+<h3 id="最大线程数：maximumPoolSize"><a href="#最大线程数：maximumPoolSize" class="headerlink" title="最大线程数：maximumPoolSize"></a>最大线程数：maximumPoolSize</h3><p>表示允许最大线程数，上一个参数中说多余的任务会放到<code>workQueue</code>中，当<code>workQueue</code>也满了以后，就会判断当前线程池中线程数量是不是小于<code>maximumPoolSize</code>，如果小于，那就接着创建线程，执行任务。</p>
+<h3 id="最大存活时间：keepAliveTime"><a href="#最大存活时间：keepAliveTime" class="headerlink" title="最大存活时间：keepAliveTime"></a>最大存活时间：keepAliveTime</h3><p>线程空闲下来后存活的时间，这个存活时间只对线程池中线程数量超过<code>corePoolSize</code>的时候才会生效。也就是说，当线程池中的线程数量小于<code>corePoolSize</code>，空闲的线程是不会根据这个时间销毁，而是一直存在于线程池中。</p>
+<h3 id="时间单位：unit"><a href="#时间单位：unit" class="headerlink" title="时间单位：unit"></a>时间单位：unit</h3><p>很简单，就是指定<code>keepAliveTime</code>的时间单位。</p>
+<h3 id="工作缓存队列：workQueue"><a href="#工作缓存队列：workQueue" class="headerlink" title="工作缓存队列：workQueue"></a>工作缓存队列：workQueue</h3><p>保存任务的阻塞队列，是在线程数达到<code>corePoolSize</code>后，新进来的任务会被保存到<code>workQueue</code>中，这里使用的是有界的队列(<code>BlockingQueue&lt;Runnable&gt; workQueue</code>)。</p>
+<h3 id="线程制造工厂：threadFactory"><a href="#线程制造工厂：threadFactory" class="headerlink" title="线程制造工厂：threadFactory"></a>线程制造工厂：threadFactory</h3><p>采用工厂模式，用于创建线程的工厂，并给线程设定线程名。<br>饱和策略：<code>RejectedExecutionHandler</code></p>
 <ul>
-<li>AbortPolicy：直接抛出异常（默认）</li>
-<li>CallerRunsPolicy：用调用者所在的线程来执行任务</li>
-<li>DiscardOldestPolicy：丢弃阻塞队列中最老的任务，队列中最靠前的任务</li>
-<li>DiscardPolicy：直接忽略当前添加进来的任务</li>
+<li><strong>AbortPolicy：</strong>直接抛出异常（默认）</li>
+<li><strong>CallerRunsPolicy：</strong>用调用者所在的线程来执行任务</li>
+<li><strong>DiscardOldestPolicy：</strong>丢弃阻塞队列中最老的任务，队列中最靠前的任务</li>
+<li><strong>DiscardPolicy：</strong>直接忽略当前添加进来的任务</li>
 </ul>
-<p>但是实际应用中这四种方式都不会使用，后两种放弃任务应该是没有使用的，无论任务的重要性，线上项目都不会忍受任务的丢失。可以通过实现RejectedExecutionHandler接口，实现其内唯一接口方法rejectedExecution(Runnable r, ThreadPoolExecutor executor)即可自己来制定符合实际要求的策略。<br>rejectedExecution这里传入的参数是Runnable，但是在执行submit的时候，传入的是Callable，那么这个策略怎么执行呢（参数对不上）。其实在AbstractExecutorService中对submit(Callable c)方法进行了封装，将执行的结果封装到了RunnableFuture中，RunnableFuture继承了Future和Runnable接口，这个时候在拒绝策略的时候，可以将RunnableFuture对象直接传入给rejectedExecution方法，不收影响。</p>
+<p>但是实际应用中这四种方式都不会使用，后两种放弃任务应该是没有使用的，无论任务的重要性，线上项目都不会忍受任务的丢失。可以通过实现<code>RejectedExecutionHandler</code>接口，实现其内唯一接口方法<code>rejectedExecution(Runnable r, ThreadPoolExecutor executor)</code>即可自己来制定符合实际要求的策略。</p>
+<p><code>rejectedExecution</code>这里传入的参数是<code>Runnable</code>，但是在执行<code>submit</code>的时候，传入的是<code>Callable</code>，那么这个策略怎么执行呢（参数对不上）。其实在<code>AbstractExecutorService</code>中对<code>submit(Callable c)</code>方法进行了封装，将执行的结果封装到了<code>RunnableFuture</code>中，<code>RunnableFuture</code>继承了<code>Future</code>和<code>Runnable</code>接口，这个时候在拒绝策略的时候，可以将<code>RunnableFuture</code>对象直接传入给<code>rejectedExecution</code>方法，不受影响。</p>
 <h2 id="常用的线程池有哪些"><a href="#常用的线程池有哪些" class="headerlink" title="常用的线程池有哪些"></a>常用的线程池有哪些</h2><ul>
-<li>newSingleThreadExecutor：创建一个单线程化的Executor，即只创建唯一的工作者线程来执行任务，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。如果这个线程异常结束，会有另一个取代它，保证顺序执行。单工作线程最大的特点是可保证顺序地执行各个任务，并且在任意给定的时间不会有多个线程是活动的。</li>
-<li>newFixedThreadPool：创建固定大小的线程池，每次提交一个任务就创建一个线程，直到线程达到线程池的最大大小。</li>
+<li><strong>newSingleThreadExecutor：</strong>创建一个单线程化的Executor，即只创建唯一的工作者线程来执行任务，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。如果这个线程异常结束，会有另一个取代它，保证顺序执行。<strong>单工作线程最大的特点是可保证顺序地执行各个任务</strong>，并且在任意给定的时间不会有多个线程是活动的。</li>
+<li><strong>newFixedThreadPool：</strong>创建固定大小的线程池，每次提交一个任务就创建一个线程，直到线程达到线程池的最大大小。</li>
 </ul>
 <p>FixedThreadPool是一个典型且优秀的线程池，它具有线程池提高程序效率和节省创建线程时所耗的开销的优点。但是，在线程池空闲时，即线程池中没有可运行任务时，它不会释放工作线程，还会占用一定的系统资源。</p>
 <ul>
-<li>newCachedThreadPool：创建一个可缓存的线程池，此线程池不会对线程池大小做限制，线程池大小完全依赖于操作系统（或者说JVM）能够创建的最大线程大小。</li>
+<li><strong>newCachedThreadPool：</strong>创建一个可缓存的线程池，此线程池不会对线程池大小做限制，线程池大小完全依赖于操作系统（或者说JVM）能够创建的最大线程大小。</li>
 </ul>
 <p>这种类型的线程池特点是：</p>
 <p>工作线程的创建数量几乎没有限制(其实也有限制的,数目为Interger. MAX_VALUE), 这样可灵活的往线程池中添加线程。</p>
 <p>如果长时间没有往线程池中提交任务，即如果工作线程空闲了指定的时间(默认为1分钟)，则该工作线程将自动终止。终止后，如果你又提交了新的任务，则线程池重新创建一个工作线程。</p>
-<p>在使用CachedThreadPool时，一定要注意控制任务的数量，否则，由于大量线程同时运行，很有会造成系统OOM。</p>
+<p>在使用CachedThreadPool时，一定要注意控制任务的数量，否则，由于大量线程同时运行，很有可能会造成系统OOM。</p>
 <ul>
-<li>newScheduledThreadPool：创建一个定长的线程池，而且支持定时的以及周期性的任务执行，支持定时及周期性任务执行。</li>
+<li><strong>newScheduledThreadPool：</strong>创建一个定长的线程池，而且支持定时的以及周期性的任务执行，支持定时及周期性任务执行。</li>
 </ul>
-<p><a href="/2018/07/threadpool-important-point/">线程池ThreadPool浅层面原理分析</a></p>
+<p>参考文章：<a href="/2018/07/threadpool-important-point/">线程池ThreadPool浅层面原理分析</a></p>
 <h2 id="线程池常用的阻塞队列有哪些"><a href="#线程池常用的阻塞队列有哪些" class="headerlink" title="线程池常用的阻塞队列有哪些?"></a>线程池常用的阻塞队列有哪些?</h2><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/20200722164307306.png"></p>
 <center> 表格左侧是线程池，右侧为它们对应的阻塞队列，可以看到 5 种线程池对应了 3 种阻塞队列</center>
 
@@ -2611,20 +2634,6 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>如果阻塞队列已满，需要通过比较参数maximumPoolSize，在线程池创建新的线程，当线程数量大于maximumPoolSize，说明当前设置线程池中线程已经处理不了了，就会执行饱和策略。</li>
 </ol>
 <h2 id="源码中线程池是怎么复用线程的？"><a href="#源码中线程池是怎么复用线程的？" class="headerlink" title="源码中线程池是怎么复用线程的？"></a>源码中线程池是怎么复用线程的？</h2><p>源码中ThreadPoolExecutor中有个内置对象Worker，每个worker都是一个线程，worker线程数量和参数有关，每个worker会while死循环从阻塞队列中取数据，<strong>通过置换worker中Runnable对象，运行其run方法起到线程置换的效果</strong>，这样做的好处是避免多线程频繁线程切换，提高程序运行性能。</p>
-<h2 id="volatile关键字的作用"><a href="#volatile关键字的作用" class="headerlink" title="volatile关键字的作用"></a>volatile关键字的作用</h2><p>一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义：</p>
-<ul>
-<li>保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。</li>
-<li>禁止进行指令重排序。</li>
-<li>volatile本质是在告诉jvm当前变量在寄存器（工作内存）中的值是不确定的，需要从主存中读取；synchronized则是锁定当前变量，只有当前线程可以访问该变量，其他线程被阻塞住。</li>
-<li>volatile仅能使用在变量级别；synchronized则可以使用在变量、方法、和类级别的。</li>
-<li>volatile仅能实现变量的修改可见性，并不能保证原子性；synchronized则可以保证变量的修改可见性和原子性。</li>
-<li>volatile不会造成线程的阻塞；synchronized可能会造成线程的阻塞。</li>
-</ul>
-<p>volatile标记的变量不会被编译器优化；synchronized标记的变量可以被编译器优化。</p>
-<h2 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a>如何避免死锁</h2><p>这个问题个人觉得需要从两个方面来回答，首先需要说明产生死锁的原因，以及产生死锁的场景，然后根据不同的死锁场景给出避免死锁的解决方案。</p>
-<h3 id="场景一：静态死锁"><a href="#场景一：静态死锁" class="headerlink" title="场景一：静态死锁"></a>场景一：静态死锁</h3><p>两个固定的锁对象，锁A和锁B，线程1、2都需要同时获取A、B锁才能执行业务逻辑，但是出现线程1先获取锁A，线程2先获取锁B，当线程1再去获取B锁的时候，发现A锁已经被占用，处于阻塞状态，同时线程2获取A锁的时候也无法获取，最终导致两个线程都处于等待对方释放锁，形成死锁的情况。这种情况主要是因为多个线程获取锁的顺序不同导致的，因此调整顺序相同即可。</p>
-<h3 id="场景二：动态死锁"><a href="#场景二：动态死锁" class="headerlink" title="场景二：动态死锁"></a>场景二：动态死锁</h3><p>锁是不固定的，比如用户A给用户B转账，用户B同时也在给用户A转账。此时如果设置锁的顺序都是先锁自己再锁对方，从代码角度来看是没有问题的，但是从实际角度来看，锁的顺序已经发生变化。此时可以通过对两个动态锁取hash值，根据hash值的比较，确定锁的顺序。若出现hash值相同，引入第三方锁，实现双层加锁，达到避免死锁的情况发生。</p>
-<p>参考文章：<a href="/2018/07/java-deadlock/">死锁的两种体现形式分析和解决方案</a></p>
 <h2 id="线程池核心线程数怎么设置"><a href="#线程池核心线程数怎么设置" class="headerlink" title="线程池核心线程数怎么设置"></a>线程池核心线程数怎么设置</h2><p>分为CPU密集型和IO密集型。</p>
 <h3 id="CPU密集型"><a href="#CPU密集型" class="headerlink" title="CPU密集型"></a>CPU密集型</h3><p>这种任务消耗的主要是 CPU 资源，可以将线程数设置为 N（CPU 核心数）+1，比 CPU 核心数多出来的一个线程是为了防止线程偶发的缺页中断，或者其它原因导致的任务暂停而带来的影响。一旦任务暂停，CPU 就会处于空闲状态，而在这种情况下多出来的一个线程就可以充分利用 CPU 的空闲时间。</p>
 <h3 id="IO密集型"><a href="#IO密集型" class="headerlink" title="IO密集型"></a>IO密集型</h3><p>这种任务应用起来，系统会用大部分的时间来处理 I/O 交互，而线程在处理 I/O 的时间段内不会占用 CPU 来处理，这时就可以将 CPU 交出给其它线程使用。因此在 I/O 密集型任务的应用中，我们可以多配置一些线程，具体的计算方法是 ： 核心线程数=CPU核心数量*2。</p>
@@ -2635,12 +2644,12 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <p>Executor 接口对象能执行我们的线程任务。ExecutorService接口继承了Executor接口并进行了扩展，提供了更多的方法我们能获得任务执行的状态并且可以获取任务的返回值。</p>
 <p>使用ThreadPoolExecutor 可以创建自定义线程池。Future 表示异步计算的结果，他提供了检查计算是否完成的方法，以等待计算的完成，并可以使用get()方法获取计算的结果。</p>
 <h2 id="线程之间是如何通信"><a href="#线程之间是如何通信" class="headerlink" title="线程之间是如何通信"></a>线程之间是如何通信</h2><p>线程之间的通信有两种方式：共享内存和消息传递。</p>
-<h3 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h3><p>在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信。典型的共享内存通信方式，就是通过共享对象进行通信消息传递。<br>例如上图线程 A 与 线程 B 之间如果要通信的话，那么就必须经历下面两个步骤：</p>
+<h3 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h3><p>在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信。典型的共享内存通信方式，就是通过共享对象进行通信消息传递。<br>例如线程 A 与 线程 B 之间如果要通信的话，那么就必须经历下面两个步骤：</p>
 <ol>
 <li>线程 A 把本地内存 A 更新过得共享变量刷新到主内存中去；</li>
 <li>线程 B 到主内存中去读取线程 A 之前更新过的共享变量。</li>
 </ol>
-<h3 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h3><p>在消息传递的并发模型里，线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信。在 Java 中典型的消息传递方式，就是 wait() 和 notify() ，或者 BlockingQueue。</p>
+<h3 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h3><p>在消息传递的并发模型里，线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信。在 Java 中典型的消息传递方式，就是<code>wait()</code>和<code>notify()</code>，或者<code>BlockingQueue</code>。</p>
 <h2 id="说说ThreadLocal原理和应用场景"><a href="#说说ThreadLocal原理和应用场景" class="headerlink" title="说说ThreadLocal原理和应用场景"></a>说说ThreadLocal原理和应用场景</h2><p>ThreadLocal可以理解为线程本地变量，他会在每个线程都创建一个副本，那么在线程之间访问内部副本变量就行了，做到了线程之间互相隔离，相比于synchronized的做法是用空间来换时间。<br>ThreadLocal有一个静态内部类ThreadLocalMap，ThreadLocalMap又包含了一个Entry数组，Entry本身是一个弱引用，他的key是指向ThreadLocal的弱引用，Entry具备了保存key value键值对的能力。<br>弱引用的目的是为了防止内存泄露，如果是强引用那么ThreadLocal对象除非线程结束否则始终无法被回收，弱引用则会在下一次GC的时候被回收。<br>但是这样还是会存在内存泄露的问题，假如key和ThreadLocal对象被回收之后，entry中就存在key为null，但是value有值的entry对象，但是永远没办法被访问到，同样除非线程结束运行。<br>但是只要ThreadLocal使用恰当，在使用完之后调用remove方法删除Entry对象，实际上是不会出现这个问题的。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1246845-20200728125215319-1595528701.png"></p>
 <p>由结构图是可以看出：</p>
@@ -2668,35 +2677,36 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h2 id="happen-before规则"><a href="#happen-before规则" class="headerlink" title="happen-before规则"></a>happen-before规则</h2><p>虽然指令重排提高了并发的性能，但是Java虚拟机会对指令重排做出一些规则限制，并不能让所有的指令都随意的改变执行位置，主要有以下几点：</p>
 <ul>
 <li>单线程每个操作，happen-before于该线程中任意后续操作</li>
-<li>volatile写happen-before与后续对这个变量的读</li>
+<li>volatile写happen-before于后续对这个变量的读</li>
 <li>synchronized解锁happen-before后续对这个锁的加锁</li>
 <li>final变量的写happen-before于final域对象的读，happen-before后续对final变量的读</li>
 <li>传递性规则，A先于B，B先于C，那么A一定先于C发生</li>
 </ul>
 <h2 id="多线程有什么用"><a href="#多线程有什么用" class="headerlink" title="多线程有什么用"></a>多线程有什么用</h2><p>一个可能在很多人看来很扯淡的一个问题：我会用多线程就好了，还管它有什么用？在我看来，这个回答更扯淡。所谓”知其然知其所以然”，”会用”只是”知其然”，”为什么用”才是”知其所以然”，只有达到”知其然知其所以然”的程度才可以说是把一个知识点运用自如。OK，下面说说我对这个问题的看法：</p>
 <h3 id="发挥多核CPU的优势"><a href="#发挥多核CPU的优势" class="headerlink" title="发挥多核CPU的优势"></a>发挥多核CPU的优势</h3><p>随着工业的进步，现在的笔记本、台式机乃至商用的应用服务器至少也都是双核的，4核、8核甚至16核的也都不少见，如果是单线程的程序，那么在双核CPU上就浪费了50%，在4核CPU上就浪费了75%。单核CPU上所谓的”多线程”那是假的多线程，同一时间处理器只会处理一段逻辑，只不过线程之间切换得比较快，看着像多个线程”同时”运行罢了。多核CPU上的多线程才是真正的多线程，它能让你的多段逻辑同时工作，多线程，可以真正发挥出多核CPU的优势来，达到充分利用CPU的目的。</p>
-<h3 id="阻止阻塞"><a href="#阻止阻塞" class="headerlink" title="阻止阻塞"></a>阻止阻塞</h3><p>从程序运行效率的角度来看，单核CPU不但不会发挥出多线程的优势，反而会因为在单核CPU上运行多线程导致线程上下文的切换，而降低程序整体的效率。但是单核CPU我们还是要应用多线程，就是为了防止阻塞。试想，如果单核CPU使用单线程，那么只要这个线程阻塞了，比方说远程读取某个数据吧，对端迟迟未返回又没有设置超时时间，那么你的整个程序在数据返回回来之前就停止运行了。多线程可以防止这个问题，多条线程同时运行，哪怕一条线程的代码执行读取数据阻塞，也不会影响其它任务的执行。</p>
+<h3 id="防止阻塞"><a href="#防止阻塞" class="headerlink" title="防止阻塞"></a>防止阻塞</h3><p>从程序运行效率的角度来看，单核CPU不但不会发挥出多线程的优势，反而会因为在单核CPU上运行多线程导致线程上下文的切换，而降低程序整体的效率。但是单核CPU我们还是要应用多线程，就是为了防止阻塞。试想，如果单核CPU使用单线程，那么只要这个线程阻塞了，比方说远程读取某个数据吧，对端迟迟未返回又没有设置超时时间，那么你的整个程序在数据返回回来之前就停止运行了。多线程可以防止这个问题，多条线程同时运行，哪怕一条线程的代码执行读取数据阻塞，也不会影响其它任务的执行。</p>
 <h3 id="便于建模"><a href="#便于建模" class="headerlink" title="便于建模"></a>便于建模</h3><p>这是另外一个没有这么明显的优点了。假设有一个大的任务A，单线程编程，那么就要考虑很多，建立整个程序模型比较麻烦。但是如果把这个大的任务A分解成几个小任务，任务B、任务C、任务D，分别建立程序模型，并通过多线程分别运行这几个任务，那就简单很多了。</p>
-<h2 id="说说CyclicBarrier和CountDownLatch的区别"><a href="#说说CyclicBarrier和CountDownLatch的区别" class="headerlink" title="说说CyclicBarrier和CountDownLatch的区别"></a>说说CyclicBarrier和CountDownLatch的区别</h2><p>两个看上去有点像的类，都在J.U.C下，都可以用来表示代码运行到某个点上，二者的区别在于：</p>
+<h2 id="说说CyclicBarrier和CountDownLatch的区别"><a href="#说说CyclicBarrier和CountDownLatch的区别" class="headerlink" title="说说CyclicBarrier和CountDownLatch的区别"></a>说说CyclicBarrier和CountDownLatch的区别</h2><p>两个看上去有点像的类，都在<strong>J.U.C</strong>下，都可以用来表示代码运行到某个点上，二者的区别在于：</p>
 <ol>
 <li>CyclicBarrier的某个线程运行到某个点上之后，该线程即停止运行，直到所有的线程都到达了这个点，所有线程才重新运行；CountDownLatch则不是，某线程运行到某个点上之后，只是给某个数值-1而已，该线程继续运行；</li>
 <li>CyclicBarrier只能唤起一个任务，CountDownLatch可以唤起多个任务；</li>
 <li>CyclicBarrier可重用，CountDownLatch不可重用，计数值为0该CountDownLatch就不可再用了。</li>
 </ol>
 <p>参考文章：<a href="/2018/10/java-thread-connect-message/">如何实现线程间通信的N种场景和对应的实现方式</a></p>
-<h2 id="了解ReentrantLock吗？"><a href="#了解ReentrantLock吗？" class="headerlink" title="了解ReentrantLock吗？"></a>了解ReentrantLock吗？</h2><p>ReetrantLock是一个可重入的独占锁，主要有两个特性，一个是支持公平锁和非公平锁，一个是可重入。<br>ReetrantLock实现依赖于AQS(AbstractQueuedSynchronizer)。</p>
-<p>ReetrantLock主要依靠AQS维护一个阻塞队列，多个线程对加锁时，失败则会进入阻塞队列。等待唤醒，重新尝试加锁。</p>
-<h2 id="ReadWriteLock是什么？"><a href="#ReadWriteLock是什么？" class="headerlink" title="ReadWriteLock是什么？"></a>ReadWriteLock是什么？</h2><p>首先ReentrantLock某些时候有局限，如果使用ReentrantLock，可能本身是为了防止线程A在写数据、线程B在读数据造成的数据不一致，但这样，如果线程C在读数据、线程D也在读数据，读数据是不会改变数据的，没有必要加锁，但是还是加锁了，降低了程序的性能。</p>
-<p>因为这个，才诞生了读写锁ReadWriteLock。ReadWriteLock是一个读写锁接口，ReentrantReadWriteLock是ReadWriteLock接口的一个具体实现，实现了读写的分离，读锁是共享的，写锁是独占的，读和读之间不会互斥，读和写、写和读、写和写之间才会互斥，提升了读写的性能。</p>
+<h2 id="了解ReentrantLock吗？"><a href="#了解ReentrantLock吗？" class="headerlink" title="了解ReentrantLock吗？"></a>了解ReentrantLock吗？</h2><p><code>ReetrantLock</code>是一个可重入的独占锁，主要有两个特性，一个是支持公平锁和非公平锁，一个是可重入。</p>
+<p><code>ReetrantLock</code>实现依赖于<code>AQS(AbstractQueuedSynchronizer)</code>。</p>
+<p><code>ReetrantLock</code>主要依靠<code>AQS</code>维护一个阻塞队列，多个线程对加锁时，失败则会进入阻塞队列。等待唤醒，重新尝试加锁。</p>
+<h2 id="ReadWriteLock是什么？"><a href="#ReadWriteLock是什么？" class="headerlink" title="ReadWriteLock是什么？"></a>ReadWriteLock是什么？</h2><p>首先<code>ReentrantLock</code>某些时候有局限，如果使用<code>ReentrantLock</code>，可能本身是为了防止线程A在写数据、线程B在读数据造成的数据不一致，但这样，如果线程C在读数据、线程D也在读数据，读数据是不会改变数据的，没有必要加锁，但是还是加锁了，降低了程序的性能。</p>
+<p>因为这个，才诞生了读写锁<code>ReadWriteLock</code>。<code>ReadWriteLock</code>是一个读写锁接口，<code>ReentrantReadWriteLock</code>是<code>ReadWriteLock</code>接口的一个具体实现，实现了读写的分离，读锁是共享的，写锁是独占的，读和读之间不会互斥，读和写、写和读、写和写之间才会互斥，提升了读写的性能。</p>
 <h2 id="什么是AQS"><a href="#什么是AQS" class="headerlink" title="什么是AQS"></a>什么是AQS</h2><ol>
-<li>AQS 是一个锁框架，它定义了锁的实现机制，并开放出扩展的地方，让子类去实现，比如我们在 lock 的时候，AQS 开放出 state 字段，让子类可以根据 state 字段来决定是否能够获得锁，对于获取不到锁的线程 AQS 会自动进行管理，无需子类锁关心，这就是 lock 时锁的内部机制，封装的很好，又暴露出子类锁需要扩展的地方；</li>
-<li>AQS 底层是由同步队列 + 条件队列联手组成，同步队列管理着获取不到锁的线程的排队和释放，条件队列是在一定场景下，对同步队列的补充，比如获得锁的线程从空队列中拿数据，肯定是拿不到数据的，这时候条件队列就会管理该线程，使该线程阻塞；</li>
+<li><strong>AQS 是一个锁框架</strong>，它定义了锁的实现机制，并开放出扩展的地方，让子类去实现，比如我们在 lock 的时候，AQS 开放出 state 字段，让子类可以根据 state 字段来决定是否能够获得锁，对于获取不到锁的线程 AQS 会自动进行管理，无需子类锁关心，这就是 lock 时锁的内部机制，封装的很好，又暴露出子类锁需要扩展的地方；</li>
+<li>AQS 底层是由同步队列 + 条件队列联手组成，同步队列管理着获取不到锁的线程排队和释放，条件队列是在一定场景下，对同步队列的补充，比如获得锁的线程从空队列中拿数据，肯定是拿不到数据的，这时候条件队列就会管理该线程，使该线程阻塞；</li>
 <li>AQS 围绕两个队列，提供了四大场景，分别是：获得锁、释放锁、条件队列的阻塞，条件队列的唤醒，分别对应着 AQS 架构图中的四种颜色的线的走向。</li>
 </ol>
 <p>参考文章：<a href="/2018/06/aqs-exclusive-share/">AQS实现方式和独占锁、共享锁的原理分析</a></p>
 <h2 id="AQS使用了哪些设计模式？"><a href="#AQS使用了哪些设计模式？" class="headerlink" title="AQS使用了哪些设计模式？"></a>AQS使用了哪些设计模式？</h2><p>AQS同步器的设计是基于模板方法模式的，如果需要自定义同步器一般的方式是这样（模板方法模式很经典的一个应用）：</p>
 <ol>
-<li>使用者继承AbstractQueuedSynchronizer并重写指定的方法。（这些重写方法很简单，无非是对于共享资源state的获取和释放）</li>
+<li>使用者继承<code>AbstractQueuedSynchronizer</code>并重写指定的方法。（这些重写方法很简单，无非是对于共享资源state的获取和释放）</li>
 <li>将AQS组合在自定义同步组件的实现中，并调用其模板方法，而这些模板方法会调用使用者重写的方法。</li>
 </ol>
 <p>这和我们以往通过实现接口的方式有很大区别，这是模板方法模式很经典的一个运用。</p>
@@ -2721,68 +2731,68 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>非公平锁：当线程要获取锁时，无视队列顺序直接去抢锁，谁抢到就是谁的</li>
 </ul>
 </li>
-<li><p><strong>Share</strong>（共享）：多个线程可同时执行，如Semaphore/CountDownLatch。Semaphore、CountDownLatCh、 CyclicBarrier、ReadWriteLock 我们都会在后面讲到。</p>
+<li><p><strong>Share</strong>（共享）：多个线程可同时执行，如<code>Semaphore</code>/<code>CountDownLatch</code>。</p>
 </li>
 </ul>
-<p>ReentrantReadWriteLock 可以看成是组合式，因为ReentrantReadWriteLock也就是读写锁允许多个线程同时对某一资源进行读。</p>
+<p><code>ReentrantReadWriteLock</code> 可以看成是组合式，因为<code>ReentrantReadWriteLock</code>也就是读写锁允许多个线程同时对某一资源进行读。</p>
 <p>不同的自定义同步器争用共享资源的方式也不同。自定义同步器在实现时只需要实现共享资源 state 的获取与释放方式即可，至于具体线程等待队列的维护（如获取资源失败入队/唤醒出队等），AQS已经在顶层实现好了。</p>
 <h2 id="AQS-组件了解吗"><a href="#AQS-组件了解吗" class="headerlink" title="AQS 组件了解吗?"></a>AQS 组件了解吗?</h2><ul>
-<li><strong>Semaphore(信号量)-允许多个线程同时访问：</strong> synchronized 和 ReentrantLock 都是一次只允许一个线程访问某个资源，Semaphore(信号量)可以指定多个线程同时访问某个资源。</li>
-<li><strong>CountDownLatch （倒计时器）：</strong> CountDownLatch是一个同步工具类，用来协调多个线程之间的同步。这个工具通常用来控制线程等待，它可以让某一个线程等待直到倒计时结束，再开始执行。</li>
-<li><strong>CyclicBarrier(循环栅栏)：</strong> CyclicBarrier 和 CountDownLatch 非常类似，它也可以实现线程间的技术等待，但是它的功能比 CountDownLatch 更加复杂和强大。主要应用场景和 CountDownLatch 类似。CyclicBarrier 的字面意思是可循环使用（Cyclic）的屏障（Barrier）。它要做的事情是，让一组线程到达一个屏障（也可以叫同步点）时被阻塞，直到最后一个线程到达屏障时，屏障才会开门，所有被屏障拦截的线程才会继续干活。CyclicBarrier默认的构造方法是 CyclicBarrier(int parties)，其参数表示屏障拦截的线程数量，每个线程调用await方法告诉 CyclicBarrier 我已经到达了屏障，然后当前线程被阻塞。</li>
+<li><strong>Semaphore(信号量)-允许多个线程同时访问：</strong> <code>synchronized</code> 和 <code>ReentrantLock</code> 都是一次只允许一个线程访问某个资源，<code>Semaphore</code>(信号量)可以指定多个线程同时访问某个资源。</li>
+<li><strong>CountDownLatch （倒计时器）：</strong> <code>CountDownLatch</code>是一个同步工具类，用来协调多个线程之间的同步。这个工具通常用来控制线程等待，它可以让某一个线程等待直到倒计时结束，再开始执行。</li>
+<li><strong>CyclicBarrier(循环栅栏)：</strong> <code>CyclicBarrier</code> 和 <code>CountDownLatch</code> 非常类似，它也可以实现线程间的技术等待，但是它的功能比 <code>CountDownLatch</code> 更加复杂和强大。主要应用场景和 <code>CountDownLatch</code> 类似。<code>CyclicBarrier</code> 的字面意思是可循环使用（Cyclic）的屏障（Barrier）。它要做的事情是，让一组线程到达一个屏障（也可以叫同步点）时被阻塞，直到最后一个线程到达屏障时，屏障才会开门，所有被屏障拦截的线程才会继续干活。<code>CyclicBarrier</code>默认的构造方法是 <code>CyclicBarrier(int parties)</code>，其参数表示屏障拦截的线程数量，每个线程调用<code>await()</code>方法告诉 <code>CyclicBarrier</code> 我已经到达了屏障，然后当前线程被阻塞。</li>
 </ul>
-<h2 id="了解Semaphore吗"><a href="#了解Semaphore吗" class="headerlink" title="了解Semaphore吗"></a>了解Semaphore吗</h2><p>Semaphore就是一个信号量，它的作用是限制某段代码块的并发数。Semaphore有一个构造函数，可以传入一个int型整数n，表示某段代码最多只有n个线程可以访问，如果超出了n，那么请等待，等到某个线程执行完毕这段代码块，下一个线程再进入。由此可以看出如果Semaphore构造函数中传入的int型整数n=1，相当于变成了一个synchronized了。</p>
+<h2 id="了解Semaphore吗"><a href="#了解Semaphore吗" class="headerlink" title="了解Semaphore吗"></a>了解Semaphore吗</h2><p><code>Semaphore</code>就是一个信号量，它的作用是限制某段代码块的并发数。<code>Semaphore</code>有一个构造函数，可以传入一个int型整数n，表示某段代码最多只有n个线程可以访问，如果超出了n，那么请等待，等到某个线程执行完毕这段代码块，下一个线程再进入。由此可以看出如果<code>Semaphore</code>构造函数中传入的int型整数<code>n=1</code>，相当于变成了一个<code>synchronized</code>了。</p>
 <h2 id="什么是阻塞队列？阻塞队列的实现原理是什么？如何使用阻塞队列来实现生产者-消费者模型？"><a href="#什么是阻塞队列？阻塞队列的实现原理是什么？如何使用阻塞队列来实现生产者-消费者模型？" class="headerlink" title="什么是阻塞队列？阻塞队列的实现原理是什么？如何使用阻塞队列来实现生产者-消费者模型？"></a>什么是阻塞队列？阻塞队列的实现原理是什么？如何使用阻塞队列来实现生产者-消费者模型？</h2><p>阻塞队列（BlockingQueue）是一个支持两个附加操作的队列。</p>
 <p>这两个附加的操作是：在队列为空时，获取元素的线程会等待队列变为非空。当队列满时，存储元素的线程会等待队列可用。</p>
 <p>阻塞队列常用于生产者和消费者的场景，生产者是往队列里添加元素的线程，消费者是从队列里拿元素的线程。阻塞队列就是生产者存放元素的容器，而消费者也只从容器里拿元素。</p>
 <p>JDK7提供了7个阻塞队列。分别是：</p>
 <ul>
-<li>ArrayBlockingQueue ：一个由数组结构组成的有界阻塞队列。</li>
-<li>LinkedBlockingQueue ：一个由链表结构组成的有界阻塞队列。</li>
-<li>PriorityBlockingQueue ：一个支持优先级排序的无界阻塞队列。</li>
-<li>DelayQueue：一个使用优先级队列实现的无界阻塞队列。</li>
-<li>SynchronousQueue：一个不存储元素的阻塞队列。</li>
-<li>LinkedTransferQueue：一个由链表结构组成的无界阻塞队列。</li>
-<li>LinkedBlockingDeque：一个由链表结构组成的双向阻塞队列。</li>
+<li><code>ArrayBlockingQueue</code>：一个由数组结构组成的有界阻塞队列。</li>
+<li><code>LinkedBlockingQueue</code>：一个由链表结构组成的有界阻塞队列。</li>
+<li><code>PriorityBlockingQueue</code>：一个支持优先级排序的无界阻塞队列。</li>
+<li><code>DelayQueue</code>：一个使用优先级队列实现的无界阻塞队列。</li>
+<li><code>SynchronousQueue</code>：一个不存储元素的阻塞队列。</li>
+<li><code>LinkedTransferQueue</code>：一个由链表结构组成的无界阻塞队列。</li>
+<li><code>LinkedBlockingDeque</code>：一个由链表结构组成的双向阻塞队列。</li>
 </ul>
-<p>Java 5之前实现同步存取时，可以使用普通的一个集合，然后在使用线程的协作和线程同步可以实现生产者，消费者模式，主要的技术就是用好，wait ,notify,notifyAll,sychronized这些关键字。而在java 5之后，可以使用阻塞队列来实现，此方式大大简少了代码量，使得多线程编程更加容易，安全方面也有保障。</p>
-<p>BlockingQueue接口是Queue的子接口，它的主要用途并不是作为容器，而是作为线程同步的的工具，因此他具有一个很明显的特性，当生产者线程试图向BlockingQueue放入元素时，如果队列已满，则线程被阻塞，当消费者线程试图从中取出一个元素时，如果队列为空，则该线程会被阻塞，正是因为它所具有这个特性，所以在程序中多个线程交替向BlockingQueue中放入元素，取出元素，它可以很好的控制线程之间的通信。</p>
-<p>阻塞队列使用最经典的场景就是socket客户端数据的读取和解析，读取数据的线程不断将数据放入队列，然后解析线程不断从队列取数据解析。</p>
+<p>Java 5之前实现同步存取时，可以使用普通的一个集合，然后在使用线程的协作和线程同步可以实现生产者，消费者模式，主要的技术就是用好<code>wait</code>,<code>notify</code>,<code>notifyAll</code>,<code>sychronized</code>这些关键字。而在Java5之后，可以使用阻塞队列来实现，此方式大大简少了代码量，使得多线程编程更加容易，安全方面也有保障。</p>
+<p><code>BlockingQueue</code>接口是<code>Queue</code>的子接口，它的主要用途并不是作为容器，而是作为线程同步的的工具，因此他具有一个很明显的特性，当生产者线程试图向<code>BlockingQueue</code>放入元素时，如果队列已满，则线程被阻塞，当消费者线程试图从中取出一个元素时，如果队列为空，则该线程会被阻塞，正是因为它所具有这个特性，所以在程序中多个线程交替向<code>BlockingQueue</code>中放入元素，取出元素，它可以很好的控制线程之间的通信。</p>
+<p><strong>阻塞队列使用最经典的场景就是<code>socket</code>客户端数据的读取和解析，读取数据的线程不断将数据放入队列，然后解析线程不断从队列取数据解析。</strong></p>
 <h2 id="什么是多线程中的上下文切换"><a href="#什么是多线程中的上下文切换" class="headerlink" title="什么是多线程中的上下文切换"></a>什么是多线程中的上下文切换</h2><p>在上下文切换过程中，CPU会停止处理当前运行的程序，并保存当前程序运行的具体位置以便之后继续运行。从这个角度来看，上下文切换有点像我们同时阅读几本书，在来回切换书本的同时我们需要记住每本书当前读到的页码。<br>在程序中，上下文切换过程中的“页码”信息是保存在进程控制块（PCB）中的。PCB还经常被称作“切换桢”（switchframe）。“页码”信息会一直保存到CPU的内存中，直到他们被再次使用。<br>上下文切换是存储和恢复CPU状态的过程，它使得线程执行能够从中断点恢复执行。上下文切换是多任务操作系统和多线程环境的基本特征。</p>
 <h2 id="什么是Daemon线程？它有什么意义？"><a href="#什么是Daemon线程？它有什么意义？" class="headerlink" title="什么是Daemon线程？它有什么意义？"></a>什么是Daemon线程？它有什么意义？</h2><p>所谓后台(daemon)线程，也叫守护线程，是指在程序运行的时候在后台提供一种通用服务的线程，并且这个线程并不属于程序中不可或缺的部分。</p>
 <p>因此，当所有的非后台线程结束时，程序也就终止了，同时会杀死进程中的所有后台线程。反过来说， 只要有任何非后台线程还在运行，程序就不会终止。</p>
-<p>必须在线程启动之前调用setDaemon()方法，才能把它设置为后台线程。</p>
-<p>注意：后台进程在不执行finally子句的情况下就会终止其run()方法。</p>
+<p>必须在线程启动之前调用<code>setDaemon()</code>方法，才能把它设置为后台线程。</p>
+<p><strong>注意：</strong>后台进程在不执行<code>finally</code>子句的情况下就会终止其<code>run()</code>方法。</p>
 <p>比如：JVM的垃圾回收线程就是Daemon线程，Finalizer也是守护线程。</p>
-<h2 id="乐观锁和悲观锁的理解及如何实现，有哪些实现方式？"><a href="#乐观锁和悲观锁的理解及如何实现，有哪些实现方式？" class="headerlink" title="乐观锁和悲观锁的理解及如何实现，有哪些实现方式？"></a>乐观锁和悲观锁的理解及如何实现，有哪些实现方式？</h2><p><strong>悲观锁：</strong>总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会阻塞直到它拿到锁。<br>传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。再比如Java里面的同步原语synchronized关键字的实现也是悲观锁。</p>
-<p><strong>乐观锁：</strong>顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。<br>乐观锁适用于多读的应用类型，这样可以提高吞吐量，像数据库提供的类似于write_condition机制，其实都是提供的乐观锁。</p>
+<h2 id="乐观锁和悲观锁的理解及如何实现，有哪些实现方式？"><a href="#乐观锁和悲观锁的理解及如何实现，有哪些实现方式？" class="headerlink" title="乐观锁和悲观锁的理解及如何实现，有哪些实现方式？"></a>乐观锁和悲观锁的理解及如何实现，有哪些实现方式？</h2><p><strong>悲观锁：</strong>总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会阻塞直到它拿到锁。<br>传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。再比如Java里面的同步原语<code>synchronized</code>关键字的实现也是悲观锁。</p>
+<p><strong>乐观锁：</strong>顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。<br>乐观锁适用于多读的应用类型，这样可以提高吞吐量，像数据库提供的类似于<code>write_condition</code>机制，其实都是提供的乐观锁。</p>
 <p>在Java中<code>java.util.concurrent.atomic</code>包下面的原子变量类就是使用了乐观锁的一种实现方式CAS实现的。</p>
 <h2 id="介绍一下-Atomic-原子类"><a href="#介绍一下-Atomic-原子类" class="headerlink" title="介绍一下 Atomic 原子类"></a>介绍一下 Atomic 原子类</h2><p>Atomic 是指一个操作是不可中断的。即使是在多个线程一起执行的时候，一个操作一旦开始，就不会被其他线程干扰。</p>
-<p>所以，所谓原子类说简单点就是具有原子 / 原子操作特征的类。</p>
-<p>并发包 java.util.concurrent 的原子类都存放在 java.util.concurrent.atomic 下：</p>
+<p>所以，所谓原子类说简单点就是具有原子操作特征的类。</p>
+<p>并发包<code>java.util.concurrent</code>的原子类都存放在<code>java.util.concurrent.atomic</code>下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/atomic1.png"></p>
 <h2 id="JUC-包中的原子类是哪4类？"><a href="#JUC-包中的原子类是哪4类？" class="headerlink" title="JUC 包中的原子类是哪4类？"></a>JUC 包中的原子类是哪4类？</h2><p><strong>基本类型</strong><br>使用原子的方式更新基本类型：</p>
 <ul>
-<li>AtomicInteger ： 整型原子类</li>
-<li>AtomicLong： 长整型原子类</li>
-<li>AtomicBoolean： 布尔型原子类</li>
+<li><code>AtomicInteger</code>： 整型原子类</li>
+<li><code>AtomicLong</code>： 长整型原子类</li>
+<li><code>AtomicBoolean</code>： 布尔型原子类</li>
 </ul>
 <p><strong>数组类型</strong><br>使用原子的方式更新数组里的某个元素：</p>
 <ul>
-<li>AtomicIntegerArray： 整型数组原子类</li>
-<li>AtomicLongArray： 长整型数组原子类</li>
-<li>AtomicReferenceArray： 引用类型数组原子类</li>
+<li><code>AtomicIntegerArray</code>： 整型数组原子类</li>
+<li><code>AtomicLongArray</code>： 长整型数组原子类</li>
+<li><code>AtomicReferenceArray</code>： 引用类型数组原子类</li>
 </ul>
 <p><strong>引用类型</strong><br>使用原子的方式更新引用类型：</p>
 <ul>
-<li>AtomicReference： 引用类型原子类</li>
-<li>AtomicStampedReference： 原子更新带有版本号的引用类型。该类将整型数值与引用关联起来，可用于解决原子的更新数据和数据的版本号，可以解决使用 CAS 进行原子更新时可能出现的 ABA 问题。</li>
-<li>AtomicMarkableReference： 原子更新带有标记位的引用类型。<strong>对象属性修改类型</strong></li>
-<li>AtomicIntegerFieldUpdater： 原子更新整型字段的更新器</li>
-<li>AtomicLongFieldUpdater： 原子更新长整型字段的更新器</li>
-<li>AtomicMarkableReference： 原子更新带有标记位的引用类型</li>
+<li><code>AtomicReference</code>： 引用类型原子类</li>
+<li><code>AtomicStampedReference</code>： 原子更新带有版本号的引用类型。该类将整型数值与引用关联起来，可用于解决原子的更新数据和数据的版本号，可以解决使用 CAS 进行原子更新时可能出现的 ABA 问题。</li>
+<li><code>AtomicMarkableReference</code>： 原子更新带有标记位的引用类型。<strong>对象属性修改类型</strong></li>
+<li><code>AtomicIntegerFieldUpdater</code>： 原子更新整型字段的更新器</li>
+<li><code>AtomicLongFieldUpdater</code>： 原子更新长整型字段的更新器</li>
+<li><code>AtomicMarkableReference</code>： 原子更新带有标记位的引用类型</li>
 </ul>
-<h2 id="简单介绍一下-AtomicInteger-类的原理"><a href="#简单介绍一下-AtomicInteger-类的原理" class="headerlink" title="简单介绍一下 AtomicInteger 类的原理"></a>简单介绍一下 AtomicInteger 类的原理</h2><p> AtomicInteger 类主要利用 CAS和 volatile 和 native 方法来保证原子操作，从而避免 synchronized 的高开销，执行效率大为提升。</p>
+<h2 id="简单介绍一下-AtomicInteger-类的原理"><a href="#简单介绍一下-AtomicInteger-类的原理" class="headerlink" title="简单介绍一下 AtomicInteger 类的原理"></a>简单介绍一下 AtomicInteger 类的原理</h2><p> <code>AtomicInteger</code> 类主要利用CAS和<code>volatile</code>和<code>native</code>方法来保证原子操作，从而避免<code>synchronized</code>的高开销，执行效率大为提升。</p>
 <p><code>AtomicInteger</code> 类的部分源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 更新操作时提供“比较并替换”的作用</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Unsafe</span> unsafe <span class="token operator">=</span> <span class="token class-name">Unsafe</span><span class="token punctuation">.</span><span class="token function">getUnsafe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -2821,17 +2831,17 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h2 id="Spring-MVC工作原理"><a href="#Spring-MVC工作原理" class="headerlink" title="Spring MVC工作原理"></a>Spring MVC工作原理</h2><p>原理图如下：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/97165423268123268.png"></p>
 <ol>
-<li>用户发送请求至前端控制器DispatcherServlet。 </li>
-<li>DispatcherServlet收到请求调用HandlerMapping处理器映射器。</li>
-<li> 处理器映射器找到具体的处理器(可以根据xml配置、注解进行查找)，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet。 </li>
-<li> DispatcherServlet调用HandlerAdapter处理器适配器。</li>
-<li>HandlerAdapter经过适配调用具体的处理器(Controller，也叫后端控制器)。 </li>
-<li>Controller执行完成返回ModelAndView。 </li>
-<li>HandlerAdapter将controller执行结果ModelAndView返回给DispatcherServlet。 </li>
-<li>DispatcherServlet将ModelAndView传给ViewReslover视图解析器。</li>
-<li>ViewReslover解析后返回具体View。</li>
-<li>DispatcherServlet根据View进行渲染视图（即将模型数据填充至视图中）。</li>
-<li>DispatcherServlet响应用户。</li>
+<li>用户发送请求至前端控制器<code>DispatcherServlet</code>。 </li>
+<li><code>DispatcherServlet</code>收到请求调用HandlerMapping处理器映射器。</li>
+<li>处理器映射器找到具体的处理器(可以根据xml配置、注解进行查找)，生成处理器对象及处理器拦截器(如果有则生成)一并返回给<code>DispatcherServlet</code>。 </li>
+<li><code>DispatcherServlet</code>调用<code>HandlerAdapter</code>处理器适配器。</li>
+<li><code>HandlerAdapter</code>经过适配调用具体的处理器(<code>Controller</code>，也叫后端控制器)。 </li>
+<li><code>Controller</code>执行完成返回<code>ModelAndView</code>。 </li>
+<li><code>HandlerAdapter</code>将<code>controller</code>执行结果<code>ModelAndView</code>返回给<code>DispatcherServlet</code>。 </li>
+<li><code>DispatcherServlet</code>将<code>ModelAndView</code>传给<code>ViewReslover</code>视图解析器。</li>
+<li><code>ViewReslover</code>解析后返回具体<code>View</code>。</li>
+<li><code>DispatcherServlet</code>根据<code>View</code>进行渲染视图（即将模型数据填充至视图中）。</li>
+<li><code>DispatcherServlet</code>响应用户。</li>
 </ol>
 <h2 id="简单介绍-Spring-MVC-的核心组件"><a href="#简单介绍-Spring-MVC-的核心组件" class="headerlink" title="简单介绍 Spring MVC 的核心组件"></a>简单介绍 Spring MVC 的核心组件</h2><p>那么接下来就简单介绍一下 <code>DispatcherServlet</code> 和九大组件（按使用顺序排序的）：</p>
 <table>
@@ -2905,15 +2915,19 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单。</li>
 <li>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比SpringAOP快很多。</li>
 </ul>
-<h2 id="在Spring-AOP-中，关注点和横切关注的区别是什么"><a href="#在Spring-AOP-中，关注点和横切关注的区别是什么" class="headerlink" title="在Spring AOP 中，关注点和横切关注的区别是什么"></a>在Spring AOP 中，关注点和横切关注的区别是什么</h2><p>关注点是应用中一个模块的行为，一个关注点可能会被定义成一个我们想实现的一个功能。 横切关注点是一个关注点，此关注点是整个应用都会使用的功能，并影响整个应用，比如日志，安全和数据传输，几乎应用的每个模块都需要的功能。因此这些都属于横切关注点。<br>那什么是连接点呢？连接点代表一个应用程序的某个位置，在这个位置我们可以插入一个AOP切面，它实际上是个应用程序执行Spring AOP的位置。<br>切入点是什么？切入点是一个或一组连接点，通知将在这些位置执行。可以通过表达式或匹配的方式指明切入点。</p>
-<h2 id="面向切面变成中，通知是什么，有哪些类型"><a href="#面向切面变成中，通知是什么，有哪些类型" class="headerlink" title="面向切面变成中，通知是什么，有哪些类型"></a>面向切面变成中，通知是什么，有哪些类型</h2><p>通知是个在方法执行前或执行后要做的动作，实际上是程序执行时要通过SpringAOP框架触发的代码段。<br>Spring切面可以应用五种类型的通知：</p>
+<h2 id="在Spring-AOP-中，关注点和横切关注点区别是什么"><a href="#在Spring-AOP-中，关注点和横切关注点区别是什么" class="headerlink" title="在Spring AOP 中，关注点和横切关注点区别是什么"></a>在Spring AOP 中，关注点和横切关注点区别是什么</h2><p>关注点是应用中一个模块的行为，一个关注点可能会被定义成一个我们想实现的一个功能。 横切关注点是一个关注点，此关注点是整个应用都会使用的功能，并影响整个应用，比如日志，安全和数据传输，几乎应用的每个模块都需要的功能。因此这些都属于横切关注点。</p>
+<p>那什么是连接点呢？连接点代表一个应用程序的某个位置，在这个位置我们可以插入一个AOP切面，它实际上是个应用程序执行Spring AOP的位置。</p>
+<p>切入点是什么？切入点是一个或一组连接点，通知将在这些位置执行。可以通过表达式或匹配的方式指明切入点。</p>
+<h2 id="面向切面编程中，通知是什么，有哪些类型"><a href="#面向切面编程中，通知是什么，有哪些类型" class="headerlink" title="面向切面编程中，通知是什么，有哪些类型"></a>面向切面编程中，通知是什么，有哪些类型</h2><p>通知是个在方法执行前或执行后要做的动作，实际上是程序执行时要通过SpringAOP框架触发的代码段。</p>
+<p>Spring切面可以应用五种类型的通知：</p>
 <ul>
-<li>before：前置通知，在一个方法执行前被调用。</li>
-<li>after: 在方法执行之后调用的通知，无论方法执行是否成功。</li>
-<li>after-returning: 仅当方法成功完成后执行的通知。</li>
-<li>after-throwing: 在方法抛出异常退出时执行的通知。</li>
-<li>around: 在方法执行之前和之后调用的通知。</li>
+<li><code>before</code>：前置通知，在一个方法执行前被调用。</li>
+<li><code>after</code>: 在方法执行之后调用的通知，无论方法执行是否成功。</li>
+<li><code>after-returning</code>: 仅当方法成功完成后执行的通知。</li>
+<li><code>after-throwing</code>: 在方法抛出异常退出时执行的通知。</li>
+<li><code>around</code>: 在方法执行之前和之后调用的通知。</li>
 </ul>
+<p>切面执行的顺序参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/daodfs111/article/details/120003190">Spring Aspect切面执行顺序</a></p>
 <h2 id="说说你对Spring的IoC是怎么理解的"><a href="#说说你对Spring的IoC是怎么理解的" class="headerlink" title="说说你对Spring的IoC是怎么理解的"></a>说说你对Spring的IoC是怎么理解的</h2><ol>
 <li>IoC就是控制反转，是指创建对象的控制权的转移。以前创建对象的主动权和时机是由自己把控的，而现在这种权力转移到Spring容器中，并由容器根据配置文件去创建实例和管理各个实例之间的依赖关系。对象与对象之间松散耦合，也利于功能的复用。DI依赖注入，和控制反转是同一个概念的不同角度的描述，即应用程序在运行时依赖IoC容器来动态注入对象需要的外部资源。</li>
 <li>最直观的表达就是，IoC让对象的创建不用去new了，可以由spring自动生产，使用java的反射机制，根据配置文件在运行时动态的去创建对象以及管理对象，并调用对象的方法的。</li>
@@ -2929,11 +2943,9 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>接口注入</li>
 </ul>
 <p>在 Spring Framework 中，仅使用构造函数和 setter 注入。</p>
-<h2 id="如何理解IoC和DI？"><a href="#如何理解IoC和DI？" class="headerlink" title="如何理解IoC和DI？"></a>如何理解IoC和DI？</h2><p>IOC就是控制反转，通俗的说就是我们不用自己创建实例对象，这些都交给Spring的bean工厂帮我们创建管理。这也是Spring的核心思想，通过面向接口编程的方式来是实现对业务组件的动态依赖。这就意味着IOC是Spring针对解决程序耦合而存在的。在实际应用中，Spring通过配置文件（xml或者properties）指定需要实例化的java类（类名的完整字符串），包括这些java类的一组初始化值，通过加载读取配置文件，用Spring提供的方法（getBean()）就可以获取到我们想要的根据指定配置进行初始化的实例对象。</p>
-<ul>
-<li>优点：IOC或依赖注入减少了应用程序的代码量。它使得应用程序的测试很简单，因为在单元测试中不再需要单例或JNDI查找机制。简单的实现以及较少的干扰机制使得松耦合得以实现。IOC容器支持勤性单例及延迟加载服务。</li>
-</ul>
-<p><strong>DI：DI—Dependency</strong> Injection，即“依赖注入”：组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。</p>
+<h2 id="如何理解IoC和DI？"><a href="#如何理解IoC和DI？" class="headerlink" title="如何理解IoC和DI？"></a>如何理解IoC和DI？</h2><p>IOC就是控制反转，通俗的说就是我们不用自己创建实例对象，这些都交给Spring的bean工厂帮我们创建管理。这也是Spring的核心思想，通过面向接口编程的方式来实现对业务组件的动态依赖。这就意味着IOC是Spring针对解决程序耦合而存在的。在实际应用中，Spring通过配置文件（xml或者properties）指定需要实例化的java类（类名的完整字符串），包括这些java类的一组初始化值，通过加载读取配置文件，用Spring提供的方法（getBean()）就可以获取到我们想要的根据指定配置进行初始化的实例对象。</p>
+<p><strong>优点：</strong>IOC或依赖注入减少了应用程序的代码量。它使得应用程序的测试很简单，因为在单元测试中不再需要单例或JNDI查找机制。简单的实现以及较少的干扰机制使得松耦合得以实现。IOC容器支持勤性单例及延迟加载服务。</p>
+<p><strong>DI：DI—Dependency Injection</strong>，即“依赖注入”：组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。</p>
 <h2 id="区分-BeanFactory-和-ApplicationContext？"><a href="#区分-BeanFactory-和-ApplicationContext？" class="headerlink" title="区分 BeanFactory 和 ApplicationContext？"></a>区分 BeanFactory 和 ApplicationContext？</h2><table>
 <thead>
 <tr>
@@ -3028,77 +3040,69 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="Spring-中的-bean-的作用域有哪些"><a href="#Spring-中的-bean-的作用域有哪些" class="headerlink" title="Spring 中的 bean 的作用域有哪些?"></a>Spring 中的 bean 的作用域有哪些?</h2><ul>
-<li>singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
-<li>prototype : 每次请求都会创建一个新的 bean 实例。</li>
-<li>request : 每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。</li>
-<li>session : ：在一个HTTP Session中，一个Bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。</li>
-<li>global-session： 全局session作用域，仅仅在基于portlet的web应用中才有意义，Spring5已经没有了。Portlet是能够生成语义代码(例如：HTML)片段的小型Java Web插件。它们基于portlet容器，可以像servlet一样处理HTTP请求。但是，与 servlet 不同，每个 portlet 都有不同的会话</li>
+<li><strong>singleton：</strong>唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
+<li><strong>prototype：</strong>每次请求都会创建一个新的 bean 实例。</li>
+<li><strong>request：</strong>每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。</li>
+<li><strong>session：</strong>在一个HTTP Session中，一个Bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。</li>
+<li><strong>global-session：</strong>全局session作用域，仅仅在基于portlet的web应用中才有意义，Spring5已经没有了。Portlet是能够生成语义代码(例如：HTML)片段的小型Java Web插件。它们基于portlet容器，可以像servlet一样处理HTTP请求。但是，与 servlet 不同，每个 portlet 都有不同的会话</li>
 </ul>
 <h2 id="将一个类声明为Spring的-bean-的注解有哪些"><a href="#将一个类声明为Spring的-bean-的注解有哪些" class="headerlink" title="将一个类声明为Spring的 bean 的注解有哪些?"></a>将一个类声明为Spring的 bean 的注解有哪些?</h2><p>我们一般使用 @Autowired 注解自动装配 bean，要想把类标识成可用于 @Autowired 注解自动装配的 bean 的类,采用以下注解可实现：</p>
 <ul>
-<li>@Component：通用的注解，可标注任意类为 Spring 组件。如果一个Bean不知道属于哪个层，可以使用@Component 注解标注。 </li>
-<li>@Repository: 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
-<li>@Service: 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao层。</li>
-<li>@Controller: 对应 Spring MVC 控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。</li>
+<li><code>@Component</code>：通用的注解，可标注任意类为 Spring 组件。如果一个Bean不知道属于哪个层，可以使用@Component 注解标注。 </li>
+<li><code>@Repository</code>: 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
+<li><code>@Service</code>: 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao 层。</li>
+<li><code>@Controller</code>: 对应 Spring MVC 控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。</li>
 </ul>
 <h2 id="解释一下spring-bean的生命周期"><a href="#解释一下spring-bean的生命周期" class="headerlink" title="解释一下spring bean的生命周期"></a>解释一下spring bean的生命周期</h2><p>Bean的生命周期是由容器来管理的。主要在创建和销毁两个时期。</p>
 <h3 id="创建过程"><a href="#创建过程" class="headerlink" title="创建过程"></a>创建过程</h3><ol>
-<li>实例化Bean</li>
+<li>实例化<code>Bean</code></li>
 </ol>
-<p>对于BeanFactory容器，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用createBean进行实例化。对于ApplicationContext容器，当容器启动结束后，通过获取BeanDefinition对象中的信息，实例化所有的bean。</p>
+<p>对于<code>BeanFactory</code>容器，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用<code>createBean</code>进行实例化。对于<code>ApplicationContext</code>容器，当容器启动结束后，通过获取<code>BeanDefinition</code>对象中的信息，实例化所有的bean。</p>
 <ol start="2">
 <li>设置对象属性（依赖注入）</li>
 </ol>
-<p>实例化后的对象被封装在BeanWrapper对象中，紧接着，Spring根据BeanDefinition中的信息以及通过BeanWrapper提供的设置属性的接口完成依赖注入。</p>
+<p>实例化后的对象被封装在<code>BeanWrapper</code>对象中，紧接着，Spring根据<code>BeanDefinition</code>中的信息以及通过<code>BeanWrapper</code>提供的设置属性的接口完成依赖注入。</p>
 <ol start="3">
-<li>处理Aware接口</li>
+<li>处理<code>Aware</code>接口</li>
 </ol>
-<p>接着，Spring会检测该对象是否实现了xxxAware接口，并将相关的xxxAware实例注入给Bean：</p>
+<p>接着，Spring会检测该对象是否实现了<code>xxxAware</code>接口，并将相关的<code>xxxAware</code>实例注入给Bean：</p>
 <ul>
-<li>如果这个Bean已经实现了BeanNameAware接口，会调用它实现的setBeanName(String beanId)方法，此处传递的就是Spring配置文件中Bean的id值；</li>
-<li>如果这个Bean已经实现了BeanFactoryAware接口，会调用它实现的setBeanFactory()方法，传递的是Spring工厂自身。</li>
-<li>如果这个Bean已经实现了ApplicationContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文。</li>
+<li>如果这个Bean已经实现了<code>BeanNameAware</code>接口，会调用它实现的<code>setBeanName(String beanId)</code>方法，此处传递的就是Spring配置文件中Bean的id值；</li>
+<li>如果这个Bean已经实现了<code>BeanFactoryAware</code>接口，会调用它实现的<code>setBeanFactory()</code>方法，传递的是Spring工厂自身。</li>
+<li>如果这个Bean已经实现了<code>ApplicationContextAware</code>接口，会调用<code>setApplicationContext(ApplicationContext)</code>方法，传入Spring上下文。</li>
 </ul>
 <ol start="4">
-<li>BeanPostProcessor</li>
+<li><code>BeanPostProcessor</code></li>
 </ol>
-<p>如果想对Bean进行一些自定义的处理，那么可以让Bean实现了BeanPostProcessor接口，那将会调用postProcessBeforeInitialization(Object obj, String s)方法。</p>
+<p>如果想对Bean进行一些自定义的处理，那么可以让Bean实现了<code>BeanPostProcessor</code>接口，那将会调用<code>postProcessBeforeInitialization(Object obj, String s)</code>方法。</p>
 <ol start="5">
-<li>InitializingBean 与 init-method</li>
+<li><code>InitializingBean</code> 与 <code>init-method</code></li>
 </ol>
-<p>如果Bean在Spring配置文件中配置了 init-method 属性，则会自动调用其配置的初始化方法。</p>
+<p>如果Bean在Spring配置文件中配置了 <code>init-method</code> 属性，则会自动调用其配置的初始化方法。</p>
 <ol start="6">
-<li>如果这个Bean实现了BeanPostProcessor接口，将会调用postProcessAfterInitialization(Object obj, String s)方法；由于这个方法是在Bean初始化结束时调用的，所以可以被应用于内存或缓存技术。</li>
+<li>如果这个Bean实现了<code>BeanPostProcessor</code>接口，将会调用<code>postProcessAfterInitialization(Object obj, String s)</code>方法；由于这个方法是在Bean初始化结束时调用的，所以可以被应用于内存或缓存技术。</li>
 </ol>
 <p><strong>以上几个步骤完成后，Bean就已经被正确创建了，之后就可以使用这个Bean了。</strong></p>
 <h3 id="销毁过程"><a href="#销毁过程" class="headerlink" title="销毁过程"></a>销毁过程</h3><ol>
-<li>DisposableBean</li>
+<li><code>DisposableBean</code></li>
 </ol>
-<p>当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用其实现的destroy()方法；</p>
+<p>当Bean不再需要时，会经过清理阶段，如果Bean实现了<code>DisposableBean</code>这个接口，会调用其实现的<code>destroy()</code>方法；</p>
 <ol start="2">
-<li>destroy-method</li>
+<li><code>destroy-method</code></li>
 </ol>
-<p>最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法。</p>
+<p>最后，如果这个Bean的Spring配置中配置了<code>destroy-method</code>属性，会自动调用其配置的销毁方法。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/848457123698412.png"></p>
 <p><strong>总结</strong></p>
-<p>主要把握创建过程和销毁过程这两个大的方面；<br>创建过程：首先实例化Bean，并设置Bean的属性，根据其实现的Aware接口（主要是BeanFactoryAware接口，BeanFactoryAware，ApplicationContextAware）设置依赖信息，<br>接下来调用BeanPostProcess的postProcessBeforeInitialization方法，完成initial前的自定义逻辑；afterPropertiesSet方法做一些属性被设定后的自定义的事情;调用Bean自身定义的init方法，去做一些初始化相关的工作;然后再调用postProcessAfterInitialization去做一些bean初始化之后的自定义工作。这四个方法的调用有点类似AOP。<br>此时，Bean初始化完成，可以使用这个Bean了。<br>销毁过程：如果实现了DisposableBean的destroy方法，则调用它，如果实现了自定义的销毁方法，则调用之。</p>
-<h2 id="解释Spring支持的几种bean的作用域"><a href="#解释Spring支持的几种bean的作用域" class="headerlink" title="解释Spring支持的几种bean的作用域"></a>解释Spring支持的几种bean的作用域</h2><p>Spring容器中的bean可以分为5个范围：</p>
-<ol>
-<li>singleton：默认，每个容器中只有一个bean的实例，单例的模式由BeanFactory自身来维护。</li>
-<li>prototype：为每一个bean请求提供一个实例。</li>
-<li>request：为每一个网络请求创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。</li>
-<li>session：与request范围类似，确保每个session中有一个bean的实例，在session过期后，bean会随之失效。</li>
-<li>global-session：全局作用域，global-session和Portlet应用相关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。全局作用域与Servlet中的session作用域效果相同。</li>
-</ol>
-<h2 id="什么是-spring-装配？"><a href="#什么是-spring-装配？" class="headerlink" title="什么是 spring 装配？"></a>什么是 spring 装配？</h2><p>当 bean 在 Spring 容器中组合在一起时，它被称为装配或 bean 装配。 Spring 容器需要知道需要什么 bean 以及容器应该如何使用依赖注入来将 bean 绑定在一起，同时装配 bean。</p>
-<p>Spring 容器能够自动装配 bean。也就是说，可以通过检查 BeanFactory 的内容让 Spring 自动解析 bean 的协作者。</p>
+<p>主要把握创建过程和销毁过程这两个大的方面：<br><strong>创建过程：</strong>首先实例化Bean，并设置Bean的属性，根据其实现的<code>Aware</code>接口（主要是<code>BeanFactoryAware</code>接口，<code>BeanFactoryAware</code>，<code>ApplicationContextAware</code>）设置依赖信息，<br>接下来调用<code>BeanPostProcess</code>的<code>postProcessBeforeInitialization</code>方法，完成<code>initial</code>前的自定义逻辑；<code>afterPropertiesSet</code>方法做一些属性被设定后的自定义的事情;调用Bean自身定义的<code>init</code>方法，去做一些初始化相关的工作;然后再调用<code>postProcessAfterInitialization</code>去做一些bean初始化之后的自定义工作。这四个方法的调用有点类似AOP。<br>此时，Bean初始化完成，可以使用这个Bean了。<br><strong>销毁过程：</strong>如果实现了<code>DisposableBean</code>的<code>destroy()</code>方法，则调用它，如果实现了自定义的销毁方法，则调用之。</p>
+<h2 id="什么是-spring-装配？"><a href="#什么是-spring-装配？" class="headerlink" title="什么是 spring 装配？"></a>什么是 spring 装配？</h2><p>当 bean 在 Spring 容器中组合在一起时，它被称为装配 bean 或 bean 装配。 Spring 容器需要知道需要什么 bean 以及容器应该如何使用依赖注入来将 bean 绑定在一起，同时装配 bean。</p>
+<p>Spring 容器能够自动装配 bean。也就是说，可以通过检查 <code>BeanFactory</code> 的内容让 Spring 自动解析 bean 的协作者。</p>
 <p>自动装配的不同模式：</p>
 <ul>
-<li><strong>no</strong> - 这是默认设置，表示没有自动装配。应使用显式 bean 引用进行装配。</li>
-<li><strong>byName</strong> - 它根据 bean 的名称注入对象依赖项。它匹配并装配其属性与 XML 文件中由相同名称定义的 bean。</li>
-<li><strong>byType</strong> - 它根据类型注入对象依赖项。如果属性的类型与 XML 文件中的一个 bean 名称匹配，则匹配并装配属性。</li>
-<li><strong>构造函数</strong> - 它通过调用类的构造函数来注入依赖项。它有大量的参数。</li>
-<li><strong>autodetect</strong> - 首先容器尝试通过构造函数使用 autowire 装配，如果不能，则尝试通过 byType 自动装配。</li>
+<li><strong>no：</strong>这是默认设置，表示没有自动装配。应使用显式 bean 引用进行装配。</li>
+<li><strong>byName：</strong>它根据 bean 的名称注入对象依赖项。它匹配并装配其属性与 XML 文件中由相同名称定义的 bean。（<code>@Resource</code>注解默认使用的就是<code>byName</code>）</li>
+<li><strong>byType：</strong>它根据类型注入对象依赖项。如果属性的类型与 XML 文件中的一个 bean 名称匹配，则匹配并装配属性。（<code>@Autowired</code>注解默认使用的就是<code>byType</code>）</li>
+<li><strong>构造函数：</strong>它通过调用类的构造函数来注入依赖项。它有大量的参数。</li>
+<li><strong>autodetect：</strong>首先容器尝试通过构造函数使用 autowire 装配，如果不能，则尝试通过 byType 自动装配。</li>
 </ul>
 <h2 id="自动装配有什么局限？"><a href="#自动装配有什么局限？" class="headerlink" title="自动装配有什么局限？"></a>自动装配有什么局限？</h2><ul>
 <li>覆盖的可能性 - 您始终可以使用 <code>&lt;constructor-arg&gt;</code> 和 <code>&lt;property&gt;</code> 设置指定依赖项，这将覆盖自动装配。</li>
@@ -3108,66 +3112,65 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <h2 id="Spring中出现同名bean怎么办？"><a href="#Spring中出现同名bean怎么办？" class="headerlink" title="Spring中出现同名bean怎么办？"></a>Spring中出现同名bean怎么办？</h2><ul>
 <li>同一个配置文件内同名的Bean，以最上面定义的为准</li>
 <li>不同配置文件中存在同名Bean，后解析的配置文件会覆盖先解析的配置文件</li>
-<li>同文件中ComponentScan和@Bean出现同名Bean。同文件下@Bean的会生效，@ComponentScan扫描进来不会生效。通过@ComponentScan扫描进来的优先级是最低的，原因就是它扫描进来的Bean定义是最先被注册的~ </li>
+<li>同文件中<code>@ComponentScan</code>和<code>@Bean</code>出现同名Bean。同文件下<code>@Bean</code>的会生效，<code>@ComponentScan</code>扫描进来不会生效。通过<code>@ComponentScan</code>扫描进来的优先级是最低的，原因就是它扫描进来的Bean定义是最先被注册的~ </li>
 </ul>
 <h2 id="Spring-怎么解决循环依赖问题？"><a href="#Spring-怎么解决循环依赖问题？" class="headerlink" title="Spring 怎么解决循环依赖问题？"></a>Spring 怎么解决循环依赖问题？</h2><p>spring对循环依赖的处理有三种情况： </p>
 <ol>
-<li>构造器的循环依赖：这种依赖spring是处理不了的，直 接抛出BeanCurrentlylnCreationException异常。 </li>
-<li>单例模式下的setter循环依赖：通过“三级缓存”处理循环依赖。 </li>
-<li>非单例循环依赖：无法处理。</li>
+<li><strong>构造器的循环依赖：</strong>这种依赖spring是处理不了的，直接抛出<code>BeanCurrentlylnCreationException</code>异常。 </li>
+<li><strong>单例模式下的setter循环依赖：</strong>通过“三级缓存”处理循环依赖。 </li>
+<li><strong>非单例循环依赖：</strong>无法处理。</li>
 </ol>
 <p>下面分析单例模式下的setter循环依赖如何解决</p>
 <p>Spring的单例对象的初始化主要分为三步： </p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1584761413341_12.png"></p>
 <ol>
-<li><p>createBeanInstance：实例化，其实也就是调用对象的构造方法实例化对象</p>
+<li><p><code>createBeanInstance</code>：实例化，其实也就是调用对象的构造方法实例化对象</p>
 </li>
-<li><p>populateBean：填充属性，这一步主要是多bean的依赖属性进行填充</p>
+<li><p><code>populateBean</code>：填充属性，这一步主要是多bean的依赖属性进行填充</p>
 </li>
-<li><p>initializeBean：调用spring xml中的init 方法。</p>
+<li><p><code>initializeBean</code>：调用spring xml中的 init 方法。</p>
 </li>
 </ol>
-<p>从上面讲述的单例bean初始化步骤我们可以知道，循环依赖主要发生在第一、第二部。也就是构造器循环依赖和field循环依赖。</p>
+<p>从上面讲述的单例bean初始化步骤我们可以知道，循环依赖主要发生在第一、第二部。也就是构造器循环依赖和<code>field</code>循环依赖。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1584758309616_10.png"></p>
-<p>举例：A的某个field或者setter依赖了B的实例对象，同时B的某个field或者setter依赖了A的实例对象”这种循环依赖的情况。A首先完成了</p>
-<p>初始化的第一步（createBeanINstance实例化），并且将自己提前曝光到singletonFactories中。</p>
-<p>此时进行初始化的第二步，发现自己依赖对象B，此时就尝试去get(B)，发现B还没有被create，所以走create流程，B在初始化第一步的时候发现自己依赖了对象A，于是尝试get(A)，尝试一级缓存singletonObjects(肯定没有，因为A还没初始化完全)，尝试二级缓存earlySingletonObjects（也没有），尝试三级缓存singletonFactories，由于A通过ObjectFactory将自己提前曝光了，所以B能够通过</p>
-<p>ObjectFactory.getObject拿到A对象(虽然A还没有初始化完全，但是总比没有好呀)，B拿到A对象后顺利完成了初始化阶段1、2、3，完全初始化之后将自己放入到一级缓存singletonObjects中。</p>
+<p>举例：A的某个field或者setter依赖了B的实例对象，同时B的某个field或者setter依赖了A的实例对象”这种循环依赖的情况。A首先完成了初始化的第一步（<code>createBeanInstance</code>实例化），并且将自己提前曝光到<code>singletonFactories</code>中。</p>
+<p>此时进行初始化的第二步，发现自己依赖对象B，此时就尝试去<code>get(B)</code>，发现B还没有被create，所以走create流程，B在初始化第一步的时候发现自己依赖了对象A，于是尝试<code>get(A)</code>，尝试一级缓存<code>singletonObjects</code>(肯定没有，因为A还没初始化完全)，尝试二级缓存<code>earlySingletonObjects</code>（也没有），尝试三级缓存<code>singletonFactories</code>，由于A通过<code>ObjectFactory</code>将自己提前曝光了，所以B能够通过<code>ObjectFactory.getObject</code>拿到A对象(虽然A还没有初始化完全，但是总比没有好呀)，B拿到A对象后顺利完成了初始化阶段1、2、3，完全初始化之后将自己放入到一级缓存singletonObjects中。</p>
 <p>此时返回A中，A此时能拿到B的对象顺利完成自己的初始化阶段2、3，最终A也完成了初始化，进去了一级缓存singletonObjects中，而且更加幸运的是，由于B拿到了A的对象引用，所以B现在hold住的A对象完成了初始化。</p>
+<p><strong>关键字：三级缓存，提前曝光。</strong></p>
 <h2 id="Spring-中的单例-bean-的线程安全问题？"><a href="#Spring-中的单例-bean-的线程安全问题？" class="headerlink" title="Spring 中的单例 bean 的线程安全问题？"></a>Spring 中的单例 bean 的线程安全问题？</h2><p>当多个用户同时请求一个服务时，容器会给每一个请求分配一个线程，这时多个线程会并发执行该请求对应的业务逻辑（成员方法），此时就要注意了，如果该处理逻辑中有对单例状态的修改（体现为该单例的成员属性），则必须考虑线程同步问题。 </p>
 <p><strong>线程安全问题都是由全局变量及静态变量引起的。</strong> </p>
-<p>若每个线程中对全局变量、静态变量只有读操作，而无写操作，一般来说，这个全局变量是线程安全的；若有多个线程同时执行写操作，一般都需要考虑线程同步，否则就可能影响线程安全.</p>
+<p>若每个线程中对全局变量、静态变量只有读操作，而无写操作，一般来说，这个全局变量是线程安全的；若有多个线程同时执行写操作，一般都需要考虑线程同步，否则就可能影响线程安全。</p>
 <p><strong>无状态bean和有状态bean</strong></p>
 <ul>
 <li>有状态就是有数据存储功能。有状态对象(Stateful Bean)，就是有实例变量的对象，可以保存数据，是非线程安全的。在不同方法调用间不保留任何状态。</li>
-<li>无状态就是一次操作，不能保存数据。无状态对象(Stateless Bean)，就是没有实例变量的对象 .不能保存数据，是不变类，是线程安全的。</li>
+<li>无状态就是一次操作，不能保存数据。无状态对象(Stateless Bean)，就是没有实例变量的对象，不能保存数据，是不变类，是线程安全的。</li>
 </ul>
-<p>在spring中无状态的Bean适合用不变模式，就是单例模式，这样可以共享实例提高性能。有状态的Bean在多线程环境下不安全，适合用Prototype原型模式。<br>Spring使用ThreadLocal解决线程安全问题。如果你的Bean有多种状态的话（比如 View Model 对象），就需要自行保证线程安全 。</p>
+<p>在spring中无状态的Bean适合用不变模式，就是单例模式，这样可以共享实例提高性能。有状态的Bean在多线程环境下不安全，适合用<code>Prototype</code>原型模式。<br>Spring使用<code>ThreadLocal</code>解决线程安全问题。如果你的Bean有多种状态的话（比如 View Model 对象），就需要自行保证线程安全 。</p>
 <h2 id="Spring框架中都用到了哪些设计模式"><a href="#Spring框架中都用到了哪些设计模式" class="headerlink" title="Spring框架中都用到了哪些设计模式"></a>Spring框架中都用到了哪些设计模式</h2><p>这是一道相对有难度的题目，你不仅要会设计模式，还要知道每个设计模式在Spring中是如何使用的。</p>
-<p><strong>简单工厂模式：</strong> Spring 中的 BeanFactory 就是简单工厂模式的体现。根据传入一个唯一的标识来获得 Bean 对象，但是在传入参数后创建还是传入参数前创建，要根据具体情况来定。</p>
-<p><strong>工厂方法模式：</strong> Spring 中的 FactoryBean 就是典型的工厂方法模式，实现了 FactoryBean 接口的 bean是一类叫做 factory 的 bean。其特点是，spring 在使用 getBean() 调用获得该 bean 时，会自动调用该 bean 的 getObject() 方法，所以返回的不是 factory 这个 bean，而是这个 bean.getOjbect()方法的返回值。</p>
-<p><strong>单例模式：</strong> 在 spring 中用到的单例模式有： scope=”singleton” ，注册式单例模式，bean 存放于Map 中。bean name 当做 key，bean 当做 value。</p>
-<p><strong>原型模式：</strong> 在 spring 中用到的原型模式有： scope=”prototype” ，每次获取的是通过克隆生成的新实例，对其进行修改时对原有实例对象不造成任何影响。</p>
-<p><strong>迭代器模式：</strong> 在 Spring 中有个 CompositeIterator 实现了 Iterator，Iterable 接口和 Iterator 接口，这两个都是迭代相关的接口。可以这么认为，实现了 Iterable 接口，则表示某个对象是可被迭代的。Iterator 接口相当于是一个迭代器，实现了 Iterator 接口，等于具体定义了这个可被迭代的对象时如何进行迭代的。</p>
+<p><strong>简单工厂模式：</strong> Spring 中的 <code>BeanFactory</code> 就是简单工厂模式的体现。根据传入一个唯一的标识来获得 Bean 对象，但是在传入参数后创建还是传入参数前创建，要根据具体情况来定。</p>
+<p><strong>工厂方法模式：</strong> Spring 中的 <code>FactoryBean</code> 就是典型的工厂方法模式，实现了 FactoryBean 接口的 bean是一类叫做 factory 的 bean。其特点是，spring 在使用<code>getBean()</code>调用获得该 bean 时，会自动调用该 bean 的 <code>getObject()</code> 方法，所以返回的不是 factory 这个 bean，而是这个 <code>bean.getOjbect()</code> 方法的返回值。</p>
+<p><strong>单例模式：</strong> 在 spring 中用到的单例模式有：<code>scope="singleton"</code>，注册式单例模式，bean 存放于 Map 中。bean name 当做 key，bean 当做 value。</p>
+<p><strong>原型模式：</strong> 在 spring 中用到的原型模式有：<code>scope="prototype"</code>，每次获取的是通过克隆生成的新实例，对其进行修改时对原有实例对象不造成任何影响。</p>
+<p><strong>迭代器模式：</strong> 在 Spring 中有个 <code>CompositeIterator</code> 实现了 <code>Iterator</code>，<code>Iterable</code> 接口和 <code>Iterator</code> 接口，这两个都是迭代相关的接口。可以这么认为，实现了 <code>Iterable</code> 接口，则表示某个对象是可被迭代的。<code>Iterator</code> 接口相当于是一个迭代器，实现了 <code>Iterator</code> 接口，等于具体定义了这个可被迭代的对象时如何进行迭代的。</p>
 <p><strong>代理模式：</strong> Spring 中经典的 AOP，就是使用动态代理实现的，分 JDK 和 CGlib 动态代理。</p>
 <p><strong>适配器模式：</strong> Spring 中的 AOP 中 AdvisorAdapter 类，它有三个实现：</p>
-<p>MethodBeforAdviceAdapter、AfterReturnningAdviceAdapter、ThrowsAdviceAdapter。Spring会根据不同的 AOP 配置来使用对应的 Advice，与策略模式不同的是，一个方法可以同时拥有多个Advice。Spring 存在很多以 Adapter 结尾的，大多数都是适配器模式。</p>
-<p><strong>观察者模式：</strong> Spring 中的 Event 和 Listener。spring 事件：ApplicationEvent，该抽象类继承了EventObject 类，JDK 建议所有的事件都应该继承自 EventObject。spring 事件监听器：ApplicationListener，该接口继承了 EventListener 接口，JDK 建议所有的事件监听器都应该继承EventListener。</p>
-<p><strong>模板模式：</strong> Spring 中的 org.springframework.jdbc.core.JdbcTemplate 就是非常经典的模板模式的应用，里面的 execute 方法，把整个算法步骤都定义好了。</p>
-<p><strong>责任链模式：</strong> DispatcherServlet 中的 doDispatch() 方法中获取与请求匹配的处理器HandlerExecutionChain，this.getHandler() 方法的处理使用到了责任链模式。</p>
+<p><code>MethodBeforAdviceAdapter</code>、<code>AfterReturnningAdviceAdapter</code>、<code>ThrowsAdviceAdapter</code>。Spring会根据不同的 AOP 配置来使用对应的 Advice，与策略模式不同的是，一个方法可以同时拥有多个Advice。Spring 存在很多以 Adapter 结尾的，大多数都是适配器模式。</p>
+<p><strong>观察者模式：</strong> Spring 中的 Event 和 Listener。spring 事件：<code>ApplicationEvent</code>，该抽象类继承了<code>EventObject</code>类，JDK 建议所有的事件都应该继承自 <code>EventObject</code>。spring 事件监听器：<code>ApplicationListener</code>，该接口继承了 <code>EventListener</code> 接口，JDK 建议所有的事件监听器都应该继承<code>EventListener</code>。</p>
+<p><strong>模板模式：</strong> Spring 中的 <code>org.springframework.jdbc.core.JdbcTemplate</code> 就是非常经典的模板模式的应用，里面的 <code>execute</code> 方法，把整个算法步骤都定义好了。</p>
+<p><strong>责任链模式：</strong> <code>DispatcherServlet</code> 中的 <code>doDispatch()</code> 方法中获取与请求匹配的处理器<code>HandlerExecutionChain</code>，<code>this.getHandler()</code> 方法的处理使用到了责任链模式。</p>
 <p><strong>注意：</strong> 这里只是列举了部分设计模式，其实里面用到了还有享元模式、建造者模式等。可选择性的回答（你会的熟悉的模式），主要是怕你回答了迭代器模式，然后继续问你，结果你一问三不知，那就尴了尬了。</p>
-<h2 id="说说Spring-中-ApplicationContext-和-BeanFactory-的区别"><a href="#说说Spring-中-ApplicationContext-和-BeanFactory-的区别" class="headerlink" title="说说Spring 中 ApplicationContext 和 BeanFactory 的区别"></a>说说Spring 中 ApplicationContext 和 BeanFactory 的区别</h2><h3 id="对-Web-应用的支持"><a href="#对-Web-应用的支持" class="headerlink" title="对 Web 应用的支持"></a>对 Web 应用的支持</h3><p>与 BeanFactory 通常以编程的方式被创建，ApplicationContext 能以声明的方式创建，如使用ContextLoader。<br>当然你也可以使用 ApplicationContext 的实现方式之一，以编程的方式创建 ApplicationContext实例。</p>
+<h2 id="说说Spring-中-ApplicationContext-和-BeanFactory-的区别"><a href="#说说Spring-中-ApplicationContext-和-BeanFactory-的区别" class="headerlink" title="说说Spring 中 ApplicationContext 和 BeanFactory 的区别"></a>说说Spring 中 ApplicationContext 和 BeanFactory 的区别</h2><h3 id="对-Web-应用的支持"><a href="#对-Web-应用的支持" class="headerlink" title="对 Web 应用的支持"></a>对 Web 应用的支持</h3><p>与 <code>BeanFactory</code> 通常以编程的方式被创建，<code>ApplicationContext</code> 能以声明的方式创建，如使用<code>ContextLoader</code>。<br>当然你也可以使用 <code>ApplicationContext</code> 的实现方式之一，以编程的方式创建 <code>ApplicationContext</code>实例。</p>
 <h3 id="延迟加载"><a href="#延迟加载" class="headerlink" title="延迟加载"></a>延迟加载</h3><ol>
-<li>BeanFactroy 采用的是延迟加载形式来注入 Bean 的，即只有在使用到某个 Bean 时(调用getBean())，才对该 Bean 进行加载实例化。这样，我们就不能发现一些存在的 spring 的配置问题。而 ApplicationContext 则相反，它是在容器启动时，一次性创建了所有的 Bean。这样，在容器启动时，我们就可以发现 Spring 中存在的配置错误。</li>
-<li>BeanFactory 和 ApplicationContext 都支持 BeanPostProcessor、BeanFactoryPostProcessor 的使用。两者之间的区别是：BeanFactory 需要手动注册，而ApplicationContext 则是自动注册。</li>
+<li><code>BeanFactroy</code> 采用的是延迟加载形式来注入 Bean 的，即只有在使用到某个 Bean 时(调用<code>getBean()</code>)，才对该 Bean 进行加载实例化。这样，我们就不能发现一些存在的 spring 的配置问题。而 <code>ApplicationContext</code> 则相反，它是在容器启动时，一次性创建了所有的 Bean。这样，在容器启动时，我们就可以发现 Spring 中存在的配置错误。</li>
+<li><code>BeanFactory</code> 和 <code>ApplicationContext</code> 都支持 <code>BeanPostProcessor</code>、<code>BeanFactoryPostProcessor</code> 的使用。两者之间的区别是：<code>BeanFactory</code> 需要手动注册，而<code>ApplicationContext</code> 则是自动注册。</li>
 </ol>
-<p>可以看到，ApplicationContext 继承了 BeanFactory，BeanFactory 是 Spring 中比较原始的Factory，它不支持 AOP、Web 等 Spring 插件。而 ApplicationContext 不仅包含了 BeanFactory的所有功能，还支持 Spring 的各种插件，还以一种面向框架的方式工作以及对上下文进行分层和实现继承。</p>
-<p>BeanFactory 是 Spring 框架的基础设施，面向 Spring 本身；而 ApplicationContext 面向使用Spring 的开发者，相比 BeanFactory 提供了更多面向实际应用的功能，几乎所有场合都可以直接使用 ApplicationContext，而不是底层的 BeanFactory。</p>
-<h3 id="常用容器"><a href="#常用容器" class="headerlink" title="常用容器"></a>常用容器</h3><p>BeanFactory 类型的有 XmlBeanFactory，它可以根据 XML 文件中定义的内容，创建相应的Bean。<br>ApplicationContext 类型的常用容器有：</p>
+<p>可以看到，<code>ApplicationContext</code> 继承了 <code>BeanFactory</code>，<code>BeanFactory</code> 是 Spring 中比较原始的Factory，它不支持 AOP、Web 等 Spring 插件。而 <code>ApplicationContext</code> 不仅包含了 <code>BeanFactory</code>的所有功能，还支持 Spring 的各种插件，还以一种面向框架的方式工作以及对上下文进行分层和实现继承。</p>
+<p><code>BeanFactory</code> 是 Spring 框架的基础设施，面向 Spring 本身；而 <code>ApplicationContext</code> 面向使用Spring 的开发者，相比 <code>BeanFactory</code> 提供了更多面向实际应用的功能，几乎所有场合都可以直接使用 <code>ApplicationContext</code>，而不是底层的 <code>BeanFactory</code>。</p>
+<h3 id="常用容器"><a href="#常用容器" class="headerlink" title="常用容器"></a>常用容器</h3><p><code>BeanFactory</code> 类型的有 <code>XmlBeanFactory</code>，它可以根据 XML 文件中定义的内容，创建相应的Bean。<br><code>ApplicationContext</code> 类型的常用容器有：</p>
 <ol>
-<li>ClassPathXmlApplicationContext：从 ClassPath 的 XML 配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中取得；</li>
-<li>FileSystemXmlApplicationContext：由文件系统中的 XML 配置文件读取上下文；</li>
-<li>XmlWebApplicationContext：由 Web 应用的 XML 文件读取上下文。例如我们在 Spring MVC使用的情况。</li>
+<li><code>ClassPathXmlApplicationContext</code>：从 ClassPath 的 XML 配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中取得；</li>
+<li><code>FileSystemXmlApplicationContext</code>：由文件系统中的 XML 配置文件读取上下文；</li>
+<li><code>XmlWebApplicationContext</code>：由 Web 应用的 XML 文件读取上下文。例如我们在 Spring MVC使用的情况。</li>
 </ol>
 <h2 id="Spring-框架中的单例-Bean-是线程安全的么"><a href="#Spring-框架中的单例-Bean-是线程安全的么" class="headerlink" title="Spring 框架中的单例 Bean 是线程安全的么"></a>Spring 框架中的单例 Bean 是线程安全的么</h2><p>Spring 框架并没有对单例 Bean 进行任何多线程的封装处理。</p>
 <ul>
@@ -3175,35 +3178,27 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 <li>单例的线程安全问题，并不是 Spring 应该去关心的。Spring 应该做的是，提供根据配置，创建单例 Bean 或多例 Bean 的功能。</li>
 </ul>
 <p>当然，但实际上，大部分的 Spring Bean 并没有可变的状态，所以在某种程度上说 Spring 的单例Bean 是线程安全的。如果你的 Bean 有多种状态的话，就需要自行保证线程安全。最浅显的解决办法，就是将多态 Bean 的作用域（Scope）由 Singleton 变更为 Prototype。</p>
-<h2 id="Spring-是怎么解决循环依赖的"><a href="#Spring-是怎么解决循环依赖的" class="headerlink" title="Spring 是怎么解决循环依赖的"></a>Spring 是怎么解决循环依赖的</h2><p>整个流程大致如下：</p>
+<h2 id="说说事务的传播机制"><a href="#说说事务的传播机制" class="headerlink" title="说说事务的传播机制"></a>说说事务的传播机制</h2><p>Spring事务定义了7种传播机制：</p>
 <ol>
-<li>首先 A 完成初始化第一步并将自己提前曝光出来（通过 ObjectFactory 将自己提前曝光），在初始化的时候，发现自己依赖对象 B，此时就会去尝试 get(B)，这个时候发现 B 还没有被创建出来；</li>
-<li>然后 B 就走创建流程，在 B 初始化的时候，同样发现自己依赖 C，C 也没有被创建出来；</li>
-<li>这个时候 C 又开始初始化进程，但是在初始化的过程中发现自己依赖 A，于是尝试 get(A)。这个时候由于 A 已经添加至缓存中（一般都是添加至三级缓存 singletonFactories），通过ObjectFactory 提前曝光，所以可以通过 ObjectFactory#getObject() 方法来拿到 A 对象。C 拿到 A 对象后顺利完成初始化，然后将自己添加到一级缓存中；</li>
-<li>回到 B，B 也可以拿到 C 对象，完成初始化，A 可以顺利拿到 B 完成初始化。到这里整个链路就已经完成了初始化过程了。</li>
-</ol>
-<p><strong>关键字：三级缓存，提前曝光。</strong></p>
-<h2 id="说说事务的传播级别"><a href="#说说事务的传播级别" class="headerlink" title="说说事务的传播级别"></a>说说事务的传播级别</h2><p>Spring事务定义了7种传播机制：</p>
-<ol>
-<li>PROPAGATION_REQUIRED:默认的Spring事物传播级别，若当前存在事务，则加入该事务，若不存在事务，则新建一个事务。</li>
-<li>PAOPAGATION_REQUIRE_NEW:若当前没有事务，则新建一个事务。若当前存在事务，则新建一个事务，新老事务相互独立。外部事务抛出异常回滚不会影响内部事务的正常提交。</li>
-<li>PROPAGATION_NESTED:如果当前存在事务，则嵌套在当前事务中执行。如果当前没有事务，则新建一个事务，类似于REQUIRE_NEW。</li>
-<li>PROPAGATION_SUPPORTS:支持当前事务，若当前不存在事务，以非事务的方式执行。</li>
-<li>PROPAGATION_NOT_SUPPORTED:以非事务的方式执行，若当前存在事务，则把当前事务挂起。</li>
-<li>PROPAGATION_MANDATORY:强制事务执行，若当前不存在事务，则抛出异常。</li>
-<li>PROPAGATION_NEVER:以非事务的方式执行，如果当前存在事务，则抛出异常。</li>
+<li><code>PROPAGATION_REQUIRED</code>：默认的Spring事物传播级别，若当前存在事务，则加入该事务，若不存在事务，则新建一个事务。</li>
+<li><code>PAOPAGATION_REQUIRE_NEW</code>：若当前没有事务，则新建一个事务。若当前存在事务，则新建一个事务，新老事务相互独立。外部事务抛出异常回滚不会影响内部事务的正常提交。</li>
+<li><code>PROPAGATION_NESTED</code>：如果当前存在事务，则嵌套在当前事务中执行。如果当前没有事务，则新建一个事务，类似于<code>REQUIRE_NEW</code>。</li>
+<li><code>PROPAGATION_SUPPORTS</code>：支持当前事务，若当前不存在事务，以非事务的方式执行。</li>
+<li><code>PROPAGATION_NOT_SUPPORTED</code>：以非事务的方式执行，若当前存在事务，则把当前事务挂起。</li>
+<li><code>PROPAGATION_MANDATORY</code>：强制事务执行，若当前不存在事务，则抛出异常。</li>
+<li><code>PROPAGATION_NEVER</code>：以非事务的方式执行，如果当前存在事务，则抛出异常。</li>
 </ol>
 <p>Spring事务传播级别一般不需要定义，<strong>默认就是PROPAGATION_REQUIRED</strong>，除非在嵌套事务的情况下需要重点了解。</p>
 <h2 id="Spring-事务实现方式"><a href="#Spring-事务实现方式" class="headerlink" title="Spring 事务实现方式"></a>Spring 事务实现方式</h2><p><strong>编程式事务管理：</strong> 这意味着你可以通过编程的方式管理事务，这种方式带来了很大的灵活性，但很难维护。</p>
 <p><strong>声明式事务管理：</strong> 这种方式意味着你可以将事务管理和业务代码分离。你只需要通过注解或者XML配置管理事务。</p>
 <h2 id="Spring框架的事务管理有哪些优点"><a href="#Spring框架的事务管理有哪些优点" class="headerlink" title="Spring框架的事务管理有哪些优点"></a>Spring框架的事务管理有哪些优点</h2><ul>
 <li>它为不同的事务API(如JTA, JDBC, Hibernate, JPA, 和JDO)提供了统一的编程模型。</li>
-<li>它为编程式事务管理提供了一个简单的API而非一系列复杂的事务API(如JTA).它支持声明式事务管理。</li>
+<li>它为编程式事务管理提供了一个简单的API而非一系列复杂的事务API(如JTA)，它支持声明式事务管理。</li>
 <li>它可以和Spring 的多种数据访问技术很好的融合。</li>
 </ul>
 <h2 id="事务注解-Transactional的本质是什么"><a href="#事务注解-Transactional的本质是什么" class="headerlink" title="事务注解@Transactional的本质是什么"></a>事务注解@Transactional的本质是什么</h2><p><code>@Transactional</code>这个注解仅仅是一些（和事务相关的）元数据，在运行时被事务基础设施读取消费，并<strong>使用这些元数据来配置bean的事务行为</strong>。 大致来说具有两方面功能，<strong>一是表明该方法要参与事务，二是配置相关属性来定制事务的参与方式和运行行为</strong>。</p>
 <p>声明式事务主要是得益于Spring AOP。使用一个事务拦截器，在方法调用的前后/周围进行事务性增强（advice），来驱动事务完成。</p>
-<p><code>@Transactional</code>注解既可以标注在类上，也可以标注在方法上。当在类上时，默认应用到类里的所有方法。如果此时方法上也标注了，则方法上的优先级高。 另外注意方法一定要是public的。</p>
+<p><code>@Transactional</code>注解既可以标注在类上，也可以标注在方法上。当在类上时，默认应用到类里的所有方法。如果此时方法上也标注了，则方法上的优先级高。 <strong>另外注意方法一定要是public的</strong>。</p>
 <h1 id="5-Mybatis篇"><a href="#5-Mybatis篇" class="headerlink" title="5. Mybatis篇"></a>5. Mybatis篇</h1><p>Mybatis系列文章：<a href="/categories/Mybatis/">Mybatis</a></p>
 <h2 id="什么是MyBatis"><a href="#什么是MyBatis" class="headerlink" title="什么是MyBatis"></a>什么是MyBatis</h2><ul>
 <li>Mybatis是一个半ORM（对象关系映射）框架，它内部封装了JDBC，开发时只需要关注SQL语句本身，不需要花费精力去处理加载驱动、创建连接、创建statement等繁杂的过程。程序员直接编写原生态sql，可以严格控制sql执行性能，灵活度高。</li>
@@ -4071,6 +4066,134 @@ objectList <span class="token operator">=</span> stringList<span class="token pu
 </ol>
 <h2 id="什么是Spring-Cloud-Gateway"><a href="#什么是Spring-Cloud-Gateway" class="headerlink" title="什么是Spring Cloud Gateway"></a>什么是Spring Cloud Gateway</h2><p>Spring Cloud Gateway是Spring Cloud官方推出的第二代网关框架，取代Zuul网关。网关作为流量的，在微服务系统中有着非常作用，网关常见的功能有路由转发、权限校验、限流控制等作用。</p>
 <p>使用了一个RouteLocatorBuilder的bean去创建路由，除了创建路由RouteLocatorBuilder可以让你添加各种predicates和filters，predicates断言的意思，顾名思义就是根据具体的请求的规则，由具体的route去处理，filters是各种过滤器，用来对请求做各种判断和修改。</p>
+<h2 id="什么是Spring-Cloud-Alibaba"><a href="#什么是Spring-Cloud-Alibaba" class="headerlink" title="什么是Spring Cloud Alibaba"></a>什么是Spring Cloud Alibaba</h2><p>Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用微服务的必需组件，方便开发者通过 Spring Cloud 编程模型轻松使用这些组件来开发分布式应用服务。</p>
+<h2 id="Spring-Cloud-Alibaba有哪些功能"><a href="#Spring-Cloud-Alibaba有哪些功能" class="headerlink" title="Spring Cloud Alibaba有哪些功能"></a>Spring Cloud Alibaba有哪些功能</h2><ul>
+<li><p><strong>服务限流降级（Sentinel）：</strong>默认支持 WebServlet、WebFlux, OpenFeign、RestTemplate、Spring Cloud Gateway, Zuul, Dubbo 和 RocketMQ 限流降级功能的接入，可以在运行时通过控制台实时修改限流降级规则，还支持查看限流降级 Metrics 监控。</p>
+</li>
+<li><p><strong>服务注册与发现（Nacos）：</strong>适配 Spring Cloud 服务注册与发现标准，默认集成了 Ribbon 的支持。</p>
+</li>
+<li><p><strong>分布式配置管理（Nacos）：</strong>支持分布式系统中的外部化配置，配置更改时自动刷新。</p>
+</li>
+<li><p><strong>消息驱动能力：</strong>基于 Spring Cloud Stream 为微服务应用构建消息驱动能力。</p>
+</li>
+<li><p><strong>分布式事务（Seata）：</strong>使用 @GlobalTransactional 注解， 高效并且对业务零侵入地解决分布式事务问题。</p>
+</li>
+<li><p><strong>阿里云对象存储：</strong>阿里云提供的海量、安全、低成本、高可靠的云存储服务。支持在任何应用、任何时间、任何地点存储和访问任意类型的数据。</p>
+</li>
+<li><p><strong>分布式任务调度：</strong>提供秒级、精准、高可靠、高可用的定时（基于 Cron 表达式）任务调度服务。同时提供分布式的任务执行模型，如网格任务。网格任务支持海量子任务均匀分配到所有 Worker（schedulerx-client）上执行。</p>
+</li>
+<li><p><strong>阿里云短信服务：</strong>覆盖全球的短信服务，友好、高效、智能的互联化通讯能力，帮助企业迅速搭建客户触达通道。</p>
+</li>
+</ul>
+<h2 id="Spring-Cloud-Alibaba的常用组件有哪些"><a href="#Spring-Cloud-Alibaba的常用组件有哪些" class="headerlink" title="Spring Cloud Alibaba的常用组件有哪些"></a>Spring Cloud Alibaba的常用组件有哪些</h2><ul>
+<li><p><strong>Sentinel：</strong>把流量作为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性。</p>
+</li>
+<li><p><strong>Nacos：</strong>一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。</p>
+</li>
+<li><p><strong>RocketMQ：</strong>一款开源的分布式消息系统，基于高可用分布式集群技术，提供低延时的、高可靠的消息发布与订阅服务。</p>
+</li>
+<li><p><strong>Dubbo：</strong>Apache Dubbo™ 是一款高性能 Java RPC 框架。</p>
+</li>
+<li><p><strong>Seata：</strong>阿里巴巴开源产品，一个易于使用的高性能微服务分布式事务解决方案。</p>
+</li>
+<li><p><strong>Alibaba Cloud OSS：</strong>阿里云对象存储服务（Object Storage Service，简称 OSS），是阿里云提供的海量、安全、低成本、高可靠的云存储服务。您可以在任何应用、任何时间、任何地点存储和访问任意类型的数据。</p>
+</li>
+<li><p><strong>Alibaba Cloud SchedulerX：</strong> 阿里中间件团队开发的一款分布式任务调度产品，提供秒级、精准、高可靠、高可用的定时（基于 Cron 表达式）任务调度服务。</p>
+</li>
+<li><p><strong>Alibaba Cloud SMS：</strong> 覆盖全球的短信服务，友好、高效、智能的互联化通讯能力，帮助企业迅速搭建客户触达通道。</p>
+</li>
+</ul>
+<h2 id="什么是Nacos"><a href="#什么是Nacos" class="headerlink" title="什么是Nacos"></a>什么是Nacos</h2><p>前面组件中也有简单介绍；Nacos命名的由来：前四个字母分别是Naming和Configuration的前两个字母，后面的s是Service</p>
+<p>Nacos是一个易于使用的动态服务发现，配置和服务管理平台，用于构建云本机应用程序。使用Spring Cloud Alibaba Nacos Discovery，您可以基于Spring Cloud的编程模型快速访问Nacos服务注册功能。</p>
+<p>Nacos就是注册中心+配置中心的组合（<code>Nacos= Eureka + Config + Bus</code>）</p>
+<h2 id="Nacos有什么作用"><a href="#Nacos有什么作用" class="headerlink" title="Nacos有什么作用"></a>Nacos有什么作用</h2><ol>
+<li><p>服务发现与服务健康检查Nacos使服务更容易注册，并通过DNS或HTTP接口发现其他服务，Nacos还提供服务的实时健康检查，以防止向不健康的主机或服务实例发送请求。</p>
+</li>
+<li><p>动态配置管理动态配置服务允许您在所有环境中以集中和动态的方式管理所有服务的配置。Nacos消除了在更新配置时重新部署应用程序，这使配置的更改更加高效和灵活。</p>
+</li>
+<li><p>动态DNS服务Nacos提供基于DNS 协议的服务发现能力，旨在支持异构语言的服务发现，支持将注册在Nacos上的服务以域名的方式暴露端点，让三方应用方便的查阅及发现。</p>
+</li>
+<li><p>服务和元数据管理Nacos 能让您从微服务平台建设的视角管理数据中心的所有服务及元数据，包括管理服务的描述、生命周期、服务的静态依赖分析、服务的健康状态、服务的流量管理、路由及安全策略。</p>
+</li>
+</ol>
+<h2 id="Nacos支持Ap和Cp的切换，该如何选择呢"><a href="#Nacos支持Ap和Cp的切换，该如何选择呢" class="headerlink" title="Nacos支持Ap和Cp的切换，该如何选择呢"></a>Nacos支持Ap和Cp的切换，该如何选择呢</h2><p>一般来说，如果不需要存储服务级别的信息且服务实例是通过nacos-client注册，并能够保持心跳上报，那么就可以选择AP模式。当前主流的服务如 Spring cloud 和 Dubbo 服务，都适用于AP模式，AP模式为了服务的可能性而减弱了一致性，因此AP模式下只支持注册临时实例。</p>
+<p>如果需要在服务级别编辑或者存储配置信息，那么 CP 是必须，K8S服务和DNS服务则适用于CP模式。</p>
+<p>CP模式下则支持注册持久化实例，此时则是以 Raft 协议为集群运行模式，该模式下注册实例之前必须先注册服务，如果服务不存在，则会返回错误。</p>
+<p>模式切换代码：<code>curl -X PUT '$NACOS_SERVER:8848/nacos/v1/ns/operator/switches?entry=serverMode&amp;value=CP'</code></p>
+<h2 id="Nacos读取配置文件的有哪几种方案"><a href="#Nacos读取配置文件的有哪几种方案" class="headerlink" title="Nacos读取配置文件的有哪几种方案"></a>Nacos读取配置文件的有哪几种方案</h2><ul>
+<li><p>Data ID<br>方案：指定<code>spring.profile.active</code>和配置文件的DataID来使不同环境下读取不同的配置</p>
+</li>
+<li><p>Group<br>方案：通过Group实现环境区分</p>
+</li>
+<li><p>Namespace<br>方案：通过建立不同NameSpace来区分</p>
+</li>
+</ul>
+<h2 id="什么是Spring-Cloud-Sentinel"><a href="#什么是Spring-Cloud-Sentinel" class="headerlink" title="什么是Spring Cloud Sentinel"></a>什么是Spring Cloud Sentinel</h2><p>Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，从流量控制、熔断降级、系统自适应保护等多个维度来帮助您保障微服务的稳定性。</p>
+<h2 id="Sentinel-基本概念有哪些"><a href="#Sentinel-基本概念有哪些" class="headerlink" title="Sentinel 基本概念有哪些"></a>Sentinel 基本概念有哪些</h2><p><strong>资源：</strong>资源是 Sentinel 的关键概念。它可以是 Java 应用程序中的任何内容，例如，由应用程序提供的服务，或由应用程序调用的其它应用提供的服务，甚至可以是一段代码。在接下来的文档中，我们都会用资源来描述代码块。只要通过 Sentinel API 定义的代码，就是资源，能够被 Sentinel 保护起来。大部分情况下，可以使用方法签名，URL，甚至服务名称作为资源名来标示资源。</p>
+<p><strong>规则：</strong>围绕资源的实时状态设定的规则，可以包括流量控制规则、熔断降级规则以及系统保护规则。所有规则可以动态实时调整。</p>
+<h2 id="Sentinel有哪些优点"><a href="#Sentinel有哪些优点" class="headerlink" title="Sentinel有哪些优点"></a>Sentinel有哪些优点</h2><ul>
+<li><p><strong>丰富的适用场景：</strong>哨兵在阿里巴巴得到了广泛的应用，几乎覆盖了近10年双11（11.11）购物节的所有核心场景，比如需要限制突发流量的“秒杀”满足系统能力、消息削峰填谷、不依靠业务断路、流量控制等。</p>
+</li>
+<li><p><strong>实时监控：</strong>Sentinel 还提供实时监控能力。可以实时查看单台机器的运行时信息，以及以下 500 个节点的集群运行时信息。</p>
+</li>
+<li><p><strong>广泛的开源生态：</strong>Sentinel 提供与 Spring、Dubbo 和 gRPC 等常用框架和库的开箱即用集成。</p>
+</li>
+<li><p><strong>多语言支持：</strong>Sentinel 为 Java、Go和C++提供了本机支持。</p>
+</li>
+<li><p><strong>丰富的 SPI 扩展：</strong>Sentinel 提供简单易用的 SPI 扩展接口，可以让您快速自定义逻辑，例如自定义规则管理、适配数据源等。</p>
+</li>
+</ul>
+<h2 id="Sentinel有哪几种流控模式"><a href="#Sentinel有哪几种流控模式" class="headerlink" title="Sentinel有哪几种流控模式"></a>Sentinel有哪几种流控模式</h2><ul>
+<li><p><strong>直接（默认）：</strong>api达到限流条件，直接限流</p>
+</li>
+<li><p><strong>关联：</strong>当关联的资料达到阈值时，就限流自己。当与A关联的资源B达到阈值后，就限流A</p>
+</li>
+<li><p><strong>链路：</strong>链路流控模式指的是，当从某个接口过来的资源达到限流条件时，开启限流；它的功能有点类似于针对 来源配置项，区别在于：针对来源是针对上级微服务，而链路流控是针对上级接口，也就是说它的粒度更细。</p>
+</li>
+</ul>
+<h2 id="Sentinel有哪几种流控效果呢"><a href="#Sentinel有哪几种流控效果呢" class="headerlink" title="Sentinel有哪几种流控效果呢"></a>Sentinel有哪几种流控效果呢</h2><ul>
+<li><p><strong>直接（默认的流控处理）：</strong>该方式是默认的流量控制方式，当QPS超过任意规则的阈值后，新的请求就会被立即拒绝，拒绝方式为抛出FlowException</p>
+</li>
+<li><p><strong>预热(Warm Up)：</strong>阈值除以coldFactor(默认为3)，经过预热时长后才达到阈值，案例，阀值为10+预热时长设置5秒。系统初始化的阀值为10 3 约等于3,即阀值刚开始为3；然后过了5秒后阀值才慢慢升高恢复到10</p>
+</li>
+<li><p><strong>排队等待：</strong>匀速器（<code>RuleConstant.CONTROL_BEHAVIOR_RATE_LIMITER</code>）方式。这种方式严格控制了请求通过的间隔时间，也即是让请求以均匀的速度通过，对应的是漏桶算法</p>
+</li>
+</ul>
+<h2 id="Sentinel-有哪些降级规则（熔断策略）"><a href="#Sentinel-有哪些降级规则（熔断策略）" class="headerlink" title="Sentinel 有哪些降级规则（熔断策略）"></a>Sentinel 有哪些降级规则（熔断策略）</h2><ul>
+<li><p><strong>慢调用比例 (SLOW_REQUEST_RATIO)：</strong>选择以慢调用比例作为阈值，需要设置允许的慢调用 RT（即最大的响应时间），请求的响应时间大于该值则统计为慢调用。当单位统计时长（statIntervalMs）内请求数目大于设置的最小请求数目，并且慢调用的比例大于阈值，则接下来的熔断时长内请求会自动被熔断。经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求响应时间小于设置的慢调用 RT 则结束熔断，若大于设置的慢调用 RT 则会再次被熔断。</p>
+</li>
+<li><p><strong>异常比例 (ERROR_RATIO)：</strong>当单位统计时长（statIntervalMs）内请求数目大于设置的最小请求数目，并且异常的比例大于阈值，则接下来的熔断时长内请求会自动被熔断。经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。异常比率的阈值范围是 [0.0, 1.0]，代表 0% - 100%。</p>
+</li>
+<li><p><strong>异常数 (ERROR_COUNT)：</strong>当单位统计时长内的异常数目超过阈值之后会自动进行熔断。经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。</p>
+</li>
+</ul>
+<h2 id="分布式事务存在的问题"><a href="#分布式事务存在的问题" class="headerlink" title="分布式事务存在的问题"></a>分布式事务存在的问题</h2><p>单体应用被拆分成微服务应用，原来的三个模块被拆分成三个独立的应用，分别使用三个独立的数据源，业务操作需要调用三个服务来完成。此时每个服务内部的数据一致性由本地事务来保证，但是<strong>全局的数据一致性问题</strong>没法保证。</p>
+<h2 id="什么是Spring-Cloud-Seata"><a href="#什么是Spring-Cloud-Seata" class="headerlink" title="什么是Spring Cloud Seata"></a>什么是Spring Cloud Seata</h2><p>Seata 是一款开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了 AT、TCC、SAGA 和 XA 事务模式，为用户打造一站式的分布式解决方案。</p>
+<h2 id="分布式事务的处理过程是怎样的"><a href="#分布式事务的处理过程是怎样的" class="headerlink" title="分布式事务的处理过程是怎样的"></a>分布式事务的处理过程是怎样的</h2><p>分布式事务处理过程的唯一ID+三组件模型：Transaction ID XID（全局唯一的事务ID）</p>
+<p><strong>三组件概念</strong></p>
+<ul>
+<li>TC (Transaction Coordinator) - 事务协调者：维护全局和分支事务的状态，驱动全局事务提交或回滚。</li>
+<li>TM (Transaction Manager) - 事务管理器：定义全局事务的范围：开始全局事务、提交或回滚全局事务。</li>
+<li>RM (Resource Manager) - 资源管理器：管理分支事务处理的资源，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。</li>
+</ul>
+<p><strong>处理过程</strong></p>
+<ul>
+<li>TM 向 TC 申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的 XID；</li>
+<li>XID 在微服务调用链路的上下文中传播；</li>
+<li>RM 向 TC 注册分支事务，将其纳入 XID 对应全局事务的管辖；</li>
+<li>TM 向 TC 发起针对 XID 的全局提交或回滚决议；</li>
+<li>TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。</li>
+</ul>
+<h2 id="Seata分布式事务框架实现原理"><a href="#Seata分布式事务框架实现原理" class="headerlink" title="Seata分布式事务框架实现原理"></a>Seata分布式事务框架实现原理</h2><blockquote>
+<p>Seata有三个组成部分<br>事务协调器TC：协调者<br>事务管理器TM：发起方<br>资源管理器RM：参与方</p>
+</blockquote>
+<ul>
+<li>发起方会向协调者申请一个全局事务id，并保存到ThreadLocal中（为什么要保存到ThreadLocal中？弱引用，线程之间不会发生数据冲突；</li>
+<li>Seata数据源代理发起方和参与方的数据源，将前置镜像和后置镜像写入到undo_log表中，方便后期回滚使用；</li>
+<li>发起方获取全局事务id，通过改写Feign客户端请求头传入全局事务id；</li>
+<li>参与方从请求头中获取全局事务id保存到ThreadLocal中，并把该分支注册到SeataServer中；</li>
+<li>如果没有出现异常，发起方会通知协调者，协调者通知所有分支，通过全局事务id和本地事务id删除undo_log数据，如果出现异常，通过undo_log逆向生成sql语句并执行，然后删除undo_log语句。如果处理业务逻辑代码超时，也会回滚。</li>
+</ul>
 <h1 id="9-Doubbo篇"><a href="#9-Doubbo篇" class="headerlink" title="9. Doubbo篇"></a>9. Doubbo篇</h1><h2 id="Dubbo是什么？"><a href="#Dubbo是什么？" class="headerlink" title="Dubbo是什么？"></a>Dubbo是什么？</h2><p>Dubbo是阿里巴巴开源的基于 Java 的高性能 RPC 分布式服务框架，现已成为 Apache 基金会孵化项目。</p>
 <p>其核心部分包含：</p>
 <ul>
@@ -7464,31 +7587,31 @@ jhsdb jmap  <span class="token operator">--</span>binaryheap <span class="token 
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/10/spring-transactional-question/">
+                <a href="/2022/09/interview-java-core-base/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="Spring事务失效的这10种坑，看看你踩中没！！！">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="Java问答知识总结篇-基础知识">
                         
-                        <span class="card-title">Spring事务失效的这10种坑，看看你踩中没！！！</span>
+                        <span class="card-title">Java问答知识总结篇-基础知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            对于从事java开发工作的同学来说，spring的事务肯定再熟悉不过了，spring事务大多数情况下，可以满足我们的业务需求，但是一不小心就会踩坑的哦。
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-10
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Spring/" class="post-category">
-                                    Spring
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
                                 </a>
                             
                             
@@ -7498,8 +7621,8 @@ jhsdb jmap  <span class="token operator">--</span>binaryheap <span class="token 
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Spring%E4%BA%8B%E5%8A%A1-%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88/">
-                        <span class="chip bg-color">Spring事务 - 事务失效</span>
+                    <a href="/tags/Java%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">Java基础</span>
                     </a>
                     
                 </div>
@@ -7513,31 +7636,31 @@ jhsdb jmap  <span class="token operator">--</span>binaryheap <span class="token 
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/09/java-jvm-jit-escape-analysis/">
+                <a href="/2022/09/interview-java-core-application/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Java中JIT优化中最重要的逃逸分析">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="Java问答知识总结篇-场景分析题">
                         
-                        <span class="card-title">Java中JIT优化中最重要的逃逸分析</span>
+                        <span class="card-title">Java问答知识总结篇-场景分析题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            逃逸分析(Escape Analysis)是一种可以有效减少Java 程序中同步负载和内存堆分配压力的算法。通过逃逸分析，Java Hotspot编译器能够分析出一个新的对象的引用的使用范围，从而决定是否要将这个对象分配到堆上。
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-category">
-                                    Java虚拟机
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
                                 </a>
                             
                             
@@ -7547,12 +7670,8 @@ jhsdb jmap  <span class="token operator">--</span>binaryheap <span class="token 
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JVM/">
-                        <span class="chip bg-color">JVM</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90/">
-                        <span class="chip bg-color">逃逸分析</span>
+                    <a href="/tags/%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90%E9%A2%98/">
+                        <span class="chip bg-color">场景分析题</span>
                     </a>
                     
                 </div>
@@ -7747,7 +7866,7 @@ jhsdb jmap  <span class="token operator">--</span>binaryheap <span class="token 
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">452.6k</span>
+                        class="white-color">644.8k</span>
             
             
             
