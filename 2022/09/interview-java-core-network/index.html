@@ -384,16 +384,16 @@
 <li>网页扩展名改变(如应用需要把.php改成.Html或.shtml)。 </li>
 </ol>
 <h2 id="Forward-和-Redirect-的区别"><a href="#Forward-和-Redirect-的区别" class="headerlink" title="Forward 和 Redirect 的区别"></a>Forward 和 Redirect 的区别</h2><ul>
-<li>浏览器 URL 地址：Forward 是服务器内部的重定向，服务器内部请求某个 servlet，然后获取响应的内容，浏览器的 URL 地址是不会变化的；Redirect 是客户端请求服务器，然后服务给客户端返回了一个 302 状态码和新的 location，客户端重新发起 HTTP 请求，服务器给客户端响应 location 对应的 URL 地址，浏览器的 URL 地址发生了变化。</li>
-<li>数据的共享：Forward 是服务器内部的重定向，request 在整个重定向过程中是不变的，request 中的信息在 servlet 间是共享的。Redirect 发起了两次 HTTP 请求分别使用不同的request。</li>
-<li>请求的次数：Forward 只有一次请求；Redirect 有两次请求。</li>
+<li><strong>浏览器 URL 地址：</strong>Forward 是服务器内部的重定向，服务器内部请求某个 servlet，然后获取响应的内容，浏览器的 URL 地址是不会变化的；Redirect 是客户端请求服务器，然后服务给客户端返回了一个 302 状态码和新的 location，客户端重新发起 HTTP 请求，服务器给客户端响应 location 对应的 URL 地址，浏览器的 URL 地址发生了变化。</li>
+<li><strong>数据的共享：</strong>Forward 是服务器内部的重定向，request 在整个重定向过程中是不变的，request 中的信息在 servlet 间是共享的。Redirect 发起了两次 HTTP 请求分别使用不同的request。</li>
+<li><strong>请求的次数：</strong>Forward 只有一次请求；Redirect 有两次请求。</li>
 </ul>
 <h2 id="Get-和-Post-请求有哪些区别"><a href="#Get-和-Post-请求有哪些区别" class="headerlink" title="Get 和 Post 请求有哪些区别"></a>Get 和 Post 请求有哪些区别</h2><h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><ul>
 <li>get 请求用来从服务器获取资源</li>
 <li>post 请求用来向服务器提交数据</li>
 </ul>
 <h3 id="表单的提交方式"><a href="#表单的提交方式" class="headerlink" title="表单的提交方式"></a>表单的提交方式</h3><ul>
-<li>get 请求直接将表单数据以 name1=value1&amp;name2=value2 的形式拼接到 URL 上<code>http://www.baidu.com/action?name1=value1&amp;name2=value2</code>，多个参数参数值需要用 &amp; 连接起来并且用 ? 拼接到 action 后面；</li>
+<li>get 请求直接将表单数据以 <code>name1=value1&amp;name2=value2</code> 的形式拼接到 URL 上<code>http://www.baidu.com/action?name1=value1&amp;name2=value2</code>，多个参数参数值需要用 <code>&amp;</code> 连接起来并且用 <code>?</code> 拼接到 action 后面；</li>
 <li>post 请求将表单数据放到请求头或者请求的消息体中。</li>
 </ul>
 <h3 id="传输数据的大小限制"><a href="#传输数据的大小限制" class="headerlink" title="传输数据的大小限制"></a>传输数据的大小限制</h3><ul>
@@ -409,10 +409,10 @@
 <li>post 请求不会被缓存也不能被收藏为标签。</li>
 </ul>
 <h2 id="说说-TCP-与-UDP-的区别，以及各自的优缺点"><a href="#说说-TCP-与-UDP-的区别，以及各自的优缺点" class="headerlink" title="说说 TCP 与 UDP 的区别，以及各自的优缺点"></a>说说 TCP 与 UDP 的区别，以及各自的优缺点</h2><ul>
-<li>TCP面向连接（如打电话要先拨号建立连接）：UDP是无连接的，即发送数据之前不需要建立连接。</li>
-<li>TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付。tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，还可以对次序乱掉的分包进行顺序控制。</li>
+<li>TCP面向连接（如打电话要先拨号建立连接），UDP是无连接的，即发送数据之前不需要建立连接。</li>
+<li>TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达；UDP尽最大努力交付，即不保证可靠交付。TCP通过校验和，重传控制，序号标识，滑动窗口，确认应答实现可靠传输。如丢包时的重发控制，还可以对次序乱掉的分包进行顺序控制。</li>
 <li>UDP具有较好的实时性，工作效率比TCP高，适用于对高速传输和实时性有较高的通信或广播通信。</li>
-<li>每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信。</li>
+<li>每一条TCP连接只能是点到点的；UDP支持一对一，一对多，多对一和多对多的交互通信。</li>
 <li>TCP对系统资源要求较多，UDP对系统资源要求较少。</li>
 </ul>
 <p><strong>总结如表：</strong></p>
@@ -478,15 +478,15 @@
 <li>广播通信</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210519180008296.png"></p>
-<h2 id="说一下-HTTP-和-HTTPS-的区别"><a href="#说一下-HTTP-和-HTTPS-的区别" class="headerlink" title="说一下 HTTP 和 HTTPS 的区别"></a>说一下 HTTP 和 HTTPS 的区别</h2><p>端口不同：HTTP和 HTTPS 的连接方式不同没用的端口也不一样，HTTP是80， HTTPS 用的是443。</p>
-<p>消耗资源：和HTTP相比，HTTPS通信会因为加解密的处理消耗更多的CPU和内存资源。</p>
-<p>开销： HTTPS 通信需要证书，这类证书通常需要向认证机构申请或者付费购买。</p>
+<h2 id="说一下-HTTP-和-HTTPS-的区别"><a href="#说一下-HTTP-和-HTTPS-的区别" class="headerlink" title="说一下 HTTP 和 HTTPS 的区别"></a>说一下 HTTP 和 HTTPS 的区别</h2><p><strong>端口不同：</strong>HTTP和 HTTPS 的连接方式不同，使用的端口也不一样，HTTP是80， HTTPS 用的是443。</p>
+<p><strong>消耗资源：</strong>和HTTP相比，HTTPS通信会因为加解密的处理消耗更多的CPU和内存资源。</p>
+<p><strong>开销：</strong> HTTPS 通信需要证书，这类证书通常需要向认证机构申请或者付费购买。</p>
 <h2 id="说说HTTP、TCP、Socket-的关系是什么"><a href="#说说HTTP、TCP、Socket-的关系是什么" class="headerlink" title="说说HTTP、TCP、Socket 的关系是什么"></a>说说HTTP、TCP、Socket 的关系是什么</h2><ul>
 <li>TCP/IP 代表传输控制协议/网际协议，指的是一系列协议族。</li>
 <li>HTTP 本身就是一个协议，是从 Web 服务器传输超文本到本地浏览器的传送协议。</li>
 <li>Socket 是 TCP/IP 网络的 API ，其实就是一个门面模式，它把复杂的 TCP/IP 协议族隐藏在Socket 接口后面。对用户来说，一组简单的接口就是全部，让 Socket 去组织数据，以符合指定的协议。</li>
 </ul>
-<p>综上所述：</p>
+<p><strong>综上所述：</strong></p>
 <ul>
 <li>需要 IP 协议来连接网络</li>
 <li>TCP 是一种允许我们安全传输数据的机制，使用 TCP 协议来传输数据的 HTTP 是 Web 服务器和客户端使用的特殊协议。</li>
@@ -494,8 +494,8 @@
 </ul>
 <h2 id="说一下HTTP的长连接与短连接的区别"><a href="#说一下HTTP的长连接与短连接的区别" class="headerlink" title="说一下HTTP的长连接与短连接的区别"></a>说一下HTTP的长连接与短连接的区别</h2><p>HTTP协议的长连接和短连接，实质上是TCP协议的长连接和短连接。</p>
 <h3 id="短连接"><a href="#短连接" class="headerlink" title="短连接"></a>短连接</h3><p><strong>在HTTP/1.0中默认使用短链接</strong>，也就是说，浏览器和服务器每进行一次HTTP操作，就建立一次连接，但任务结束就中断连接。如果客户端访问的某个HTML或其他类型的Web资源，如 JavaScript文件、图像文件、 CSS 文件等。当浏览器每遇到这样一个Web资源，就会建立一个HTTP会话。</p>
-<h3 id="长连接"><a href="#长连接" class="headerlink" title="长连接"></a>长连接</h3><p>从<strong>HTTP/1.1起，默认使用长连接</strong>，用以保持连接特性。在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭。如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。</p>
-<h2 id="HTTP请求报文和响应报文的格式？"><a href="#HTTP请求报文和响应报文的格式？" class="headerlink" title="HTTP请求报文和响应报文的格式？"></a>HTTP请求报文和响应报文的格式？</h2><p><strong>请求报文格式</strong>：</p>
+<h3 id="长连接"><a href="#长连接" class="headerlink" title="长连接"></a>长连接</h3><p>从<strong>HTTP/1.1起，默认使用长连接</strong>，用以保持连接特性。在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭。如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。<code>Keep-Alive</code>不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。</p>
+<h2 id="HTTP请求报文和响应报文的格式？"><a href="#HTTP请求报文和响应报文的格式？" class="headerlink" title="HTTP请求报文和响应报文的格式？"></a>HTTP请求报文和响应报文的格式？</h2><p><strong>请求报文格式：</strong></p>
 <ol>
 <li>请求行（请求方法+URI协议+版本）</li>
 <li>请求头部</li>
@@ -512,7 +512,7 @@ Accept-Encoding:gzip,deflate
 
 username=jinqiao&amp;password=1234 请求主体<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>响应报文</strong>：</p>
+<p><strong>响应报文：</strong></p>
 <ol>
 <li>状态行（版本+状态码+原因短语）</li>
 <li>响应首部</li>
@@ -534,26 +534,26 @@ Content-Length:112
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="HTTP1-0和HTTP1-1的区别"><a href="#HTTP1-0和HTTP1-1的区别" class="headerlink" title="HTTP1.0和HTTP1.1的区别?"></a>HTTP1.0和HTTP1.1的区别?</h2><ul>
-<li><p><strong>长连接</strong>：HTTP 1.1支持长连接（Persistent Connection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟，在HTTP1.1中默认开启<code>Connection： keep-alive</code>，一定程度上弥补了HTTP1.0每次请求都要创建连接的缺点。</p>
+<li><p><strong>长连接：</strong>HTTP 1.1支持长连接（Persistent Connection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟，在HTTP1.1中默认开启<code>Connection:keep-alive</code>，一定程度上弥补了HTTP1.0每次请求都要创建连接的缺点。</p>
 </li>
-<li><p><strong>缓存处理</strong>：在HTTP1.0中主要使用header里的If-Modified-Since,Expires来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略，可供选择的缓存头来控制缓存策略。</p>
+<li><p><strong>缓存处理：</strong>在HTTP1.0中主要使用<code>header</code>里的<code>If-Modified-Since</code>,<code>Expires</code>来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略，可供选择的缓存头来控制缓存策略。</p>
 </li>
-<li><p><strong>带宽优化及网络连接的使用</strong>：HTTP1.0中，存在一些浪费带宽的现象，例如客户端只是需要某个对象的一部分，而服务器却将整个对象送过来了，并且不支持断点续传功能，HTTP1.1则在请求头引入了range头域，它允许只请求资源的某个部分，即返回码是206（Partial Content），这样就方便了开发者自由的选择以便于充分利用带宽和连接。</p>
+<li><p><strong>带宽优化及网络连接的使用：</strong>HTTP1.0中，存在一些浪费带宽的现象，例如客户端只是需要某个对象的一部分，而服务器却将整个对象送过来了，并且不支持断点续传功能，HTTP1.1则在请求头引入了<code>range</code>头域，它允许只请求资源的某个部分，即返回码是<code>206（Partial Content）</code>，这样就方便了开发者自由的选择以便于充分利用带宽和连接。</p>
 </li>
-<li><p><strong>错误通知的管理</strong>：在HTTP1.1中新增了24个错误状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</p>
+<li><p><strong>错误通知的管理：</strong>在HTTP1.1中新增了24个错误状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</p>
 </li>
-<li><p><strong>Host头处理</strong>：在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个IP地址。HTTP1.1的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。</p>
+<li><p><strong>Host头处理：</strong>在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个IP地址。HTTP1.1的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。</p>
 </li>
 </ul>
 <h2 id="HTTP1-1和-HTTP2-0的区别？"><a href="#HTTP1-1和-HTTP2-0的区别？" class="headerlink" title="HTTP1.1和 HTTP2.0的区别？"></a>HTTP1.1和 HTTP2.0的区别？</h2><p>HTTP2.0相比HTTP1.1支持的特性：</p>
 <ul>
-<li><p><strong>新的二进制格式</strong>：HTTP1.1的解析是基于文本。基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，要做到健壮性考虑的场景必然很多，二进制则不同，只认0和1的组合。基于这种考虑HTTP2.0的协议解析决定采用二进制格式，实现方便且健壮。</p>
+<li><p><strong>新的二进制格式：</strong>HTTP1.1的解析是基于文本。基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，要做到健壮性考虑的场景必然很多，二进制则不同，只认0和1的组合。基于这种考虑HTTP2.0的协议解析决定采用二进制格式，实现方便且健壮。</p>
 </li>
-<li><p><strong>多路复用</strong>，即连接共享，即每一个request都是用作连接共享机制的。一个request对应一个id，这样一个连接上可以有多个request，每个连接的request可以随机的混杂在一起，接收方可以根据request的 id将request再归属到各自不同的服务端请求里面。</p>
+<li><p><strong>多路复用：</strong>即连接共享，即每一个request都是用作连接共享机制的。一个request对应一个id，这样一个连接上可以有多个request，每个连接的request可以随机的混杂在一起，接收方可以根据request的 id将request再归属到各自不同的服务端请求里面。</p>
 </li>
-<li><p><strong>头部压缩</strong>，HTTP1.1的头部（header）带有大量信息，而且每次都要重复发送；HTTP2.0使用encoder来减少需要传输的header大小，通讯双方各自cache一份header fields表，既避免了重复header的传输，又减小了需要传输的大小。</p>
+<li><p><strong>头部压缩：</strong>HTTP1.1的头部（header）带有大量信息，而且每次都要重复发送；HTTP2.0使用encoder来减少需要传输的header大小，通讯双方各自cache一份<code>header fields</code>表，既避免了重复header的传输，又减小了需要传输的大小。</p>
 </li>
-<li><p><strong>服务端推送</strong>：服务器除了对最初请求的响应外，服务器还可以额外的向客户端推送资源，而无需客户端明确的请求。</p>
+<li><p><strong>服务端推送：</strong>服务器除了对最初请求的响应外，服务器还可以额外的向客户端推送资源，而无需客户端明确的请求。</p>
 </li>
 </ul>
 <h2 id="HTTP-与-HTTPS-的区别？"><a href="#HTTP-与-HTTPS-的区别？" class="headerlink" title="HTTP 与 HTTPS 的区别？"></a>HTTP 与 HTTPS 的区别？</h2><table>
@@ -647,7 +647,7 @@ Content-Length:112
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210520214432214.png"></p>
 <p>从上面的图可以看到滑动窗口左边的是已发送并且被确认的分组，滑动窗口右边是还没有轮到的分组。</p>
 <p>滑动窗口里面也分为两块，一块是已经发送但是未被确认的分组，另一块是窗口内等待发送的分组。随着已发送的分组不断被确认，窗口内等待发送的分组也会不断被发送。整个窗口就会往右移动，让还没轮到的分组进入窗口内。</p>
-<p>可以看到滑动窗口起到了一个限流的作用，也就是说当前滑动窗口的大小决定了当前 TCP 发送包的速率，而滑动窗口的大小取决于拥塞控制窗口和流量控制窗口的两者间的最小值。</p>
+<p>可以看到滑动窗口起到了一个限流的作用，也就是说当前滑动窗口的大小决定了当前 TCP 发送包的速率，而滑动窗口的大小取决于<strong>拥塞控制窗口</strong>和<strong>流量控制窗口</strong>的两者间的最小值。</p>
 <h2 id="详细讲一下拥塞控制？"><a href="#详细讲一下拥塞控制？" class="headerlink" title="详细讲一下拥塞控制？"></a>详细讲一下拥塞控制？</h2><p>TCP 一共使用了四种算法来实现拥塞控制：</p>
 <ul>
 <li><p>慢开始 (slow-start)；</p>
@@ -668,17 +668,17 @@ Content-Length:112
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210520214146324.png"></p>
 <h2 id="OSI-的七层模型都有哪些"><a href="#OSI-的七层模型都有哪些" class="headerlink" title="OSI 的七层模型都有哪些"></a>OSI 的七层模型都有哪些</h2><p>OSI七层模型一般指开放系统互连参考模型 (Open System Interconnect 简称OSI)是国际标准化组织(ISO)和国际电报电话咨询委员会(CCITT)联合制定的开放系统互连参考模型,为开放式互连信息系统提供了一种功能结构的框架。</p>
 <ul>
-<li>应用层：各种应用程序协议，比如 HTTP、HTTPS、FTP、SOCKS 安全套接字协议、DNS 域名系统、GDP 网关发现协议等等。</li>
-<li>表示层：加密解密、转换翻译、压缩解压缩，比如 LPP 轻量级表示协议。</li>
-<li>会话层：不同机器上的用户建立和管理会话，比如 SSL 安全套接字层协议、TLS 传输层安全协议、RPC 远程过程调用协议等等。</li>
-<li>传输层：接受上一层的数据，在必要的时候对数据进行分割，并将这些数据交给网络层，保证这些数据段有效到达对端，比如 TCP 传输控制协议、UDP 数据报协议。<ul>
-<li>TCP：提供面向连接的、可靠的数据传输服务；</li>
-<li>UDP：提供无连接的、尽最大努力的数据传输服务，但不保证数据传输的可靠性。</li>
+<li><strong>应用层：</strong>各种应用程序协议，比如 HTTP、HTTPS、FTP、SOCKS 安全套接字协议、DNS 域名系统、GDP 网关发现协议等等。</li>
+<li><strong>表示层：</strong>加密解密、转换翻译、压缩解压缩，比如 LPP 轻量级表示协议。</li>
+<li><strong>会话层：</strong>不同机器上的用户建立和管理会话，比如 SSL 安全套接字层协议、TLS 传输层安全协议、RPC 远程过程调用协议等等。</li>
+<li><strong>传输层：</strong>接受上一层的数据，在必要的时候对数据进行分割，并将这些数据交给网络层，保证这些数据段有效到达对端，比如 TCP 传输控制协议、UDP 数据报协议。<ul>
+<li><strong>TCP：</strong>提供面向连接的、可靠的数据传输服务；</li>
+<li><strong>UDP：</strong>提供无连接的、尽最大努力的数据传输服务，但不保证数据传输的可靠性。</li>
 </ul>
 </li>
-<li>网络层：控制子网的运行：逻辑编址、分组传输、路由选择，比如 IP、IPV6、SLIP 等等。</li>
-<li>数据链路层：物理寻址，同时将原始比特流转变为逻辑传输路线，比如 XTP 压缩传输协议、PPTP 点对点隧道协议等等。</li>
-<li>物理层：机械、电子、定时接口通信信道上的原始比特流传输，比如 IEEE802.2 等等。</li>
+<li><strong>网络层：</strong>控制子网的运行：逻辑编址、分组传输、路由选择，比如 IP、IPV6、SLIP 等等。</li>
+<li><strong>数据链路层：</strong>物理寻址，同时将原始比特流转变为逻辑传输路线，比如 XTP 压缩传输协议、PPTP 点对点隧道协议等等。</li>
+<li><strong>物理层：</strong>机械、电子、定时接口通信信道上的原始比特流传输，比如 IEEE802.2 等等。</li>
 </ul>
 <h2 id="说说TCP-IP四层网络模型"><a href="#说说TCP-IP四层网络模型" class="headerlink" title="说说TCP/IP四层网络模型"></a>说说TCP/IP四层网络模型</h2><p>TCP/IP分层模型（TCP/IP Layening Model）被称作因特网分层模型(Internet Layering Model)、因特网参考模型(Internet Reference Model)。</p>
 <p>TCP/IP协议被组织成四个概念层，其中有三层对应于ISO参考模型中的相应层。ICP/IP协议族并不包含物理层和数据链路层，因此它不能独立完成整个计算机网络系统的功能，必须与许多其他的协议协同工作。</p>
@@ -703,8 +703,8 @@ Content-Length:112
 </ul>
 <p>应用层对应于OSI七层参考模型的应用层和表达层。</p>
 <p>因特网的应用层协议包括Finger、Whois、FTP(文件传输协议)、Gopher、HTTP(超文本传输协议)、Telent(远程终端协议)、SMTP(简单邮件传送协议)、IRC(因特网中继会话)、NNTP（网络新闻传输协议）等。</p>
-<h2 id="如何实现跨域"><a href="#如何实现跨域" class="headerlink" title="如何实现跨域"></a>如何实现跨域</h2><p>当浏览器执行 JS 脚本的时候，会检测脚本要访问的协议、域名、端口号是不是和当前网址一致，如果不一致就是跨域。跨域是不允许的，这种限制叫做浏览器的同源策略，简单点的说法就是浏览器不允许一个源中加载脚本与其他源中的资源进行交互。那么如何实现跨域呢？主要实现方式有三种：JSONP、CORS方式、代理方式。</p>
-<h3 id="JSONP-方式"><a href="#JSONP-方式" class="headerlink" title="JSONP 方式"></a>JSONP 方式</h3><p>script、img、iframe、link、video、audio 等带有 src 属性的标签可以跨域请求和执行资源，JSONP 利用这一点“漏洞”实现跨域。</p>
+<h2 id="如何实现跨域"><a href="#如何实现跨域" class="headerlink" title="如何实现跨域"></a>如何实现跨域</h2><p>当浏览器执行 JS 脚本的时候，会检测脚本要访问的协议、域名、端口号是不是和当前网址一致，如果不一致就是跨域。跨域是不允许的，这种限制叫做<strong>浏览器的同源策略</strong>，简单点的说法就是浏览器不允许一个源中加载脚本与其他源中的资源进行交互。那么如何实现跨域呢？主要实现方式有三种：JSONP、CORS方式、代理方式。（<strong>现在根据更多的时使用代理模式，使用Nginx进行统一代理</strong>）</p>
+<h3 id="JSONP-方式"><a href="#JSONP-方式" class="headerlink" title="JSONP 方式"></a>JSONP 方式</h3><p><code>script、img、iframe、link、video、audio</code> 等带有 <code>src</code> 属性的标签可以跨域请求和执行资源，JSONP 利用这一点“漏洞”实现跨域。</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
  <span class="token keyword">var</span> scriptTag <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'script'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
  scriptTag<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token string">"text/javascript"</span><span class="token punctuation">;</span>
@@ -729,9 +729,9 @@ Content-Length:112
 <p>JSONP 实现跨域很简单但是只支持 GET 请求方式。而且在服务器端接受到 JSONP 请求后需要设置请求头，添加 <code>Access-Control-Allow-Origin</code>属性，属性值为 * ，表示允许所有域名访问，这样浏览器才会正常解析，否则会报 406 错误。</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">response<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">"Access-Control-Allow-Origin"</span><span class="token punctuation">,</span> <span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="CORS-方式"><a href="#CORS-方式" class="headerlink" title="CORS 方式"></a>CORS 方式</h3><p>CORS（Cross-Origin Resource Sharing）即跨域资源共享，需要浏览器和服务器同时支持，这种请求方式分为简单请求和非简单请求。</p>
-<p>当浏览器发出的 XMLHttpRequest 请求的请求方式是 POST 或者 GET，请求头中只包含 Accept、Accept-Language、Content-Language、Last-Event-ID、Content-Type（applicationx-www-form-urlencoded、multipart/form-data、text/plain）时那么这个请求就是一个简单请求。</p>
-<p>对于简单的请求，浏览器会在请求头中添加 Origin 属性，标明本次请求来自哪个源（协议 + 域名 +端口）。</p>
+<h3 id="CORS-方式"><a href="#CORS-方式" class="headerlink" title="CORS 方式"></a>CORS 方式</h3><p>CORS-Origin Resource Sharing）即跨域资源共享，需要浏览器和服务器同时支持，这种请求方式分为简单请求和非简单请求。</p>
+<p>当浏览器发出的 XMLHttpRequest 请求的请求方式是 POST 或者 GET，请求头中只包含 <code>Accept、Accept-Language、Content-Language、Last-Event-ID、Content-Type（applicationx-www-form-urlencoded、multipart/form-data、text/plain）</code>时那么这个请求就是一个简单请求。</p>
+<p>对于简单的请求，浏览器会在请求头中添加 Origin 属性，标明本次请求来自哪个源（协议 + 域名 + 端口）。</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json">GET
 <span class="token comment">// 标明本次请求来自哪个源（协议+域名+端口）</span>
 Origin<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//127.0.0.1:8080</span>
@@ -757,7 +757,7 @@ xhr.withCredentials = <span class="token boolean">true</span>;
 xhr.open('post'<span class="token punctuation">,</span> 'http<span class="token operator">:</span><span class="token comment">//10.10.0.101:8899/login', true);</span>
 xhr.setRequestHeader('Content-Type'<span class="token punctuation">,</span> 'text/plain');<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>另外一种是非简单请求，请求方式是 PUT 或 DELETE，或者请求头中添加了Content-Type:application/json 属性和属性值的请求。</p>
+<p>另外一种是非简单请求，请求方式是 PUT 或 DELETE，或者请求头中添加了 <code>Content-Type:application/json</code> 属性和属性值的请求。</p>
 <p>这种请求在浏览器正式发出 XMLHttpRequest 请求前会先发送一个预检 HTTP 请求，询问服务器当前网页的域名是否在服务器的许可名单之中，只有得到服务器的肯定后才会正式发出通信请求。</p>
 <p>预检请求的头信息：</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token comment">// 预检请求的请求方式是 OPTIONS</span>
@@ -1470,7 +1470,7 @@ net.ipv4.tcp_tw_recycle <span class="token operator">=</span> <span class="token
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">644.8k</span>
+                        class="white-color">650.3k</span>
             
             
             
