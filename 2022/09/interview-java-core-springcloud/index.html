@@ -383,7 +383,7 @@
 <p>通常对于使用微服务架构开发的系统，涉及到许多微服务。这些微服务彼此协作。</p>
 <p>比如一个服务调用链路是A调用B，B调用C，C调用D。如果D出现网络短时的中断，这个收就会导致整个链路堵塞在C位置，增加了C的压力，有可能导致C的崩溃，同理可能影响到B、A，最终引起服务雪崩的问题。</p>
 <p>使用Hystrix在这种情况下的Fallback方法功能。在C服务中定义fallback（回退）处理逻辑，及时的给出反馈信息。很好的预防服务雪崩的问题。</p>
-<h2 id="说说-RPC-的实现原理"><a href="#说说-RPC-的实现原理" class="headerlink" title="说说 RPC 的实现原理"></a>说说 RPC 的实现原理</h2><p>首先需要有处理网络连接通讯的模块，负责连接建立、管理和消息的传输。其次需要有编解码的模块，因为网络通讯都是传输的字节码，需要将我们使用的对象序列化和反序列 化。剩下的就是客户端和服务器端的部分，服务器端暴露要开放的服务接口，客户调用服 务接口的一个代理实现，这个代理实现负责收集数据、编码并传输给服务器然后等待结果返回。</p>
+<h2 id="说说-RPC-的实现原理"><a href="#说说-RPC-的实现原理" class="headerlink" title="说说 RPC 的实现原理"></a>说说 RPC 的实现原理</h2><p>首先需要有处理网络连接通讯的模块，负责连接建立、管理和消息的传输。其次需要有编解码的模块，因为网络通讯都是传输的字节码，需要将我们使用的对象序列化和反序列化。剩下的就是客户端和服务器端的部分，服务器端暴露要开放的服务接口，客户调用服务接口的一个代理实现，这个代理实现负责收集数据、编码并传输给服务器然后等待结果返回。</p>
 <h2 id="Eureka自我保护机制是什么"><a href="#Eureka自我保护机制是什么" class="headerlink" title="Eureka自我保护机制是什么"></a>Eureka自我保护机制是什么</h2><p>当Eureka Server 节点在短时间内丢失了过多实例的连接时（比如网络故障或频繁启动关闭客户端）节点会进入自我保护模式，保护注册信息，不再删除注册数据，故障恢复时，自动退出自我保护模式。</p>
 <h2 id="什么是Ribbon"><a href="#什么是Ribbon" class="headerlink" title="什么是Ribbon"></a>什么是Ribbon</h2><p>ribbon是一个负载均衡客户端，可以很好的控制htt和tcp的一些行为。feign默认集成了ribbon。</p>
 <h2 id="什么是-Feigin-？它的优点是什么"><a href="#什么是-Feigin-？它的优点是什么" class="headerlink" title="什么是 Feigin ？它的优点是什么"></a>什么是 Feigin ？它的优点是什么</h2><ol>
@@ -397,8 +397,8 @@
 <li>服务指定的位置不同，Ribbon是在@RibbonClient注解上声明，Feign则是在定义抽象方法的接口中使用@FeignClient声明</li>
 <li>调用方式不同，Ribbon需要自己构建http请求，模拟http请求</li>
 </ol>
-<h2 id="什么是Spring-Cloud-Gateway"><a href="#什么是Spring-Cloud-Gateway" class="headerlink" title="什么是Spring Cloud Gateway"></a>什么是Spring Cloud Gateway</h2><p>Spring Cloud Gateway是Spring Cloud官方推出的第二代网关框架，取代Zuul网关。网关作为流量的，在微服务系统中有着非常作用，网关常见的功能有路由转发、权限校验、限流控制等作用。</p>
-<p>使用了一个RouteLocatorBuilder的bean去创建路由，除了创建路由RouteLocatorBuilder可以让你添加各种predicates和filters，predicates断言的意思，顾名思义就是根据具体的请求的规则，由具体的route去处理，filters是各种过滤器，用来对请求做各种判断和修改。</p>
+<h2 id="什么是Spring-Cloud-Gateway"><a href="#什么是Spring-Cloud-Gateway" class="headerlink" title="什么是Spring Cloud Gateway"></a>什么是Spring Cloud Gateway</h2><p>Spring Cloud Gateway是Spring Cloud官方推出的第二代网关框架，取代Zuul网关。网关作为流量的入口，在微服务系统中有着非常重要的作用，网关常见的功能有路由转发、权限校验、限流控制等作用。</p>
+<p>使用了一个<code>RouteLocatorBuilder</code>的bean去创建路由，除了创建路由<code>RouteLocatorBuilder</code>可以让你添加各种<code>predicates</code>和<code>filters</code>，<code>predicates</code>断言的意思，顾名思义就是根据具体的请求的规则，由具体的<code>route</code>去处理，<code>filters</code>是各种过滤器，用来对请求做各种判断和修改。</p>
 <h2 id="什么是Spring-Cloud-Alibaba"><a href="#什么是Spring-Cloud-Alibaba" class="headerlink" title="什么是Spring Cloud Alibaba"></a>什么是Spring Cloud Alibaba</h2><p>Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用微服务的必需组件，方便开发者通过 Spring Cloud 编程模型轻松使用这些组件来开发分布式应用服务。</p>
 <h2 id="Spring-Cloud-Alibaba有哪些功能"><a href="#Spring-Cloud-Alibaba有哪些功能" class="headerlink" title="Spring Cloud Alibaba有哪些功能"></a>Spring Cloud Alibaba有哪些功能</h2><ul>
 <li><p><strong>服务限流降级（Sentinel）：</strong>默认支持 WebServlet、WebFlux, OpenFeign、RestTemplate、Spring Cloud Gateway, Zuul, Dubbo 和 RocketMQ 限流降级功能的接入，可以在运行时通过控制台实时修改限流降级规则，还支持查看限流降级 Metrics 监控。</p>
@@ -409,7 +409,7 @@
 </li>
 <li><p><strong>消息驱动能力：</strong>基于 Spring Cloud Stream 为微服务应用构建消息驱动能力。</p>
 </li>
-<li><p><strong>分布式事务（Seata）：</strong>使用 @GlobalTransactional 注解， 高效并且对业务零侵入地解决分布式事务问题。</p>
+<li><p><strong>分布式事务（Seata）：</strong>使用 <code>@GlobalTransactional</code> 注解， 高效并且对业务零侵入地解决分布式事务问题。</p>
 </li>
 <li><p><strong>阿里云对象存储：</strong>阿里云提供的海量、安全、低成本、高可靠的云存储服务。支持在任何应用、任何时间、任何地点存储和访问任意类型的数据。</p>
 </li>
@@ -459,7 +459,7 @@
 <li><p>服务和元数据管理Nacos 能让您从微服务平台建设的视角管理数据中心的所有服务及元数据，包括管理服务的描述、生命周期、服务的静态依赖分析、服务的健康状态、服务的流量管理、路由及安全策略。</p>
 </li>
 </ol>
-<h2 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h2><p>在微服务架构中一个业务流程需要多个微服务通过网络接口调用完成业务处理，服务消费方从服务注册中心获取服 务提供方的地址，从而进行远程调用，这个过程叫做服务发现。</p>
+<h2 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h2><p>在微服务架构中一个业务流程需要多个微服务通过网络接口调用完成业务处理，服务消费方从服务注册中心获取服务提供方的地址，从而进行远程调用，这个过程叫做服务发现。</p>
 <h3 id="服务发现流程"><a href="#服务发现流程" class="headerlink" title="服务发现流程"></a>服务发现流程</h3><ol>
 <li><p>服务实例本身并不记录服务生产方的网络地址，所有服务实例内部都会包含服务发现客户端。</p>
 </li>
@@ -1279,7 +1279,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">650.3k</span>
+                        class="white-color">654.7k</span>
             
             
             

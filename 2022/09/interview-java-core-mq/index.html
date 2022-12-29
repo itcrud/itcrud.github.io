@@ -336,14 +336,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.9k
+                    16.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    45 分
+                    57 分
                 </div>
                 
 
@@ -470,13 +470,13 @@
 <h2 id="RabbitMQ是什么？"><a href="#RabbitMQ是什么？" class="headerlink" title="RabbitMQ是什么？"></a>RabbitMQ是什么？</h2><p>RabbitMQ是实现了高级消息队列协议（AMQP）的开源消息代理软件（亦称面向消息的中间件）。RabbitMQ服务器是用Erlang语言编写的，而群集和故障转移是构建在开放电信平台框架上的。所有主要的编程语言均有与代理接口通讯的客户端库。</p>
 <h2 id="RabbitMQ特点"><a href="#RabbitMQ特点" class="headerlink" title="RabbitMQ特点?"></a>RabbitMQ特点?</h2><p><strong>可靠性:</strong> RabbitMQ使用一些机制来保证可靠性， 如持久化、传输确认及发布确认等。</p>
 <p><strong>灵活的路由:</strong> 在消息进入队列之前，通过交换器来路由消息。对于典型的路由功能， RabbitMQ 己经提供了一些内置的交换器来实现。针对更复杂的路由功能，可以将多个 交换器绑定在一起， 也可以通过插件机制来实现自己的交换器。</p>
-<p><strong>扩展性:</strong> 多个RabbitMQ节点可以组成一个集群，也可以根据实际业务情况动态地扩展 集群中节点。</p>
-<p><strong>高可用性:</strong> 队列可以在集群中的机器上设置镜像，使得在部分节点出现问题的情况下队 列仍然可用。</p>
-<p><strong>多种协议:</strong> RabbitMQ除了原生支持AMQP协议，还支持STOMP， MQTT等多种消息 中间件协议。</p>
+<p><strong>扩展性:</strong> 多个RabbitMQ节点可以组成一个集群，也可以根据实际业务情况动态地扩展集群中节点。</p>
+<p><strong>高可用性:</strong> 队列可以在集群中的机器上设置镜像，使得在部分节点出现问题的情况下队列仍然可用。</p>
+<p><strong>多种协议:</strong> RabbitMQ除了原生支持AMQP协议，还支持STOMP， MQTT等多种消息中间件协议。</p>
 <p><strong>多语言客户端:</strong> RabbitMQ 几乎支持所有常用语言，比如 Java、 Python、 Ruby、 PHP、 C#、 JavaScript 等。</p>
-<p><strong>管理界面:</strong> RabbitMQ 提供了一个易用的用户界面，使得用户可以监控和管理消息、集 群中的节点等。</p>
-<p><strong>令插件机制:</strong> RabbitMQ 提供了许多插件 ， 以实现从多方面进行扩展，当然也可以编写自 己的插件。</p>
-<h2 id="AMQP是什么"><a href="#AMQP是什么" class="headerlink" title="AMQP是什么?"></a>AMQP是什么?</h2><p>RabbitMQ就是 AMQP 协议的 <code>Erlang</code> 的实现(当然 RabbitMQ 还支持 <code>STOMP2</code>、 <code>MQTT3</code> 等协议 ) AMQP 的模型架构 和 RabbitMQ 的模型架构是一样的，生产者将消息发送给交换器，交换器和队列绑定 。</p>
+<p><strong>管理界面:</strong> RabbitMQ 提供了一个易用的用户界面，使得用户可以监控和管理消息、集群中的节点等。</p>
+<p><strong>令插件机制:</strong> RabbitMQ 提供了许多插件 ， 以实现从多方面进行扩展，当然也可以编写自己的插件。</p>
+<h2 id="AMQP是什么"><a href="#AMQP是什么" class="headerlink" title="AMQP是什么?"></a>AMQP是什么?</h2><p>RabbitMQ就是 AMQP 协议的 <code>Erlang</code> 的实现(当然 RabbitMQ 还支持 <code>STOMP2</code>、 <code>MQTT3</code> 等协议 ) AMQP 的模型架构和 RabbitMQ 的模型架构是一样的，生产者将消息发送给交换器，交换器和队列绑定。</p>
 <p>RabbitMQ 中的交换器、交换器类型、队列、绑定、路由键等都是遵循的 AMQP 协议中相 应的概念。目前 RabbitMQ 最新版本默认支持的是 AMQP 0-9-1。</p>
 <h2 id="AMQP的3层协议？"><a href="#AMQP的3层协议？" class="headerlink" title="AMQP的3层协议？"></a>AMQP的3层协议？</h2><ul>
 <li><p><strong>Module Layer:</strong> 协议最高层，主要定义了一些客户端调用的命令，客户端可以用这些命令实现自己的业务逻辑。</p>
@@ -487,7 +487,7 @@
 </li>
 </ul>
 <h2 id="说说Broker服务节点、Queue队列、Exchange交换器？"><a href="#说说Broker服务节点、Queue队列、Exchange交换器？" class="headerlink" title="说说Broker服务节点、Queue队列、Exchange交换器？"></a>说说Broker服务节点、Queue队列、Exchange交换器？</h2><ul>
-<li><strong>Broker：</strong>可以看做RabbitMQ的服务节点。一般请下一个Broker可以看做一个RabbitMQ服务器。</li>
+<li><strong>Broker：</strong>可以看做RabbitMQ的服务节点。一般一个Broker可以看做一个RabbitMQ服务器。</li>
 <li><strong>Queue：</strong>RabbitMQ的内部对象，用于存储消息。多个消费者可以订阅同一队列，这时队列中的消息会被平摊（轮询）给多个消费者进行处理。</li>
 <li><strong>Exchange：</strong>生产者将消息发送到交换器，由交换器将消息路由到一个或者多个队列中。当路由不到时，或返回给生产者或直接丢弃。</li>
 </ul>
@@ -554,7 +554,77 @@
 <p><strong>单机模式</strong>：就是demo级别的，一般就是你本地启动了玩玩儿的，没人生产用单机模式</p>
 <p><strong>普通集群模式</strong>：意思就是在多台机器上启动多个RabbitMQ实例，每个机器启动一个。</p>
 <p><strong>镜像集群模式</strong>：这种模式，才是所谓的RabbitMQ的高可用模式，跟普通集群模式不一样的是，你创建的queue，无论元数据(元数据指RabbitMQ的配置数据)还是queue里的消息都会存在于多个实例上，然后每次你写消息到queue的时候，都会自动把消息到多个实例的queue里进行消息同步。</p>
-<h2 id="RabbitMQ中Exchange的分发策略"><a href="#RabbitMQ中Exchange的分发策略" class="headerlink" title="RabbitMQ中Exchange的分发策略"></a>RabbitMQ中Exchange的分发策略</h2><p>Direct 键（routing key）分布：消息中的路由键（routing key）如果和 Binding 中的 binding key 一致，交换器就将消息发到对应的队列中。它是完全匹配、单播的模式。<br>Fanout（广播分发）：每个发到 fanout 类型交换器的消息都会分到所有绑定的队列上去。很像子网广播，每台子网内的主机都获得了一份复制的消息。fanout 类型转发消息是最快的。<br>topic交换器：topic 交换器通过模式匹配分配消息的路由键属性，将路由键和某个模式进行匹配，此时队列需要绑定到一个模式上。它将路由键和绑定键的字符串切分成单词，这些单词之间用点隔开。它同样也会识别两个通配符：符号“#”和符号“”。#匹配 0 个或多个单词，匹配不多不少一个单词。</p>
+<h2 id="RabbitMQ的基础概念"><a href="#RabbitMQ的基础概念" class="headerlink" title="RabbitMQ的基础概念"></a>RabbitMQ的基础概念</h2><p><strong>ConnectionFactory、Connection、Channel</strong></p>
+<p>ConnectionFactory、Connection、Channel都是RabbitMQ对外提供的API中最基本的对象。Connection是RabbitMQ的socket链接，它封装了socket协议相关部分逻辑。ConnectionFactory为Connection的制造工厂。</p>
+<p>Channel是我们与RabbitMQ打交道的最重要的一个接口，我们大部分的业务操作是在Channel这个接口中完成的，包括定义Queue、定义Exchange、绑定Queue与Exchange、发布消息等。</p>
+<p><strong>Queue</strong></p>
+<p>Queue（队列）是RabbitMQ的内部对象，用于存储消息，用下图表示。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819103814085-804287529.png"></p>
+<p>RabbitMQ中的消息都只能存储在Queue中，生产者（下图中的P）生产消息并最终投递到Queue中，消费者（下图中的C）可以从Queue中获取消息并消费。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819103830954-867723738.png"></p>
+<p>多个消费者可以订阅同一个Queue，这时Queue中的消息会被平均分摊给多个消费者进行处理，而不是每个消费者都收到所有的消息并处理。</p>
+<p><strong>Message acknowledgment</strong></p>
+<p>在实际应用中，可能会发生消费者收到Queue中的消息，但没有处理完成就宕机（或出现其他意外）的情况，这种情况下就可能会导致消息丢失。为了避免这种情况发生，我们可以要求消费者在消费完消息后发送一个回执给RabbitMQ，RabbitMQ收到消息回执（Message acknowledgment）后才将该消息从Queue中移除；如果RabbitMQ没有收到回执并检测到消费者的RabbitMQ连接断开，则RabbitMQ会将该消息发送给其他消费者（如果存在多个消费者）进行处理。这里不存在timeout概念，一个消费者处理消息时间再长也不会导致该消息被发送给其他消费者，除非它的RabbitMQ连接断开。</p>
+<p>这里会产生另外一个问题，如果我们的开发人员在处理完业务逻辑后，忘记发送回执给RabbitMQ，这将会导致严重的bug——Queue中堆积的消息会越来越多；消费者重启后会重复消费这些消息并重复执行业务逻辑…</p>
+<p><strong>Message durability</strong></p>
+<p>如果我们希望即使在RabbitMQ服务重启的情况下，也不会丢失消息，我们可以将Queue与Message都设置为可持久化的（durable），这样可以保证绝大部分情况下我们的RabbitMQ消息不会丢失。但依然解决不了小概率丢失事件的发生（比如RabbitMQ服务器已经接收到生产者的消息，但还没来得及持久化该消息时RabbitMQ服务器就断电了），如果我们需要对这种小概率事件也要管理起来，那么我们要用到事务。由于这里仅为RabbitMQ的简单介绍，所以这里将不讲解RabbitMQ相关的事务。</p>
+<p><strong>Prefetch count</strong></p>
+<p>前面我们讲到如果有多个消费者同时订阅同一个Queue中的消息，Queue中的消息会被平摊给多个消费者。这时如果每个消息的处理时间不同，就有可能会导致某些消费者一直在忙，而另外一些消费者很快就处理完手头工作并一直空闲的情况。我们可以通过设置prefetchCount来限制Queue每次发送给每个消费者的消息数，比如我们设置prefetchCount=1，则Queue每次给每个消费者发送一条消息；消费者处理完这条消息后Queue会再给该消费者发送一条消息。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819104007647-1027286628.png"></p>
+<p><strong>Exchange</strong></p>
+<p>在上一节我们看到生产者将消息投递到Queue中，实际上这在RabbitMQ中这种事情永远都不会发生。实际的情况是，生产者将消息发送到Exchange（交换器，下图中的X），由Exchange将消息路由到一个或多个Queue中（或者丢弃）。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819104028789-412276700.png"></p>
+<p>Exchange是按照什么逻辑将消息路由到Queue的？这个将在Binding一节介绍。</p>
+<p>RabbitMQ中的Exchange有四种类型，不同的类型有着不同的路由策略，这将在Exchange Types一节介绍。</p>
+<p><strong>routing key</strong></p>
+<p>生产者在将消息发送给Exchange的时候，一般会指定一个routing key，来指定这个消息的路由规则，而这个routing key需要与Exchange Type及binding key联合使用才能最终生效。</p>
+<p>在Exchange Type与binding key固定的情况下（在正常使用时一般这些内容都是固定配置好的），我们的生产者就可以在发送消息给Exchange时，通过指定routing key来决定消息流向哪里。</p>
+<p>RabbitMQ为routing key设定的长度限制为255 bytes。</p>
+<p><strong>Binding</strong></p>
+<p>RabbitMQ中通过Binding将Exchange与Queue关联起来，这样RabbitMQ就知道如何正确地将消息路由到指定的Queue了。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819104128931-1338459538.png"></p>
+<p><strong>Binding key</strong></p>
+<p>在绑定（Binding）Exchange与Queue的同时，一般会指定一个binding key；消费者将消息发送给Exchange时，一般会指定一个routing key；当binding key与routing key相匹配时，消息将会被路由到对应的Queue中。这个将在Exchange Types章节会列举实际的例子加以说明。</p>
+<p>在绑定多个Queue到同一个Exchange的时候，这些Binding允许使用相同的binding key。</p>
+<p>binding key 并不是在所有情况下都生效，它依赖于Exchange Type，比如fanout类型的Exchange就会无视binding key，而是将消息路由到所有绑定到该Exchange的Queue。</p>
+<h2 id="RabbitMQ中Exchange的分发策略（Exchange-Types）"><a href="#RabbitMQ中Exchange的分发策略（Exchange-Types）" class="headerlink" title="RabbitMQ中Exchange的分发策略（Exchange Types）"></a>RabbitMQ中Exchange的分发策略（Exchange Types）</h2><p><strong>fanout</strong></p>
+<p>fanout类型的Exchange路由规则非常简单，它会把所有发送到该Exchange的消息路由到所有与它绑定的Queue中。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819104152177-2053988251.png"></p>
+<p>上图中，生产者（P）发送到Exchange（X）的所有消息都会路由到图中的两个Queue，并最终被两个消费者（C1与C2）消费。</p>
+<p><strong>direct</strong></p>
+<p>direct类型的Exchange路由规则也很简单，它会把消息路由到那些binding key与routing key完全匹配的Queue中。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819104210818-1771762193.png"></p>
+<p>以上图的配置为例，我们以routingKey=”error”发送消息到Exchange，则消息会路由到Queue1（amqp.gen-S9b…，这是由RabbitMQ自动生成的Queue名称）和Queue2（amqp.gen-Agl…）；如果我们以routingKey=”info”或routingKey=”warning”来发送消息，则消息只会路由到Queue2。如果我们以其他routingKey发送消息，则消息不会路由到这两个Queue中。</p>
+<p><strong>topic</strong></p>
+<p>前面讲到direct类型的Exchange路由规则是完全匹配binding key与routing key，但这种严格的匹配方式在很多情况下不能满足实际业务需求。topic类型的Exchange在匹配规则上进行了扩展，它与direct类型的Exchage相似，也是将消息路由到binding key与routing key相匹配的Queue中，但这里的匹配规则有些不同，它约定：</p>
+<ul>
+<li>routing key为一个句点号<code>.</code>分隔的字符串（我们将被句点号<code>.</code>分隔开的每一段独立的字符串称为一个单词），如“stock.usd.nyse”、“nyse.vmw”、“quick.orange.rabbit”</li>
+<li>binding key与routing key一样也是句点号<code>.</code>分隔的字符串</li>
+<li>binding key中可以存在两种特殊字符<code>*</code>与<code>#</code>，用于做模糊匹配，其中<code>*</code>用于匹配一个单词，<code>#</code>用于匹配多个单词（可以是零个）</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819104233644-253637000.png"></p>
+<p>以上图中的配置为例，routingKey=”quick.orange.rabbit”的消息会同时路由到Q1与Q2，routingKey=”lazy.orange.fox”的消息会路由到Q1，routingKey=”lazy.brown.fox”的消息会路由到Q2，routingKey=”lazy.pink.rabbit”的消息会路由到Q2（只会投递给Q2一次，虽然这个routingKey与Q2的两个bindingKey都匹配）；routingKey=”quick.brown.fox”、routingKey=”orange”、routingKey=”quick.orange.male.rabbit”的消息将会被丢弃，因为它们没有匹配任何bindingKey。</p>
+<p><strong>headers</strong></p>
+<p>headers类型的Exchange不依赖于routing key与binding key的匹配规则来路由消息，而是根据发送的消息内容中的headers属性进行匹配。</p>
+<p>在绑定Queue与Exchange时指定一组键值对；当消息发送到Exchange时，RabbitMQ会取到该消息的headers（也是一个键值对的形式），对比其中的键值对是否完全匹配Queue与Exchange绑定时指定的键值对；如果完全匹配则消息会路由到该Queue，否则不会路由到该Queue。</p>
+<p>该类型的Exchange没有用到过（不过也应该很有用武之地），所以不做介绍。</p>
+<p><strong>RPC</strong></p>
+<p>MQ本身是基于异步的消息处理，前面的示例中所有的生产者（P）将消息发送到RabbitMQ后不会知道消费者（C）处理成功或者失败（甚至连有没有消费者来处理这条消息都不知道）。</p>
+<p>但实际的应用场景中，我们很可能需要一些同步处理，需要同步等待服务端将我的消息处理完成后再进行下一步处理。这相当于RPC（Remote Procedure Call，远程过程调用）。在RabbitMQ中也支持RPC。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/774371-20190819104253450-1490098886.png"></p>
+<p>RabbitMQ中实现RPC的机制是：</p>
+<ul>
+<li>客户端发送请求（消息）时，在消息的属性（MessageProperties，在AMQP协议中定义了14中properties，这些属性会随着消息一起发送）中设置两个值replyTo（一个Queue名称，用于告诉服务器处理完成后将通知我的消息发送到这个Queue中）和correlationId（此次请求的标识号，服务器处理完成后需要将此属性返还，客户端将根据这个id了解哪条请求被成功执行了或执行失败）</li>
+<li>服务器端收到消息并处理</li>
+<li>服务器端处理完消息后，将生成一条应答消息到replyTo指定的Queue，同时带上correlationId属性</li>
+<li>客户端之前已订阅replyTo指定的Queue，从中收到服务器的应答消息后，根据其中的correlationId属性分析哪条请求被执行了，根据执行结果进行后续业务处理</li>
+</ul>
+<h2 id="RabbitMQ的持久化、事务和Confirm机制"><a href="#RabbitMQ的持久化、事务和Confirm机制" class="headerlink" title="RabbitMQ的持久化、事务和Confirm机制"></a>RabbitMQ的持久化、事务和Confirm机制</h2><p><strong>持久化</strong></p>
+<p>Rabbit MQ默认是不持久队列、Exchange、Binding以及队列中的消息的，这意味着一旦消息服务器重启，所有已声明的队列，Exchange，Binding以及队列中的消息都会丢失。通过设置Exchange和MessageQueue的<code>durable</code>属性为<code>true</code>，可以使得队列和Exchange持久化，但是这还不能使得队列中的消息持久化，这需要生产者在发送消息的时候，将<code>delivery mode</code>设置为2，只有这3个全部设置完成后，才能保证服务器重启不会对现有的队列造成影响。这里需要注意的是，只有<code>durable</code>为<code>true</code>的Exchange和<code>durable</code>为<code>ture</code>的Queues才能绑定，否则在绑定时，RabbitMQ都会抛错的(也就是说Exchange和Queue需要同时设置为可持久化)。持久化会对RabbitMQ的性能造成比较大的影响，可能会下降10倍不止。</p>
+<p><strong>事务</strong></p>
+<p>对事务的支持是AMQP协议的一个重要特性。假设当生产者将一个持久化消息发送给服务器时，因为consume命令本身没有任何Response返回，所以即使服务器崩溃，没有持久化该消息，生产者也无法获知该消息已经丢失。如果此时使用事务，即通过txSelect()开启一个事务，然后发送消息给服务器，然后通过txCommit()提交该事务，即可以保证，如果txCommit()提交了，则该消息一定会持久化，如果txCommit()还未提交即服务器崩溃，则该消息不会服务器就收。当然Rabbit MQ也提供了txRollback()命令用于回滚某一个事务。</p>
+<p><strong>Confirm机制</strong></p>
+<p>使用事务固然可以保证只有提交的事务，才会被服务器执行。但是这样同时也将客户端与消息服务器同步起来，这背离了消息队列解耦的本质。Rabbit MQ提供了一个更加轻量级的机制来保证生产者可以感知服务器消息是否已被路由到正确的队列中——Confirm。如果设置channel为confirm状态，则通过该channel发送的消息都会被分配一个唯一的ID，然后一旦该消息被正确的路由到匹配的队列中后，服务器会返回给生产者一个Confirm，该Confirm包含该消息的ID，这样生产者就会知道该消息已被正确分发。对于持久化消息，只有该消息被持久化后，才会返回Confirm。Confirm机制的最大优点在于异步，生产者在发送消息以后，即可继续执行其他任务。而服务器返回Confirm后，会触发生产者的<strong>回调函数</strong>，生产者在回调函数中处理Confirm信息。如果消息服务器发生异常，导致该消息丢失，会返回给生产者一个nack，表示消息已经丢失，这样生产者就可以通过重发消息，保证消息不丢失。<strong>Confirm机制在性能上要比事务优越很多</strong>。但是Confirm机制，无法进行回滚，就是一旦服务器崩溃，生产者无法得到Confirm信息，生产者其实本身也不知道该消息是否已经被持久化，只有继续重发来保证消息不丢失，但是如果原先已经持久化的消息，并不会被回滚，这样队列中就会存在两条相同的消息，系统需要支持去重。</p>
 <h2 id="RocketMQ是什么？"><a href="#RocketMQ是什么？" class="headerlink" title="RocketMQ是什么？"></a>RocketMQ是什么？</h2><p>RocketMQ 是阿里巴巴开源的分布式消息中间件。支持事务消息、顺序消息、批量消息、定时消息、消息回溯等。它里面有几个区别于标准消息中件间的概念，如Group、Topic、Queue等。系统组成则由Producer、Consumer、Broker、NameServer等。</p>
 <p><strong>RocketMQ 特点</strong></p>
 <ul>
@@ -664,7 +734,7 @@
 <ul>
 <li>完全消费正常后在进行手动ack确认。</li>
 </ul>
-<h2 id="rocketMQ的消息堆积如何处理？"><a href="#rocketMQ的消息堆积如何处理？" class="headerlink" title="rocketMQ的消息堆积如何处理？"></a>rocketMQ的消息堆积如何处理？</h2><p>首先要找到是什么原因导致的消息堆积，是Producer太多了，Consumer太少了导致的还是说其他情况，总之先定位问题。</p>
+<h2 id="RocketMQ的消息堆积如何处理？"><a href="#RocketMQ的消息堆积如何处理？" class="headerlink" title="RocketMQ的消息堆积如何处理？"></a>RocketMQ的消息堆积如何处理？</h2><p>首先要找到是什么原因导致的消息堆积，是Producer太多了，Consumer太少了导致的还是说其他情况，总之先定位问题。</p>
 <p>然后看下消息消费速度是否正常，正常的话，可以通过上线更多consumer临时解决消息堆积问题</p>
 <h3 id="追问：如果Consumer和Queue不对等，上线了多台也在短时间内无法消费完堆积的消息怎么办？"><a href="#追问：如果Consumer和Queue不对等，上线了多台也在短时间内无法消费完堆积的消息怎么办？" class="headerlink" title="追问：如果Consumer和Queue不对等，上线了多台也在短时间内无法消费完堆积的消息怎么办？"></a>追问：如果Consumer和Queue不对等，上线了多台也在短时间内无法消费完堆积的消息怎么办？</h3><ul>
 <li>准备一个临时的topic</li>
@@ -795,14 +865,14 @@
 <h2 id="如何保证消息的可靠传输？如果消息丢了怎么办"><a href="#如何保证消息的可靠传输？如果消息丢了怎么办" class="headerlink" title="如何保证消息的可靠传输？如果消息丢了怎么办"></a>如何保证消息的可靠传输？如果消息丢了怎么办</h2><p>数据的丢失问题，可能出现在<strong>生产者、MQ、消费者</strong>中。</p>
 <p><strong>生产者丢失：</strong> 生产者将数据发送到 RabbitMQ 的时候，可能数据就在半路给搞丢了，因为网络问题啥的，都有可能。此时可以选择用 RabbitMQ 提供的事务功能，就是生产者发送数据之前开启RabbitMQ 事务channel.txSelect，然后发送消息，如果消息没有成功被 RabbitMQ 接收到，那么生产者会收到异常报错，此时就可以回滚事务channel.txRollback，然后重试发送消息；如果收到了消息，那么可以提交事务channel.txCommit。吞吐量会下来，因为太耗性能。所以一般来说，如果你要确保说写 RabbitMQ 的消息别丢，可以开启confirm模式，在生产者那里设置开启confirm模式之后，你每次写的消息都会分配一个唯一的 id，然后如果写入了 RabbitMQ 中，RabbitMQ 会给你回传一个ack消息，告诉你说这个消息 ok 了。如果 RabbitMQ 没能处理这个消息，会回调你一个nack接口，告诉你这个消息接收失败，你可以重试。而且你可以结合这个机制自己在内存里维护每个消息 id 的状态，如果超过一定时间还没接收到这个消息的回调，那么你可以重发。事务机制和cnofirm机制最大的不同在于，事务机制是同步的，你提交一个事务之后会阻塞在那儿，但是confirm机制是异步的，你发送个消息之后就可以发送下一个消息，然后那个消息RabbitMQ 接收了之后会异步回调你一个接口通知你这个消息接收到了。所以一般在生产者这块避免数据丢失，都是用confirm机制的。</p>
 <p><strong>MQ中丢失：</strong> 就是 RabbitMQ 自己弄丢了数据，这个你必须开启 RabbitMQ 的持久化，就是消息写入之后会持久化到磁盘，哪怕是 RabbitMQ 自己挂了，恢复之后会自动读取之前存储的数据，一般数据不会丢。设置持久化有两个步骤：创建 queue 的时候将其设置为持久化，这样就可以保证RabbitMQ 持久化 queue 的元数据，但是不会持久化 queue 里的数据。第二个是发送消息的时候将消息的 deliveryMode 设置为 2，就是将消息设置为持久化的，此时 RabbitMQ 就会将消息持久化到磁盘上去。必须要同时设置这两个持久化才行，RabbitMQ 哪怕是挂了，再次重启，也会从磁盘上重启恢复 queue，恢复这个 queue 里的数据。持久化可以跟生产者那边的confirm机制配合起来，只有消息被持久化到磁盘之后，才会通知生产者ack了，所以哪怕是在持久化到磁盘之前，RabbitMQ 挂了，数据丢了，生产者收不到ack，你也是可以自己重发的。注意，哪怕是你给RabbitMQ 开启了持久化机制，也有一种可能，就是这个消息写到了 RabbitMQ 中，但是还没来得及持久化到磁盘上，结果不巧，此时 RabbitMQ 挂了，就会导致内存里的一点点数据丢失。</p>
-<p>消费端丢失：你消费的时候，刚消费到，还没处理，结果进程挂了，比如重启了，那么就尴尬了，RabbitMQ 认为你都消费了，这数据就丢了。这个时候得用 RabbitMQ 提供的ack机制，简单来说，就是你关闭 RabbitMQ 的自动ack，可以通过一个 api 来调用就行，然后每次你自己代码里确保处理完的时候，再在程序里ack一把。这样的话，如果你还没处理完，不就没有ack？那RabbitMQ 就认为你还没处理完，这个时候 RabbitMQ 会把这个消费分配给别的 consumer 去处理，消息是不会丢的。</p>
+<p><strong>消费端丢失：</strong>你消费的时候，刚消费到，还没处理，结果进程挂了，比如重启了，那么就尴尬了，RabbitMQ 认为你都消费了，这数据就丢了。这个时候得用 RabbitMQ 提供的ack机制，简单来说，就是你关闭 RabbitMQ 的自动ack，可以通过一个 api 来调用就行，然后每次你自己代码里确保处理完的时候，再在程序里ack一把。这样的话，如果你还没处理完，不就没有ack？那RabbitMQ 就认为你还没处理完，这个时候 RabbitMQ 会把这个消费分配给别的 consumer 去处理，消息是不会丢的。(RabbitMQ在等待消费者的ACk时是没有超时概念的，只要RabbitMQ和消费者之间的连接没有断开，就会一直等待。除非出现断开，也没收到ACk，RabbitMQ就会把这个消息交给其他消费者来进行消费)</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/7586425786534275423.png"></p>
 <h2 id="如何保证消息的顺序性"><a href="#如何保证消息的顺序性" class="headerlink" title="如何保证消息的顺序性"></a>如何保证消息的顺序性</h2><p>先看看顺序会错乱的场景：RabbitMQ：一个 queue，多个 consumer，这不明显乱了。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/5784787678957932.png"></p>
-<p>解决方案：</p>
+<p>解决方案：（将原来的一对多、多对多优化成一对一，利用队列本身的顺序性特性，做到消息的顺序性，以牺牲性能为代价）</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/75624557552357554.png"></p>
 <h2 id="如何解决消息队列的延时以及过期失效问题？消息队列满了以后该怎么处理？有几百万消息持续积压几小时，说说怎么解决？"><a href="#如何解决消息队列的延时以及过期失效问题？消息队列满了以后该怎么处理？有几百万消息持续积压几小时，说说怎么解决？" class="headerlink" title="如何解决消息队列的延时以及过期失效问题？消息队列满了以后该怎么处理？有几百万消息持续积压几小时，说说怎么解决？"></a>如何解决消息队列的延时以及过期失效问题？消息队列满了以后该怎么处理？有几百万消息持续积压几小时，说说怎么解决？</h2><h3 id="消息积压处理办法：临时紧急扩容"><a href="#消息积压处理办法：临时紧急扩容" class="headerlink" title="消息积压处理办法：临时紧急扩容"></a>消息积压处理办法：临时紧急扩容</h3><p>先修复 consumer 的问题，确保其恢复消费速度，然后将现有 cnosumer 都停掉。 新建一个topic，partition 是原来的 10 倍，临时建立好原先 10 倍的 queue 数量。 然后写一个临时的分发数据的 consumer 程序，这个程序部署上去消费积压的数据，消费之后不做耗时的处理，直接均匀轮询写入临时建立好的 10 倍数量的 queue。 接着临时征用 10 倍的机器来部署 consumer，每一批 consumer 消费一个临时 queue 的数据。这种做法相当于是临时将 queue 资源和 consumer 资源扩大 10 倍，以正常的 10 倍速度来消费数据。 等快速消费完积压数据之后，得恢复原先部署的架构，重新用原先的 consumer 机器来消费消息。</p>
-<h3 id="MQ中消息失效"><a href="#MQ中消息失效" class="headerlink" title="MQ中消息失效"></a>MQ中消息失效</h3><p>假设你用的是 RabbitMQ，RabbtiMQ 是可以设置过期时间的，也就是 TTL。如果消息在 queue 中积压超过一定的时间就会被RabbitMQ 给清理掉，这个数据就没了。那这就是第二个坑了。这就不是说数据会大量积压在 mq里，而是大量的数据会直接搞丢。我们可以采取一个方案，就是批量重导，这个我们之前线上也有类似的场景干过。就是大量积压的时候，我们当时就直接丢弃数据了，然后等过了高峰期以后，比如大家一起喝咖啡熬夜到晚上12点以后，用户都睡觉了。这个时候我们就开始写程序，将丢失的那批数据，写个临时程序，一点一点的查出来，然后重新灌入 mq 里面去，把白天丢的数据给他补回来。也只能是这样了。假设 1 万个订单积压在 mq 里面，没有处理，其中 1000 个订单都丢了，你只能手动写程序把那 1000 个订单给查出来，手动发到 mq 里去再补一次。</p>
+<h3 id="MQ中消息失效"><a href="#MQ中消息失效" class="headerlink" title="MQ中消息失效"></a>MQ中消息失效</h3><p>假设你用的是 RabbitMQ，RabbtiMQ 是可以设置过期时间的，也就是 TTL。如果消息在 queue 中积压超过一定的时间就会被RabbitMQ 给清理掉，这个数据就没了。那这就是第二个坑了。这就不是说数据会大量积压在 mq里，而是大量的数据会直接搞丢。我们可以采取一个方案，就是<strong>批量重导</strong>，这个我们之前线上也有类似的场景干过。就是大量积压的时候，我们当时就直接丢弃数据了，然后等过了高峰期以后，比如大家一起喝咖啡熬夜到晚上12点以后，用户都睡觉了。这个时候我们就开始写程序，将丢失的那批数据，写个临时程序，一点一点的查出来，然后重新灌入 mq 里面去，把白天丢的数据给他补回来。也只能是这样了。假设 1 万个订单积压在 mq 里面，没有处理，其中 1000 个订单都丢了，你只能手动写程序把那 1000 个订单给查出来，手动发到 mq 里去再补一次。</p>
 <h3 id="MQ消息队列块满了"><a href="#MQ消息队列块满了" class="headerlink" title="MQ消息队列块满了"></a>MQ消息队列块满了</h3><p>如果消息积压在 mq 里，你很长时间都没有处理掉，此时导致 mq 都快写满了，咋办？这个还有别的办法吗？没有，谁让你第一个方案执行的太慢了，你临时写程序，接入数据来消费，消费一个丢弃一个，都不要了，快速消费掉所有的消息。然后走第二个方案，到了晚上再补数据吧。</p>
 
                 
@@ -1258,7 +1328,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">650.3k</span>
+                        class="white-color">654.7k</span>
             
             
             
