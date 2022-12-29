@@ -343,7 +343,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    72 分
+                    73 分
                 </div>
                 
 
@@ -362,7 +362,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p><a href="/2022/09/interview-java-core-base/">Java问答知识总结篇-基础知识</a><br><a href="/2022/09/interview-java-core-jvm/">Java问答知识总结篇-JVM</a><br><a href="/2022/09/interview-java-core-threads/">Java问答知识总结篇-多线程&amp;并发编程</a><br><a href="/2022/09/interview-java-core-network/">Java问答知识总结篇-网络基础</a><br><a href="/2022/09/interview-java-core-spring/">Java问答知识总结篇-Spring</a><br><a href="/2022/09/interview-java-core-springboot/">Java问答知识总结篇-Spring Boot</a><br><a href="/2022/09/interview-java-core-mybatis/">Java问答知识总结篇-Mybatis</a><br><a href="/2022/09/interview-java-core-MySQL/">Java问答知识总结篇-MySQL</a><br><a href="/2022/09/interview-java-core-Redis/">Java问答知识总结篇-Redis</a><br><a href="/2022/09/interview-java-core-MQ/">Java问答知识总结篇-MQ</a><br><a href="/2022/09/interview-java-core-Nginx/">Java问答知识总结篇-Nginx</a><br><a href="/2022/09/interview-java-core-distribution/">Java问答知识总结篇-分布式</a><br><a href="/2022/09/interview-java-core-SpringCloud/">Java问答知识总结篇-Spring Cloud</a><br><a href="/2022/09/interview-java-core-Dubbo/">Java问答知识总结篇-Dubbo</a><br><a href="/2022/09/interview-java-core-zookeeper/">Java问答知识总结篇-Zookeeper</a><br><a href="/2022/09/interview-java-core-ElasticSearch/">Java问答知识总结篇-ElasticSearch</a><br><a href="/2022/09/interview-java-core-Netty/">Java问答知识总结篇-Netty</a><br><a href="/2022/09/interview-java-core-application/">Java问答知识总结篇-场景分析题</a></p>
+<p><a href="/2022/09/interview-java-core-base/">Java问答知识总结篇-基础知识</a><br><a href="/2022/09/interview-java-core-jvm/">Java问答知识总结篇-JVM</a><br><a href="/2022/09/interview-java-core-threads/">Java问答知识总结篇-多线程&amp;并发编程</a><br><a href="/2022/09/interview-java-core-network/">Java问答知识总结篇-网络基础</a><br><a href="/2022/09/interview-java-core-spring/">Java问答知识总结篇-Spring</a><br><a href="/2022/09/interview-java-core-springboot/">Java问答知识总结篇-Spring Boot</a><br><a href="/2022/09/interview-java-core-mybatis/">Java问答知识总结篇-Mybatis</a><br><a href="/2022/09/interview-java-core-mysql/">Java问答知识总结篇-MySQL</a><br><a href="/2022/09/interview-java-core-redis/">Java问答知识总结篇-Redis</a><br><a href="/2022/09/interview-java-core-mq/">Java问答知识总结篇-MQ</a><br><a href="/2022/09/interview-java-core-nginx/">Java问答知识总结篇-Nginx</a><br><a href="/2022/09/interview-java-core-distribution/">Java问答知识总结篇-分布式</a><br><a href="/2022/09/interview-java-core-springcloud/">Java问答知识总结篇-Spring Cloud</a><br><a href="/2022/09/interview-java-core-dubbo/">Java问答知识总结篇-Dubbo</a><br><a href="/2022/09/interview-java-core-zookeeper/">Java问答知识总结篇-Zookeeper</a><br><a href="/2022/09/interview-java-core-elasticsearch/">Java问答知识总结篇-ElasticSearch</a><br><a href="/2022/09/interview-java-core-netty/">Java问答知识总结篇-Netty</a><br><a href="/2022/09/interview-java-core-application/">Java问答知识总结篇-场景分析题</a></p>
 </blockquote>
 <p>MySQL系列文章：<a href="/categories/MySQL/">MySQL</a></p>
 <h2 id="数据库的三范式是什么"><a href="#数据库的三范式是什么" class="headerlink" title="数据库的三范式是什么"></a>数据库的三范式是什么</h2><p>第一范式：列不可再分</p>
@@ -375,27 +375,27 @@
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/982364364164657.png"></p>
 <p>MySQL常用引擎包括：MYISAM、Innodb、Memory、MERGE</p>
 <ul>
-<li>MYISAM：全表锁，拥有较高的执行速度，不支持事务，不支持外键，并发性能差，占用空间相对较小，对事务完整性没有要求，以select、insert为主的应用基本上可以使用这引擎；</li>
-<li>Innodb:行级锁，提供了具有提交、回滚和崩溃回复能力的事务安全，支持自动增长列，支持外键约束，并发能力强，占用空间是MYISAM的2.5倍，处理效率相对会差一些；</li>
-<li>Memory:全表锁，存储在内容中，速度快，但会占用和数据量成正比的内存空间且数据在MySQL重启时会丢失，默认使用HASH索引，检索效率非常高，但不适用于精确查找，主要用于那些内容变化不频繁的代码表；</li>
+<li><strong>MYISAM：</strong>全表锁，拥有较高的执行速度，不支持事务，不支持外键，并发性能差，占用空间相对较小，对事务完整性没有要求，以select、insert为主的应用基本上可以使用这引擎；</li>
+<li><strong>InnoDB：</strong>行级锁，提供了具有提交、回滚和崩溃回复能力的事务安全，支持自动增长列，支持外键约束，并发能力强，占用空间是MYISAM的2.5倍，处理效率相对会差一些；</li>
+<li><strong>Memory：</strong>全表锁，存储在内存中，速度快，但会占用和数据量成正比的内存空间且数据在MySQL重启时会丢失，默认使用HASH索引，检索效率非常高，但不适用于精确查找，主要用于那些内容变化不频繁的代码表；</li>
 <li>MERGE：是一组MYISAM表的组合。</li>
 </ul>
 <h2 id="说说InnoDB与MyISAM的区别"><a href="#说说InnoDB与MyISAM的区别" class="headerlink" title="说说InnoDB与MyISAM的区别"></a>说说InnoDB与MyISAM的区别</h2><ul>
 <li>InnoDB支持事务，MyISAM不支持，对于InnoDB每一条SQL语言都默认封装成事务，自动提交，这样会影响速度，所以最好把多条SQL语言放在begin和commit之间，组成一个事务；</li>
 <li>InnoDB支持外键，而MyISAM不支持。对一个包含外键的InnoDB表转为MYISAM会失败；</li>
 <li>InnoDB是聚集索引，数据文件是和索引绑在一起的，必须要有主键，通过主键索引效率很高。但是辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据。因此，主键不应该过大，因为主键太大，其他索引也都会很大。而MyISAM是非聚集索引，数据文件是分离的，索引保存的是数据文件的指针。主键索引和辅助索引是独立的；</li>
-<li>InnoDB不保存表的具体行数，执行select count(*) from table时需要全表扫描。而MyISAM用一个变量保存了整个表的行数，执行上述语句时只需要读出该变量即可，速度很快；</li>
+<li>InnoDB不保存表的具体行数，执行<code>select count(*) from table</code>时需要全表扫描。而MyISAM用一个变量保存了整个表的行数，执行上述语句时只需要读出该变量即可，速度很快；</li>
 <li>在 MySQL 5.1 及之前的版本中，MyISAM 是默认的存储引擎，而在 MySQL 5.5 版本以后，默认使用 InnoDB 存储引擎；</li>
 <li>MyISAM 不支持行级锁，换句话说，MyISAM 会对整张表加锁，而不是针对行。同时，MyISAM 不支持事务和外键。MyISAM 可被压缩，存储空间较小，而且 MyISAM 在筛选大量数据时非常快；</li>
 <li>InnoDB 是事务型引擎，当事务异常提交时，会被回滚。同时，InnoDB 支持行锁。此外，InnoDB 需要更多存储空间，会在内存中建立其专用的缓冲池用于高速缓冲数据和索引。InnoDB 支持自动奔溃恢复特性。</li>
-<li>Innodb不支持全文索引，而MyISAM支持全文索引，查询效率上MyISAM要高。</li>
+<li>InnoDB不支持全文索引，而MyISAM支持全文索引，查询效率上MyISAM要高。</li>
 </ul>
 <h2 id="SQL-约束有哪几种？"><a href="#SQL-约束有哪几种？" class="headerlink" title="SQL 约束有哪几种？"></a>SQL 约束有哪几种？</h2><ul>
-<li>NOT NULL: 用于控制字段的内容一定不能为空（NULL）。</li>
-<li>UNIQUE: 控件字段内容不能重复，一个表允许有多个 Unique 约束。</li>
-<li>PRIMARY KEY: 也是用于控件字段内容不能重复，但它在一个表只允许出现一个。</li>
-<li>FOREIGN KEY: 用于预防破坏表之间连接的动作，也能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</li>
-<li>CHECK: 用于控制字段的值范围。</li>
+<li><strong>NOT NULL：</strong>用于控制字段的内容一定不能为空（NULL）。</li>
+<li><strong>UNIQUE：</strong>控件字段内容不能重复，一个表允许有多个 Unique 约束。</li>
+<li><strong>PRIMARY KEY：</strong>也是用于控件字段内容不能重复，但它在一个表只允许出现一个。</li>
+<li><strong>FOREIGN KEY：</strong>用于预防破坏表之间连接的动作，也能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</li>
+<li><strong>CHECK：</strong>用于控制字段的值范围。</li>
 </ul>
 <h2 id="数据库的事务"><a href="#数据库的事务" class="headerlink" title="数据库的事务"></a>数据库的事务</h2><h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>事务是一个不可分割的数据库操作序列，也是数据库并发控制的基本单位，其执行的结果必须使数据库从一种一致性状态变到另一种一致性状态。事务是逻辑上的一组操作，要么都执行，要么都不执行。</p>
 <p>事务最经典也经常被拿出来说例子就是转账了。</p>
@@ -407,15 +407,15 @@
 <li><strong>隔离性：</strong> 在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。</li>
 <li><strong>持久性：</strong> 一旦事务提交成功，事务中的所有操作都必须持久化到数据库中。</li>
 </ul>
-<h2 id="MYISAM引擎和Innodb都支持锁，为何MYISAM没有事务"><a href="#MYISAM引擎和Innodb都支持锁，为何MYISAM没有事务" class="headerlink" title="MYISAM引擎和Innodb都支持锁，为何MYISAM没有事务"></a>MYISAM引擎和Innodb都支持锁，为何MYISAM没有事务</h2><p>MYISAM引擎是针对当前表做增删改操作时加锁，没有事务开启和事务提交机制，一旦增删改成功后，就不可进行回滚。如果在一个连续操作过程，涉及多张表的增删改，没有事务的情况下，就有可能靠前的操作成功，数据成功修改，靠后的操作失败，数据未修改成功，最终导致脏数据的产生。但是在Innodb引擎下就可以解决这种脏数据的问题，事务内出现异常，事务内的所有操作都会被回滚。</p>
+<h2 id="MYISAM引擎和InnoDB都支持锁，为何MYISAM没有事务"><a href="#MYISAM引擎和InnoDB都支持锁，为何MYISAM没有事务" class="headerlink" title="MYISAM引擎和InnoDB都支持锁，为何MYISAM没有事务"></a>MYISAM引擎和InnoDB都支持锁，为何MYISAM没有事务</h2><p>MYISAM引擎是针对当前表做增删改操作时加锁，没有事务开启和事务提交机制，一旦增删改成功后，就不可进行回滚。如果在一个连续操作过程，涉及多张表的增删改，没有事务的情况下，就有可能靠前的操作成功，数据成功修改，靠后的操作失败，数据未修改成功，最终导致脏数据的产生。但是在Innodb引擎下就可以解决这种脏数据的问题，事务内出现异常，事务内的所有操作都会被回滚。</p>
 <h2 id="索引是什么"><a href="#索引是什么" class="headerlink" title="索引是什么"></a>索引是什么</h2><p>官方介绍索引是帮助MySQL高效获取数据的数据结构。更通俗的说，数据库索引好比是一本书前面的目录，能加快数据库的查询速度；</p>
 <p>一般来说索引本身也很大，不可能全部存储在内存中，因此索引往往是存储在磁盘上的文件中的（可能存储在单独的索引文件中，也可能和数据一起存储在数据文件中）。</p>
 <p>我们通常所说的索引，包括聚集索引、覆盖索引、组合索引、前缀索引、唯一索引等，没有特别说明，默认都是使用B+树结构组织（多路搜索树，并不一定是二叉的）的索引。</p>
 <h2 id="MySQL中-in-和-exists-区别"><a href="#MySQL中-in-和-exists-区别" class="headerlink" title="MySQL中 in 和 exists 区别"></a>MySQL中 in 和 exists 区别</h2><p>MySQL中的in语句是把外表和内表作hash 连接，而exists语句是对外表作loop循环，每次loop循环再对内表进行查询。一直大家都认为exists比in语句的效率要高，这种说法其实是不准确的。这个是要区分环境的。</p>
 <p>如果查询的两个表大小相当，那么用in和exists差别不大。</p>
 <p>如果两个表中一个较小，一个是大表，则子查询表大的用exists，子查询表小的用in。</p>
-<p>not in 和not exists：如果查询语句使用了not in，那么内外表都进行全表扫描，没有用到索引；而not extsts的子查询依然能用到表上的索引。所以无论那个表大，用not exists都比not in要快。</p>
-<h2 id="简单说一说drop、delete与truncate的区别"><a href="#简单说一说drop、delete与truncate的区别" class="headerlink" title="简单说一说drop、delete与truncate的区别"></a>简单说一说drop、delete与truncate的区别</h2><p>SQL中的drop、delete、truncate都表示删除，但是三者有一些差别delete和truncate只删除表的数据不删除表的结构 速度，一般来说: drop&gt; truncate &gt;delete，delete语句是dml语句,这个操作会放到rollback segement中，事务提交之后才生效; 如果有相应的trigger，执行的时候将被触发. truncate,drop是ddl, 操作立即生效，原数据不放到rollback segment中，不能回滚，操作不触发trigger。</p>
+<p>not in 和not exists：如果查询语句使用了not in，那么内外表都进行全表扫描，没有用到索引；而not exists的子查询依然能用到表上的索引。所以无论那个表大，用not exists都比not in要快。</p>
+<h2 id="简单说一说drop、delete与truncate的区别"><a href="#简单说一说drop、delete与truncate的区别" class="headerlink" title="简单说一说drop、delete与truncate的区别"></a>简单说一说drop、delete与truncate的区别</h2><p>SQL中的<code>drop</code>、<code>delete</code>、<code>truncate</code>都表示删除，但是三者有一些差别<code>delete</code>和<code>truncate</code>只删除表的数据不删除表的结构，速度一般来说: <code>drop&gt; truncate &gt;delete</code>，<code>delete</code>语句是<code>dml</code>语句,这个操作会放到<code>rollback segement</code>中，事务提交之后才生效; 如果有相应的<code>trigger</code>，执行的时候将被触发。<code>truncate</code>,<code>drop</code>是<code>ddl</code>, 操作立即生效，原数据不放到<code>rollback segment</code>中，不能回滚，操作不触发<code>trigger</code>。如果表中存在自增的字段，如自增ID，<code>truncate</code>会将ID重置，从1开始，而<code>delete</code>不行，依然从当前自增的ID延续。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210822203927822.png"></p>
 <h2 id="MySQL-执行查询的过程"><a href="#MySQL-执行查询的过程" class="headerlink" title="MySQL 执行查询的过程"></a>MySQL 执行查询的过程</h2><ol>
 <li>客户端通过 TCP 连接发送连接请求到 MySQL 连接器，连接器会对该请求进行权限验证及连接资源分配</li>
@@ -434,21 +434,21 @@
 <ol>
 <li><p>更加直白的理解：存储过程可以说是一个记录集，它是由一些 T-SQL 语句组成的代码块，这些 T-SQL 语句代码像一个方法一样实现一些功能（对单表或多表的增删改查），然后再给这个代码块取一个名字，在用到这个功能的时候调用他就行了。 </p>
 </li>
-<li><p>存储过程是一个预编译的代码块，执行效率比较高,一个存储过程替代大量 T_SQL 语句 ，可以降低网络通信量，提高通信速率,可以一定程度上确保数据安全</p>
+<li><p>存储过程是一个预编译的代码块，执行效率比较高,一个存储过程替代大量 T_SQL 语句 ，可以降低网络通信量，提高通信速率，可以一定程度上确保数据安全。</p>
 </li>
 </ol>
-<p>但是,在互联网项目中,其实是不太推荐存储过程的,比较出名的就是阿里的《Java 开发手册》中禁止使用存储过程,我个人的理解是,在互联网项目中,迭代太快,项目的生命周期也比较短,人员流动相比于传统的项目也更加频繁,在这样的情况下,存储过程的管理确实是没有那么方便,同时,复用性也没有写在服务层那么好。</p>
+<p>但是,在互联网项目中，其实是不太推荐存储过程的，比较出名的就是阿里的《Java 开发手册》中禁止使用存储过程，我个人的理解是，在互联网项目中，迭代太快，项目的生命周期也比较短，人员流动相比于传统的项目也更加频繁，在这样的情况下，存储过程的管理确实是没有那么方便，同时，复用性也没有写在服务层那么好。</p>
 <h2 id="并发事务带来哪些问题"><a href="#并发事务带来哪些问题" class="headerlink" title="并发事务带来哪些问题"></a>并发事务带来哪些问题</h2><p>在典型的应用程序中，多个事务并发运行，经常会操作相同的数据来完成各自的任务（多个用户对同一数据进行操作）。并发虽然是必须的，但可能会导致以下的问题。</p>
 <p><strong>脏读（Dirty read）:</strong> 当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</p>
 <p><strong>丢失修改（Lost to modify）:</strong> 指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。 例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。</p>
-<p><strong>不可重复读（Unrepeatableread）:</strong> 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。</p>
-<p><strong>幻读（Phantom read）:</strong> 幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。</p>
+<p><strong>不可重复读（Unrepeatableread）:</strong> 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。（针对修改数据）</p>
+<p><strong>幻读（Phantom read）:</strong> 幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些<strong>原本不存在的记录</strong>，就好像发生了幻觉一样，所以称为幻读。（针对新增、删除数据）</p>
 <p><strong>不可重复读和幻读区别：</strong> 不可重复读的重点是修改比如多次读取一条记录发现其中某些列的值被修改，幻读的重点在于新增或者删除比如多次读取一条记录发现记录增多或减少了。</p>
 <h2 id="事务隔离级别有哪些-MySQL的默认隔离级别"><a href="#事务隔离级别有哪些-MySQL的默认隔离级别" class="headerlink" title="事务隔离级别有哪些?MySQL的默认隔离级别"></a>事务隔离级别有哪些?MySQL的默认隔离级别</h2><p>SQL 标准定义了四个隔离级别：</p>
 <p><strong>READ-UNCOMMITTED(读取未提交)：</strong> 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读；</p>
 <p><strong>READ-COMMITTED(读取已提交)：</strong> 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生；</p>
 <p><strong>REPEATABLE-READ(可重复读)：</strong> 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生；</p>
-<p><strong>SERIALIZABLE(可串行化)：</strong> 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。</p>
+<p><strong>SERIALIZABLE(可串行化)：</strong> 最高的隔离级别，完全服从ACID的隔离级别。<strong>所有的事务依次逐个执行</strong>，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。</p>
 <table>
 <thead>
 <tr>
@@ -484,8 +484,8 @@
 </tr>
 </tbody></table>
 <p>MySQL InnoDB 存储引擎的默认支持的隔离级别是 REPEATABLE-READ（可重读）,Oracle 默认采用的 READ_COMMITTED隔离级别。我们可以通过 <code>SELECT @@tx_isolation; </code>命令来查看。</p>
-<p>这里需要注意的是：与 SQL 标准不同的地方在于 InnoDB 存储引擎在 REPEATABLE-READ（可重读） 事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server) 是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是REPEATABLEREAD（可重读） 已经可以完全保证事务的隔离性要求，即达到了 SQL标准的SERIALIZABLE(可串行化) 隔离级别。因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是READ-COMMITTED(读取提交内容) ，但是你要知道的是InnoDB 存储引擎默认使用REPEAaTABLE-READ（可重读） 并不会有任何性能损失。</p>
-<p>InnoDB 存储引擎在 分布式事务 的情况下一般会用到 SERIALIZABLE(可串行化) 隔离级别。</p>
+<p>这里需要注意的是：与 SQL 标准不同的地方在于 InnoDB 存储引擎在 REPEATABLE-READ（可重读） 事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server) 是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是REPEATABLEREAD（可重读） 已经可以完全保证事务的隔离性要求，即达到了 SQL标准的SERIALIZABLE(可串行化) 隔离级别。因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是READ-COMMITTED(读取提交内容) ，但是你要知道的是InnoDB 存储引擎默认使用REPEATABLE-READ（可重读） 并不会有任何性能损失。</p>
+<p>InnoDB 存储引擎在<strong>分布式事务</strong>的情况下一般会用到 SERIALIZABLE(可串行化) 隔离级别。</p>
 <h2 id="事务的实现原理"><a href="#事务的实现原理" class="headerlink" title="事务的实现原理"></a>事务的实现原理</h2><p>事务是基于重做日志文件(redo log)和回滚日志(undo log)实现的。</p>
 <p>每提交一个事务必须先将该事务的所有日志写入到重做日志文件进行持久化，数据库就可以通过重做日志来保证事务的原子性和持久性。</p>
 <p>每当有修改事务时，还会产生 undo log，如果需要回滚，则根据 undo log 的反向语句进行逻辑操作，比如 insert 一条记录就 delete 一条记录。undo log 主要实现数据库的一致性。</p>
@@ -494,7 +494,7 @@
 <p>事务日志的目的：实例或者介质失败，事务日志文件就能派上用场。</p>
 <h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a>redo log</h3><p>redo log 不是随着事务的提交才写入的，而是在事务的执行过程中，便开始写入 redo 中。具体的落盘策略可以进行配置 。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启 MySQL 服务的时候，根据 redo log 进行重做，从而达到事务的未入磁盘数据进行持久化这一特性。RedoLog 是为了实现事务的持久性而出现的产物。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210822181340692.png"></p>
-<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a>undo log</h3><p>undo log 用来回滚行记录到某个版本。事务未提交之前，Undo 保存了未提交之前的版本数据，Undo 中的数据可作为数据旧版本快照供其他并发事务进行快照读。是为了实现事务的原子性而出现的产物,在 MySQL innodb 存储引擎中用来实现多版本并发控制。</p>
+<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a>undo log</h3><p>undo log 用来回滚行记录到某个版本。事务未提交之前，Undo 保存了未提交之前的版本数据，Undo 中的数据可作为数据旧版本快照供其他并发事务进行快照读。是为了实现事务的原子性而出现的产物，在 MySQL innodb 存储引擎中用来实现多版本并发控制。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210822181416382.png"></p>
 <h2 id="什么是MySQL的-binlog？"><a href="#什么是MySQL的-binlog？" class="headerlink" title="什么是MySQL的 binlog？"></a>什么是MySQL的 binlog？</h2><p>MySQL的 binlog 是记录所有数据库表结构变更（例如 CREATE、ALTER TABLE）以及表数据修改（INSERT、UPDATE、DELETE）的二进制日志。binlog 不会记录 SELECT 和 SHOW 这类操作，因为这类操作对数据本身并没有修改，但你可以通过查询通用日志来查看 MySQL 执行过的所有语句。</p>
 <p>MySQL binlog 以事件形式记录，还包含语句所执行的消耗的时间，MySQL 的二进制日志是事务安全型的。binlog 的主要目的是复制和恢复。</p>
@@ -515,9 +515,9 @@
 <p><strong>MVCC实现原理</strong></p>
 <p>对于 InnoDB ，聚簇索引记录中包含 3 个隐藏的列：</p>
 <ul>
-<li>ROW ID：隐藏的自增 ID，如果表没有主键，InnoDB 会自动按 ROW ID 产生一个聚集索引树。</li>
-<li>事务 ID：记录最后一次修改该记录的事务 ID。</li>
-<li>回滚指针：指向这条记录的上一个版本。</li>
+<li><strong>ROW ID：</strong>隐藏的自增 ID，如果表没有主键，InnoDB 会自动按 ROW ID 产生一个聚集索引树。</li>
+<li><strong>事务 ID：</strong>记录最后一次修改该记录的事务 ID。</li>
+<li><strong>回滚指针：</strong>指向这条记录的上一个版本。</li>
 </ul>
 <p>我们拿上面的例子，对应解释下 MVCC 的实现原理，如下图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/modb_95751916-225c-11eb-b0bb-5254001c05fe.png"></p>
@@ -580,7 +580,7 @@
 <h3 id="水平分区"><a href="#水平分区" class="headerlink" title="水平分区"></a>水平分区</h3><p><strong>保持数据表结构不变，通过某种策略存储数据分片。这样每一片数据分散到不同的表或者库中，达到了分布式的目的。 水平拆分可以支撑非常大的数据量。</strong></p>
 <p>水平拆分是指数据表行的拆分，表的行数超过200万行时，就会变慢，这时可以把一张的表的数据拆成多张表来存放。举个例子：我们可以将用户信息表拆分成多个用户信息表，这样就可以避免单一表数据量过大对性能造成影响。</p>
 <p>水平拆分可以支持非常大的数据量。需要注意的一点是：分表仅仅是解决了单一表数据过大的问题，但由于表的数据还是在同一台机器上，其实对于提升MySQL并发能力没有什么意义，所以水平拆分最好分库。</p>
-<p>水平拆分能够 支持非常大的数据量存储，应用端改造也少，但 分片事务难以解决 ，跨节点Join性能较差，逻辑复杂。《Java工程师修炼之道》的作者推荐 尽量不要对数据进行分片，因为拆分会带来逻辑、部署、运维的各种复杂度 ，一般的数据表在优化得当的情况下支撑千万以下的数据量是没有太大问题的。如果实在要分片，尽量选择客户端分片架构，这样可以减少一次和中间件的网络I/O。</p>
+<p>水平拆分能够支持非常大的数据量存储，应用端改造也少，但分片事务难以解决，跨节点Join性能较差，逻辑复杂。《Java工程师修炼之道》的作者推荐尽量不要对数据进行分片，因为拆分会带来逻辑、部署、运维的各种复杂度 ，一般的数据表在优化得当的情况下支撑千万以下的数据量是没有太大问题的。如果实在要分片，尽量选择客户端分片架构，这样可以减少一次和中间件的网络I/O。</p>
 <p>下面补充一下数据库分片的两种常见方案：</p>
 <p><strong>客户端代理：</strong> 分片逻辑在应用端，封装在jar包中，通过修改或者封装JDBC层来实现。 当当网的 Sharding-JDBC 、阿里的TDDL是两种比较常用的实现。</p>
 <p><strong>中间件代理：</strong> 在应用和数据中间加了一个代理层。分片逻辑统一维护在中间件服务中。 我们现在谈的 Mycat 、360的Atlas、网易的DDB等等都是这种架构的实现。</p>
@@ -595,7 +595,7 @@
 <li><strong>美团的Leaf分布式ID生成系统：</strong> Leaf 是美团开源的分布式ID生成器，能保证全局唯一性、趋势递增、单调递增、信息安全，里面也提到了几种分布式方案的对比，但也需要依赖关系数据库、Zookeeper等中间件。感觉还不错。美团技术团队的一篇文章：<a target="_blank" rel="noopener" href="https://tech.meituan.com/2017/04/21/mt-leaf.html">技术博客</a></li>
 </ul>
 <h2 id="说说在-MySQL-中一条查询-SQL-是如何执行的"><a href="#说说在-MySQL-中一条查询-SQL-是如何执行的" class="headerlink" title="说说在 MySQL 中一条查询 SQL 是如何执行的"></a>说说在 MySQL 中一条查询 SQL 是如何执行的</h2><ul>
-<li><strong>取得链接：</strong> 使用使用到 MySQL 中的连接器；</li>
+<li><strong>取得链接：</strong> 获取到 MySQL 中的连接器；</li>
 <li><strong>查询缓存：</strong> key 为 SQL 语句，value 为查询结果，如果查到就直接返回。不建议使用缓存，在 MySQL 8.0 版本已经将查询缓存删除，也就是说 MySQL 8.0 版本后不存在此功能；</li>
 <li><strong>分析器：</strong> 分为词法分析和语法分析。此阶段只是做一些 SQL 解析，语法校验。所以一般语法错误在此阶段；</li>
 <li><strong>优化器：</strong> 是在表里有多个索引的时候，决定使用哪个索引；或者一个语句中存在多表关联的时候（join），决定各个表的连接顺序；</li>
@@ -605,17 +605,17 @@
 <p>因为复制是异步进行的，所以从服务器不需要一直连接着主服务器，从服务器甚至可以通过拨号断断续续地连接主服务器。通过配置文件，可以指定复制所有的数据库，某个数据库，甚至是某个数据库上的某个表。</p>
 <h2 id="MySQL主从同步的目的？为什么要做主从同步？"><a href="#MySQL主从同步的目的？为什么要做主从同步？" class="headerlink" title="MySQL主从同步的目的？为什么要做主从同步？"></a>MySQL主从同步的目的？为什么要做主从同步？</h2><ol>
 <li>通过增加从服务器来提高数据库的性能，在主服务器上执行写入和更新，在从服务器上向外提供读功能，可以动态地调整从服务器的数量，从而调整整个数据库的性能。</li>
-<li>提高数据安全-因为数据已复制到从服务器，从服务器可以终止复制进程，所以，可以在从服务器上备份而不破坏主服务器相应数据</li>
-<li>在主服务器上生成实时数据，而在从服务器上分析这些数据，从而提高主服务器的性能</li>
-<li>数据备份。一般我们都会做数据备份，可能是写定时任务，一些特殊行业可能还需要手动备份，有些行业要求备份和原数据不能在同一个地方，所以主从就能很好的解决这个问题，不仅备份及时，而且还可以多地备份，保证数据的安全</li>
+<li>提高数据安全，因为数据已复制到从服务器，从服务器可以终止复制进程，所以，可以在从服务器上备份而不破坏主服务器相应数据。</li>
+<li>在主服务器上生成实时数据，而在从服务器上分析这些数据，从而提高主服务器的性能。</li>
+<li>数据备份。一般我们都会做数据备份，可能是写定时任务，一些特殊行业可能还需要手动备份，有些行业要求备份和原数据不能在同一个地方，所以主从就能很好的解决这个问题，不仅备份及时，而且还可以多地备份，保证数据的安全。</li>
 </ol>
 <h2 id="MySQL主从复制流程和原理？"><a href="#MySQL主从复制流程和原理？" class="headerlink" title="MySQL主从复制流程和原理？"></a>MySQL主从复制流程和原理？</h2><p>基本原理流程，是3个线程以及之间的关联。</p>
 <ul>
-<li><p>主：binlog线程——记录下所有改变了数据库数据的语句，放进master上的binlog中；</p>
+<li><p>主：binlog线程，记录下所有改变了数据库数据的语句，放进master上的binlog中；</p>
 </li>
-<li><p>从：io线程——在使用start slave之后，负责从master上拉取binlog内容，放进自己的relay log中；</p>
+<li><p>从：io线程，在使用start slave之后，负责从master上拉取binlog内容，放进自己的relay log中；</p>
 </li>
-<li><p>从：sql执行线程——执行relay log中的语句。</p>
+<li><p>从：sql执行线程，执行relay log中的语句。</p>
 </li>
 </ul>
 <p><strong>复制过程如下：</strong></p>
@@ -646,11 +646,11 @@
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210411215012443.png"></p>
 <p><strong>B-Tree索引</strong>（MySQL使用B+Tree）</p>
-<p>B-Tree能加快数据的访问速度，因为存储引擎不再需要进行全表扫描来获取数据，数据分布在各个节点之中。</p>
+<p>B-Tree能加快数据的访问速度，因为存储引擎不再需要进行全表扫描来获取数据，<strong>数据分布在各个节点之中</strong>。</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/image-20210411215023820.png"></p>
 <p><strong>B+Tree索引</strong></p>
-<p>是B-Tree的改进版本，同时也是数据库索引索引所采用的存储结构。数据都在叶子节点上，并且增加了顺序访问指针，每个叶子节点都指向相邻的叶子节点的地址。相比B-Tree来说，进行范围查找时只需要查找两个节点，进行遍历即可。而B-Tree需要获取所有节点，相比之下B+Tree效率更高。</p>
-<p>B+tree性质：</p>
+<p>是B-Tree的改进版本，同时也是数据库索引索引所采用的存储结构。<strong>数据都在叶子节点上</strong>，并且增加了顺序访问指针，每个叶子节点都指向相邻的叶子节点的地址。相比B-Tree来说，进行范围查找时只需要查找两个节点，进行遍历即可。而B-Tree需要获取所有节点，相比之下B+Tree效率更高。</p>
+<p>B+Tree性质：</p>
 <ul>
 <li><p>n棵子tree的节点包含n个关键字，不用来保存数据而是保存数据的索引。</p>
 </li>
@@ -1545,7 +1545,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">654.7k</span>
+                        class="white-color">654.8k</span>
             
             
             
