@@ -1,0 +1,1430 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Spring cloud Eureka实现思路和源码解析, 程序猿洞晓">
+    <meta name="description" content="现在很多公司都在使用Spring Boot和Spring Cloud构建微服务，目前来说这些技术在国内虽然应用很多，但是相关的中文版资料不是很多，关于内部原理分析的文章也是少之又少。现在团队开始准备使用Spring Cloud，最近也在研究相关的知识点，参考了很多博客，写了这篇文章，让我们一起来探讨Spring Cloud的组件Eureka的实现原理。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Spring cloud Eureka实现思路和源码解析 | 程序猿洞晓</title>
+    <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/matery.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/reward.css">
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">程序猿洞晓</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/top" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/toolbox" class="waves-effect waves-light">
+      
+      <i class="fas fa-toolbox" style="zoom: 0.6;"></i>
+      
+      <span>工具箱</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-link" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">程序猿洞晓</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/top" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/toolbox" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-toolbox"></i>
+			
+			工具箱
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-link"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Spring cloud Eureka实现思路和源码解析</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Spring-Cloud/">
+                                <span class="chip bg-color">Spring Cloud</span>
+                            </a>
+                        
+                            <a href="/tags/Eureka/">
+                                <span class="chip bg-color">Eureka</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Spring-Cloud/" class="post-category">
+                                Spring Cloud
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
+                    2018-07-02
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    16 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p>本博客是根据以下两篇博客整合。如需转载，请带上原文链接。<br><a target="_blank" rel="noopener" href="http://nobodyiam.com/2016/06/25/dive-into-eureka/">Dive into Eureka</a><br><a target="_blank" rel="noopener" href="http://blog.didispace.com/springcloud-sourcecode-eureka/">Spring Cloud源码分析（一）Eureka</a></p>
+</blockquote>
+<p>现在很多公司都在使用Spring Boot和Spring Cloud构建微服务，目前来说这些技术在国内虽然应用很多，但是相关的中文版资料不是很多，关于内部原理分析的文章也是少之又少。现在团队开始准备使用Spring Cloud，最近也在研究相关的知识点，参考了很多博客，写了这篇文章，让我们一起来探讨Spring Cloud的组件Eureka的实现原理。</p>
+<h2 id="1-What-is-Eureka？"><a href="#1-What-is-Eureka？" class="headerlink" title="1. What is Eureka？"></a>1. What is Eureka？</h2><p>官方文档定义：</p>
+<blockquote>
+<p>Eureka is a REST (Representational State Transfer) based service that is primarily used in the AWS cloud for locating services for the purpose of load balancing and failover of middle-tier servers. We call this service, the Eureka Server. Eureka also comes with a Java-based client component,the Eureka Client, which makes interactions with the service much easier. The client also has a built-in load balancer that does basic round-robin load balancing.</p>
+</blockquote>
+<p>简单来说Eureka就是Netflix开源的一款提供服务注册和服务发现的产品，并且提供了相应的Java客户端。</p>
+<h2 id="2-Why-Eureka？"><a href="#2-Why-Eureka？" class="headerlink" title="2. Why Eureka？"></a>2. Why Eureka？</h2><p>使用Eureka的理由：</p>
+<ul>
+<li><p>大家都在用<br>一项技术出来后，从受欢迎的程度和使用的程度就可以看出来这项技术的优势和前景。</p>
+</li>
+<li><p>它提供了完整的Service Registry和Service Discovery实现<br>提供了完整的实现，并且也经受住了Netflix自己的生产环境考验，相对使用起来会比较省心。</p>
+</li>
+<li><p>和Spring Cloud无缝集成<br>Spring Cloud有一套非常完善的开源代码来整合Eureka，所以使用起来非常方便。另外，Eureka还支持在我们应用自身的容器中启动，也就是说我们的应用启动完之后，既充当了Eureka的角色，同时也是服务的提供者和消费者。这样就极大的提高了服务的可用性。</p>
+</li>
+<li><p>Open Source(开源)<br>最后一点是开源，由于代码是开源的，所以非常便于我们了解它的实现原理和排查问题。</p>
+<h2 id="3-Eureka实现俯瞰"><a href="#3-Eureka实现俯瞰" class="headerlink" title="3. Eureka实现俯瞰"></a>3. Eureka实现俯瞰</h2><h3 id="3-1-基础架构"><a href="#3-1-基础架构" class="headerlink" title="3.1 基础架构"></a>3.1 基础架构</h3><p><img src="http://nobodyiam.com/images/2016-06-25/architecture-overview.png"><br>上图简要描述了Eureka的基本架构，由3个角色组成：</p>
+</li>
+<li><p>Eureka Server :提供服务注册和发现</p>
+</li>
+<li><p>Service Provider:服务提供方,将自身服务注册到Eureka，从而使服务消费方能够找到</p>
+</li>
+<li><p>Service Consumer:服务消费方,从Eureka获取注册服务列表，从而能够消费服务<br>需要注意的是，上图中的3个角色都是逻辑角色。在实际运行中，这几个角色甚至可以是同一个实例，比如在Eureka Provider同时也可以是Eureka Consumer，也可以是Eureka Server。</p>
+<h3 id="3-2-实现细节图"><a href="#3-2-实现细节图" class="headerlink" title="3.2 实现细节图"></a>3.2 实现细节图</h3><p><img src="http://nobodyiam.com/images/2016-06-25/architecture-detail.png"><br>上图更进一步的展示了3个角色之间的交互。</p>
+</li>
+<li><p>Service Provider会向Eureka Server做Register（服务注册）、Renew（服务续约）、Cancel（服务下线）等操作。</p>
+</li>
+<li><p>Eureka Server之间会做注册服务的同步(replicate)，从而保证状态一致</p>
+</li>
+<li><p>Service Consumer会向Eureka Server获取注册服务列表，并消费服务</p>
+<h3 id="3-3-说说源码"><a href="#3-3-说说源码" class="headerlink" title="3.3 说说源码"></a>3.3 说说源码</h3><p>在将服务注册到Eureka服务注册中心是所需要加的注解和配置</p>
+</li>
+<li><p>在应用主类中配置了<code>@EnableDiscoveryClient</code>注解</p>
+</li>
+<li><p>在<code>application.properties</code>中用<code>eureka.client.serviceUrl.defaultZone</code>参数指定了服务注册中心的位置<br>先查看@EnableDiscoveryClient的源码如下：</p>
+</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * Annotation to enable a DiscoveryClient implementation.
+ * @author Spencer Gibb
+ */</span>
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">TYPE</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Documented</span>
+<span class="token annotation punctuation">@Inherited</span>
+<span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span><span class="token class-name">EnableDiscoveryClientImportSelector</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">EnableDiscoveryClient</span> <span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>从该注解的注释我们可以知道：该注解用来开启<code>DiscoveryClient</code>的实例。通过搜索<code>DiscoveryClient</code>，我们可以发现有一个类和一个接口。通过梳理可以得到如下图的关系：<br><img src="http://blog.didispace.com/assets/eureka-code-1.png"><br>其中，左边的 <code>org.springframework.cloud.client.discovery.DiscoveryClient</code>是Spring Cloud的接口，它定义了用来发现服务的常用抽象方法，而<code>org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient</code>是对该接口的实现，从命名来就可以判断，它实现的是对Eureka发现服务的封装。所以<code>EurekaDiscoveryClient</code>依赖了Eureka的<code>com.netflix.discovery.EurekaClient</code>接口，<code>EurekaClient</code>继承了<code>LookupService</code>接口，他们都是Netflix开源包中的内容，它主要定义了针对Eureka的发现服务的抽象方法，而真正实现发现服务的则是Netflix包中的<code>com.netflix.discovery.DiscoveryClient</code>类。<br>那么，我们就看看来详细看看<code>DiscoveryClient</code>类。先解读一下该类头部的注释有个总体的了解，注释的大致内容如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">这个类用于帮助与Eureka Server互相协作。
+
+Eureka Client负责了下面的任务：
+- 向Eureka Server注册服务实例
+- 向Eureka Server为租约续期
+- 当服务关闭期间，向Eureka Server取消租约
+- 查询Eureka Server中的服务实例列表
+
+Eureka Client还需要配置一个Eureka Server的URL列表。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在具体研究Eureka Client具体负责的任务之前，我们先看看对Eureka Server的URL列表配置在哪里。根据我们配置的属性名：<code>eureka.client.serviceUrl.defaultZone</code>，通过<code>serviceUrl</code>我们找到该属性相关的加载方法<code>getServiceUrlsFromConfig</code>，但是在SR5版本中它们都被<code>@Deprecated</code>标注了，并在注释中可以看到<code>@link</code>到了替代类<code>com.netflix.discovery.endpoint.EndpointUtils</code>，我们可以在该类中找到下面这个函数：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token function">getServiceUrlsMapFromConfig</span><span class="token punctuation">(</span>
+			<span class="token class-name">EurekaClientConfig</span> clientConfig<span class="token punctuation">,</span> <span class="token class-name">String</span> instanceZone<span class="token punctuation">,</span> <span class="token keyword">boolean</span> preferSameZone<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> orderedUrls <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> region <span class="token operator">=</span> <span class="token function">getRegion</span><span class="token punctuation">(</span>clientConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> availZones <span class="token operator">=</span> clientConfig<span class="token punctuation">.</span><span class="token function">getAvailabilityZones</span><span class="token punctuation">(</span>clientConfig<span class="token punctuation">.</span><span class="token function">getRegion</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>availZones <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> availZones<span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        availZones <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        availZones<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token constant">DEFAULT_ZONE</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+	……
+    <span class="token keyword">int</span> myZoneOffset <span class="token operator">=</span> <span class="token function">getZoneOffset</span><span class="token punctuation">(</span>instanceZone<span class="token punctuation">,</span> preferSameZone<span class="token punctuation">,</span> availZones<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">String</span> zone <span class="token operator">=</span> availZones<span class="token punctuation">[</span>myZoneOffset<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> serviceUrls <span class="token operator">=</span> clientConfig<span class="token punctuation">.</span><span class="token function">getEurekaServerServiceUrls</span><span class="token punctuation">(</span>zone<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>serviceUrls <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        orderedUrls<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>zone<span class="token punctuation">,</span> serviceUrls<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+	……
+    <span class="token keyword">return</span> orderedUrls<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3-4-Region、Zone"><a href="#3-4-Region、Zone" class="headerlink" title="3.4 Region、Zone"></a>3.4 Region、Zone</h3><p>在上面的函数中，我们可以发现客户端依次加载了两个内容，第一个是Region，第二个是Zone，从其加载逻上我们可以判断他们之间的关系：</p>
+<ul>
+<li>通过<code>getRegion</code>函数，我们可以看到它从配置中读取了一个Region返回，所以一个微服务应用只可以属于一个Region，如果不特别配置，就默认为”default”。若我们要自己设置，可以通过<code>eureka.client.region</code>属性来定义。</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">getRegion</span><span class="token punctuation">(</span><span class="token class-name">EurekaClientConfig</span> clientConfig<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">String</span> region <span class="token operator">=</span> clientConfig<span class="token punctuation">.</span><span class="token function">getRegion</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>region <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        region <span class="token operator">=</span> <span class="token constant">DEFAULT_REGION</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    region <span class="token operator">=</span> region<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> region<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>通过<code>getAvailabilityZones</code>函数，我们可以知道当我们没有特别为Region配置Zone的时候，将默认采用defaultZone，这也是我们之前配置参数<code>eureka.client.serviceUrl.defaultZone</code>的由来。若要为应用指定Zone，我们可以通过<code>eureka.client.availability-zones</code>属性来进行设置。从该函数的return内容，我们可以Zone是可以有多个的，并且通过逗号分隔来配置。由此，我们可以判断Region与Zone是一对多的关系。</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getAvailabilityZones</span><span class="token punctuation">(</span><span class="token class-name">String</span> region<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token class-name">String</span> value <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>availabilityZones<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>region<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		value <span class="token operator">=</span> <span class="token constant">DEFAULT_ZONE</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> value<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-5-ServiceUrls"><a href="#3-5-ServiceUrls" class="headerlink" title="3.5 ServiceUrls"></a>3.5 ServiceUrls</h3><p>在获取了Region和Zone信息之后，才开始真正加载Eureka Server的具体地址。它根据传入的参数按一定算法确定加载位于哪一个Zone配置的serviceUrls。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> myZoneOffset <span class="token operator">=</span> <span class="token function">getZoneOffset</span><span class="token punctuation">(</span>instanceZone<span class="token punctuation">,</span> preferSameZone<span class="token punctuation">,</span> availZones<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> zone <span class="token operator">=</span> availZones<span class="token punctuation">[</span>myZoneOffset<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> serviceUrls <span class="token operator">=</span> clientConfig<span class="token punctuation">.</span><span class="token function">getEurekaServerServiceUrls</span><span class="token punctuation">(</span>zone<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>具体获取serviceUrls的实现，我们可以详细查看<code>getEurekaServerServiceUrls</code>函数的具体实现类<code>EurekaClientConfigBean</code>，该类是<code>EurekaClientConfig</code>和<code>EurekaConstants</code>接口的实现，用来加载配置文件中的内容，这里有非常多有用的信息，这里我们先说一下此处我们关心的，关于<code>defaultZone</code>的信息。通过搜索<code>defaultZone</code>，我们可以很容易的找到下面这个函数，它具体实现了，如何解析该参数的过程，通过此内容，我们就可以知道，<code>eureka.client.serviceUrl.defaultZone</code>属性可以配置多个，并且需要通过逗号分隔。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> <span class="token function">getEurekaServerServiceUrls</span><span class="token punctuation">(</span><span class="token class-name">String</span> myZone<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token class-name">String</span> serviceUrls <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>serviceUrl<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>myZone<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>serviceUrls <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> serviceUrls<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		serviceUrls <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>serviceUrl<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token constant">DEFAULT_ZONE</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>serviceUrls<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">final</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> serviceUrlsSplit <span class="token operator">=</span> <span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">commaDelimitedListToStringArray</span><span class="token punctuation">(</span>serviceUrls<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> eurekaServiceUrls <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>serviceUrlsSplit<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">String</span> eurekaServiceUrl <span class="token operator">:</span> serviceUrlsSplit<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">endsWithSlash</span><span class="token punctuation">(</span>eurekaServiceUrl<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				eurekaServiceUrl <span class="token operator">+=</span> <span class="token string">"/"</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+			eurekaServiceUrls<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>eurekaServiceUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">return</span> eurekaServiceUrls<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>当客户端在服务列表中选择实例进行访问时，对于Zone和Region遵循这样的规则：优先访问同自己一个Zone中的实例，其次才访问其他Zone中的实例。通过Region和Zone的两层级别定义，配合实际部署的物理结构，我们就可以有效的设计出区域性故障的容错集群。</p>
+<h3 id="3-6-服务注册"><a href="#3-6-服务注册" class="headerlink" title="3.6 服务注册"></a>3.6 服务注册</h3><p>在理解了多个服务注册中心信息的加载后，我们再回头看看<code>DiscoveryClient</code>类是如何实现“服务注册”行为的，通过查看它的构造类，可以找到它调用了下面这个函数：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">initScheduledTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>clientConfig<span class="token punctuation">.</span><span class="token function">shouldRegisterWithEureka</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+        <span class="token comment">// InstanceInfo replicator</span>
+        instanceInfoReplicator <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">InstanceInfoReplicator</span><span class="token punctuation">(</span>
+                <span class="token keyword">this</span><span class="token punctuation">,</span>
+               instanceInfo<span class="token punctuation">,</span>
+                clientConfig<span class="token punctuation">.</span><span class="token function">getInstanceInfoReplicationIntervalSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// burstSize</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+        instanceInfoReplicator<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span>clientConfig<span class="token punctuation">.</span><span class="token function">getInitialInstanceInfoReplicationIntervalSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Not registering with Eureka server per configuration"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在上面的函数中，我们可以看到关键的判断依据<code>if (clientConfig.shouldRegisterWithEureka())</code>。在该分支内，创建了一个<code>InstanceInfoReplicator</code>类的实例，它会执行一个定时任务，查看该类的run()函数了解该任务做了什么工作：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        discoveryClient<span class="token punctuation">.</span><span class="token function">refreshInstanceInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Long</span> dirtyTimestamp <span class="token operator">=</span> instanceInfo<span class="token punctuation">.</span><span class="token function">isDirtyWithTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>dirtyTimestamp <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            discoveryClient<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            instanceInfo<span class="token punctuation">.</span><span class="token function">unsetIsDirty</span><span class="token punctuation">(</span>dirtyTimestamp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"There was a problem with the instance info replicator"</span><span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Future</span> next <span class="token operator">=</span> scheduler<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> replicationIntervalSeconds<span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        scheduledPeriodicRef<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>相信大家都发现了<code>discoveryClient.register()</code>;这一行，真正触发调用注册的地方就在这里。继续查看<code>register()</code>的实现内容如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">boolean</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">{</span>
+    logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token constant">PREFIX</span> <span class="token operator">+</span> appPathIdentifier <span class="token operator">+</span> <span class="token string">": registering service..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">EurekaHttpResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Void</span><span class="token punctuation">&gt;</span></span> httpResponse<span class="token punctuation">;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        httpResponse <span class="token operator">=</span> eurekaTransport<span class="token punctuation">.</span>registrationClient<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>instanceInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"{} - registration failed {}"</span><span class="token punctuation">,</span> <span class="token constant">PREFIX</span> <span class="token operator">+</span> appPathIdentifier<span class="token punctuation">,</span> e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>logger<span class="token punctuation">.</span><span class="token function">isInfoEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"{} - registration status: {}"</span><span class="token punctuation">,</span> <span class="token constant">PREFIX</span> <span class="token operator">+</span> appPathIdentifier<span class="token punctuation">,</span> httpResponse<span class="token punctuation">.</span><span class="token function">getStatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> httpResponse<span class="token punctuation">.</span><span class="token function">getStatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">204</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>通过属性命名，大家基本也能猜出来，注册操作也是通过REST请求的方式进行的。同时，这里我们也能看到发起注册请求的时候，传入了一个<code>com.netflix.appinfo.InstanceInfo</code>对象，该对象就是注册时候客户端给服务端的服务的元数据。</p>
+<h3 id="3-7-服务获取与服务续约"><a href="#3-7-服务获取与服务续约" class="headerlink" title="3.7 服务获取与服务续约"></a>3.7 服务获取与服务续约</h3><p>顺着上面的思路，我们继续来看<code>DiscoveryClient</code>的<code>initScheduledTasks</code>函数，不难发现在其中还有两个定时任务，分别是“服务获取”和“服务续约”：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">initScheduledTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>clientConfig<span class="token punctuation">.</span><span class="token function">shouldFetchRegistry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// registry cache refresh timer</span>
+        <span class="token keyword">int</span> registryFetchIntervalSeconds <span class="token operator">=</span> clientConfig<span class="token punctuation">.</span><span class="token function">getRegistryFetchIntervalSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> expBackOffBound <span class="token operator">=</span> clientConfig<span class="token punctuation">.</span><span class="token function">getCacheRefreshExecutorExponentialBackOffBound</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        scheduler<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span>
+                <span class="token keyword">new</span> <span class="token class-name">TimedSupervisorTask</span><span class="token punctuation">(</span>
+                        <span class="token string">"cacheRefresh"</span><span class="token punctuation">,</span>
+                        scheduler<span class="token punctuation">,</span>
+                        cacheRefreshExecutor<span class="token punctuation">,</span>
+                        registryFetchIntervalSeconds<span class="token punctuation">,</span>
+                        <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">,</span>
+                        expBackOffBound<span class="token punctuation">,</span>
+                        <span class="token keyword">new</span> <span class="token class-name">CacheRefreshThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">)</span><span class="token punctuation">,</span>
+                registryFetchIntervalSeconds<span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>clientConfig<span class="token punctuation">.</span><span class="token function">shouldRegisterWithEureka</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> renewalIntervalInSecs <span class="token operator">=</span> instanceInfo<span class="token punctuation">.</span><span class="token function">getLeaseInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRenewalIntervalInSecs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> expBackOffBound <span class="token operator">=</span> clientConfig<span class="token punctuation">.</span><span class="token function">getHeartbeatExecutorExponentialBackOffBound</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Starting heartbeat executor: "</span> <span class="token operator">+</span> <span class="token string">"renew interval is: "</span> <span class="token operator">+</span> renewalIntervalInSecs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Heartbeat timer</span>
+        scheduler<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span>
+                <span class="token keyword">new</span> <span class="token class-name">TimedSupervisorTask</span><span class="token punctuation">(</span>
+                        <span class="token string">"heartbeat"</span><span class="token punctuation">,</span>
+                        scheduler<span class="token punctuation">,</span>
+                        heartbeatExecutor<span class="token punctuation">,</span>
+                        renewalIntervalInSecs<span class="token punctuation">,</span>
+                        <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">,</span>
+                        expBackOffBound<span class="token punctuation">,</span>
+                        <span class="token keyword">new</span> <span class="token class-name">HeartbeatThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">)</span><span class="token punctuation">,</span>
+                renewalIntervalInSecs<span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">SECONDS</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// InstanceInfo replicator</span>
+		……
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>从源码中，我们就可以发现，“服务获取”相对于“服务续约”更为独立，“服务续约”与“服务注册”在同一个if逻辑中，这个不难理解，服务注册到Eureka Server后，自然需要一个心跳去续约，防止被剔除，所以他们肯定是成对出现的。从源码中，我们可以清楚看到了，对于服务续约相关的时间控制参数：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">eureka<span class="token punctuation">.</span>instance<span class="token punctuation">.</span>lease<span class="token operator">-</span>renewal<span class="token operator">-</span>interval<span class="token operator">-</span>in<span class="token operator">-</span>seconds<span class="token operator">=</span><span class="token number">30</span>
+eureka<span class="token punctuation">.</span>instance<span class="token punctuation">.</span>lease<span class="token operator">-</span>expiration<span class="token operator">-</span>duration<span class="token operator">-</span>in<span class="token operator">-</span>seconds<span class="token operator">=</span><span class="token number">90</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>而“服务获取”的逻辑在独立的一个if判断中，其判断依据就是我们之前所提到的<code>eureka.client.fetch-registry=true</code>参数，它默认是为true的，大部分情况下我们不需要关心。为了定期的更新客户端的服务清单，以保证服务访问的正确性，“服务获取”的请求不会只限于服务启动，而是一个定时执行的任务，从源码中我们可以看到任务运行中的<code>registryFetchIntervalSeconds</code>参数对应<code>eureka.client.registry-fetch-interval-seconds=30</code>配置参数，它默认为30秒。<br>继续循序渐进的向下深入，我们就能分别发现实现“服务获取”和“服务续约”的具体方法，其中“服务续约”的实现较为简单，直接以REST请求的方式进行续约：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">boolean</span> <span class="token function">renew</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">EurekaHttpResponse</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">InstanceInfo</span><span class="token punctuation">&gt;</span></span> httpResponse<span class="token punctuation">;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        httpResponse <span class="token operator">=</span> eurekaTransport<span class="token punctuation">.</span>registrationClient<span class="token punctuation">.</span><span class="token function">sendHeartBeat</span><span class="token punctuation">(</span>instanceInfo<span class="token punctuation">.</span><span class="token function">getAppName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> instanceInfo<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> instanceInfo<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        logger<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"{} - Heartbeat status: {}"</span><span class="token punctuation">,</span> <span class="token constant">PREFIX</span> <span class="token operator">+</span> appPathIdentifier<span class="token punctuation">,</span> httpResponse<span class="token punctuation">.</span><span class="token function">getStatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>httpResponse<span class="token punctuation">.</span><span class="token function">getStatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">404</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token constant">REREGISTER_COUNTER</span><span class="token punctuation">.</span><span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"{} - Re-registering apps/{}"</span><span class="token punctuation">,</span> <span class="token constant">PREFIX</span> <span class="token operator">+</span> appPathIdentifier<span class="token punctuation">,</span> instanceInfo<span class="token punctuation">.</span><span class="token function">getAppName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> httpResponse<span class="token punctuation">.</span><span class="token function">getStatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"{} - was unable to send heartbeat!"</span><span class="token punctuation">,</span> <span class="token constant">PREFIX</span> <span class="token operator">+</span> appPathIdentifier<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>而“服务获取”则相对复杂一些，会根据是否第一次获取发起不同的REST请求和相应的处理，具体的实现逻辑还是跟之前类似，有兴趣的读者可以继续查看服务客户端的其他具体内容，了解更多细节。</p>
+<h3 id="3-8-服务注册中心处理"><a href="#3-8-服务注册中心处理" class="headerlink" title="3.8 服务注册中心处理"></a>3.8 服务注册中心处理</h3><p>通过上面的源码分析，可以看到所有的交互都是通过REST的请求来发起的。下面我们来看看服务注册中心对这些请求的处理。Eureka Server对于各类REST请求的定义都位于：<code>com.netflix.eureka.resources</code>包下。<br>以“服务注册”请求为例：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@POST</span>
+<span class="token annotation punctuation">@Consumes</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"application/json"</span><span class="token punctuation">,</span> <span class="token string">"application/xml"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">Response</span> <span class="token function">addInstance</span><span class="token punctuation">(</span><span class="token class-name">InstanceInfo</span> info<span class="token punctuation">,</span>
+                  <span class="token annotation punctuation">@HeaderParam</span><span class="token punctuation">(</span><span class="token class-name">PeerEurekaNode</span><span class="token punctuation">.</span><span class="token constant">HEADER_REPLICATION</span><span class="token punctuation">)</span> <span class="token class-name">String</span> isReplication<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    logger<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"Registering instance {} (replication={})"</span><span class="token punctuation">,</span> info<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> isReplication<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// validate that the instanceinfo contains all the necessary required fields</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token comment">// handle cases where clients may be registering with bad DataCenterInfo with missing data</span>
+    <span class="token class-name">DataCenterInfo</span> dataCenterInfo <span class="token operator">=</span> info<span class="token punctuation">.</span><span class="token function">getDataCenterInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>dataCenterInfo <span class="token keyword">instanceof</span> <span class="token class-name">UniqueIdentifier</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">String</span> dataCenterInfoId <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">UniqueIdentifier</span><span class="token punctuation">)</span> dataCenterInfo<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isBlank</span><span class="token punctuation">(</span>dataCenterInfoId<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">boolean</span> experimental <span class="token operator">=</span> <span class="token string">"true"</span><span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span>
+					serverConfig<span class="token punctuation">.</span><span class="token function">getExperimental</span><span class="token punctuation">(</span><span class="token string">"registration.validation.dataCenterInfoId"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>experimental<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token class-name">String</span> entity <span class="token operator">=</span> <span class="token string">"DataCenterInfo of type "</span> <span class="token operator">+</span> dataCenterInfo<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+										<span class="token operator">+</span> <span class="token string">" must contain a valid id"</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> <span class="token class-name">Response</span><span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">entity</span><span class="token punctuation">(</span>entity<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>dataCenterInfo <span class="token keyword">instanceof</span> <span class="token class-name">AmazonInfo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token class-name">AmazonInfo</span> amazonInfo <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">AmazonInfo</span><span class="token punctuation">)</span> dataCenterInfo<span class="token punctuation">;</span>
+                <span class="token class-name">String</span> effectiveId <span class="token operator">=</span> amazonInfo<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">AmazonInfo<span class="token punctuation">.</span>MetaDataKey</span><span class="token punctuation">.</span>instanceId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>effectiveId <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    amazonInfo<span class="token punctuation">.</span><span class="token function">getMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>
+							<span class="token class-name">AmazonInfo<span class="token punctuation">.</span>MetaDataKey</span><span class="token punctuation">.</span>instanceId<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> info<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"Registering DataCenterInfo of type {} without an appropriate id"</span><span class="token punctuation">,</span>
+						dataCenterInfo<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    registry<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>info<span class="token punctuation">,</span> <span class="token string">"true"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>isReplication<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Response</span><span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">204</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 204 to be backwards compatible</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在对注册信息进行了一大堆校验之后，会调用<code>org.springframework.cloud.netflix.eureka.server.InstanceRegistry</code>对象中的<code>register(InstanceInfo info, int leaseDuration, boolean isReplication)</code>函数来进行服务注册：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token class-name">InstanceInfo</span> info<span class="token punctuation">,</span> <span class="token keyword">int</span> leaseDuration<span class="token punctuation">,</span> <span class="token keyword">boolean</span> isReplication<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>log<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		log<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"register "</span> <span class="token operator">+</span> info<span class="token punctuation">.</span><span class="token function">getAppName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">", vip "</span> <span class="token operator">+</span> info<span class="token punctuation">.</span><span class="token function">getVIPAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token operator">+</span> <span class="token string">", leaseDuration "</span> <span class="token operator">+</span> leaseDuration <span class="token operator">+</span> <span class="token string">", isReplication "</span>
+				<span class="token operator">+</span> isReplication<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">this</span><span class="token punctuation">.</span>ctxt<span class="token punctuation">.</span><span class="token function">publishEvent</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">EurekaInstanceRegisteredEvent</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> info<span class="token punctuation">,</span>
+			leaseDuration<span class="token punctuation">,</span> isReplication<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>info<span class="token punctuation">,</span> leaseDuration<span class="token punctuation">,</span> isReplication<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在注册函数中，先调用<code>publishEvent</code>函数，将该新服务注册的事件传播出去，然后调用<code>com.netflix.eureka.registry.AbstractInstanceRegistry</code>父类中的注册实现，将<code>InstanceInfo</code>中的元数据信息存储在一个<code>ConcurrentHashMap&lt;String, Map&lt;String, Lease&lt;InstanceInfo&gt;&gt;&gt;</code>对象中，它是一个两层Map结构，第一层的key存储服务名：<code>InstanceInfo</code>中的<code>appName</code>属性，第二层的key存储实例名：<code>InstanceInfo</code>中的<code>instanceId</code>属性。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Lease</span><span class="token punctuation">&lt;</span><span class="token class-name">InstanceInfo</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> registry <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Lease</span><span class="token punctuation">&lt;</span><span class="token class-name">InstanceInfo</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>到这里服务注册、服务获取、服务续约都已经很清晰了，可以再理一下。<br>1、服务注册，在服务注册的时候，会将本项目提供的服务都封装到对应的Map集合中，这是封装模式和Spring MVC对提供的接口封装有点类似；<br>2、服务获取，是消费者从Eureka中获取服务的列表，而且这种服务列表是根据定时任务定时更新；<br>3、服务续约，服务的提供者把服务注册在服务注册中心，需要定时的去和服务注册中心保持心跳，证明自己还有提供服务的能力，同时在提供的服务发生变化的时候也会做相应的同步更新。服务续约是服务提供者主动发出。</p>
+<h3 id="3-9-其他关键点"><a href="#3-9-其他关键点" class="headerlink" title="3.9 其他关键点"></a>3.9 其他关键点</h3><h4 id="3-9-1-eviction-失效服务剔除"><a href="#3-9-1-eviction-失效服务剔除" class="headerlink" title="3.9.1 eviction-失效服务剔除"></a>3.9.1 eviction-失效服务剔除</h4><p>Eviction（失效服务剔除）用来定期在Eureka Server检测失效的服务，检测标准就是超过一定时间没有Renew的服务。默认失效时间为90秒，也就是如果有服务超过90秒没有向Eureka Server发起Renew请求的话，就会被当做失效服务剔除掉。<br>失效时间可以通过<code>eureka.instance.leaseExpirationDurationInSeconds</code>进行配置，定期扫描时间可以通过<code>eureka.server.evictionIntervalTimerInMs</code>进行配置。</p>
+<h4 id="3-9-2-cancel-服务下线"><a href="#3-9-2-cancel-服务下线" class="headerlink" title="3.9.2 cancel-服务下线"></a>3.9.2 cancel-服务下线</h4><p>Cancel（服务下线）一般在Service Provider shut down的时候调用，用来把自身的服务从Eureka Server中删除，以防客户端调用不存在的服务。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">程序猿洞晓</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://itcrud.github.io/2018/07/spring-cloud-eureka-source/">https://itcrud.github.io/2018/07/spring-cloud-eureka-source/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">程序猿洞晓</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Spring-Cloud/">
+                                    <span class="chip bg-color">Spring Cloud</span>
+                                </a>
+                            
+                                <a href="/tags/Eureka/">
+                                    <span class="chip bg-color">Eureka</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'd5b070018a0674352910',
+        clientSecret: 'ee7de87a788f3687fbd8365e86cb2ba43f20c0a9',
+        repo: 'issue',
+        owner: 'itcrud',
+        admin: ["itcrud"],
+        id: '2018-07-02T21-42-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/07/java-jmm-jvm/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="Java虚拟机那些事儿(一)：浅析JVM与JMM模型结构与关系">
+                        
+                        <span class="card-title">Java虚拟机那些事儿(一)：浅析JVM与JMM模型结构与关系</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            最近翻看了java线程相关的东西，书中有一边专门讲到java内存模型，读完之后边回想起java虚拟机模型，那时心中便在思考java内存模型（以下简称JMM）和java虚拟机模型（以下简称JVM）之间的关系，下面将详细讲述。根据JMM的设计，系统存在一个主内存(Main Memory)，Java中所有变量都储存在主存中，对于……
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-07-04
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-category">
+                                    Java虚拟机
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JVM/">
+                        <span class="chip bg-color">JVM</span>
+                    </a>
+                    
+                    <a href="/tags/JMM/">
+                        <span class="chip bg-color">JMM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/06/fork-join-principle/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="Fork-Join内部实现原理分析">
+                        
+                        <span class="card-title">Fork-Join内部实现原理分析</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            在做一个长的任务的时候，需要消耗的时间很长，但是这个时候主流程又要等待这个长任务执行结束后才能执行。如这里这个长任务可能是从数据库中查出报表数据，计算封装出可以写入到报表的数据，主流程在等待往报表中写数据，但是长任务中迟迟计算不出报表数据，因此这里就需要考虑多线程，如果直接创建一个子线程，主线程还是需要等待这个子线程执行结束，这个方案……
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-06-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    并发编程
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Fork-Join/">
+                        <span class="chip bg-color">Fork-Join</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2015-2023</span>
+            
+            <a href="/about" target="_blank">程序猿洞晓</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">676k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2015";
+                        var startMonth = "09";
+                        var startDate = "1";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/itcrud" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:itcrud@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

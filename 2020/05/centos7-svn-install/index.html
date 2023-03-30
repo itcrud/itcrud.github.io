@@ -1,0 +1,1363 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="CentOS7环境下在线和离线安装SVN（Subversion）, 程序猿洞晓">
+    <meta name="description" content="被逼无奈，很多年都没有用过SVN啦，现在公司都是使用这个，只有再次捡起来。这篇文章将会介绍SVN的在线安装和离线安装。所谓的在线安装就是通过yum源安装，超级简单，再者就是离线安装，在没有外网的服务器环境，超级麻烦。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>CentOS7环境下在线和离线安装SVN（Subversion） | 程序猿洞晓</title>
+    <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/matery.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/reward.css">
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">程序猿洞晓</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/top" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/toolbox" class="waves-effect waves-light">
+      
+      <i class="fas fa-toolbox" style="zoom: 0.6;"></i>
+      
+      <span>工具箱</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-link" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">程序猿洞晓</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/top" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/toolbox" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-toolbox"></i>
+			
+			工具箱
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-link"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/13.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">CentOS7环境下在线和离线安装SVN（Subversion）</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/SVN/">
+                                <span class="chip bg-color">SVN</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/SVN/" class="post-category">
+                                SVN
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
+                    2020-05-18
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>被逼无奈，很多年都没有用过SVN啦，现在公司都是使用这个，只有再次捡起来。这篇文章将会介绍SVN的在线安装和离线安装。所谓的在线安装就是通过yum源安装，超级简单，再者就是离线安装，在没有外网的服务器环境，超级麻烦。</p>
+<h2 id="1-在线安装"><a href="#1-在线安装" class="headerlink" title="1. 在线安装"></a>1. 在线安装</h2><p>废话不多说，直接搞起来。</p>
+<ul>
+<li>首先检查本机是否已经安装了SVN</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 检查subversion是否已经安装</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> subversion
+<span class="token comment"># 如果已经安装，上一步会给出安装的名称</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-e</span> <span class="token parameter variable">--nodeps</span> <span class="token punctuation">[</span>名称<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>使用yum直接线上安装</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> subversion<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>上一步安装成功后，需要创建存储数据的目录和密码鉴权文件存储目录</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /usr/local/svn/svndata
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /usr/local/svn/svnpasswd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>启动svn服务，指定数据存储目录</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">svnserve <span class="token parameter variable">-d</span> <span class="token parameter variable">-r</span> /usr/local/svn/svndata<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>创建版本库，简单的来说就是一个项目数据存储的库，这个库由svn控制版本</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">svnadmin create /usr/local/svn/svndata/demo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>svn配置文件</li>
+</ul>
+<p>进入demo项目的<code>conf</code>目录下，可以看到配置文件三个分别是authz、passwd、svnserve.conf。其中authz是权限控制，passwd是密码控制，svnserve.conf自然就是当前demo项目的相关配置信息。</p>
+<p>修改svnserve.conf配置信息：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#进入目录</span>
+<span class="token builtin class-name">cd</span> /usr/local/svn/svndata/demo/conf
+<span class="token comment">#禁止匿名访问（默认情况下是提供只读权限）</span>
+anon-access<span class="token operator">=</span>none 
+<span class="token comment">#给通过认证的用户提供写的权限，同时包含读的权限</span>
+auth-access<span class="token operator">=</span>write 
+<span class="token comment">#指定密码文件位置，默认是当前目录下的passwd，这里指定全局配置</span>
+password-db<span class="token operator">=</span>/usr/local/svn/svnpasswd/passwd
+<span class="token comment">#指定鉴权文件位置，默认是当前目录下的auth，这里指定全局配置</span>
+authz-db<span class="token operator">=</span>/usr/local/svn/svnpasswd/authz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>配置权限和密码文件位置</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#进入目录</span>
+<span class="token builtin class-name">cd</span> /usr/local/svn/svndata/demo/conf
+<span class="token comment">#复制文件到svnpasswd目录下</span>
+<span class="token function">cp</span> <span class="token parameter variable">-p</span> authz <span class="token function">passwd</span> /usr/local/svn/svnpasswd/
+<span class="token comment">#进入svnpasswd目录</span>
+<span class="token builtin class-name">cd</span> /usr/local/svn/svnpasswd/
+<span class="token comment">#修改文件访问权限</span>
+<span class="token function">chmod</span> <span class="token number">700</span> authz <span class="token function">passwd</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>密码文件内容配置</li>
+</ul>
+<p>这里配置相对简单，文件打开后，会有一行是<code>[users]</code>，然后在接下来的几行就是说明如何配置并有示例。配置如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#打开passwd文件</span>
+<span class="token function">vim</span> <span class="token function">passwd</span>
+<span class="token comment"># 配置文件内容如下</span>
+<span class="token comment">#配置两个用户分别是itcrud和joker，对应的密码都是123456</span>
+<span class="token punctuation">[</span>users<span class="token punctuation">]</span>
+<span class="token assign-left variable">itcrud</span><span class="token operator">=</span><span class="token number">123456</span>
+<span class="token assign-left variable">joker</span><span class="token operator">=</span><span class="token number">123456</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>权限文件内容配置</li>
+</ul>
+<p>这里配置分为两块，分别是用户组配置和具体项目权限配置。用户组就是定义一个组，然后有对应的组员。项目权限配置就是当前项目可以那几个组参与，参与的成员是多少，各自成员可以执行的权限大小等。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#打开authz配置文件</span>
+<span class="token function">vim</span> authz
+<span class="token comment">#文件内容如下</span>
+<span class="token punctuation">[</span>groups<span class="token punctuation">]</span>
+<span class="token assign-left variable">team</span><span class="token operator">=</span>itcrud,joker <span class="token comment">#组名为team,组员有itcrud和joker，多个组员用逗号隔开</span>
+<span class="token punctuation">[</span>demo:/<span class="token punctuation">]</span> <span class="token comment">#表示demo项目的根目录</span>
+@team<span class="token operator">=</span>rw <span class="token comment">#整个team有读写的权限</span>
+<span class="token assign-left variable">joker</span><span class="token operator">=</span>r <span class="token comment">#组员joker只有读的权限</span>
+<span class="token assign-left variable">itcrud</span><span class="token operator">=</span>w <span class="token comment">#组员itcrud有读写的权限</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>重启svn服务</li>
+</ul>
+<p>到这里安装结束，重启svn服务，让配置信息生效。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#杀死当前svn进程</span>
+<span class="token function">pkill</span> svnserve
+<span class="token comment">#重启服务</span>
+svnserve <span class="token parameter variable">-d</span> <span class="token parameter variable">-r</span> /usr/local/svn/svndata<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>拉取项目测试一下</li>
+</ul>
+<p>通过本地拉取和提交项目测试一下安装是否成功。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/local/src/
+<span class="token comment">#拉取项目用户:itcrud，代码库存储机器IP:192.168.233.181，项目仓库名：demo</span>
+svn <span class="token parameter variable">--username</span><span class="token operator">=</span>itcrud co svn://192.168.233.181/demo <span class="token comment"># 执行后输入密码</span>
+<span class="token comment">#进入demo目录</span>
+<span class="token builtin class-name">cd</span> demo
+<span class="token comment">#创建文件</span>
+<span class="token function">touch</span> test.sh
+<span class="token comment">#提交</span>
+svn <span class="token function">add</span> <span class="token builtin class-name">.</span>
+svn commit <span class="token parameter variable">-m</span> <span class="token string">"first"</span>
+<span class="token comment">#----------------------------分割线</span>
+<span class="token comment">#重新创建一个目录，检查上面提交项目的操作有没成功</span>
+<span class="token builtin class-name">cd</span> /usr/local/src/
+<span class="token function">mkdir</span> testdir
+<span class="token builtin class-name">cd</span> testdir
+svn <span class="token parameter variable">--username</span><span class="token operator">=</span>itcrud co svn://192.168.233.181/demo <span class="token comment"># 执行后输入密码</span>
+<span class="token comment">#这里检查拉取的项目有没有上面添加的test.sh文件，即可知道是否安装成功。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2-离线安装"><a href="#2-离线安装" class="headerlink" title="2. 离线安装"></a>2. 离线安装</h2><p>离线安装是个痛苦的过程，主要是安装过程，对应上面在线安装<code>yum -y install subversion</code>命令。在线安装只要这一个命令，但是离线安装内容就多啦。为什么？因为在安装svn的时候需要添加一些依赖，这些依赖不能通过在线下载，只能本地下载然后上传到服务器上，依次安装。</p>
+<h3 id="2-1-SVN安装包和所需要的依赖"><a href="#2-1-SVN安装包和所需要的依赖" class="headerlink" title="2.1 SVN安装包和所需要的依赖"></a>2.1 SVN安装包和所需要的依赖</h3><p>如果下面说的这些依赖，服务器已经安装过了，可以忽略，但是对于一台刚创建的服务器，是没有带这些依赖的。</p>
+<ul>
+<li>subversion：svn安装包</li>
+<li>apr、apr-util、zlib：所需依赖的其中三个</li>
+<li>unzip：用来解压zip文件(可以参考博客:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_19524879/article/details/87095919">https://blog.csdn.net/qq_19524879/article/details/87095919</a>)</li>
+<li>expat：这个是apr-util安装是所需要的依赖(github下载地址:<a target="_blank" rel="noopener" href="https://github.com/libexpat/libexpat/releases">https://github.com/libexpat/libexpat/releases</a>)</li>
+<li>sqlite-amalgamation：这是个zip包，上面安装unzip就是用来解压它的</li>
+</ul>
+<p>这些依赖在后文中我会打包提供下载地址，需要的可以直接下载。（包括svn安装包）</p>
+<p><font style="color:#ff4422;"><strong>后文有个补充说明注意看一下，也许对你很重要。</strong></font></p>
+<h3 id="2-2-安装步骤"><a href="#2-2-安装步骤" class="headerlink" title="2.2 安装步骤"></a>2.2 安装步骤</h3><p>下面所使用到安装包都上传到<code>/usr/local</code>目录下，个人习惯，各位看官可以根据自己习惯随意。</p>
+<ul>
+<li>安装zlib-1.2.8.tar.gz</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#解压安装包</span>
+<span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> zlib-1.2.8.tar.gz
+<span class="token comment">#进入解压目录</span>
+<span class="token builtin class-name">cd</span> zlib-1.2.8
+<span class="token comment">#运行配置</span>
+./configure
+<span class="token comment">#编译安装</span>
+<span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>安装expat-2.2.9.tar.gz</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#解压安装包</span>
+<span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> expat-2.2.9.tar.gz
+<span class="token comment">#进入解压目录</span>
+<span class="token builtin class-name">cd</span> expat-2.2.9
+<span class="token comment">#运行配置</span>
+./configure
+<span class="token comment">#编译安装</span>
+<span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>安装apr-1.7.0.tar.gz</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#解压安装包</span>
+<span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> apr-1.7.0.tar.gz
+<span class="token comment">#进入解压目录</span>
+<span class="token builtin class-name">cd</span> apr-1.7.0
+<span class="token comment">#运行配置</span>
+./configure --with-apr<span class="token operator">=</span>/usr/local/apr
+<span class="token comment">#编译安装</span>
+<span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>安装apr-util-1.6.1.tar.gz</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#解压安装包</span>
+<span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> apr-util-1.6.1.tar.gz
+<span class="token comment">#进入解压目录</span>
+<span class="token builtin class-name">cd</span> apr-util-1.6.1
+<span class="token comment">#运行配置</span>
+./configure --with-apr<span class="token operator">=</span>/usr/local/apr
+<span class="token comment">#编译安装</span>
+<span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>安装unzip</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> lx_unzip-6.0-5.el6.x86_64.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>安装sqlite-amalgamation插件</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 先解压svn安装包</span>
+<span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> subversion-1.13.0.tar.gz
+<span class="token comment"># 将sqlite-amalgamation移动到subversion-1.13.0目录下</span>
+<span class="token function">mv</span> sqlite-amalgamation-3081101.zip subversion-1.13.0
+<span class="token comment"># 解压sqlite-amalgamation-3081101.zip包</span>
+<span class="token function">unzip</span> sqlite-amalgamation-3081101.zip
+<span class="token comment"># 重命名</span>
+<span class="token function">mv</span> sqlite-amalgamation-3081101 sqlite-amalgamation<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>安装svn</li>
+</ul>
+<p>上面各种依赖安装结束，最后安装svn。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#进入subversion-1.13.0</span>
+<span class="token builtin class-name">cd</span> subversion-1.13.0
+<span class="token comment">#执行configure配置</span>
+./configure --with-apr<span class="token operator">=</span>/usr/local/apr --with-apr-util<span class="token operator">=</span>/usr/local/apr --with-lz4<span class="token operator">=</span>internal --with-utf8proc<span class="token operator">=</span>internal
+<span class="token comment">#编译和安装</span>
+<span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>到这里安装完成，然后就是创建svndata、svnpasswd目录、配置相关文件等，这些步骤参考在线安装过程，是一样的。</p>
+<h2 id="3-防火墙问题"><a href="#3-防火墙问题" class="headerlink" title="3. 防火墙问题"></a>3. 防火墙问题</h2><p>上面在测试拉取项目、提交数据都是在服务器本地完成，在实际使用过程都是在远程操作，所有需要服务器开通防火墙，这里简单粗暴，直接关闭防火墙。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl stop firewalld.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="4-补充说明"><a href="#4-补充说明" class="headerlink" title="4. 补充说明"></a>4. 补充说明</h2><p>我在虚拟机中在线和离线安装的时候使用上面步骤完全没有问题，但是在实际服务器上离线安装出现了点问题，就是在安装zlib的时候，执行<code>./configure</code>报错，缺少gcc工具。这里补充一下gcc安装。</p>
+<p>这个安装参考大神博客。可以直接看此链接安装。<a target="_blank" rel="noopener" href="https://blog.csdn.net/yuan_ren_sheng/article/details/81021563">https://blog.csdn.net/yuan_ren_sheng/article/details/81021563</a></p>
+<p>这里抄录一遍，防止后期上面的博客链接失效。下载gcc安装包，解压后按照下面的顺序依次安装。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> lib64gmp3-4.3.1-1mdv2010.0.x86_64.rpm
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> ppl-0.10.2-11.el6.x86_64.rpm
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> cloog-ppl-0.15.7-1.2.el6.x86_64.rpm
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> mpfr-2.4.1-6.el6.x86_64.rpm
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> cpp-4.4.7-4.el6.x86_64.rpm <span class="token parameter variable">--force</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> kernel-headers-2.6.32-431.el6.x86_64.rpm
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> glibc-headers-2.12-1.132.el6.x86_64.rpm <span class="token parameter variable">--nodeps</span> <span class="token parameter variable">--force</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> glibc-devel-2.12-1.132.el6.x86_64.rpm <span class="token parameter variable">--force</span> <span class="token parameter variable">--nodeps</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> gcc-4.4.7-4.el6.x86_64.rpm <span class="token parameter variable">--force</span> <span class="token parameter variable">--nodeps</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> libstdc++-devel-4.4.7-4.el6.x86_64.rpm <span class="token parameter variable">--force</span> <span class="token parameter variable">--nodeps</span>
+<span class="token function">rpm</span> <span class="token parameter variable">-ivh</span> gcc-c++-4.4.7-4.el6.x86_64.rpm <span class="token parameter variable">--force</span> <span class="token parameter variable">--nodeps</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>检查是否安装成功：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 执行下面的命令</span>
+gcc <span class="token parameter variable">-v</span>
+<span class="token comment"># 给出的安装成功日志如下</span>
+Using built-in specs.
+Target: x86_64-redhat-linux
+Configured with: <span class="token punctuation">..</span>/configure <span class="token parameter variable">--prefix</span><span class="token operator">=</span>/usr <span class="token parameter variable">--mandir</span><span class="token operator">=</span>/usr/share/man <span class="token parameter variable">--infodir</span><span class="token operator">=</span>/usr/share/info --with-bugurl<span class="token operator">=</span>http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads<span class="token operator">=</span>posix --enable-checking<span class="token operator">=</span>release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages<span class="token operator">=</span>c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt<span class="token operator">=</span>gtk --disable-dssi --with-java-home<span class="token operator">=</span>/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar<span class="token operator">=</span>/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune<span class="token operator">=</span>generic --with-arch_32<span class="token operator">=</span>i686 <span class="token parameter variable">--build</span><span class="token operator">=</span>x86_64-redhat-linux
+Thread model: posix
+gcc version <span class="token number">4.4</span>.7 <span class="token number">20120313</span> <span class="token punctuation">(</span>Red Hat <span class="token number">4.4</span>.7-4<span class="token punctuation">)</span> <span class="token punctuation">(</span>GCC<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="5-参考的文章"><a href="#5-参考的文章" class="headerlink" title="5. 参考的文章"></a>5. 参考的文章</h2><p><a target="_blank" rel="noopener" href="https://jingyan.baidu.com/album/f0e83a259daec522e59101e0.html">Linux平台的SVN服务器的配置及搭建</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39496190/article/details/86573894">linux离线安装svn</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_19524879/article/details/87095919">linux unzip命令不存在及ZIP离线安装</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">程序猿洞晓</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://itcrud.github.io/2020/05/centos7-svn-install/">https://itcrud.github.io/2020/05/centos7-svn-install/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">程序猿洞晓</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/SVN/">
+                                    <span class="chip bg-color">SVN</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'd5b070018a0674352910',
+        clientSecret: 'ee7de87a788f3687fbd8365e86cb2ba43f20c0a9',
+        repo: 'issue',
+        owner: 'itcrud',
+        admin: ["itcrud"],
+        id: '2020-05-18T13-56-03',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/07/enum-select-list/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="通过枚举值的方式，实现前端选择栏的统一处理逻辑">
+                        
+                        <span class="card-title">通过枚举值的方式，实现前端选择栏的统一处理逻辑</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            在实际项目开发中经常会遇到前端下拉列表和后端交互的方式，这样的有两种实现解决方案。第一种是前后端约定好，前端写死，不好的地方就是发生变动，前后端都要重新发版上线，耦合性太高；还有一种就是全权委托给后端处理，下拉列表数据也是后端处理好给到前端，如果发生变动只需要后端发版即可。对于灵活性、可维护性肯定是第二种更好一点，这里就会涉及到后端如何存储这些下拉列表数据，数据库存储还是枚举？
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-02
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%9E%9A%E4%B8%BE%E5%88%97%E8%A1%A8/">
+                        <span class="chip bg-color">枚举列表</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/springboot-auto-compiler/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="Spring Boot项目本地调试代码热部署">
+                        
+                        <span class="card-title">Spring Boot项目本地调试代码热部署</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            开发过程中，一边写代码一边调试，如果项目没有设置热部署功能，则每次需要对项目重启，这样过于麻烦和浪费时间，在各编辑器上都是带有自动编译的功能，下面看一下常用的开发工具IDEA是如何设置的，Eclipse也会说到，相对于两种编辑器，Eclipse配置会简单很多。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Spring-Boot/" class="post-category">
+                                    Spring Boot
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%83%AD%E9%83%A8%E7%BD%B2/">
+                        <span class="chip bg-color">热部署</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2015-2023</span>
+            
+            <a href="/about" target="_blank">程序猿洞晓</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">676k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2015";
+                        var startMonth = "09";
+                        var startDate = "1";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/itcrud" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:itcrud@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

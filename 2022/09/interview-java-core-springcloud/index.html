@@ -1,0 +1,1591 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Java问答知识总结篇-Spring Cloud, 程序猿洞晓">
+    <meta name="description" content="以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud &amp;&amp; Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Java问答知识总结篇-Spring Cloud | 程序猿洞晓</title>
+    <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/matery.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/reward.css">
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">程序猿洞晓</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/top" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/toolbox" class="waves-effect waves-light">
+      
+      <i class="fas fa-toolbox" style="zoom: 0.6;"></i>
+      
+      <span>工具箱</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-link" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">程序猿洞晓</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/top" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/toolbox" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-toolbox"></i>
+			
+			工具箱
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-link"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Java问答知识总结篇-Spring Cloud</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Spring-Cloud/">
+                                <span class="chip bg-color">Spring Cloud</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                最佳实践
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
+                    2022-09-21
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    11k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    38 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p><a href="/2022/09/interview-java-core-base/">Java问答知识总结篇-基础知识</a><br><a href="/2022/09/interview-java-core-jvm/">Java问答知识总结篇-JVM</a><br><a href="/2022/09/interview-java-core-threads/">Java问答知识总结篇-多线程&amp;并发编程</a><br><a href="/2022/09/interview-java-core-network/">Java问答知识总结篇-网络基础</a><br><a href="/2022/09/interview-java-core-spring/">Java问答知识总结篇-Spring</a><br><a href="/2022/09/interview-java-core-springboot/">Java问答知识总结篇-Spring Boot</a><br><a href="/2022/09/interview-java-core-mybatis/">Java问答知识总结篇-Mybatis</a><br><a href="/2022/09/interview-java-core-mysql/">Java问答知识总结篇-MySQL</a><br><a href="/2022/09/interview-java-core-redis/">Java问答知识总结篇-Redis</a><br><a href="/2022/09/interview-java-core-mq/">Java问答知识总结篇-MQ</a><br><a href="/2022/09/interview-java-core-nginx/">Java问答知识总结篇-Nginx</a><br><a href="/2022/09/interview-java-core-distribution/">Java问答知识总结篇-分布式</a><br><a href="/2022/09/interview-java-core-springcloud/">Java问答知识总结篇-Spring Cloud</a><br><a href="/2022/09/interview-java-core-dubbo/">Java问答知识总结篇-Dubbo</a><br><a href="/2022/09/interview-java-core-zookeeper/">Java问答知识总结篇-Zookeeper</a><br><a href="/2022/09/interview-java-core-elasticsearch/">Java问答知识总结篇-ElasticSearch</a><br><a href="/2022/09/interview-java-core-netty/">Java问答知识总结篇-Netty</a><br><a href="/2022/09/interview-java-core-application/">Java问答知识总结篇-场景分析题</a></p>
+</blockquote>
+<p>Spring Cloud系列文章：<a href="/categories/Spring-Cloud/">Spring-Cloud</a></p>
+<h2 id="什么是服务熔断？什么是服务降级？"><a href="#什么是服务熔断？什么是服务降级？" class="headerlink" title="什么是服务熔断？什么是服务降级？"></a>什么是服务熔断？什么是服务降级？</h2><p>熔断机制是应对雪崩效应的一种微服务链路保护机制。当某个微服务不可用或者响应时间太长时，会进行服务降级，进而熔断该节点微服务的调用，快速返回“错误”的响应信息。当检测到该节点微服务调用响应正常后恢复调用链路。在Spring Cloud框架里熔断机制通过Hystrix实现，Hystrix会监控微服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内调用20次，如果失败，就会启动熔断机制。</p>
+<p>服务降级，一般是从整体负荷考虑。就是当某个服务熔断之后，服务器将不再被调用，此时客户端可以自己准备一个本地的fallback回调，返回一个缺省值。这样做，虽然水平下降，但好歹可用，比直接挂掉强。</p>
+<h2 id="Eureka和zookeeper都可以提供服务注册与发现的功能，请说说两个的区别"><a href="#Eureka和zookeeper都可以提供服务注册与发现的功能，请说说两个的区别" class="headerlink" title="Eureka和zookeeper都可以提供服务注册与发现的功能，请说说两个的区别"></a>Eureka和zookeeper都可以提供服务注册与发现的功能，请说说两个的区别</h2><p>Zookeeper保证了CP（C：一致性，P：分区容错性），Eureka保证了AP（A：高可用，P：分区容错性）。</p>
+<ol>
+<li>当向注册中心查询服务列表时，我们可以容忍注册中心返回的是几分钟以前的信息，但不能容忍直接down掉不可用。也就是说，服务注册功能对高可用性要求比较高，但zk会出现这样一种情况，当master节点因为网络故障与其他节点失去联系时，剩余节点会重新选leader。问题在于，选取leader时间过长，30 ~ 120s，且选取期间zk集群都不可用，这样就会导致选取期间注册服务瘫痪。在云部署的环境下，因网络问题使得zk集群失去master节点是较大概率会发生的事，虽然服务能够恢复，但是漫长的选取时间导致的注册长期不可用是不能容忍的。</li>
+<li>Eureka保证了可用性，Eureka各个节点是平等的，几个节点挂掉不会影响正常节点的工作，剩余的节点仍然可以提供注册和查询服务。而Eureka的客户端向某个Eureka注册或发现时发生连接失败，则会自动切换到其他节点，只要有一台Eureka还在，就能保证注册服务可用，只是查到的信息可能不是最新的。除此之外，Eureka还有自我保护机制，如果在15分钟内超过85%的节点没有正常的心跳，那么Eureka就认为客户端与注册中心发生了网络故障，此时会出现以下几种情况：<ul>
+<li>Eureka不在从注册列表中移除因为长时间没有收到心跳而应该过期的服务。</li>
+<li>Eureka仍然能够接受新服务的注册和查询请求，但是不会被同步到其他节点上（即保证当前节点仍然可用）</li>
+<li>当网络稳定时，当前实例新的注册信息会被同步到其他节点。</li>
+</ul>
+</li>
+</ol>
+<p>因此，Eureka可以很好的应对因网络故障导致部分节点失去联系的情况，而不会像Zookeeper那样使整个微服务瘫痪。</p>
+<h2 id="负载平衡的意义什么"><a href="#负载平衡的意义什么" class="headerlink" title="负载平衡的意义什么"></a>负载平衡的意义什么</h2><p>在计算中，负载平衡可以改善跨计算机，计算机集群，网络链接，中央处理单元或磁盘驱动器等多种计算资源的工作负载分布。负载平衡旨在优化资源使用，最大化吞吐量，最小化响应时间并避免任何单一资源 的过载。使用多个组件进行负载平衡而不是单个组件可能会通过冗余来提高可靠性和可用性。负载平衡通常涉及专用软件或硬件，例如多层交换机或域名系统服务器进程。</p>
+<h2 id="什么是Hystrix？它如何实现容错？"><a href="#什么是Hystrix？它如何实现容错？" class="headerlink" title="什么是Hystrix？它如何实现容错？"></a>什么是Hystrix？它如何实现容错？</h2><p>Hystrix是一个延迟和容错库，旨在隔离远程系统，服务和第三方库的访问点，当出现故障是不可避免的故障时，停止级联故障并在复杂的分布式系统中实现弹性。</p>
+<p>通常对于使用微服务架构开发的系统，涉及到许多微服务。这些微服务彼此协作。</p>
+<p>比如一个服务调用链路是A调用B，B调用C，C调用D。如果D出现网络短时的中断，这个收就会导致整个链路堵塞在C位置，增加了C的压力，有可能导致C的崩溃，同理可能影响到B、A，最终引起服务雪崩的问题。</p>
+<p>使用Hystrix在这种情况下的Fallback方法功能。在C服务中定义fallback（回退）处理逻辑，及时的给出反馈信息。很好的预防服务雪崩的问题。</p>
+<h2 id="说说-RPC-的实现原理"><a href="#说说-RPC-的实现原理" class="headerlink" title="说说 RPC 的实现原理"></a>说说 RPC 的实现原理</h2><p>首先需要有处理网络连接通讯的模块，负责连接建立、管理和消息的传输。其次需要有编解码的模块，因为网络通讯都是传输的字节码，需要将我们使用的对象序列化和反序列化。剩下的就是客户端和服务器端的部分，服务器端暴露要开放的服务接口，客户调用服务接口的一个代理实现，这个代理实现负责收集数据、编码并传输给服务器然后等待结果返回。</p>
+<h2 id="Eureka自我保护机制是什么"><a href="#Eureka自我保护机制是什么" class="headerlink" title="Eureka自我保护机制是什么"></a>Eureka自我保护机制是什么</h2><p>当Eureka Server 节点在短时间内丢失了过多实例的连接时（比如网络故障或频繁启动关闭客户端）节点会进入自我保护模式，保护注册信息，不再删除注册数据，故障恢复时，自动退出自我保护模式。</p>
+<h2 id="什么是Ribbon"><a href="#什么是Ribbon" class="headerlink" title="什么是Ribbon"></a>什么是Ribbon</h2><p>ribbon是一个负载均衡客户端，可以很好的控制htt和tcp的一些行为。feign默认集成了ribbon。</p>
+<h2 id="什么是-Feigin-？它的优点是什么"><a href="#什么是-Feigin-？它的优点是什么" class="headerlink" title="什么是 Feigin ？它的优点是什么"></a>什么是 Feigin ？它的优点是什么</h2><ol>
+<li>feign采用的是基于接口的注解</li>
+<li>feign整合了ribbon，具有负载均衡的能力</li>
+<li>整合了Hystrix，具有熔断的能力</li>
+</ol>
+<h2 id="Ribbon和Feign的区别"><a href="#Ribbon和Feign的区别" class="headerlink" title="Ribbon和Feign的区别"></a>Ribbon和Feign的区别</h2><ol>
+<li>Ribbon都是调用其他服务的，但方式不同</li>
+<li>启动类注解不同，Ribbon是@RibbonClient，feign则是@EnableFeignClients</li>
+<li>服务指定的位置不同，Ribbon是在@RibbonClient注解上声明，Feign则是在定义抽象方法的接口中使用@FeignClient声明</li>
+<li>调用方式不同，Ribbon需要自己构建http请求，模拟http请求</li>
+</ol>
+<h2 id="什么是Spring-Cloud-Gateway"><a href="#什么是Spring-Cloud-Gateway" class="headerlink" title="什么是Spring Cloud Gateway"></a>什么是Spring Cloud Gateway</h2><p>Spring Cloud Gateway是Spring Cloud官方推出的第二代网关框架，取代Zuul网关。网关作为流量的入口，在微服务系统中有着非常重要的作用，网关常见的功能有路由转发、权限校验、限流控制等作用。</p>
+<p>使用了一个<code>RouteLocatorBuilder</code>的bean去创建路由，除了创建路由<code>RouteLocatorBuilder</code>可以让你添加各种<code>predicates</code>和<code>filters</code>，<code>predicates</code>断言的意思，顾名思义就是根据具体的请求的规则，由具体的<code>route</code>去处理，<code>filters</code>是各种过滤器，用来对请求做各种判断和修改。</p>
+<h2 id="什么是Spring-Cloud-Alibaba"><a href="#什么是Spring-Cloud-Alibaba" class="headerlink" title="什么是Spring Cloud Alibaba"></a>什么是Spring Cloud Alibaba</h2><p>Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用微服务的必需组件，方便开发者通过 Spring Cloud 编程模型轻松使用这些组件来开发分布式应用服务。</p>
+<h2 id="Spring-Cloud-Alibaba有哪些功能"><a href="#Spring-Cloud-Alibaba有哪些功能" class="headerlink" title="Spring Cloud Alibaba有哪些功能"></a>Spring Cloud Alibaba有哪些功能</h2><ul>
+<li><p><strong>服务限流降级（Sentinel）：</strong>默认支持 WebServlet、WebFlux, OpenFeign、RestTemplate、Spring Cloud Gateway, Zuul, Dubbo 和 RocketMQ 限流降级功能的接入，可以在运行时通过控制台实时修改限流降级规则，还支持查看限流降级 Metrics 监控。</p>
+</li>
+<li><p><strong>服务注册与发现（Nacos）：</strong>适配 Spring Cloud 服务注册与发现标准，默认集成了 Ribbon 的支持。</p>
+</li>
+<li><p><strong>分布式配置管理（Nacos）：</strong>支持分布式系统中的外部化配置，配置更改时自动刷新。</p>
+</li>
+<li><p><strong>消息驱动能力：</strong>基于 Spring Cloud Stream 为微服务应用构建消息驱动能力。</p>
+</li>
+<li><p><strong>分布式事务（Seata）：</strong>使用 <code>@GlobalTransactional</code> 注解， 高效并且对业务零侵入地解决分布式事务问题。</p>
+</li>
+<li><p><strong>阿里云对象存储：</strong>阿里云提供的海量、安全、低成本、高可靠的云存储服务。支持在任何应用、任何时间、任何地点存储和访问任意类型的数据。</p>
+</li>
+<li><p><strong>分布式任务调度：</strong>提供秒级、精准、高可靠、高可用的定时（基于 Cron 表达式）任务调度服务。同时提供分布式的任务执行模型，如网格任务。网格任务支持海量子任务均匀分配到所有 Worker（schedulerx-client）上执行。</p>
+</li>
+<li><p><strong>阿里云短信服务：</strong>覆盖全球的短信服务，友好、高效、智能的互联化通讯能力，帮助企业迅速搭建客户触达通道。</p>
+</li>
+</ul>
+<h2 id="Spring-Cloud-Alibaba的常用组件有哪些"><a href="#Spring-Cloud-Alibaba的常用组件有哪些" class="headerlink" title="Spring Cloud Alibaba的常用组件有哪些"></a>Spring Cloud Alibaba的常用组件有哪些</h2><ul>
+<li><p><strong>Sentinel：</strong>把流量作为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性。</p>
+</li>
+<li><p><strong>Nacos：</strong>一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。</p>
+</li>
+<li><p><strong>RocketMQ：</strong>一款开源的分布式消息系统，基于高可用分布式集群技术，提供低延时的、高可靠的消息发布与订阅服务。</p>
+</li>
+<li><p><strong>Dubbo：</strong>Apache Dubbo™ 是一款高性能 Java RPC 框架。</p>
+</li>
+<li><p><strong>Seata：</strong>阿里巴巴开源产品，一个易于使用的高性能微服务分布式事务解决方案。</p>
+</li>
+<li><p><strong>Alibaba Cloud OSS：</strong>阿里云对象存储服务（Object Storage Service，简称 OSS），是阿里云提供的海量、安全、低成本、高可靠的云存储服务。您可以在任何应用、任何时间、任何地点存储和访问任意类型的数据。</p>
+</li>
+<li><p><strong>Alibaba Cloud SchedulerX：</strong> 阿里中间件团队开发的一款分布式任务调度产品，提供秒级、精准、高可靠、高可用的定时（基于 Cron 表达式）任务调度服务。</p>
+</li>
+<li><p><strong>Alibaba Cloud SMS：</strong> 覆盖全球的短信服务，友好、高效、智能的互联化通讯能力，帮助企业迅速搭建客户触达通道。</p>
+</li>
+</ul>
+<h2 id="什么是Nacos，介绍一下Nacos"><a href="#什么是Nacos，介绍一下Nacos" class="headerlink" title="什么是Nacos，介绍一下Nacos"></a>什么是Nacos，介绍一下Nacos</h2><h3 id="服务发现和服务健康监测"><a href="#服务发现和服务健康监测" class="headerlink" title="服务发现和服务健康监测"></a>服务发现和服务健康监测</h3><p>使服务更容易注册，并通过DNS或HTTP接口发现其他服务，还提供服务的实时健康检查，以防 止向不健康的主机或服务实例发送请求。</p>
+<p>支持基于DNS和基于RPC的服务发现。服务提供者使用原生SDK、OpenAPI、或一个独立的Agent TODO注册 Service 后，服务消费者可以使用DNS TODO 或HTTP&amp;API查找和发现服务。</p>
+<p>Nacos提供对服务的实时的健康检查，阻止向不健康的主机或服务实例发送请求。Nacos 支持传输层 (PING 或 TCP)和应用层 (如 HTTP、MySQL、用户自定义）的健康检查。 对于复杂的云环境和网络拓扑环境中（如 VPC、边缘网络等）服务的健康检查，Nacos 提供了 <strong>agent 上报模式</strong>和<strong>服务端主动检测</strong>2种健康检查模式。Nacos 还提供了统一的健康检查仪表盘，帮助您根据健康状态管理服务的可用性及流量。</p>
+<h3 id="动态配置服务"><a href="#动态配置服务" class="headerlink" title="动态配置服务"></a>动态配置服务</h3><ul>
+<li>以中心化、外部化和动态化的方式管理所有环境的应用配置和服务配置。</li>
+<li>消除了配置变更时重新部署应用和服务的需要，让配置管理变得更加高效和敏捷。</li>
+<li>配置中心化管理让实现无状态服务变得更简单，让服务按需弹性扩展变得更容易。</li>
+<li>提供了一个简洁易用的UI (控制台样例 Demo) 帮助管理所有的服务和应用的配置。</li>
+</ul>
+<p>Nacos 还提供包括配置版本跟踪、金丝雀发布、一键回滚配置以及客户端配置更新状态跟踪在内的一系列开箱即用的配置管理特性，能更安全地在生产环境中管理配置变更和降低配置变更带来的风险。</p>
+<h3 id="动态-DNS-服务"><a href="#动态-DNS-服务" class="headerlink" title="动态 DNS 服务"></a>动态 DNS 服务</h3><p>动态 DNS 服务支持权重路由，更容易地实现中间层负载均衡、更灵活的路由策略、流量控制以及数据中心内网的简单DNS解析服务。动态DNS服务还能更容易地实现以 DNS 协议为基础的服务发现，消除耦合到厂商私有服务发现 API 上的风险。</p>
+<p>Nacos 提供了一些简单的 DNS APIs TODO ，管理服务的关联域名和可用的 IP:PORT 列表。</p>
+<h3 id="服务及其元数据管理"><a href="#服务及其元数据管理" class="headerlink" title="服务及其元数据管理"></a>服务及其元数据管理</h3><p>从微服务平台建设的视角管理数据中心的所有服务及元数据，包括管理服务的描述、生命周期、服务的静态依赖分析、服务的健康状态、服务的流量管理、路由及安全策略、服务的 SLA 以及最首要的 metrics 统计数据。</p>
+<h2 id="Nacos有什么作用"><a href="#Nacos有什么作用" class="headerlink" title="Nacos有什么作用"></a>Nacos有什么作用</h2><ol>
+<li><p>服务发现与服务健康检查Nacos使服务更容易注册，并通过DNS或HTTP接口发现其他服务，Nacos还提供服务的实时健康检查，以防止向不健康的主机或服务实例发送请求。</p>
+</li>
+<li><p>动态配置管理动态配置服务允许您在所有环境中以集中和动态的方式管理所有服务的配置。Nacos消除了在更新配置时重新部署应用程序，这使配置的更改更加高效和灵活。</p>
+</li>
+<li><p>动态DNS服务Nacos提供基于DNS 协议的服务发现能力，旨在支持异构语言的服务发现，支持将注册在Nacos上的服务以域名的方式暴露端点，让三方应用方便的查阅及发现。</p>
+</li>
+<li><p>服务和元数据管理Nacos 能让您从微服务平台建设的视角管理数据中心的所有服务及元数据，包括管理服务的描述、生命周期、服务的静态依赖分析、服务的健康状态、服务的流量管理、路由及安全策略。</p>
+</li>
+</ol>
+<h2 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h2><p>在微服务架构中一个业务流程需要多个微服务通过网络接口调用完成业务处理，服务消费方从服务注册中心获取服务提供方的地址，从而进行远程调用，这个过程叫做服务发现。</p>
+<h3 id="服务发现流程"><a href="#服务发现流程" class="headerlink" title="服务发现流程"></a>服务发现流程</h3><ol>
+<li><p>服务实例本身并不记录服务生产方的网络地址，所有服务实例内部都会包含服务发现客户端。</p>
+</li>
+<li><p>在每个服务启动时会向服务发现中心上报自己的网络位置。在服务发现中心内部会形成一个服务注册表，服务注册表是服务发现的核心部分，是包含所有服务实例网络地址的数据库。</p>
+</li>
+<li><p>服务发现客户端会定期从服务发现中心同步服务注册表 ，并缓存在客户端。</p>
+</li>
+<li><p>当需要对某服务进行请求时，服务实例通过该注册表，定位目标服务网络地址。若目标服务存在多个网络地址，则使用负载均衡算法从多个服务实例中选择出一个，然后发出请求。</p>
+</li>
+</ol>
+<p>总结，在微服务环境中，由于服务运行实例的网络地址是不断动态变化的，服务实例数量的动态变化 ，因此无法使用固定的配置文件来记录服务提供方的网络地址，必须使用动态的服务发现机制用于实现微服务间的相互感知。 各服务实例会上报自己的网络地址，这样服务中心就形成了一个完整的服务注册表，各服务实例会通过服务发现中心来获取访问目标服务的网络地址，从而实现服务发现的机制。</p>
+<h3 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h3><ol>
+<li>服务提供方将自己注册到服务注册中心</li>
+<li>服务消费方从注册中心获取服务地址</li>
+<li>进行远程调用</li>
+</ol>
+<h2 id="服务发现数据模型"><a href="#服务发现数据模型" class="headerlink" title="服务发现数据模型"></a>服务发现数据模型</h2><h3 id="Namespace-隔离设计"><a href="#Namespace-隔离设计" class="headerlink" title="Namespace 隔离设计"></a>Namespace 隔离设计</h3><p>命名空间（Namespace）用于进行租户粒度的隔离，Namespace 的常用场景之一是不同环境的隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等。</p>
+<p>从一个租户(用户)的角度来看，如果有多套不同的环境，那么这个时候可以根据指定的环境来创建不同的 namespce，以此来实现多环境的隔离。如有开发，测试和生产三个不同的环境，那么使用一套 nacos 集群可以分别建以下三个不同的 namespace。</p>
+<p>从多个租户(用户)的角度来看，每个租户(用户)可能会有自己的 namespace，每个租户(用户)的配置数据以及注册的服务数据都会归属到自己的 namespace 下，以此来实现多租户间的数据隔离。</p>
+<h3 id="命名空间管理"><a href="#命名空间管理" class="headerlink" title="命名空间管理"></a>命名空间管理</h3><p>命名空间(Namespace)是用于隔离多个环境的（如开发、测试、生产），而每个应用在不同环境的同一个配置（如数据库数据源）的值是不一样的。因此，我们应针对企业项目实际研发流程、环境进行规划。 如某软件公司拥有开发、测试、生产三套环境，那么我们应该针对这三个环境分别建立三个namespace。</p>
+<p>建立好所有namespace后，在配置管理与服务管理模块下所有页面，都会包含用于切换namespace(环境)的tab按钮；</p>
+<p><strong>注意：</strong></p>
+<p>namesace 为 public 是 nacos 的一个保留空间，如需要创建自己的 namespace，不要和 public 重名，以一个实际业务场景有具体语义的名字来命名，以免带来字面上不容易区分哪一个 namespace。</p>
+<p>在编写程序获取配置集时，指定的namespace参数一定要填写命名空间ID，而不是名称。</p>
+<h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><p>Nacos在经过阿里内部多年生产经验后提炼出的数据模型，是一种 服务-集群-实例 的三层模型，这样基本可以满 足服务在所有场景下的数据存储和管理。</p>
+<p>服务：对外提供的软件功能，通过网络访问预定义的接口。</p>
+<p>实例：提供一个或多个服务的具有可访问网络地址（IP:Port）的进程，启动一个服务，就产生了一个服务实例。</p>
+<p>元信息：Nacos数据（如配置和服务）描述信息，如服务版本、权重、容灾策略、负载均衡策略、鉴权配置、各种自定义标 签 (label)，</p>
+<p>从作用范围来分：服务级别的元信息、集群的元信息、实例的元信息。</p>
+<p>集群：服务实例的集合，服务实例组成一个默认集群, 集群可以被进一步按需求划分，划分的单位可以是虚拟集群，相同集群下的实例才能相互感知。</p>
+<p>应用通过Namespace、Service、Cluster(DEFAULT)的配置，描述了该服务向哪个环境（如开发环境）的哪个集群注册实例。</p>
+<h2 id="Nacos支持AP和CP的切换，该如何选择呢"><a href="#Nacos支持AP和CP的切换，该如何选择呢" class="headerlink" title="Nacos支持AP和CP的切换，该如何选择呢"></a>Nacos支持AP和CP的切换，该如何选择呢</h2><p>一般来说，如果不需要存储服务级别的信息且服务实例是通过nacos-client注册，并能够保持心跳上报，那么就可以选择AP模式。当前主流的服务如 Spring cloud 和 Dubbo 服务，都适用于AP模式，AP模式为了服务的可能性而减弱了一致性，因此AP模式下只支持注册临时实例。</p>
+<p>如果需要在服务级别编辑或者存储配置信息，那么 CP 是必须，K8S服务和DNS服务则适用于CP模式。</p>
+<p>CP模式下则支持注册持久化实例，此时则是以 Raft 协议为集群运行模式，该模式下注册实例之前必须先注册服务，如果服务不存在，则会返回错误。</p>
+<p>模式切换代码：<code>curl -X PUT '$NACOS_SERVER:8848/nacos/v1/ns/operator/switches?entry=serverMode&amp;value=CP'</code></p>
+<h2 id="Nacos健康检测机制"><a href="#Nacos健康检测机制" class="headerlink" title="Nacos健康检测机制"></a>Nacos健康检测机制</h2><ol>
+<li>为什么服务中心需要健康监测机制?</li>
+</ol>
+<p>如果服务中心没有健康监测机制，那么注册的服务挂掉以后（比如两个实例，挂掉了一个），订阅服务如果没有得到通知，仍然是50%的向两台机器发送请求，就会有50%的请求失败，出现严重的系统错误，所以服务中心需要检测到注册服务是否健康，如果有服务挂掉以后，需要主动将当前的可用服务信息通知到订阅方。</p>
+<ol start="2">
+<li>nacos如何进行健康检查？</li>
+</ol>
+<p>nacos有两种健康监测方式，一种是对临时服务，一种是持久化服务，服务注册时通过<code>ephemeral</code>参数进行区分，<code>ephemeral=true</code>代表是临时服务，<code>ephemeral=false</code>代表是持久化服务，<strong>所有服务默认为临时服务</strong></p>
+<p><strong>临时服务检查机制：</strong>由服务主动向服务中心上报心跳，5s上报一次，15s没有上报，服务为不健康服务，30s没有上报，注册中心摘除服务。</p>
+<p><strong>持久化服务检查机制：</strong>由注册中心主动探测，20s探测一次，探测失败，服务为不健康服务，但是服务不会被摘除。</p>
+<ol start="3">
+<li>高并发大流量下健康实例摘除引发服务雪崩</li>
+</ol>
+<p>A-&gt;B-&gt;C ,A服务调用B服务，B服务调用C服务，正常情况下，假如C服务有10个实例，每个实例能够达到的QPS为500，那么整个C服务可以达到5000的qps，但是c服务如果宕机了5个服务，注册中心通知B服务目前只有5个实例可用，那么每个c实例每秒需要接收1000次请求，这个显然大大超出了实例的性能范围，机器会被打死，接着B服务也会无法提供服务，继而A服务无法提供服务。</p>
+<ol start="4">
+<li>nacos保护阈值如何避免服务雪崩</li>
+</ol>
+<p>每个服务可以设置保护阈值，0到1之间，当健康实例个数比例（健康实例个数/总实例）小于保护阈值时，为了避免服务雪崩，也会向不健康实例发送请求，这样牺牲掉一部请求，避免整个系统无法提供服务。</p>
+<h2 id="Nacos配置中心"><a href="#Nacos配置中心" class="headerlink" title="Nacos配置中心"></a>Nacos配置中心</h2><p>Nacos除了实现了服务的注册发现之外，还将配置中心功能整合在了一起。通过Nacos的配置管理功能，我们可以将整个架构体系内的所有配置都集中在Nacos中存储。这样做的好处，在以往的教程中介绍Spring Cloud Config时也有提到，主要有以下几点：</p>
+<ul>
+<li>分离的多环境配置，可以更灵活的管理权限，安全性更高。</li>
+<li>应用程序的打包更为纯粹，以实现一次打包，多处运行的特点。</li>
+<li>配置动态刷新（可以在读取配置的类上面添加注解<code>@RefreshScope</code>来实现动态刷新）</li>
+<li>配置回滚（可以再历史版本里面查看到配置文件修改的记录，可以选择对应的版本回滚）。</li>
+<li>Nacos的配置管理，基础层面都通过DataId和Group来定位配置内容，除此之外还增加了很多其他的管理功能。</li>
+</ul>
+<h2 id="分布式配置中心实现原理"><a href="#分布式配置中心实现原理" class="headerlink" title="分布式配置中心实现原理"></a>分布式配置中心实现原理</h2><ul>
+<li>本地应用读取云端分布式配置中心文件（第一次读取时建立长连接）。</li>
+<li>本地应用读取到配置文件后，本地jvm和硬盘都会缓存一份。</li>
+<li>本地应用与分布式配置中心服务器端一直保持长连接。</li>
+<li>当我们的配置文件发生变化（根据版本号|MID判断），将变化结果通知本地应用及时刷新配置文件。</li>
+</ul>
+<p>对于Nacos配置管理，通过Namespace、group、Data ID能够定位到一个配置集。</p>
+<p><strong>配置集(Data ID)：</strong></p>
+<p>在系统中，一个配置文件通常就是一个配置集，一个配置集可以包含了系统的各种配置信息，如：一个配置集可能包含了数据源、线程池、日志级别等配置项。每个配置集都可以定义一个有意义的名称，就是配置集的ID即Data ID。</p>
+<p><strong>配置项：</strong></p>
+<p>配置集中包含的一个个配置内容就是配置项。它代表一个具体的可配置的参数与其值域，通常以 <code>key=value</code> 的形式存在。如我们常配置系统的日志输出级别（<code>logLevel=INFO|WARN|ERROR</code>） 就是一个配置项。</p>
+<p><strong>配置分组(Group)：</strong></p>
+<p>配置分组是对配置集进行分组，通过一个有意义的字符串（如 Buy 或 Trade ）来表示，不同的配置分组下可以有相同的配置集（Data ID）。当在 Nacos 上创建一个配置时，如果未填写配置分组的名称，则配置分组的名称默认采用<code>DEFAULT_GROUP</code>。配置分组的常见场景：可用于区分不同的项目或应用，例如：学生管理系统的配置集可以定义一个group为：STUDENT_GROUP。</p>
+<p><strong>命名空间(Namespace)：</strong></p>
+<p>命名空间可用于进行不同环境的配置隔离。例如可以隔离开发环境、测试环境和生产环境，因为它们的配置可能各不相同，或者是隔离不同的用户，不同的开发人员使用同一个nacos管理各自的配置，可通过 namespace隔离。不同的命名空间下，可以存在相同名称的配置分组(Group) 或 配置集。</p>
+<p><strong>常见实践用法：</strong></p>
+<p>Nacos抽象定义了Namespace、Group、Data ID的概念，具体这几个概念代表什么，取决于我们把它们看成什么，如：</p>
+<p>Namespace：代表不同环境，如开发、测试、生产环境；</p>
+<p>Group：代表某项目；</p>
+<p>DataId：每个项目下往往有若干个工程，每个配置集(DataId)是一个工程的主配置文件。</p>
+<h2 id="Spring-Cloud-LoadBalancer-（下文简称-SCL）"><a href="#Spring-Cloud-LoadBalancer-（下文简称-SCL）" class="headerlink" title="Spring Cloud LoadBalancer （下文简称 SCL）"></a>Spring Cloud LoadBalancer （下文简称 SCL）</h2><p>SpringCloud原有的客户端负载均衡方案Ribbon已经被废弃，取而代之的是SpringCloud LoadBalancer。</p>
+<p>Spring Cloud 中内部微服务调用默认是 http 请求，主要通过下面三种 API：</p>
+<ol>
+<li><p>RestTemplate：同步 http API</p>
+</li>
+<li><p>WebClient：异步响应式 http API</p>
+</li>
+<li><p>三方客户端封装，例如 openfeign</p>
+</li>
+</ol>
+<p>如果项目中加入了 <code>spring-cloud-loadbalancer</code> 的依赖并且配置启用了，那么会自动在相关的 Bean 中加入负载均衡器的特性。</p>
+<p>对于 <code>RestTemplate</code>，会自动对所有 <code>@LoadBalanced</code> 注解修饰的 <code>RestTemplate Bean</code> 增加 <code>Interceptor</code> 从而加上了负载均衡器的特性。</p>
+<p>对于 <code>WebClient</code>，会自动创建 <code>ReactorLoadBalancerExchangeFilterFunction</code>，我们可以通过加入<code>ReactorLoadBalancerExchangeFilterFunction</code>会加入负载均衡器的特性。</p>
+<p>对于三方客户端，一般不需要我们额外配置什么。</p>
+<p>Spring Cloud 2020,内置轮询、随机的负载均衡策略，默认轮询策略。可以通过 <code>@LoadBalancerClient</code> 注解的configuration属性指定服务级别的负载均衡策略。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@LoadBalancerClient</span><span class="token punctuation">(</span>value <span class="token operator">=</span> “demo<span class="token operator">-</span>provider”<span class="token punctuation">,</span> configuration <span class="token operator">=</span> <span class="token class-name">RandomLoadbalancerConfig</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="自定义负载均衡策略"><a href="#自定义负载均衡策略" class="headerlink" title="自定义负载均衡策略"></a>自定义负载均衡策略</h2><p>通过上文可知，目前 SCL 支持的负载均衡策略相较于 Ribbon 还是较少，需要开发者自行实现，好在 SCL 提供了便捷的 API 方便扩展使用。 这里演示自定义一个基于注册中心元数据的灰度负载均衡策略。</p>
+<p><strong>定义灰度负载均衡策略:</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GrayRoundRobinLoadBalancer</span> <span class="token keyword">extends</span> <span class="token class-name">RoundRobinLoadBalancer</span> <span class="token punctuation">{</span>
+
+	<span class="token keyword">private</span> <span class="token class-name">ObjectProvider</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ServiceInstanceListSupplier</span><span class="token punctuation">&gt;</span></span> serviceInstanceListSupplierProvider<span class="token punctuation">;</span>
+
+	<span class="token keyword">private</span> <span class="token class-name">String</span> serviceId<span class="token punctuation">;</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token class-name">Mono</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Response</span><span class="token punctuation">&lt;</span><span class="token class-name">ServiceInstance</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token function">choose</span><span class="token punctuation">(</span><span class="token class-name">Request</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">ServiceInstanceListSupplier</span> supplier <span class="token operator">=</span> serviceInstanceListSupplierProvider
+				<span class="token punctuation">.</span><span class="token function">getIfAvailable</span><span class="token punctuation">(</span><span class="token class-name">NoopServiceInstanceListSupplier</span><span class="token operator">::</span><span class="token keyword">new</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> supplier<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>serviceInstances <span class="token operator">-&gt;</span> <span class="token function">getInstanceResponse</span><span class="token punctuation">(</span>serviceInstances<span class="token punctuation">,</span> request<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token class-name">Response</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ServiceInstance</span><span class="token punctuation">&gt;</span></span> <span class="token function">getInstanceResponse</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ServiceInstance</span><span class="token punctuation">&gt;</span></span> instances<span class="token punctuation">,</span> <span class="token class-name">Request</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+		<span class="token comment">// 注册中心无可用实例 抛出异常</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">CollUtil</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>instances<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"No instance available {}"</span><span class="token punctuation">,</span> serviceId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">EmptyResponse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token class-name">DefaultRequestContext</span> requestContext <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">DefaultRequestContext</span><span class="token punctuation">)</span> request<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">RequestData</span> clientRequest <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">RequestData</span><span class="token punctuation">)</span> requestContext<span class="token punctuation">.</span><span class="token function">getClientRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">HttpHeaders</span> headers <span class="token operator">=</span> clientRequest<span class="token punctuation">.</span><span class="token function">getHeaders</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token class-name">String</span> reqVersion <span class="token operator">=</span> headers<span class="token punctuation">.</span><span class="token function">getFirst</span><span class="token punctuation">(</span><span class="token class-name">CommonConstants</span><span class="token punctuation">.</span><span class="token constant">VERSION</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">StrUtil</span><span class="token punctuation">.</span><span class="token function">isBlank</span><span class="token punctuation">(</span>reqVersion<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">choose</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">block</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token comment">// 遍历可以实例元数据，若匹配则返回此实例</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">ServiceInstance</span> instance <span class="token operator">:</span> instances<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token class-name">NacosServiceInstance</span> nacosInstance <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">NacosServiceInstance</span><span class="token punctuation">)</span> instance<span class="token punctuation">;</span>
+			<span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> metadata <span class="token operator">=</span> nacosInstance<span class="token punctuation">.</span><span class="token function">getMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token class-name">String</span> targetVersion <span class="token operator">=</span> <span class="token class-name">MapUtil</span><span class="token punctuation">.</span><span class="token function">getStr</span><span class="token punctuation">(</span>metadata<span class="token punctuation">,</span> <span class="token class-name">CommonConstants</span><span class="token punctuation">.</span><span class="token constant">VERSION</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>reqVersion<span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span>targetVersion<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				log<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"gray requst match success :{} {}"</span><span class="token punctuation">,</span> reqVersion<span class="token punctuation">,</span> nacosInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">DefaultResponse</span><span class="token punctuation">(</span>nacosInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+		<span class="token comment">// 降级策略，使用轮询策略</span>
+		<span class="token keyword">return</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">choose</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">block</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>针对客户端注入灰度负载均衡策略:</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@LoadBalancerClient</span><span class="token punctuation">(</span>value <span class="token operator">=</span> “demo<span class="token operator">-</span>provider”<span class="token punctuation">,</span> configuration <span class="token operator">=</span> <span class="token class-name">GrayRoundLoadbalancerConfig</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="Nacos读取配置文件的有哪几种方案"><a href="#Nacos读取配置文件的有哪几种方案" class="headerlink" title="Nacos读取配置文件的有哪几种方案"></a>Nacos读取配置文件的有哪几种方案</h2><ul>
+<li><p>Data ID<br>方案：指定<code>spring.profile.active</code>和配置文件的DataID来使不同环境下读取不同的配置</p>
+</li>
+<li><p>Group<br>方案：通过Group实现环境区分</p>
+</li>
+<li><p>Namespace<br>方案：通过建立不同NameSpace来区分</p>
+</li>
+</ul>
+<h2 id="服务发现产品对比"><a href="#服务发现产品对比" class="headerlink" title="服务发现产品对比"></a>服务发现产品对比</h2><p>目前市面上用的比较多的服务发现中心有：<code>Nacos</code>、<code>Eureka</code>、<code>Consul</code>和<code>Zookeeper</code>。</p>
+<table>
+<thead>
+<tr>
+<th align="center">对比项目</th>
+<th align="center">Naos</th>
+<th align="center">Eureka</th>
+<th align="center">Consul</th>
+<th align="center">Zookeeper</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">一致性协议</td>
+<td align="center">支持AP和CP模型</td>
+<td align="center">AP模型</td>
+<td align="center">CP模型</td>
+<td align="center">CP模型</td>
+</tr>
+<tr>
+<td align="center">健康检查</td>
+<td align="center">TCP/HTTP/MYSQL/Client Beat</td>
+<td align="center">Client Beat</td>
+<td align="center">CP/HTTP/gRPC/Cmd</td>
+<td align="center">Keep Alive</td>
+</tr>
+<tr>
+<td align="center">负载均衡策略</td>
+<td align="center">权重/metadata/Selector</td>
+<td align="center">Ribbon</td>
+<td align="center">Fabio</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">雪崩保护</td>
+<td align="center">有</td>
+<td align="center">有</td>
+<td align="center">无</td>
+<td align="center">无</td>
+</tr>
+<tr>
+<td align="center">自动注销实例</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">访问协议</td>
+<td align="center">HTTP/DNS</td>
+<td align="center">HTTP</td>
+<td align="center">HTTP/DNS</td>
+<td align="center">TCP</td>
+</tr>
+<tr>
+<td align="center">监听支持</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">多数据中心</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">跨注册中心同步</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center">SpringCloud集成</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center">Dubbo集成</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">k8s集成</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+</tbody></table>
+<h2 id="什么是Spring-Cloud-Sentinel"><a href="#什么是Spring-Cloud-Sentinel" class="headerlink" title="什么是Spring Cloud Sentinel"></a>什么是Spring Cloud Sentinel</h2><p>Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，从流量控制、熔断降级、系统自适应保护等多个维度来帮助您保障微服务的稳定性。</p>
+<h2 id="Sentinel-基本概念有哪些"><a href="#Sentinel-基本概念有哪些" class="headerlink" title="Sentinel 基本概念有哪些"></a>Sentinel 基本概念有哪些</h2><p><strong>资源：</strong>资源是 Sentinel 的关键概念。它可以是 Java 应用程序中的任何内容，例如，由应用程序提供的服务，或由应用程序调用的其它应用提供的服务，甚至可以是一段代码。在接下来的文档中，我们都会用资源来描述代码块。只要通过 Sentinel API 定义的代码，就是资源，能够被 Sentinel 保护起来。大部分情况下，可以使用方法签名，URL，甚至服务名称作为资源名来标示资源。</p>
+<p><strong>规则：</strong>围绕资源的实时状态设定的规则，可以包括流量控制规则、熔断降级规则以及系统保护规则。所有规则可以动态实时调整。</p>
+<h2 id="Sentinel有哪些优点"><a href="#Sentinel有哪些优点" class="headerlink" title="Sentinel有哪些优点"></a>Sentinel有哪些优点</h2><ul>
+<li><p><strong>丰富的适用场景：</strong>哨兵在阿里巴巴得到了广泛的应用，几乎覆盖了近10年双11（11.11）购物节的所有核心场景，比如需要限制突发流量的“秒杀”满足系统能力、消息削峰填谷、不依靠业务断路、流量控制等。</p>
+</li>
+<li><p><strong>实时监控：</strong>Sentinel 还提供实时监控能力。可以实时查看单台机器的运行时信息，以及以下 500 个节点的集群运行时信息。</p>
+</li>
+<li><p><strong>广泛的开源生态：</strong>Sentinel 提供与 Spring、Dubbo 和 gRPC 等常用框架和库的开箱即用集成。</p>
+</li>
+<li><p><strong>多语言支持：</strong>Sentinel 为 Java、Go和C++提供了本机支持。</p>
+</li>
+<li><p><strong>丰富的 SPI 扩展：</strong>Sentinel 提供简单易用的 SPI 扩展接口，可以让您快速自定义逻辑，例如自定义规则管理、适配数据源等。</p>
+</li>
+</ul>
+<h2 id="Sentinel有哪几种流控模式"><a href="#Sentinel有哪几种流控模式" class="headerlink" title="Sentinel有哪几种流控模式"></a>Sentinel有哪几种流控模式</h2><ul>
+<li><p><strong>直接（默认）：</strong>api达到限流条件，直接限流</p>
+</li>
+<li><p><strong>关联：</strong>当关联的资料达到阈值时，就限流自己。当与A关联的资源B达到阈值后，就限流A</p>
+</li>
+<li><p><strong>链路：</strong>链路流控模式指的是，当从某个接口过来的资源达到限流条件时，开启限流；它的功能有点类似于针对来源配置项，区别在于：针对来源是针对上级微服务，而链路流控是针对上级接口，也就是说它的粒度更细。</p>
+</li>
+</ul>
+<h2 id="Sentinel有哪几种流控效果呢"><a href="#Sentinel有哪几种流控效果呢" class="headerlink" title="Sentinel有哪几种流控效果呢"></a>Sentinel有哪几种流控效果呢</h2><ul>
+<li><p><strong>直接（默认的流控处理）：</strong>该方式是默认的流量控制方式，当QPS超过任意规则的阈值后，新的请求就会被立即拒绝，拒绝方式为抛出<code>FlowException</code></p>
+</li>
+<li><p><strong>预热(Warm Up)：</strong>阈值除以coldFactor(默认为3)，经过预热时长后才达到阈值，案例，阀值为10+预热时长设置5秒。系统初始化的阀值为10 3 约等于3,即阀值刚开始为3；然后过了5秒后阀值才慢慢升高恢复到10</p>
+</li>
+<li><p><strong>排队等待：</strong>匀速器（<code>RuleConstant.CONTROL_BEHAVIOR_RATE_LIMITER</code>）方式。这种方式严格控制了请求通过的间隔时间，也就是让请求以均匀的速度通过，对应的是漏桶算法</p>
+</li>
+</ul>
+<h2 id="Sentinel-有哪些降级规则（熔断策略）"><a href="#Sentinel-有哪些降级规则（熔断策略）" class="headerlink" title="Sentinel 有哪些降级规则（熔断策略）"></a>Sentinel 有哪些降级规则（熔断策略）</h2><ul>
+<li><p><strong>慢调用比例 (SLOW_REQUEST_RATIO)：</strong>选择以慢调用比例作为阈值，需要设置允许的慢调用 RT（即最大的响应时间），请求的响应时间大于该值则统计为慢调用。当单位统计时长（statIntervalMs）内请求数目大于设置的最小请求数目，并且慢调用的比例大于阈值，则接下来的熔断时长内请求会自动被熔断。经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求响应时间小于设置的慢调用 RT 则结束熔断，若大于设置的慢调用 RT 则会再次被熔断。</p>
+</li>
+<li><p><strong>异常比例 (ERROR_RATIO)：</strong>当单位统计时长（statIntervalMs）内请求数目大于设置的最小请求数目，并且异常的比例大于阈值，则接下来的熔断时长内请求会自动被熔断。经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。异常比率的阈值范围是 [0.0, 1.0]，代表 0% - 100%。</p>
+</li>
+<li><p><strong>异常数 (ERROR_COUNT)：</strong>当单位统计时长内的异常数目超过阈值之后会自动进行熔断。经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。</p>
+</li>
+</ul>
+<h2 id="常见四种限流算法"><a href="#常见四种限流算法" class="headerlink" title="常见四种限流算法"></a>常见四种限流算法</h2><h3 id="固定窗口计数器"><a href="#固定窗口计数器" class="headerlink" title="固定窗口计数器"></a>固定窗口计数器</h3><p>固定窗口，相比其他的限流算法，这应该是最简单的一种。</p>
+<p>它简单地对一个固定的时间窗口内的请求数量进行计数，如果超过请求数量的阈值，将被直接丢弃。</p>
+<p>这个简单的限流算法优缺点都很明显。优点的话就是简单，缺点举个例子来说。</p>
+<p>比如我们下图中固定时间窗口的区域，默认时间范围是 1 秒，限流数量是 100。</p>
+<p>如图中括号内所示，如果在窗口内的两段时间内，总的流量之和超过100即表示已经达到限流的标准，如果出现跨窗口，即使达到限流标准，也会被视为未达到。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202212261444.png"></p>
+<ul>
+<li>0~1秒的流量分别是50和49，加起来的总和是99，没有超过100阈值，不限流；</li>
+<li>0.5<del>1.5的流量分别是49和58，加起来总和是107，超过了100阈值，不限流，因为0.5</del>1秒属于窗口1,1~1.5秒属于窗口2，不可交叉计算；</li>
+<li>1~2秒的流量分别是58和50，加起来总和是108，超过100阈值，限流，两个值在同一个固定的窗口下。</li>
+</ul>
+<h3 id="滑动窗口计数器"><a href="#滑动窗口计数器" class="headerlink" title="滑动窗口计数器"></a>滑动窗口计数器</h3><p>为了优化这个问题，于是有了滑动窗口算法。顾名思义，滑动窗口就是时间窗口在随着时间推移不停地移动。</p>
+<p>滑动窗口把一个固定时间窗口再继续拆分成 N 个小窗口，然后对每个小窗口分别进行计数，所有小窗口请求之和不能超过我们设定的限流阈值。</p>
+<p>以下图举例子来说：随着时间的推移，窗口的位置都会不断的移动，向后滑动，滑动的时间范围内流量之和，就是对应当前时刻的流量总值。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202212261457.png"></p>
+<ul>
+<li>0~1秒的流量分别是50和49，加起来的总和是99，没有超过100阈值，不限流；</li>
+<li>0.5~1.5的流量分别是49和58，加起来总和是107，超过了100阈值，限流，两个值在同一个固定的窗口下；</li>
+<li>1~2秒的流量分别是58和50，加起来总和是108，超过100阈值，限流，两个值在同一个固定的窗口下。</li>
+</ul>
+<h3 id="漏桶（也有称漏斗-Leaky-bucket）"><a href="#漏桶（也有称漏斗-Leaky-bucket）" class="headerlink" title="漏桶（也有称漏斗 Leaky bucket）"></a>漏桶（也有称漏斗 Leaky bucket）</h3><p>漏桶算法名副其实，就是一个漏的桶，不管请求的数量有多少，最终都会以固定的出口流量大小匀速流出。如果请求的流量超过漏桶大小，那么超出的流量将会被丢弃。</p>
+<p>也就是说流量流入的速度是不定的，但是流出的速度是恒定的。</p>
+<p>这个和 MQ 削峰填谷的思想比较类似，在面对突然激增的流量的时候，通过漏桶算法可以做到匀速排队，固定速度限流。</p>
+<p>漏桶算法的优势是匀速，匀速是优点也是缺点，很多人说漏桶不能处理突增流量，这个说法并不准确。</p>
+<p>漏桶本来就应该是为了处理间歇性的突增流量。流量一下起来了，然后系统处理不过来，可以在空闲的时候去处理，防止了突增流量导致系统崩溃，保护了系统的稳定性。</p>
+<p>但是换一个思路来想，其实这些突增的流量对于系统来说完全没有压力，你还在慢慢地匀速排队，其实是对系统性能的浪费。</p>
+<p>所以，对于这种有场景来说，令牌桶算法比漏桶就更有优势。</p>
+<h3 id="令牌桶（-Token-bucket）"><a href="#令牌桶（-Token-bucket）" class="headerlink" title="令牌桶（ Token bucket）"></a>令牌桶（ Token bucket）</h3><p>令牌桶算法是指系统以一定地速度往令牌桶里丢令牌。当一个请求过来的时候，会去令牌桶里申请一个令牌，如果能够获取到令牌，那么请求就可以正常进行，反之被丢弃。</p>
+<p>现在的令牌桶算法，像 Guava 和 Sentinel 的实现都有冷启动 / 预热的方式。为了避免在流量激增的同时把系统打挂，令牌桶算法会在最开始一段时间内冷启动，随着流量的增加，<strong>系统会根据流量大小动态地调整生成令牌的速度，直到最终请求达到系统阈值</strong>。</p>
+<h2 id="Spring-Cloud-GateWay如何实现限流？"><a href="#Spring-Cloud-GateWay如何实现限流？" class="headerlink" title="Spring Cloud GateWay如何实现限流？"></a>Spring Cloud GateWay如何实现限流？</h2><ol>
+<li><p>Spring Cloud GateWay使用令牌桶算法实现限流（Nginx使用漏桶算法实现限流 ）</p>
+</li>
+<li><p>Spring Cloud GateWay默认使用Redis 的RateLimter限流算法来实现，所以需要引入Redis依赖</p>
+</li>
+<li><p>使用的过程中，主要配置 令牌桶填充的速率，令牌桶容量，指定限流的key</p>
+</li>
+<li><p>限流的Key,可以根据用户 来做限流，IP 来做限流，接口限流等等。</p>
+</li>
+</ol>
+<h2 id="微服务中网关的作用"><a href="#微服务中网关的作用" class="headerlink" title="微服务中网关的作用"></a>微服务中网关的作用</h2><ul>
+<li><strong>统一入口：</strong>为全部微服务提供唯一入口点，网关起到外部和内部隔离，保障了后台服务的安全性；</li>
+<li><strong>鉴权校验：</strong>识别每个请求的权限，拒绝不符合要求的请求；</li>
+<li><strong>动态路由：</strong>动态的将请求路由到不同的后端集群中；</li>
+<li><strong>减少客户端与服务端的耦合：</strong>服务可以独立发展，通过网关层来做映射。</li>
+</ul>
+<h2 id="Spring-Cloud-Gateway-详解"><a href="#Spring-Cloud-Gateway-详解" class="headerlink" title="Spring Cloud Gateway 详解"></a>Spring Cloud Gateway 详解</h2><p>Spring Cloud Gateway原理的讲解，以及其主要参数router、predicate、uri的讲解。（有它就够啦）<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/crazymakercircle/p/11704077.html">https://www.cnblogs.com/crazymakercircle/p/11704077.html</a></p>
+<h2 id="分布式事务存在的问题"><a href="#分布式事务存在的问题" class="headerlink" title="分布式事务存在的问题"></a>分布式事务存在的问题</h2><p>单体应用被拆分成微服务应用，原来的三个模块被拆分成三个独立的应用，分别使用三个独立的数据源，业务操作需要调用三个服务来完成。此时每个服务内部的数据一致性由本地事务来保证，但是<strong>全局的数据一致性问题</strong>没法保证。</p>
+<h2 id="什么是Spring-Cloud-Seata"><a href="#什么是Spring-Cloud-Seata" class="headerlink" title="什么是Spring Cloud Seata"></a>什么是Spring Cloud Seata</h2><p>Seata 是一款开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了 AT、TCC、SAGA 和 XA 事务模式，为用户打造一站式的分布式解决方案。</p>
+<h2 id="分布式事务的处理过程是怎样的"><a href="#分布式事务的处理过程是怎样的" class="headerlink" title="分布式事务的处理过程是怎样的"></a>分布式事务的处理过程是怎样的</h2><p>分布式事务处理过程的唯一ID+三组件模型：Transaction ID XID（全局唯一的事务ID）</p>
+<p><strong>三组件概念</strong></p>
+<ul>
+<li>TC (Transaction Coordinator) - 事务协调者：维护全局和分支事务的状态，驱动全局事务提交或回滚。</li>
+<li>TM (Transaction Manager) - 事务管理器：定义全局事务的范围：开始全局事务、提交或回滚全局事务。</li>
+<li>RM (Resource Manager) - 资源管理器：管理分支事务处理的资源，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。</li>
+</ul>
+<p><strong>处理过程</strong></p>
+<ul>
+<li>TM 向 TC 申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的 XID；</li>
+<li>XID 在微服务调用链路的上下文中传播；</li>
+<li>RM 向 TC 注册分支事务，将其纳入 XID 对应全局事务的管辖；</li>
+<li>TM 向 TC 发起针对 XID 的全局提交或回滚决议；</li>
+<li>TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。</li>
+</ul>
+<h2 id="Seata分布式事务框架实现原理"><a href="#Seata分布式事务框架实现原理" class="headerlink" title="Seata分布式事务框架实现原理"></a>Seata分布式事务框架实现原理</h2><blockquote>
+<p>Seata有三个组成部分<br>事务协调器TC：协调者<br>事务管理器TM：发起方<br>资源管理器RM：参与方</p>
+</blockquote>
+<ul>
+<li>发起方会向协调者申请一个全局事务id，并保存到ThreadLocal中（为什么要保存到ThreadLocal中？弱引用，线程之间不会发生数据冲突；</li>
+<li>Seata数据源代理发起方和参与方的数据源，将前置镜像和后置镜像写入到undo_log表中，方便后期回滚使用；</li>
+<li>发起方获取全局事务id，通过改写Feign客户端请求头传入全局事务id；</li>
+<li>参与方从请求头中获取全局事务id保存到ThreadLocal中，并把该分支注册到SeataServer中；</li>
+<li>如果没有出现异常，发起方会通知协调者，协调者通知所有分支，通过全局事务id和本地事务id删除undo_log数据，如果出现异常，通过undo_log逆向生成sql语句并执行，然后删除undo_log语句。如果处理业务逻辑代码超时，也会回滚。</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">程序猿洞晓</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://itcrud.github.io/2022/09/interview-java-core-springcloud/">https://itcrud.github.io/2022/09/interview-java-core-springcloud/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">程序猿洞晓</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Spring-Cloud/">
+                                    <span class="chip bg-color">Spring Cloud</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'd5b070018a0674352910',
+        clientSecret: 'ee7de87a788f3687fbd8365e86cb2ba43f20c0a9',
+        repo: 'issue',
+        owner: 'itcrud',
+        admin: ["itcrud"],
+        id: '2022-09-21T15-01-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/09/interview-java-core-mysql/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="Java问答知识总结篇-MySQL">
+                        
+                        <span class="card-title">Java问答知识总结篇-MySQL</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/interview-java-core-springboot/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="Java问答知识总结篇-Spring Boot">
+                        
+                        <span class="card-title">Java问答知识总结篇-Spring Boot</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Spring-Boot/">
+                        <span class="chip bg-color">Spring Boot</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2015-2023</span>
+            
+            <a href="/about" target="_blank">程序猿洞晓</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">676k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2015";
+                        var startMonth = "09";
+                        var startDate = "1";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/itcrud" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:itcrud@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,1520 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Java问答知识总结篇-Spring, 程序猿洞晓">
+    <meta name="description" content="以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud &amp;&amp; Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Java问答知识总结篇-Spring | 程序猿洞晓</title>
+    <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/matery.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/reward.css">
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">程序猿洞晓</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/top" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/toolbox" class="waves-effect waves-light">
+      
+      <i class="fas fa-toolbox" style="zoom: 0.6;"></i>
+      
+      <span>工具箱</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-link" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">程序猿洞晓</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/top" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/toolbox" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-toolbox"></i>
+			
+			工具箱
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-link"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Java问答知识总结篇-Spring</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Spring/">
+                                <span class="chip bg-color">Spring</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                最佳实践
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
+                    2022-09-21
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    8.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    32 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p><a href="/2022/09/interview-java-core-base/">Java问答知识总结篇-基础知识</a><br><a href="/2022/09/interview-java-core-jvm/">Java问答知识总结篇-JVM</a><br><a href="/2022/09/interview-java-core-threads/">Java问答知识总结篇-多线程&amp;并发编程</a><br><a href="/2022/09/interview-java-core-network/">Java问答知识总结篇-网络基础</a><br><a href="/2022/09/interview-java-core-spring/">Java问答知识总结篇-Spring</a><br><a href="/2022/09/interview-java-core-springboot/">Java问答知识总结篇-Spring Boot</a><br><a href="/2022/09/interview-java-core-mybatis/">Java问答知识总结篇-Mybatis</a><br><a href="/2022/09/interview-java-core-mysql/">Java问答知识总结篇-MySQL</a><br><a href="/2022/09/interview-java-core-redis/">Java问答知识总结篇-Redis</a><br><a href="/2022/09/interview-java-core-mq/">Java问答知识总结篇-MQ</a><br><a href="/2022/09/interview-java-core-nginx/">Java问答知识总结篇-Nginx</a><br><a href="/2022/09/interview-java-core-distribution/">Java问答知识总结篇-分布式</a><br><a href="/2022/09/interview-java-core-springcloud/">Java问答知识总结篇-Spring Cloud</a><br><a href="/2022/09/interview-java-core-dubbo/">Java问答知识总结篇-Dubbo</a><br><a href="/2022/09/interview-java-core-zookeeper/">Java问答知识总结篇-Zookeeper</a><br><a href="/2022/09/interview-java-core-elasticsearch/">Java问答知识总结篇-ElasticSearch</a><br><a href="/2022/09/interview-java-core-netty/">Java问答知识总结篇-Netty</a><br><a href="/2022/09/interview-java-core-application/">Java问答知识总结篇-场景分析题</a></p>
+</blockquote>
+<p>Spring系列文章:<a href="/categories/Spring/">Spring</a></p>
+<h2 id="使用Spring框架的好处是什么？"><a href="#使用Spring框架的好处是什么？" class="headerlink" title="使用Spring框架的好处是什么？"></a>使用Spring框架的好处是什么？</h2><p>这么问的话，就直接说Spring框架的好处就可以了。比如说Spring有以下特点：</p>
+<p><strong>轻量：</strong> Spring 是轻量的，基本的版本大约2MB。</p>
+<p><strong>控制反转：</strong> Spring通过控制反转实现了松散耦合，对象给出它们的依赖，而不是创建或查找依赖的对象。</p>
+<p><strong>面向切面的编程(AOP)：</strong> Spring支持面向切面的编程，并且把应用业务逻辑和系统服务分开。</p>
+<p><strong>容器：</strong> Spring 包含并管理应用中对象的生命周期和配置。</p>
+<p><strong>MVC框架：</strong> Spring的WEB框架是个精心设计的框架，是Web框架的一个很好的替代品。</p>
+<p><strong>事务管理：</strong> Spring 提供一个持续的事务管理接口，可以扩展到上至本地事务下至全局事务（JTA）。</p>
+<p><strong>异常处理：</strong> Spring 提供方便的API把具体技术相关的异常（比如由JDBC，Hibernate or JDO抛出的）转化为一致的unchecked 异常。</p>
+<h2 id="Autowired和Resource关键字的区别"><a href="#Autowired和Resource关键字的区别" class="headerlink" title="Autowired和Resource关键字的区别"></a>Autowired和Resource关键字的区别</h2><p><code>@Resource</code>和<code>@Autowired</code>都是做bean的注入时使用，其实<code>@Resource</code>并不是Spring的注解，它的包是<code>javax.annotation.Resource</code>，需要导入，但是Spring支持该注解的注入。</p>
+<h3 id="Autowired"><a href="#Autowired" class="headerlink" title="@Autowired"></a>@Autowired</h3><p><code>@Autowired</code>为Spring提供的注解，只按照byType注入。<br><code>@Autowired</code>注解是按照类型（byType）装配依赖对象，默认情况下它要求依赖对象必须存在，如果允许null值，可以设置它的required属性为false。如果我们想使用按照名称（byName）来装配，可以结合<code>@Qualifier</code>注解一起使用。</p>
+<h3 id="Resource"><a href="#Resource" class="headerlink" title="@Resource"></a>@Resource</h3><p><code>@Resource</code>默认按照ByName自动注入，由J2EE提供。<br><code>@Resource</code>有两个重要的属性：name和type，而Spring将<code>@Resource</code>注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。</p>
+<h3 id="Resource装配顺序"><a href="#Resource装配顺序" class="headerlink" title="@Resource装配顺序"></a>@Resource装配顺序</h3><ol>
+<li>如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常。</li>
+<li>如果指定了name，则从上下文中查找名称（id）匹配的bean进行装配，找不到则抛出异常。</li>
+<li>如果指定了type，则从上下文中找到类似匹配的唯一bean进行装配，找不到或是找到多个，都会抛出异常。</li>
+<li>如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配。</li>
+</ol>
+<p>注意：<code>@Resource</code>的作用相当于<code>@Autowired</code>，只不过<code>@Autowired</code>按照byType自动注入。</p>
+<h2 id="Spring-MVC工作原理"><a href="#Spring-MVC工作原理" class="headerlink" title="Spring MVC工作原理"></a>Spring MVC工作原理</h2><p>原理图如下：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/97165423268123268.png"></p>
+<ol>
+<li>用户发送请求至前端控制器<code>DispatcherServlet</code>。 </li>
+<li><code>DispatcherServlet</code>收到请求调用HandlerMapping处理器映射器。</li>
+<li>处理器映射器找到具体的处理器(可以根据xml配置、注解进行查找)，生成处理器对象及处理器拦截器(如果有则生成)一并返回给<code>DispatcherServlet</code>。 </li>
+<li><code>DispatcherServlet</code>调用<code>HandlerAdapter</code>处理器适配器。</li>
+<li><code>HandlerAdapter</code>经过适配调用具体的处理器(<code>Controller</code>，也叫后端控制器)。 </li>
+<li><code>Controller</code>执行完成返回<code>ModelAndView</code>。 </li>
+<li><code>HandlerAdapter</code>将<code>controller</code>执行结果<code>ModelAndView</code>返回给<code>DispatcherServlet</code>。 </li>
+<li><code>DispatcherServlet</code>将<code>ModelAndView</code>传给<code>ViewReslover</code>视图解析器。</li>
+<li><code>ViewReslover</code>解析后返回具体<code>View</code>。</li>
+<li><code>DispatcherServlet</code>根据<code>View</code>进行渲染视图（即将模型数据填充至视图中）。</li>
+<li><code>DispatcherServlet</code>响应用户。</li>
+</ol>
+<h2 id="简单介绍-Spring-MVC-的核心组件"><a href="#简单介绍-Spring-MVC-的核心组件" class="headerlink" title="简单介绍 Spring MVC 的核心组件"></a>简单介绍 Spring MVC 的核心组件</h2><p>那么接下来就简单介绍一下 <code>DispatcherServlet</code> 和九大组件（按使用顺序排序的）：</p>
+<table>
+<thead>
+<tr>
+<th align="left">组件</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DispatcherServlet</td>
+<td align="left">Spring MVC 的核心组件，是请求的入口，负责协调各个组件工作</td>
+</tr>
+<tr>
+<td align="left">MultipartResolver</td>
+<td align="left">内容类型( <code>Content-Type</code> )为 <code>multipart/*</code> 的请求的解析器，例如解析处理文件上传的请求，便于获取参数信息以及上传的文件</td>
+</tr>
+<tr>
+<td align="left">HandlerMapping</td>
+<td align="left">请求的处理器匹配器，负责为请求找到合适的 <code>HandlerExecutionChain</code> 处理器执行链，包含处理器（<code>handler</code>）和拦截器们（<code>interceptors</code>）</td>
+</tr>
+<tr>
+<td align="left">HandlerAdapter</td>
+<td align="left">处理器的适配器。因为处理器 <code>handler</code> 的类型是 Object 类型，需要有一个调用者来实现 <code>handler</code> 是怎么被执行。Spring 中的处理器的实现多变，比如用户处理器可以实现 Controller 接口、HttpRequestHandler 接口，也可以用 <code>@RequestMapping</code> 注解将方法作为一个处理器等，这就导致 Spring MVC 无法直接执行这个处理器。所以这里需要一个处理器适配器，由它去执行处理器</td>
+</tr>
+<tr>
+<td align="left">HandlerExceptionResolver</td>
+<td align="left">处理器异常解析器，将处理器（ <code>handler</code> ）执行时发生的异常，解析( 转换 )成对应的 ModelAndView 结果</td>
+</tr>
+<tr>
+<td align="left">RequestToViewNameTranslator</td>
+<td align="left">视图名称转换器，用于解析出请求的默认视图名</td>
+</tr>
+<tr>
+<td align="left">LocaleResolver</td>
+<td align="left">本地化（国际化）解析器，提供国际化支持</td>
+</tr>
+<tr>
+<td align="left">ThemeResolver</td>
+<td align="left">主题解析器，提供可设置应用整体样式风格的支持</td>
+</tr>
+<tr>
+<td align="left">ViewResolver</td>
+<td align="left">视图解析器，根据视图名和国际化，获得最终的视图 View 对象</td>
+</tr>
+<tr>
+<td align="left">FlashMapManager</td>
+<td align="left">FlashMap 管理器，负责重定向时，保存参数至临时存储（默认 Session）</td>
+</tr>
+</tbody></table>
+<p>Spring MVC 对各个组件的职责划分的比较清晰。<code>DispatcherServlet</code> 负责协调，其他组件则各自做分内之事，互不干扰。</p>
+<h2 id="谈谈你对Spring的AOP理解"><a href="#谈谈你对Spring的AOP理解" class="headerlink" title="谈谈你对Spring的AOP理解"></a>谈谈你对Spring的AOP理解</h2><p>AOP（Aspect-Oriented Programming，面向切面编程）能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可扩展性和可维护性。<br>Spring AOP是基于动态代理的，如果要代理的对象实现了某个接口，那么Spring AOP就会使用JDK动态代理去创建代理对象；而对于没有实现接口的对象，就无法使用JDK动态代理，转而使用CGlib动态代理生成一个被代理对象的子类来作为代理。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/782654957123684.png"></p>
+<p>注意：图中的implements和extend。即一个是接口，一个是实现类。<br>当然也可以使用AspectJ，Spring AOP中已经集成了AspectJ，AspectJ应该算得上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样可以大大简化代码量。我们需要增加新功能也方便，提高了系统的扩展性。日志功能、事务管理和权限管理等场景都用到了AOP。</p>
+<h2 id="AOP-有哪些实现方式？"><a href="#AOP-有哪些实现方式？" class="headerlink" title="AOP 有哪些实现方式？"></a>AOP 有哪些实现方式？</h2><p>实现 AOP 的技术，主要分为两大类：</p>
+<ul>
+<li>静态代理 - 指使用 AOP 框架提供的命令进行编译，从而在编译阶段就可生成 AOP 代理类，因此也称为编译时增强；<ul>
+<li>编译时编织（特殊编译器实现）</li>
+<li>类加载时编织（特殊的类加载器实现）。</li>
+</ul>
+</li>
+<li>动态代理 - 在运行时在内存中“临时”生成 AOP 动态代理类，因此也被称为运行时增强。<ul>
+<li><code>JDK</code> 动态代理：通过反射来接收被代理的类，并且要求被代理的类必须实现一个接口 。JDK 动态代理的核心是 InvocationHandler 接口和 Proxy 类 。</li>
+<li><code>CGLIB</code>动态代理： 如果目标类没有实现接口，那么 <code>Spring AOP</code> 会选择使用 <code>CGLIB</code> 来动态代理目标类 。<code>CGLIB</code> （ Code Generation Library ），是一个代码生成的类库，可以在运行时动态的生成某个类的子类，注意， <code>CGLIB</code> 是通过继承的方式做的动态代理，因此如果某个类被标记为 <code>final</code> ，那么它是无法使用 <code>CGLIB</code> 做动态代理的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring-AOP和AspectJ-AOP有什么区别"><a href="#Spring-AOP和AspectJ-AOP有什么区别" class="headerlink" title="Spring AOP和AspectJ AOP有什么区别"></a>Spring AOP和AspectJ AOP有什么区别</h2><ul>
+<li>Spring AOP是属于运行时增强，而AspectJ是编译时增强。Spring AOP基于代理（Proxying），而AspectJ基于字节码操作（Bytecode Manipulation）。</li>
+<li>Spring AOP已经集成了AspectJ，AspectJ应该算得上是Java生态系统中最完整的AOP框架了。</li>
+<li>AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单。</li>
+<li>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比SpringAOP快很多。</li>
+</ul>
+<h2 id="在Spring-AOP-中，关注点和横切关注点区别是什么"><a href="#在Spring-AOP-中，关注点和横切关注点区别是什么" class="headerlink" title="在Spring AOP 中，关注点和横切关注点区别是什么"></a>在Spring AOP 中，关注点和横切关注点区别是什么</h2><p>关注点是应用中一个模块的行为，一个关注点可能会被定义成一个我们想实现的一个功能。 横切关注点是一个关注点，此关注点是整个应用都会使用的功能，并影响整个应用，比如日志，安全和数据传输，几乎应用的每个模块都需要的功能。因此这些都属于横切关注点。</p>
+<p>那什么是连接点呢？连接点代表一个应用程序的某个位置，在这个位置我们可以插入一个AOP切面，它实际上是个应用程序执行Spring AOP的位置。</p>
+<p>切入点是什么？切入点是一个或一组连接点，通知将在这些位置执行。可以通过表达式或匹配的方式指明切入点。</p>
+<h2 id="面向切面编程中，通知是什么，有哪些类型"><a href="#面向切面编程中，通知是什么，有哪些类型" class="headerlink" title="面向切面编程中，通知是什么，有哪些类型"></a>面向切面编程中，通知是什么，有哪些类型</h2><p>通知是个在方法执行前或执行后要做的动作，实际上是程序执行时要通过SpringAOP框架触发的代码段。</p>
+<p>Spring切面可以应用五种类型的通知：</p>
+<ul>
+<li><code>before</code>：前置通知，在一个方法执行前被调用。</li>
+<li><code>after</code>: 在方法执行之后调用的通知，无论方法执行是否成功。</li>
+<li><code>after-returning</code>: 仅当方法成功完成后执行的通知。</li>
+<li><code>after-throwing</code>: 在方法抛出异常退出时执行的通知。</li>
+<li><code>around</code>: 在方法执行之前和之后调用的通知。</li>
+</ul>
+<p>切面执行的顺序参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/daodfs111/article/details/120003190">Spring Aspect切面执行顺序</a></p>
+<h2 id="说说你对Spring的IoC是怎么理解的"><a href="#说说你对Spring的IoC是怎么理解的" class="headerlink" title="说说你对Spring的IoC是怎么理解的"></a>说说你对Spring的IoC是怎么理解的</h2><ol>
+<li>IoC就是控制反转，是指创建对象的控制权的转移。以前创建对象的主动权和时机是由自己把控的，而现在这种权力转移到Spring容器中，并由容器根据配置文件去创建实例和管理各个实例之间的依赖关系。对象与对象之间松散耦合，也利于功能的复用。DI依赖注入，和控制反转是同一个概念的不同角度的描述，即应用程序在运行时依赖IoC容器来动态注入对象需要的外部资源。</li>
+<li>最直观的表达就是，IoC让对象的创建不用去new了，可以由spring自动生产，使用java的反射机制，根据配置文件在运行时动态的去创建对象以及管理对象，并调用对象的方法的。</li>
+<li>Spring的IoC有三种注入方式 ：构造器注入、setter方法注入、根据注解注入。</li>
+</ol>
+<p><strong>拓展理解：</strong> IoC让相互协作的组件保持松散的耦合，而AOP编程允许你把遍布于应用各层的功能分离出来形成可重用的功能组件。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/3101171-33099411d16ca051.png"></p>
+<h2 id="什么是依赖注入？可以通过多少种方式完成依赖注入？"><a href="#什么是依赖注入？可以通过多少种方式完成依赖注入？" class="headerlink" title="什么是依赖注入？可以通过多少种方式完成依赖注入？"></a>什么是依赖注入？可以通过多少种方式完成依赖注入？</h2><p>在依赖注入中，您不必创建对象，但必须描述如何创建它们。您不是直接在代码中将组件和服务连接在一起，而是描述配置文件中哪些组件需要哪些服务。由 IoC 容器将它们装配在一起。</p>
+<p>通常，依赖注入可以通过三种方式完成，即：</p>
+<ul>
+<li>构造函数注入</li>
+<li>setter 注入</li>
+<li>接口注入</li>
+</ul>
+<p>在 Spring Framework 中，仅使用构造函数和 setter 注入。</p>
+<h2 id="如何理解IoC和DI？"><a href="#如何理解IoC和DI？" class="headerlink" title="如何理解IoC和DI？"></a>如何理解IoC和DI？</h2><p>IOC就是控制反转，通俗的说就是我们不用自己创建实例对象，这些都交给Spring的bean工厂帮我们创建管理。这也是Spring的核心思想，通过面向接口编程的方式来实现对业务组件的动态依赖。这就意味着IOC是Spring针对解决程序耦合而存在的。在实际应用中，Spring通过配置文件（xml或者properties）指定需要实例化的java类（类名的完整字符串），包括这些java类的一组初始化值，通过加载读取配置文件，用Spring提供的方法（getBean()）就可以获取到我们想要的根据指定配置进行初始化的实例对象。</p>
+<p><strong>优点：</strong>IOC或依赖注入减少了应用程序的代码量。它使得应用程序的测试很简单，因为在单元测试中不再需要单例或JNDI查找机制。简单的实现以及较少的干扰机制使得松耦合得以实现。IOC容器支持勤性单例及延迟加载服务。</p>
+<p><strong>DI：DI—Dependency Injection</strong>，即“依赖注入”：组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。</p>
+<h2 id="区分-BeanFactory-和-ApplicationContext？"><a href="#区分-BeanFactory-和-ApplicationContext？" class="headerlink" title="区分 BeanFactory 和 ApplicationContext？"></a>区分 BeanFactory 和 ApplicationContext？</h2><table>
+<thead>
+<tr>
+<th>BeanFactory</th>
+<th>ApplicationContext</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>它使用懒加载</td>
+<td>它使用即时加载</td>
+</tr>
+<tr>
+<td>它使用语法显式提供资源对象</td>
+<td>它自己创建和管理资源对象</td>
+</tr>
+<tr>
+<td>不支持国际化</td>
+<td>支持国际化</td>
+</tr>
+<tr>
+<td>不支持基于依赖的注解</td>
+<td>支持基于依赖的注解</td>
+</tr>
+</tbody></table>
+<p>BeanFactory和ApplicationContext的优缺点分析：</p>
+<p>BeanFactory的优缺点：</p>
+<ul>
+<li>优点：应用启动的时候占用资源很少，对资源要求较高的应用，比较有优势；</li>
+<li>缺点：运行速度会相对来说慢一些。而且有可能会出现空指针异常的错误，而且通过Bean工厂创建的Bean生命周期会简单一些。</li>
+</ul>
+<p>ApplicationContext的优缺点：</p>
+<ul>
+<li>优点：所有的Bean在启动的时候都进行了加载，系统运行的速度快；在系统启动的时候，可以发现系统中的配置问题。</li>
+<li>缺点：把费时的操作放到系统启动中完成，所有的对象都可以预加载，缺点就是内存占用较大。</li>
+</ul>
+<h2 id="区分构造函数注入和-setter-注入"><a href="#区分构造函数注入和-setter-注入" class="headerlink" title="区分构造函数注入和 setter 注入"></a>区分构造函数注入和 setter 注入</h2><table>
+<thead>
+<tr>
+<th>构造函数注入</th>
+<th>setter 注入</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>没有部分注入</td>
+<td>有部分注入</td>
+</tr>
+<tr>
+<td>不会覆盖 setter 属性</td>
+<td>会覆盖 setter 属性</td>
+</tr>
+<tr>
+<td>任意修改都会创建一个新实例</td>
+<td>任意修改不会创建一个新实例</td>
+</tr>
+<tr>
+<td>适用于设置很多属性</td>
+<td>适用于设置少量属性</td>
+</tr>
+</tbody></table>
+<h2 id="spring-提供了哪些配置方式？"><a href="#spring-提供了哪些配置方式？" class="headerlink" title="spring 提供了哪些配置方式？"></a>spring 提供了哪些配置方式？</h2><ul>
+<li>基于 xml 配置</li>
+</ul>
+<p>bean 所需的依赖项和服务在 XML 格式的配置文件中指定。这些配置文件通常包含许多 bean 定义和特定于应用程序的配置选项。它们通常以 bean 标签开头。例如：</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>studentbean<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>org.edureka.firstSpring.StudentBean<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Edureka<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>基于注解配置</li>
+</ul>
+<p>您可以通过在相关的类，方法或字段声明上使用注解，将 bean 配置为组件类本身，而不是使用 XML 来描述 bean 装配。默认情况下，Spring 容器中未打开注解装配。因此，您需要在使用它之前在 Spring 配置文件中启用它。例如：</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">context:</span>annotation-config</span><span class="token punctuation">/&gt;</span></span>
+<span class="token comment">&lt;!-- bean definitions go here --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>基于 Java API 配置</li>
+</ul>
+<p>Spring 的 Java 配置是通过使用 @Bean 和 @Configuration 来实现。</p>
+<ol>
+<li>@Bean 注解扮演与 <code>&lt;bean /&gt;</code> 元素相同的角色。</li>
+<li>@Configuration 类允许通过简单地调用同一个类中的其他 @Bean 方法来定义 bean 间依赖关系。</li>
+</ol>
+<p>例如：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StudentConfig</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">StudentBean</span> <span class="token function">myStudent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">StudentBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Spring-中的-bean-的作用域有哪些"><a href="#Spring-中的-bean-的作用域有哪些" class="headerlink" title="Spring 中的 bean 的作用域有哪些?"></a>Spring 中的 bean 的作用域有哪些?</h2><ul>
+<li><strong>singleton：</strong>唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
+<li><strong>prototype：</strong>每次请求都会创建一个新的 bean 实例。</li>
+<li><strong>request：</strong>每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。</li>
+<li><strong>session：</strong>在一个HTTP Session中，一个Bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。</li>
+<li><strong>global-session：</strong>全局session作用域，仅仅在基于portlet的web应用中才有意义，Spring5已经没有了。Portlet是能够生成语义代码(例如：HTML)片段的小型Java Web插件。它们基于portlet容器，可以像servlet一样处理HTTP请求。但是，与 servlet 不同，每个 portlet 都有不同的会话</li>
+</ul>
+<h2 id="将一个类声明为Spring的-bean-的注解有哪些"><a href="#将一个类声明为Spring的-bean-的注解有哪些" class="headerlink" title="将一个类声明为Spring的 bean 的注解有哪些?"></a>将一个类声明为Spring的 bean 的注解有哪些?</h2><p>我们一般使用 @Autowired 注解自动装配 bean，要想把类标识成可用于 @Autowired 注解自动装配的 bean 的类,采用以下注解可实现：</p>
+<ul>
+<li><code>@Component</code>：通用的注解，可标注任意类为 Spring 组件。如果一个Bean不知道属于哪个层，可以使用@Component 注解标注。 </li>
+<li><code>@Repository</code>: 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
+<li><code>@Service</code>: 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao 层。</li>
+<li><code>@Controller</code>: 对应 Spring MVC 控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。</li>
+</ul>
+<h2 id="解释一下spring-bean的生命周期"><a href="#解释一下spring-bean的生命周期" class="headerlink" title="解释一下spring bean的生命周期"></a>解释一下spring bean的生命周期</h2><p>Bean的生命周期是由容器来管理的。主要在创建和销毁两个时期。</p>
+<h3 id="创建过程"><a href="#创建过程" class="headerlink" title="创建过程"></a>创建过程</h3><ol>
+<li>实例化<code>Bean</code></li>
+</ol>
+<p>对于<code>BeanFactory</code>容器，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用<code>createBean</code>进行实例化。对于<code>ApplicationContext</code>容器，当容器启动结束后，通过获取<code>BeanDefinition</code>对象中的信息，实例化所有的bean。</p>
+<ol start="2">
+<li>设置对象属性（依赖注入）</li>
+</ol>
+<p>实例化后的对象被封装在<code>BeanWrapper</code>对象中，紧接着，Spring根据<code>BeanDefinition</code>中的信息以及通过<code>BeanWrapper</code>提供的设置属性的接口完成依赖注入。</p>
+<ol start="3">
+<li>处理<code>Aware</code>接口</li>
+</ol>
+<p>接着，Spring会检测该对象是否实现了<code>xxxAware</code>接口，并将相关的<code>xxxAware</code>实例注入给Bean：</p>
+<ul>
+<li>如果这个Bean已经实现了<code>BeanNameAware</code>接口，会调用它实现的<code>setBeanName(String beanId)</code>方法，此处传递的就是Spring配置文件中Bean的id值；</li>
+<li>如果这个Bean已经实现了<code>BeanFactoryAware</code>接口，会调用它实现的<code>setBeanFactory()</code>方法，传递的是Spring工厂自身。</li>
+<li>如果这个Bean已经实现了<code>ApplicationContextAware</code>接口，会调用<code>setApplicationContext(ApplicationContext)</code>方法，传入Spring上下文。</li>
+</ul>
+<ol start="4">
+<li><code>BeanPostProcessor</code></li>
+</ol>
+<p>如果想对Bean进行一些自定义的处理，那么可以让Bean实现了<code>BeanPostProcessor</code>接口，那将会调用<code>postProcessBeforeInitialization(Object obj, String s)</code>方法。</p>
+<ol start="5">
+<li><code>InitializingBean</code> 与 <code>init-method</code></li>
+</ol>
+<p>如果Bean在Spring配置文件中配置了 <code>init-method</code> 属性，则会自动调用其配置的初始化方法。</p>
+<ol start="6">
+<li>如果这个Bean实现了<code>BeanPostProcessor</code>接口，将会调用<code>postProcessAfterInitialization(Object obj, String s)</code>方法；由于这个方法是在Bean初始化结束时调用的，所以可以被应用于内存或缓存技术。</li>
+</ol>
+<p><strong>以上几个步骤完成后，Bean就已经被正确创建了，之后就可以使用这个Bean了。</strong></p>
+<h3 id="销毁过程"><a href="#销毁过程" class="headerlink" title="销毁过程"></a>销毁过程</h3><ol>
+<li><code>DisposableBean</code></li>
+</ol>
+<p>当Bean不再需要时，会经过清理阶段，如果Bean实现了<code>DisposableBean</code>这个接口，会调用其实现的<code>destroy()</code>方法；</p>
+<ol start="2">
+<li><code>destroy-method</code></li>
+</ol>
+<p>最后，如果这个Bean的Spring配置中配置了<code>destroy-method</code>属性，会自动调用其配置的销毁方法。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/848457123698412.png"></p>
+<p><strong>总结</strong></p>
+<p>主要把握创建过程和销毁过程这两个大的方面：<br><strong>创建过程：</strong>首先实例化Bean，并设置Bean的属性，根据其实现的<code>Aware</code>接口（主要是<code>BeanFactoryAware</code>接口，<code>BeanFactoryAware</code>，<code>ApplicationContextAware</code>）设置依赖信息，<br>接下来调用<code>BeanPostProcess</code>的<code>postProcessBeforeInitialization</code>方法，完成<code>initial</code>前的自定义逻辑；<code>afterPropertiesSet</code>方法做一些属性被设定后的自定义的事情;调用Bean自身定义的<code>init</code>方法，去做一些初始化相关的工作;然后再调用<code>postProcessAfterInitialization</code>去做一些bean初始化之后的自定义工作。这四个方法的调用有点类似AOP。<br>此时，Bean初始化完成，可以使用这个Bean了。<br><strong>销毁过程：</strong>如果实现了<code>DisposableBean</code>的<code>destroy()</code>方法，则调用它，如果实现了自定义的销毁方法，则调用之。</p>
+<h2 id="什么是-spring-装配？"><a href="#什么是-spring-装配？" class="headerlink" title="什么是 spring 装配？"></a>什么是 spring 装配？</h2><p>当 bean 在 Spring 容器中组合在一起时，它被称为装配 bean 或 bean 装配。 Spring 容器需要知道需要什么 bean 以及容器应该如何使用依赖注入来将 bean 绑定在一起，同时装配 bean。</p>
+<p>Spring 容器能够自动装配 bean。也就是说，可以通过检查 <code>BeanFactory</code> 的内容让 Spring 自动解析 bean 的协作者。</p>
+<p>自动装配的不同模式：</p>
+<ul>
+<li><strong>no：</strong>这是默认设置，表示没有自动装配。应使用显式 bean 引用进行装配。</li>
+<li><strong>byName：</strong>它根据 bean 的名称注入对象依赖项。它匹配并装配其属性与 XML 文件中由相同名称定义的 bean。（<code>@Resource</code>注解默认使用的就是<code>byName</code>）</li>
+<li><strong>byType：</strong>它根据类型注入对象依赖项。如果属性的类型与 XML 文件中的一个 bean 名称匹配，则匹配并装配属性。（<code>@Autowired</code>注解默认使用的就是<code>byType</code>）</li>
+<li><strong>构造函数：</strong>它通过调用类的构造函数来注入依赖项。它有大量的参数。</li>
+<li><strong>autodetect：</strong>首先容器尝试通过构造函数使用 autowire 装配，如果不能，则尝试通过 byType 自动装配。</li>
+</ul>
+<h2 id="自动装配有什么局限？"><a href="#自动装配有什么局限？" class="headerlink" title="自动装配有什么局限？"></a>自动装配有什么局限？</h2><ul>
+<li>覆盖的可能性 - 您始终可以使用 <code>&lt;constructor-arg&gt;</code> 和 <code>&lt;property&gt;</code> 设置指定依赖项，这将覆盖自动装配。</li>
+<li>基本元数据类型 - 简单属性（如原数据类型，字符串和类）无法自动装配。</li>
+<li>令人困惑的性质 - 总是喜欢使用明确的装配，因为自动装配不太精确。</li>
+</ul>
+<h2 id="Spring中出现同名bean怎么办？"><a href="#Spring中出现同名bean怎么办？" class="headerlink" title="Spring中出现同名bean怎么办？"></a>Spring中出现同名bean怎么办？</h2><ul>
+<li>同一个配置文件内同名的Bean，以最上面定义的为准</li>
+<li>不同配置文件中存在同名Bean，后解析的配置文件会覆盖先解析的配置文件</li>
+<li>同文件中<code>@ComponentScan</code>和<code>@Bean</code>出现同名Bean。同文件下<code>@Bean</code>的会生效，<code>@ComponentScan</code>扫描进来不会生效。通过<code>@ComponentScan</code>扫描进来的优先级是最低的，原因就是它扫描进来的Bean定义是最先被注册的~ </li>
+</ul>
+<h2 id="Spring-怎么解决循环依赖问题？"><a href="#Spring-怎么解决循环依赖问题？" class="headerlink" title="Spring 怎么解决循环依赖问题？"></a>Spring 怎么解决循环依赖问题？</h2><p>spring对循环依赖的处理有三种情况： </p>
+<ol>
+<li><strong>构造器的循环依赖：</strong>这种依赖spring是处理不了的，直接抛出<code>BeanCurrentlylnCreationException</code>异常。 </li>
+<li><strong>单例模式下的setter循环依赖：</strong>通过“三级缓存”处理循环依赖。 </li>
+<li><strong>非单例循环依赖：</strong>无法处理。</li>
+</ol>
+<p>下面分析单例模式下的setter循环依赖如何解决</p>
+<p>Spring的单例对象的初始化主要分为三步： </p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1584761413341_12.png"></p>
+<ol>
+<li><p><code>createBeanInstance</code>：实例化，其实也就是调用对象的构造方法实例化对象</p>
+</li>
+<li><p><code>populateBean</code>：填充属性，这一步主要是多bean的依赖属性进行填充</p>
+</li>
+<li><p><code>initializeBean</code>：调用spring xml中的 init 方法。</p>
+</li>
+</ol>
+<p>从上面讲述的单例bean初始化步骤我们可以知道，循环依赖主要发生在第一、第二部。也就是构造器循环依赖和<code>field</code>循环依赖。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/1584758309616_10.png"></p>
+<p>举例：A的某个field或者setter依赖了B的实例对象，同时B的某个field或者setter依赖了A的实例对象”这种循环依赖的情况。A首先完成了初始化的第一步（<code>createBeanInstance</code>实例化），并且将自己提前曝光到<code>singletonFactories</code>中。</p>
+<p>此时进行初始化的第二步，发现自己依赖对象B，此时就尝试去<code>get(B)</code>，发现B还没有被create，所以走create流程，B在初始化第一步的时候发现自己依赖了对象A，于是尝试<code>get(A)</code>，尝试一级缓存<code>singletonObjects</code>(肯定没有，因为A还没初始化完全)，尝试二级缓存<code>earlySingletonObjects</code>（也没有），尝试三级缓存<code>singletonFactories</code>，由于A通过<code>ObjectFactory</code>将自己提前曝光了，所以B能够通过<code>ObjectFactory.getObject</code>拿到A对象(虽然A还没有初始化完全，但是总比没有好呀)，B拿到A对象后顺利完成了初始化阶段1、2、3，完全初始化之后将自己放入到一级缓存singletonObjects中。</p>
+<p>此时返回A中，A此时能拿到B的对象顺利完成自己的初始化阶段2、3，最终A也完成了初始化，进去了一级缓存singletonObjects中，而且更加幸运的是，由于B拿到了A的对象引用，所以B现在hold住的A对象完成了初始化。</p>
+<p><strong>关键字：三级缓存，提前曝光。</strong></p>
+<h2 id="Spring-中的单例-bean-的线程安全问题？"><a href="#Spring-中的单例-bean-的线程安全问题？" class="headerlink" title="Spring 中的单例 bean 的线程安全问题？"></a>Spring 中的单例 bean 的线程安全问题？</h2><p>当多个用户同时请求一个服务时，容器会给每一个请求分配一个线程，这时多个线程会并发执行该请求对应的业务逻辑（成员方法），此时就要注意了，如果该处理逻辑中有对单例状态的修改（体现为该单例的成员属性），则必须考虑线程同步问题。 </p>
+<p><strong>线程安全问题都是由全局变量及静态变量引起的。</strong> </p>
+<p>若每个线程中对全局变量、静态变量只有读操作，而无写操作，一般来说，这个全局变量是线程安全的；若有多个线程同时执行写操作，一般都需要考虑线程同步，否则就可能影响线程安全。</p>
+<p><strong>无状态bean和有状态bean</strong></p>
+<ul>
+<li>有状态就是有数据存储功能。有状态对象(Stateful Bean)，就是有实例变量的对象，可以保存数据，是非线程安全的。在不同方法调用间不保留任何状态。</li>
+<li>无状态就是一次操作，不能保存数据。无状态对象(Stateless Bean)，就是没有实例变量的对象，不能保存数据，是不变类，是线程安全的。</li>
+</ul>
+<p>在spring中无状态的Bean适合用不变模式，就是单例模式，这样可以共享实例提高性能。有状态的Bean在多线程环境下不安全，适合用<code>Prototype</code>原型模式。<br>Spring使用<code>ThreadLocal</code>解决线程安全问题。如果你的Bean有多种状态的话（比如 View Model 对象），就需要自行保证线程安全 。</p>
+<h2 id="Spring框架中都用到了哪些设计模式"><a href="#Spring框架中都用到了哪些设计模式" class="headerlink" title="Spring框架中都用到了哪些设计模式"></a>Spring框架中都用到了哪些设计模式</h2><p>这是一道相对有难度的题目，你不仅要会设计模式，还要知道每个设计模式在Spring中是如何使用的。</p>
+<p><strong>简单工厂模式：</strong> Spring 中的 <code>BeanFactory</code> 就是简单工厂模式的体现。根据传入一个唯一的标识来获得 Bean 对象，但是在传入参数后创建还是传入参数前创建，要根据具体情况来定。</p>
+<p><strong>工厂方法模式：</strong> Spring 中的 <code>FactoryBean</code> 就是典型的工厂方法模式，实现了 FactoryBean 接口的 bean是一类叫做 factory 的 bean。其特点是，spring 在使用<code>getBean()</code>调用获得该 bean 时，会自动调用该 bean 的 <code>getObject()</code> 方法，所以返回的不是 factory 这个 bean，而是这个 <code>bean.getOjbect()</code> 方法的返回值。</p>
+<p><strong>单例模式：</strong> 在 spring 中用到的单例模式有：<code>scope="singleton"</code>，注册式单例模式，bean 存放于 Map 中。bean name 当做 key，bean 当做 value。</p>
+<p><strong>原型模式：</strong> 在 spring 中用到的原型模式有：<code>scope="prototype"</code>，每次获取的是通过克隆生成的新实例，对其进行修改时对原有实例对象不造成任何影响。</p>
+<p><strong>迭代器模式：</strong> 在 Spring 中有个 <code>CompositeIterator</code> 实现了 <code>Iterator</code>，<code>Iterable</code> 接口和 <code>Iterator</code> 接口，这两个都是迭代相关的接口。可以这么认为，实现了 <code>Iterable</code> 接口，则表示某个对象是可被迭代的。<code>Iterator</code> 接口相当于是一个迭代器，实现了 <code>Iterator</code> 接口，等于具体定义了这个可被迭代的对象时如何进行迭代的。</p>
+<p><strong>代理模式：</strong> Spring 中经典的 AOP，就是使用动态代理实现的，分 JDK 和 CGlib 动态代理。</p>
+<p><strong>适配器模式：</strong> Spring 中的 AOP 中 AdvisorAdapter 类，它有三个实现：</p>
+<p><code>MethodBeforAdviceAdapter</code>、<code>AfterReturnningAdviceAdapter</code>、<code>ThrowsAdviceAdapter</code>。Spring会根据不同的 AOP 配置来使用对应的 Advice，与策略模式不同的是，一个方法可以同时拥有多个Advice。Spring 存在很多以 Adapter 结尾的，大多数都是适配器模式。</p>
+<p><strong>观察者模式：</strong> Spring 中的 Event 和 Listener。spring 事件：<code>ApplicationEvent</code>，该抽象类继承了<code>EventObject</code>类，JDK 建议所有的事件都应该继承自 <code>EventObject</code>。spring 事件监听器：<code>ApplicationListener</code>，该接口继承了 <code>EventListener</code> 接口，JDK 建议所有的事件监听器都应该继承<code>EventListener</code>。</p>
+<p><strong>模板模式：</strong> Spring 中的 <code>org.springframework.jdbc.core.JdbcTemplate</code> 就是非常经典的模板模式的应用，里面的 <code>execute</code> 方法，把整个算法步骤都定义好了。</p>
+<p><strong>责任链模式：</strong> <code>DispatcherServlet</code> 中的 <code>doDispatch()</code> 方法中获取与请求匹配的处理器<code>HandlerExecutionChain</code>，<code>this.getHandler()</code> 方法的处理使用到了责任链模式。</p>
+<p><strong>注意：</strong> 这里只是列举了部分设计模式，其实里面用到了还有享元模式、建造者模式等。可选择性的回答（你会的熟悉的模式），主要是怕你回答了迭代器模式，然后继续问你，结果你一问三不知，那就尴了尬了。</p>
+<h2 id="说说Spring-中-ApplicationContext-和-BeanFactory-的区别"><a href="#说说Spring-中-ApplicationContext-和-BeanFactory-的区别" class="headerlink" title="说说Spring 中 ApplicationContext 和 BeanFactory 的区别"></a>说说Spring 中 ApplicationContext 和 BeanFactory 的区别</h2><h3 id="对-Web-应用的支持"><a href="#对-Web-应用的支持" class="headerlink" title="对 Web 应用的支持"></a>对 Web 应用的支持</h3><p>与 <code>BeanFactory</code> 通常以编程的方式被创建，<code>ApplicationContext</code> 能以声明的方式创建，如使用<code>ContextLoader</code>。<br>当然你也可以使用 <code>ApplicationContext</code> 的实现方式之一，以编程的方式创建 <code>ApplicationContext</code>实例。</p>
+<h3 id="延迟加载"><a href="#延迟加载" class="headerlink" title="延迟加载"></a>延迟加载</h3><ol>
+<li><code>BeanFactroy</code> 采用的是延迟加载形式来注入 Bean 的，即只有在使用到某个 Bean 时(调用<code>getBean()</code>)，才对该 Bean 进行加载实例化。这样，我们就不能发现一些存在的 spring 的配置问题。而 <code>ApplicationContext</code> 则相反，它是在容器启动时，一次性创建了所有的 Bean。这样，在容器启动时，我们就可以发现 Spring 中存在的配置错误。</li>
+<li><code>BeanFactory</code> 和 <code>ApplicationContext</code> 都支持 <code>BeanPostProcessor</code>、<code>BeanFactoryPostProcessor</code> 的使用。两者之间的区别是：<code>BeanFactory</code> 需要手动注册，而<code>ApplicationContext</code> 则是自动注册。</li>
+</ol>
+<p>可以看到，<code>ApplicationContext</code> 继承了 <code>BeanFactory</code>，<code>BeanFactory</code> 是 Spring 中比较原始的Factory，它不支持 AOP、Web 等 Spring 插件。而 <code>ApplicationContext</code> 不仅包含了 <code>BeanFactory</code>的所有功能，还支持 Spring 的各种插件，还以一种面向框架的方式工作以及对上下文进行分层和实现继承。</p>
+<p><code>BeanFactory</code> 是 Spring 框架的基础设施，面向 Spring 本身；而 <code>ApplicationContext</code> 面向使用Spring 的开发者，相比 <code>BeanFactory</code> 提供了更多面向实际应用的功能，几乎所有场合都可以直接使用 <code>ApplicationContext</code>，而不是底层的 <code>BeanFactory</code>。</p>
+<h3 id="常用容器"><a href="#常用容器" class="headerlink" title="常用容器"></a>常用容器</h3><p><code>BeanFactory</code> 类型的有 <code>XmlBeanFactory</code>，它可以根据 XML 文件中定义的内容，创建相应的Bean。<br><code>ApplicationContext</code> 类型的常用容器有：</p>
+<ol>
+<li><code>ClassPathXmlApplicationContext</code>：从 ClassPath 的 XML 配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中取得；</li>
+<li><code>FileSystemXmlApplicationContext</code>：由文件系统中的 XML 配置文件读取上下文；</li>
+<li><code>XmlWebApplicationContext</code>：由 Web 应用的 XML 文件读取上下文。例如我们在 Spring MVC使用的情况。</li>
+</ol>
+<h2 id="Spring-框架中的单例-Bean-是线程安全的么"><a href="#Spring-框架中的单例-Bean-是线程安全的么" class="headerlink" title="Spring 框架中的单例 Bean 是线程安全的么"></a>Spring 框架中的单例 Bean 是线程安全的么</h2><p>Spring 框架并没有对单例 Bean 进行任何多线程的封装处理。</p>
+<ul>
+<li>关于单例 Bean 的线程安全和并发问题，需要开发者自行去搞定。</li>
+<li>单例的线程安全问题，并不是 Spring 应该去关心的。Spring 应该做的是，提供根据配置，创建单例 Bean 或多例 Bean 的功能。</li>
+</ul>
+<p>当然，但实际上，大部分的 Spring Bean 并没有可变的状态，所以在某种程度上说 Spring 的单例Bean 是线程安全的。如果你的 Bean 有多种状态的话，就需要自行保证线程安全。最浅显的解决办法，就是将多态 Bean 的作用域（Scope）由 Singleton 变更为 Prototype。</p>
+<h2 id="说说事务的传播机制"><a href="#说说事务的传播机制" class="headerlink" title="说说事务的传播机制"></a>说说事务的传播机制</h2><p>Spring事务定义了7种传播机制：</p>
+<ol>
+<li><code>PROPAGATION_REQUIRED</code>：默认的Spring事物传播级别，若当前存在事务，则加入该事务，若不存在事务，则新建一个事务。</li>
+<li><code>PAOPAGATION_REQUIRE_NEW</code>：若当前没有事务，则新建一个事务。若当前存在事务，则新建一个事务，新老事务相互独立。外部事务抛出异常回滚不会影响内部事务的正常提交。</li>
+<li><code>PROPAGATION_NESTED</code>：如果当前存在事务，则嵌套在当前事务中执行。如果当前没有事务，则新建一个事务，类似于<code>REQUIRE_NEW</code>。</li>
+<li><code>PROPAGATION_SUPPORTS</code>：支持当前事务，若当前不存在事务，以非事务的方式执行。</li>
+<li><code>PROPAGATION_NOT_SUPPORTED</code>：以非事务的方式执行，若当前存在事务，则把当前事务挂起。</li>
+<li><code>PROPAGATION_MANDATORY</code>：强制事务执行，若当前不存在事务，则抛出异常。</li>
+<li><code>PROPAGATION_NEVER</code>：以非事务的方式执行，如果当前存在事务，则抛出异常。</li>
+</ol>
+<p>Spring事务传播级别一般不需要定义，<strong>默认就是PROPAGATION_REQUIRED</strong>，除非在嵌套事务的情况下需要重点了解。</p>
+<h2 id="Spring-事务实现方式"><a href="#Spring-事务实现方式" class="headerlink" title="Spring 事务实现方式"></a>Spring 事务实现方式</h2><p><strong>编程式事务管理：</strong> 这意味着你可以通过编程的方式管理事务，这种方式带来了很大的灵活性，但很难维护。</p>
+<p><strong>声明式事务管理：</strong> 这种方式意味着你可以将事务管理和业务代码分离。你只需要通过注解或者XML配置管理事务。</p>
+<h2 id="Spring框架的事务管理有哪些优点"><a href="#Spring框架的事务管理有哪些优点" class="headerlink" title="Spring框架的事务管理有哪些优点"></a>Spring框架的事务管理有哪些优点</h2><ul>
+<li>它为不同的事务API(如JTA, JDBC, Hibernate, JPA, 和JDO)提供了统一的编程模型。</li>
+<li>它为编程式事务管理提供了一个简单的API而非一系列复杂的事务API(如JTA)，它支持声明式事务管理。</li>
+<li>它可以和Spring 的多种数据访问技术很好的融合。</li>
+</ul>
+<h2 id="事务注解-Transactional的本质是什么"><a href="#事务注解-Transactional的本质是什么" class="headerlink" title="事务注解@Transactional的本质是什么"></a>事务注解@Transactional的本质是什么</h2><p><code>@Transactional</code>这个注解仅仅是一些（和事务相关的）元数据，在运行时被事务基础设施读取消费，并<strong>使用这些元数据来配置bean的事务行为</strong>。 大致来说具有两方面功能，<strong>一是表明该方法要参与事务，二是配置相关属性来定制事务的参与方式和运行行为</strong>。</p>
+<p>声明式事务主要是得益于Spring AOP。使用一个事务拦截器，在方法调用的前后/周围进行事务性增强（advice），来驱动事务完成。</p>
+<p><code>@Transactional</code>注解既可以标注在类上，也可以标注在方法上。当在类上时，默认应用到类里的所有方法。如果此时方法上也标注了，则方法上的优先级高。 <strong>另外注意方法一定要是public的</strong>。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">程序猿洞晓</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://itcrud.github.io/2022/09/interview-java-core-spring/">https://itcrud.github.io/2022/09/interview-java-core-spring/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">程序猿洞晓</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'd5b070018a0674352910',
+        clientSecret: 'ee7de87a788f3687fbd8365e86cb2ba43f20c0a9',
+        repo: 'issue',
+        owner: 'itcrud',
+        admin: ["itcrud"],
+        id: '2022-09-21T16-58-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/09/interview-java-core-mybatis/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Java问答知识总结篇-Mybatis">
+                        
+                        <span class="card-title">Java问答知识总结篇-Mybatis</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Mybatis/">
+                        <span class="chip bg-color">Mybatis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/interview-java-core-threads/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="Java问答知识总结篇-多线程&amp;并发编程">
+                        
+                        <span class="card-title">Java问答知识总结篇-多线程&amp;并发编程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">多线程</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2015-2023</span>
+            
+            <a href="/about" target="_blank">程序猿洞晓</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">676k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2015";
+                        var startMonth = "09";
+                        var startDate = "1";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/itcrud" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:itcrud@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

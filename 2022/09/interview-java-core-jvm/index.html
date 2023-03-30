@@ -1,0 +1,1632 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Java问答知识总结篇-JVM, 程序猿洞晓">
+    <meta name="description" content="以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud &amp;&amp; Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Java问答知识总结篇-JVM | 程序猿洞晓</title>
+    <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/matery.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/reward.css">
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">程序猿洞晓</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/top" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/toolbox" class="waves-effect waves-light">
+      
+      <i class="fas fa-toolbox" style="zoom: 0.6;"></i>
+      
+      <span>工具箱</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-link" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">程序猿洞晓</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/top" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/toolbox" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-toolbox"></i>
+			
+			工具箱
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-link"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/2.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Java问答知识总结篇-JVM</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JVM/">
+                                <span class="chip bg-color">JVM</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                最佳实践
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
+                    2022-09-21
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    15.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    55 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p><a href="/2022/09/interview-java-core-base/">Java问答知识总结篇-基础知识</a><br><a href="/2022/09/interview-java-core-jvm/">Java问答知识总结篇-JVM</a><br><a href="/2022/09/interview-java-core-threads/">Java问答知识总结篇-多线程&amp;并发编程</a><br><a href="/2022/09/interview-java-core-network/">Java问答知识总结篇-网络基础</a><br><a href="/2022/09/interview-java-core-spring/">Java问答知识总结篇-Spring</a><br><a href="/2022/09/interview-java-core-springboot/">Java问答知识总结篇-Spring Boot</a><br><a href="/2022/09/interview-java-core-mybatis/">Java问答知识总结篇-Mybatis</a><br><a href="/2022/09/interview-java-core-mysql/">Java问答知识总结篇-MySQL</a><br><a href="/2022/09/interview-java-core-redis/">Java问答知识总结篇-Redis</a><br><a href="/2022/09/interview-java-core-mq/">Java问答知识总结篇-MQ</a><br><a href="/2022/09/interview-java-core-nginx/">Java问答知识总结篇-Nginx</a><br><a href="/2022/09/interview-java-core-distribution/">Java问答知识总结篇-分布式</a><br><a href="/2022/09/interview-java-core-springcloud/">Java问答知识总结篇-Spring Cloud</a><br><a href="/2022/09/interview-java-core-dubbo/">Java问答知识总结篇-Dubbo</a><br><a href="/2022/09/interview-java-core-zookeeper/">Java问答知识总结篇-Zookeeper</a><br><a href="/2022/09/interview-java-core-elasticsearch/">Java问答知识总结篇-ElasticSearch</a><br><a href="/2022/09/interview-java-core-netty/">Java问答知识总结篇-Netty</a><br><a href="/2022/09/interview-java-core-application/">Java问答知识总结篇-场景分析题</a></p>
+</blockquote>
+<p>JVM系列文章：<a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/">Java虚拟机</a></p>
+<h2 id="什么是JVM内存结构？"><a href="#什么是JVM内存结构？" class="headerlink" title="什么是JVM内存结构？"></a>什么是JVM内存结构？</h2><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images3/202211111633.png"></p>
+<p>JVM将虚拟机分为5大区域，程序计数器、虚拟机栈、本地方法栈、java堆、方法区：</p>
+<ul>
+<li>程序计数器：线程私有的，是一块很小的内存空间，作为当前线程的行号指示器，用于记录当前虚拟机正在执行的线程指令地址；</li>
+<li>虚拟机栈：线程私有的，每个方法执行的时候都会创建一个栈帧，用于存储局部变量表、操作数、动态链接和方法返回等信息，当线程请求的栈深度超过了虚拟机允许的最大深度时，就会抛出StackOverFlowError；</li>
+<li>本地方法栈：线程私有的，保存的是native方法的信息，当一个jvm创建的线程调用native方法后，jvm不会在虚拟机栈中为该线程创建栈帧，而是简单的动态链接并直接调用该方法；</li>
+<li>堆：java堆是所有线程共享的一块内存，几乎所有对象的实例和数组都要在堆上分配内存，因此该区域经常发生垃圾回收的操作；</li>
+<li>方法区：存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码数据。即永久代，在jdk1.8中不存在方法区了，被元数据区替代了，原方法区被分成两部分；1：加载的类信息；2：运行时常量池；加载的类信息被保存在元数据区中，运行时常量池保存在堆中。</li>
+</ul>
+<h2 id="什么是Java内存模型？"><a href="#什么是Java内存模型？" class="headerlink" title="什么是Java内存模型？"></a>什么是Java内存模型？</h2><p><strong>Java 内存模型</strong>（下文简称 <strong>JMM</strong>）就是在底层处理器内存模型的基础上，定义自己的多线程语义。它明确指定了一组排序规则，来保证线程间的可见性。</p>
+<p>这一组规则被称为 <strong>Happens-Before</strong>, JMM 规定，要想保证 B 操作能够看到 A 操作的结果（无论它们是否在同一个线程），那么 A 和 B 之间必须满足 <strong>Happens-Before 关系</strong>：</p>
+<ul>
+<li><strong>单线程规则</strong>：一个线程中的每个动作都 happens-before 该线程中后续的每个动作</li>
+<li><strong>监视器锁定规则</strong>：监听器的<strong>解锁</strong>动作 happens-before 后续对这个监听器的<strong>锁定</strong>动作</li>
+<li><strong>volatile 变量规则</strong>：对 volatile 字段的写入动作 happens-before 后续对这个字段的每个读取动作</li>
+<li><strong>线程 start 规则</strong>：线程 <strong>start()</strong> 方法的执行 happens-before 一个启动线程内的任意动作</li>
+<li><strong>线程 join 规则</strong>：一个线程内的所有动作 happens-before 任意其他线程在该线程 <strong>join()</strong> 成功返回之前</li>
+<li><strong>传递性</strong>：如果 A happens-before B, 且 B happens-before C, 那么 A happens-before C</li>
+</ul>
+<p>怎么理解 happens-before 呢？如果按字面意思，比如第二个规则，线程（不管是不是同一个）的解锁动作发生在锁定之前？这明显不对。happens-before 也是为了保证可见性，比如那个解锁和加锁的动作，可以这样理解，线程1释放锁退出同步块，线程2加锁进入同步块，那么线程2就能看见线程1对共享对象修改的结果。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211111636.png"></p>
+<p>Java 提供了几种语言结构，包括 <em>volatile</em>, <em>final</em> 和 <em>synchronized</em>, 它们旨在帮助程序员向<strong>编译器</strong>描述程序的并发要求，其中：</p>
+<ul>
+<li><strong>volatile</strong> - 保证<strong>可见性</strong>和<strong>有序性</strong></li>
+<li><strong>synchronized</strong> - 保证<strong>可见性</strong>和<strong>有序性</strong>; 通过<strong>管程（Monitor）</strong>保证一组动作的<strong>原子性</strong></li>
+<li><strong>final</strong> - 通过禁止<strong>在构造函数初始化</strong>和<strong>给 final 字段赋值</strong>这两个动作的重排序，保证<strong>可见性</strong>（如果 <strong>this 引用逃逸</strong>就不好说可见性了）</li>
+</ul>
+<p>编译器在遇到这些关键字时，会插入相应的内存屏障，保证语义的正确性。</p>
+<p>有一点需要<strong>注意</strong>的是，<strong>synchronized</strong> <strong>不保证</strong>同步块内的代码禁止重排序，因为它通过锁保证同一时刻只有<strong>一个线程</strong>访问同步块（或临界区），也就是说同步块的代码只需满足 <strong>as-if-serial</strong> 语义 - 只要单线程的执行结果不改变，可以进行重排序。</p>
+<p>所以说，Java 内存模型描述的是多线程对共享内存修改后彼此之间的可见性，另外，还确保正确同步的 Java 代码可以在不同体系结构的处理器上正确运行。</p>
+<h2 id="heap-和stack-有什么区别？"><a href="#heap-和stack-有什么区别？" class="headerlink" title="heap 和stack 有什么区别？"></a>heap 和stack 有什么区别？</h2><ol>
+<li>申请方式</li>
+</ol>
+<p>stack：由系统自动分配。例如，声明在函数中一个局部变量 int b; 系统自动在栈中为 b 开辟空间</p>
+<p>heap：需要程序员自己申请，并指明大小，在 c 中 malloc 函数，对于Java 需要手动 new Object()的形式开辟</p>
+<ol start="2">
+<li>申请后系统的响应</li>
+</ol>
+<p>stack：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。</p>
+<p>heap：首先应该知道操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序。另外，由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。</p>
+<ol start="3">
+<li>申请大小的限制</li>
+</ol>
+<p>stack：栈是向低地址扩展的数据结构，是一块连续的内存的区域。这句话的意思是栈顶的地址和栈的最大容量是系统预先规定好的，在 WINDOWS 下，栈的大小是 2M（默认值也取决于虚拟内存的大小），如果申请的空间超过栈的剩余空间时，将提示 overflow。因此，能从栈获得的空间较小。</p>
+<p>heap：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的， 自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见， 堆获得的空间比较灵活，也比较大。</p>
+<ol start="4">
+<li>申请效率的比较</li>
+</ol>
+<p>stack：由系统自动分配，速度较快。但程序员是无法控制的。</p>
+<p>heap：由 new 分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便。</p>
+<ol start="5">
+<li>heap和stack中的存储内容</li>
+</ol>
+<p>stack：在函数调用时，第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址， 然后是函数的各个参数，在大多数的 C 编译器中，参数是由右往左入栈的，然后是函数中的局部变量。注意静态变量是不入栈的。</p>
+<p>当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。</p>
+<p>heap：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容由程序员安排。</p>
+<h2 id="谈谈对-OOM-的认识？如何排查-OOM-的问题？"><a href="#谈谈对-OOM-的认识？如何排查-OOM-的问题？" class="headerlink" title="谈谈对 OOM 的认识？如何排查 OOM 的问题？"></a>谈谈对 OOM 的认识？如何排查 OOM 的问题？</h2><p>除了程序计数器，其他内存区域都有 OOM 的风险。</p>
+<ul>
+<li>栈一般经常会发生 StackOverflowError，比如 32 位的 windows 系统单进程限制 2G 内存，无限创建线程就会发生栈的 OOM</li>
+<li>Java 8 常量池移到堆中，溢出会出 java.lang.OutOfMemoryError: Java heap space，设置最大元空间大小参数无效；</li>
+<li>堆内存溢出，报错同上，这种比较好理解，GC 之后无法在堆中申请内存创建对象就会报错；</li>
+<li>方法区 OOM，经常会遇到的是动态生成大量的类、jsp 等；</li>
+<li>直接内存 OOM，涉及到 -XX:MaxDirectMemorySize 参数和 Unsafe 对象对内存的申请。</li>
+</ul>
+<p>排查 OOM 的方法：</p>
+<ul>
+<li>增加两个参数 <code>-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heapdump.hprof</code>，当 OOM 发生时自动 dump 堆内存信息到指定目录；</li>
+<li>同时 jstat 查看监控 JVM 的内存和 GC 情况，先观察问题大概出在什么区域；</li>
+<li>使用 MAT 工具载入到 dump 文件，分析大对象的占用情况，比如 HashMap 做缓存未清理，时间长了就会内存溢出，可以把改为弱引用 。</li>
+</ul>
+<h2 id="谈谈-JVM-中的常量池？"><a href="#谈谈-JVM-中的常量池？" class="headerlink" title="谈谈 JVM 中的常量池？"></a>谈谈 JVM 中的常量池？</h2><p>JVM常量池主要分为<strong>Class文件常量池、运行时常量池，全局字符串常量池，以及基本类型包装类对象常量池</strong>。</p>
+<ul>
+<li><strong>Class文件常量池</strong>。class文件是一组以字节为单位的二进制数据流，在java代码的编译期间，我们编写的java文件就被编译为.class文件格式的二进制数据存放在磁盘中，其中就包括class文件常量池。</li>
+<li><strong>运行时常量池</strong>：运行时常量池相对于class常量池一大特征就是具有动态性，java规范并不要求常量只能在运行时才产生，也就是说运行时常量池的内容并不全部来自class常量池，在运行时可以通过代码生成常量并将其放入运行时常量池中，这种特性被用的最多的就是String.intern()。</li>
+<li><strong>全局字符串常量池</strong>：字符串常量池是JVM所维护的一个字符串实例的引用表，在HotSpot VM中，它是一个叫做StringTable的全局表。在字符串常量池中维护的是字符串实例的引用，底层C++实现就是一个Hashtable。这些被维护的引用所指的字符串实例，被称作”被驻留的字符串”或”interned string”或通常所说的”进入了字符串常量池的字符串”。 </li>
+<li><strong>基本类型包装类对象常量池：</strong>java中基本类型的包装类的大部分都实现了常量池技术，这些类是Byte,Short,Integer,Long,Character,Boolean,另外两种浮点数类型的包装类则没有实现。另外上面这5种整型的包装类也只是在对应值小于等于127时才可使用对象池，也即对象不负责创建和管理大于127的这些类的对象。</li>
+</ul>
+<h2 id="OOM和SOF在什么情况下会引起"><a href="#OOM和SOF在什么情况下会引起" class="headerlink" title="OOM和SOF在什么情况下会引起"></a>OOM和SOF在什么情况下会引起</h2><h3 id="OOM（OutOfMemoryError异常）"><a href="#OOM（OutOfMemoryError异常）" class="headerlink" title="OOM（OutOfMemoryError异常）"></a>OOM（OutOfMemoryError异常）</h3><p>除了程序计数器外，虚拟机内存的其他几个运行是区域都有发生OutOfMemoryError（OOM）异常的可能。</p>
+<h4 id="Java-Heap-溢出"><a href="#Java-Heap-溢出" class="headerlink" title="Java Heap 溢出"></a>Java Heap 溢出</h4><p>一般的异常信息：java.lang.OutOfMemoryError:Java heap spacess<br>Java堆用于存储对象实例，我们只要不断的创建对象，并且保证GC Roots到对象之间有可达路径来避免垃圾回收机制清除对象，就会在对象数量达到最大堆容量限制后产生内存溢出异常。<br>出现这种异常，一般手段是先通过内存映像分析工具对dump出来的堆转存快照进行分析，重点是确认内存中的对象是否是必要的，先分清是因为内存泄漏还是内存溢出引起的。<br>如果是内存泄漏，可进一步通过工具查看泄漏对象到GC Roots的应用链。于是就能找到泄漏对象是通过怎样的路径与GC Roots相关联并导致垃圾收集器无法自动回收。<br>如果不存在泄漏，那几应该检查虚拟机的参数（-Xmx和-Xms）的设置是否适当。</p>
+<h4 id="虚拟机栈和本地方法栈溢出"><a href="#虚拟机栈和本地方法栈溢出" class="headerlink" title="虚拟机栈和本地方法栈溢出"></a>虚拟机栈和本地方法栈溢出</h4><ul>
+<li>如果线程请求的栈深度大于虚拟机所允许的最大深度，将抛出StackOverflowError异常；</li>
+<li>如果虚拟机在拓展栈时无法申请到足够的内存空间，则抛出OutOfMemoryError异常；</li>
+<li>如果虚拟机栈在配置的时候指定不可拓展。就不会存在虚拟机栈拓展请求内存空调的操作，因此就不会出现OutOfMemoryError异常，只会是StackOverflowError异常。</li>
+</ul>
+<h4 id="运行时常量池异常"><a href="#运行时常量池异常" class="headerlink" title="运行时常量池异常"></a>运行时常量池异常</h4><p>异常信息：java.lang.OutOfMemoryError:PermGenspace<br>如果要想运行时常量池中添加内容，最简单的做法就是使用String.intern()这个Native方法。该方法的作用是：<br>如果常量池中已经包含一个等于此String的字符串，则返回代表池中这个字符串的String对象；否则，将此String对象包含的字符串添加到常量池中，并且返回此String对象的应用。由于常量池分配在方法区中。我们可以通过-XX:PermSize和-XX:MaxPermSize限制方法区的大小，从而间接限制其中常量池的容量。</p>
+<h4 id="方法区溢出"><a href="#方法区溢出" class="headerlink" title="方法区溢出"></a>方法区溢出</h4><p>异常信息：java.lang.OutOfMemoryError:PermGenspace<br>方法区用于存放Class的相关信息，如类名、访问修饰符、常量池、字段描述、方法描述等。也有可能是方法区中保存的class对象没有被及时回收掉或者class信息占用的内存超过了我们的配置。<br>方法区溢出也是一种常见的内存溢出异常，一个类如果要被垃圾收集器回收，判定条件是很苛刻的。在经常动态生成大量class的应用中，要特别注意这点。</p>
+<h3 id="SOF（堆栈溢出StackOverflowError）"><a href="#SOF（堆栈溢出StackOverflowError）" class="headerlink" title="SOF（堆栈溢出StackOverflowError）"></a>SOF（堆栈溢出StackOverflowError）</h3><p>当应用程序递归太深而发生堆栈溢出时，抛出该错误。<br>因为栈空间是有限的，一旦出现死循环或者是大量的递归调用，在不断的压栈过程中，造成栈容量不能满足需求而导致溢出。<br>栈溢出的原因：递归调用、大量循环或者死循环，全局变量是否过多，数组、List、Map数据过大。</p>
+<h2 id="JVM内存模型简介"><a href="#JVM内存模型简介" class="headerlink" title="JVM内存模型简介"></a>JVM内存模型简介</h2><p>JVM定义了不同原型时数据区，他们是用来执行应用程序的。某些区域随着JVM启动及销毁，另外一些区域的数据是线程性独立的，随着线程创建和销毁。JVM内存模型总体架构图如下：（来自官网）</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84%E5%9B%BE.png"></p>
+<p>JVM在执行Java程序时，会把它管理的内存划分为若干个区域，每个区域都有自己的用户和创建销毁时间。主要分为两个大部分，线程私有区和共享区。</p>
+<h3 id="线程私有区"><a href="#线程私有区" class="headerlink" title="线程私有区"></a>线程私有区</h3><h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>当同时进行的线程数超过CPU数或其内核数时，就要通过时间片轮询分派CPU的时间资源，会发生线程切换。这时，每个线程就需要一个数据自己的计数器来记录下一条要运行的指令。如果执行的是Java方法，计数器记录正在执行的Java字节码地址。如果执行的是native本地方法，则计数器为空。</p>
+<h4 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h4><p>线程私有，随线程创建而创建。<strong>管理Java方法执行的内存模型</strong>。每个方法执行时都会创建一个栈帧来存储方法的变量表、操作数栈、动态链接方法、返回值、返回地址等信息。栈的大小决定了方法调用的可达深度（可通过-Xss参数设置虚拟机栈大小）。栈的大小可以是固定的，或者是动态拓展的。如果请求的栈深度大于最大可用深度，则抛出StackOverflowError；如果栈是可动态拓展的，单没有内存空间支持拓展，则抛出OutOfMemoryError。</p>
+<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>与虚拟机栈作用相似，但它不是为Java方法服务的，而是本地方法（C语言）。</p>
+<h3 id="线程共享区"><a href="#线程共享区" class="headerlink" title="线程共享区"></a>线程共享区</h3><h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>线程共享的，用于存放被虚拟机加载的类的元数据信息，如常量、静态变量和即时编译器编译后的代码。若要分代，算是永久代。另外运行时常量池存放编译生成的各种常量。（Hotspot虚拟机确认一个类的定义信息不会被使用，也会将其回收。回收的基本条件至少有：所有该类的实例被回收，而且装载该类的ClassLoader被回收）</p>
+<h4 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h4><p>存放对象实例和数组，是垃圾回收的主要区域，分为新生代和老年代。刚创建的对象在新生代的Eden区中，经过GC后进入新生代的S0区中，再经过GC进入新生代的S1区中，15次GC后仍存在就进入老年代。这是按照一种回收机制进行划分的，不是固定的。若堆的控件不够实例分配，则会出现OutOfMemoryError错误。</p>
+<h2 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h2><p>栈是运行时单位，代表着逻辑，内含基本数据类型和堆中对象引用，所在区域连续，没有碎片；堆是存储单位，代表着数据，可被多个栈共享（包括成员中基本数据类型、引用和引用对象），所在区域不连续，会有碎片。</p>
+<h3 id="功能不同"><a href="#功能不同" class="headerlink" title="功能不同"></a>功能不同</h3><p>栈内存用来存储局部变量和方法调用，而堆内存用来存储Java中的对象。无论是成员变量，局部变量，还是类变量，它们指向的对象都存储在堆内存中。</p>
+<h3 id="共享性不同"><a href="#共享性不同" class="headerlink" title="共享性不同"></a>共享性不同</h3><p>栈内存是线程私有的。 堆内存是所有线程共有的。</p>
+<h3 id="异常错误不同"><a href="#异常错误不同" class="headerlink" title="异常错误不同"></a>异常错误不同</h3><p>如果栈内存或者堆内存不足都会抛出异常。 栈空间不足：StackOverFlowError或者OutOfMemoryError。 堆空间不足：OutOfMemoryError。</p>
+<h3 id="空间大小"><a href="#空间大小" class="headerlink" title="空间大小"></a>空间大小</h3><p>栈的空间大小远远小于堆的。</p>
+<h2 id="对象的分配规则"><a href="#对象的分配规则" class="headerlink" title="对象的分配规则"></a>对象的分配规则</h2><p>对象优先分配在Eden区，如果Eden区没有足够的空间时，虚拟机执行一次Minor GC；</p>
+<ul>
+<li><strong>大对象直接进入老年代（大对象是指需要大量连续内存空间的对象）</strong> ，这样做的目的是避免在Eden区和两个Survivor区之间发生大量的内存拷贝（新生代采用复制算法收集内存）。</li>
+<li><strong>长期存活的对象进入老年代</strong> ，虚拟机为每个对象定义了一个年龄计数器，如果对象经过了1次Minor GC那么对象会进入Survivor区，之后每经过一次Minor GC那么对象的年龄加1，直到达到阀值对象进入老年代。（默认年龄阈值是15）</li>
+<li><strong>动态判断对象的年龄</strong> ，如果Survivor区中相同年龄的所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象可以直接进入老年代。</li>
+<li><strong>空间分配担保</strong> ，每次进行Minor GC时，JVM会计算Survivor区移至老年区的对象的平均大小，如果这个值大于老年区的剩余值大小则进行一次Full GC，如果小于，则检查HandlePromotionFailure设置，如果true则只进行Minor GC,如果false则进行Full GC。</li>
+</ul>
+<h2 id="JVM加载class文件的原理机制"><a href="#JVM加载class文件的原理机制" class="headerlink" title="JVM加载class文件的原理机制"></a>JVM加载class文件的原理机制</h2><p>JVM中类的装载是由类加载器（ClassLoader）和它的子类来实现的，Java中的类加载器是一个重要的Java运行时系统组件，它负责在运行时查找和装入类文件中的类。 由于Java的跨平台性，经过编译的Java源程序并不是一个可执行程序，而是一个或多个类文件。当Java程序需要使用某个类时，JVM会确保这个类已经被加载、连接（验证、准备和解析）和初始化。类的加载是指把类的.class文件中的数据读入到内存中，通常是创建一个字节数组读入.class文件，然后产生与所加载类对应的Class对象。加载完成后，Class对象还不完整，所以此时的类还不可用。当类被加载后就进入连接阶段，这一阶段包括验证、准备（为静态变量分配内存并设置默认的初始值）和解析（将符号引用替换为直接引用）三个步骤。最后JVM对类进行初始化。</p>
+<h3 id="初始化内容"><a href="#初始化内容" class="headerlink" title="初始化内容"></a>初始化内容</h3><ol>
+<li>如果类存在直接的父类并且这个类还没有被初始化，那么就先初始化父类；</li>
+<li>如果类中存在初始化语句，就依次执行这些初始化语句。 类的加载是由类加载器完成的。</li>
+</ol>
+<h3 id="类加载器分类"><a href="#类加载器分类" class="headerlink" title="类加载器分类"></a>类加载器分类</h3><p>类加载器包括：根加载器（BootStrap）、扩展加载器（Extension）、系统加载器（System）和用户自定义类加载器（java.lang.ClassLoader的子类）。类加载过程采取了双亲委托机制（PDM）。PDM更好的保证了Java平台的安全性，在该机制中，JVM自带的Bootstrap是根加载器，其他的加载器都有且仅有一个父类加载器。类的加载首先请求父类加载器加载，父类加载器无能为力时才由其子类加载器自行加载。JVM不会向Java程序提供对Bootstrap的引用。下面是关于几个类加载器的说明：</p>
+<ol>
+<li><strong>Bootstrap：</strong>一般用本地代码实现，负责加载JVM基础核心类库（rt.jar）；</li>
+<li><strong>Extension：</strong>从java.ext.dirs系统属性所指定的目录中加载类库，它的父加载器是Bootstrap；</li>
+<li><strong>System：</strong>又叫应用类加载器，其父类是Extension。它是应用最广泛的类加载器。它从环境变量classpath或者系统属性java.class.path所指定的目录中记载类，是用户自定义加载器的默认父加载器。</li>
+</ol>
+<h2 id="类的生命周期"><a href="#类的生命周期" class="headerlink" title="类的生命周期"></a>类的生命周期</h2><p>类的生命周期包括这几个部分，加载、连接、初始化、使用和卸载，其中前三部是类的加载的过程，如下图：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%BF%87%E7%A8%8B.png"></p>
+<ul>
+<li><strong>加载：</strong>查找并加载类的二进制数据，在Java堆中也创建一个java.lang.Class类的对象；</li>
+<li><strong>连接：</strong>连接又包含三块内容：验证、准备、初始化；<ul>
+<li>验证，文件格式、元数据、字节码、符号引用验证；</li>
+<li>准备，为类的静态变量分配内存，并将其初始化为默认值，如果类变量被final修饰，不会设置初始值，而是将其进行实际赋值；</li>
+<li>解析，把类中的符号引用转换为直接引用（换句话说，解析是在引用转换的时候触发，无转换无解析）。</li>
+</ul>
+</li>
+<li><strong>初始化：</strong>为类的静态变量赋予正确的初始值（初始化过程是单线程的，如果存在多线程，由一个线程执行，其他线程自旋）；</li>
+<li><strong>使用：</strong>new出对象程序中使用；</li>
+<li><strong>卸载：</strong>执行垃圾回收。</li>
+</ul>
+<h2 id="Java的对象结构"><a href="#Java的对象结构" class="headerlink" title="Java的对象结构"></a>Java的对象结构</h2><p>Java对象由三个部分组成：对象头、实例数据、对齐填充。<br><strong>对象头：</strong> 由两部分组成，第一部分存储对象自身的运行时数据：哈希码、GC分代年龄、锁标识状态、线程持有的锁、偏向线程ID（一般占32/64 bit）。第二部分是指针类型，指向对象的类元数据类型（即对象代表哪个类）。如果是数组对象，则对象头中还有一部分用来记录数组长度。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/vbfdghklubgnfg44546.png"></p>
+<p><strong>实例数据：</strong> 用来存储对象真正的有效信息（包括父类继承下来的和自己定义的）。<br><strong>对齐填充：</strong> JVM要求对象起始地址必须是8字节的整数倍（8字节对齐）。</p>
+<h2 id="如何判断对象可以被回收"><a href="#如何判断对象可以被回收" class="headerlink" title="如何判断对象可以被回收"></a>如何判断对象可以被回收</h2><p>判断对象是否存活一般有两种方式：</p>
+<ol>
+<li><strong>引用计数：</strong>每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题；（对象的循环引用会引发内存的泄露问题）</li>
+<li><strong>可达性分析（Reachability Analysis）：</strong>从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的，不可达对象。</li>
+</ol>
+<h2 id="在可达性分析算法和引用计数法中被标记的对象就一定会被回收吗"><a href="#在可达性分析算法和引用计数法中被标记的对象就一定会被回收吗" class="headerlink" title="在可达性分析算法和引用计数法中被标记的对象就一定会被回收吗"></a>在可达性分析算法和引用计数法中被标记的对象就一定会被回收吗</h2><p>不一定，此两种算法标记这些可被回收对象后，虚拟机会对其进行最后的判定。</p>
+<ol>
+<li>首先判定当前对象是否有必要执行finalize方法，即这个类有没有重写finalize方法；</li>
+<li>如果没有重写，则最终判定此对象死亡；</li>
+<li>如果重写，会判定此方法是否已经被JVM执行过，如果执行过，则被判定为对象死亡；</li>
+<li>如果没有执行，会将对象加入到F-Queue队列中，JVM会自动创建低优先级的Finalizer线程去执行F-Queue队列中的对象；</li>
+<li>如果此对象的finalize方法中重新与引用链上的对象关联，就可以不被回收，获得重生，否则被判定为对象死亡。</li>
+</ol>
+<p><strong>需要注意：</strong></p>
+<ol>
+<li>finalize方法如果存在死循环或者其他复杂逻辑，会导致F-Queue队列其他对象永久等待，会导致内存回收系统崩溃，JVM不保证等待finalize方法执行结束；</li>
+<li>finalize方法运行代价较高，不确定性大，不建议使用该方法。</li>
+</ol>
+<h2 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h2><p>GC最基础的算法有标记清除法、标记整理法、复制算法、分代收集算法，我们常用的垃圾回收器一般都采用分代收集算法。</p>
+<h3 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h3><p><strong>步骤：</strong></p>
+<ul>
+<li>第一步：利用可达性去遍历内存，把存活对象和垃圾对象进行标记； </li>
+<li>第二步：在遍历一遍，将所有标记的对象回收掉。 </li>
+</ul>
+<p><strong>特点：</strong></p>
+<p>效率不行，标记和清除的效率都不高；标记和清除后会产生大量的不连续的空间分片，可能会导致之后程序运行的时候需分配大对象而找不到连续分片而不得不触发一次GC。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/20221110113901.png"></p>
+<h3 id="标记-整理法"><a href="#标记-整理法" class="headerlink" title="标记-整理法"></a>标记-整理法</h3><p><strong>步骤：</strong></p>
+<ul>
+<li>第一步：利用可达性去遍历内存，把存活对象和垃圾对象进行标记； </li>
+<li>第二步：将所有的存活的对象向一端移动，将端边界以外的对象都回收掉； </li>
+</ul>
+<p><strong>特点：</strong></p>
+<p>适用于存活对象多，垃圾少的情况；需要整理的过程，无空间碎片产生。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211101142.png"></p>
+<h3 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h3><p>将内存按照容量大小分为大小相等的两块，每次只使用一块，当一块使用完了，就将还存活的对象移到另一块上，然后在把使用过的内存空间移除。</p>
+<p><strong>特点：</strong></p>
+<p>不会产生空间碎片；内存使用率极低。</p>
+<h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>根据内存对象的存活周期不同，将内存划分成几块，java虚拟机一般将内存分成新生代和老生代，在新生代中，有大量对象死去和少量对象存活，所以采用复制算法，只需要付出少量存活对象的复制成本就可以完成收集；老年代中因为对象的存活率高，没有额外的空间对他进行分配担保，所以采用标记清理或者标记整理算法进行回收。</p>
+<h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211101143.png"></p>
+<h2 id="JVM调优命令有哪些"><a href="#JVM调优命令有哪些" class="headerlink" title="JVM调优命令有哪些"></a>JVM调优命令有哪些</h2><p>Sun JDK监控和故障处理命令有<code>jps</code> 、<code>jstat</code> 、<code>jmap</code> 、<code>jhat</code> 、<code>jstack</code> 、<code>jinfo</code>。</p>
+<h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。<br>命令格式：<code>jps [options] [hostid]</code></p>
+<ol>
+<li><code>-l</code>：输出应用程序main class的完整package名或者应用程序的jar文件完整路径名；</li>
+<li><code>-m</code>：输出传递给main方法的参数，在嵌入式jvm上可能是null；</li>
+<li><code>-v</code>：输出传递给JVM的参数；</li>
+<li><code>-V</code>：隐藏传递给JVM的参数；</li>
+<li><code>-p</code>：只显示pid，不显示class名称、jar名和传递给main方法的参数。</li>
+</ol>
+<h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p>JVM statistics Monitoring是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。</p>
+<p>命令格式：<code>jstat [options vmid [interval[s|ms] [count]]]</code></p>
+<ol>
+<li><code>-class</code>：显示类装载、卸载数量、总空间以及类装载所消耗的时间；</li>
+<li><code>-compiler</code>：显示JIT编译的相关信息；</li>
+<li><code>-gc</code>：显示和GC相关的堆和方法区信息；</li>
+<li><code>-gcapacity</code>：显示各个代的容量以及使用情况；</li>
+<li><code>-gcmetacapacity</code>：显示metaspace的大小和使用情况；</li>
+<li><code>-gcnew</code>：显示新生代的信息；</li>
+<li><code>-gcold</code>：显示老年代和永久代（元数据区）的信息；</li>
+<li><code>-gcoldcapacity</code>：显示老年代的信息；</li>
+<li><code>-gcutil</code>：显示垃圾收集信息；</li>
+<li><code> -gccause</code>：显示垃圾回收的相关信息；</li>
+<li><code>-printcompilation</code>：输出JIT编译的方法信息</li>
+</ol>
+<h3 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h3><p>JVM Memory Map命令用于生成heap dump文件。<br>命令格式：<code>jmap [option] vmid</code></p>
+<ol>
+<li><code>[pid]</code>：查看进程的内存映像信息；</li>
+<li><code>-heap</code>：显示Java堆详细信息；</li>
+<li><code>-histo</code>：显示堆中对象的统计信息，包括类、实例数量、合计数量；</li>
+<li><code>-clstats</code>：打印类加载器信息；</li>
+<li><code>-finalizerinfo</code>：显示在F-Queue队列等待Finalizer线程执行finalizer方法的对象；</li>
+<li><code>-dump</code>：生成堆转储快照。（<code>jmap -dump:file=filename,format=b</code>）</li>
+</ol>
+<h3 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h3><p>JVM Heap Analysis Tool命令是与jmap搭配使用，用来分析jmap生成的dump，jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看。<br>命令：<code>jhat [filename]</code><br>此命令一般不会使用的原因：</p>
+<ul>
+<li>在生产导出日志文件后，直接在生产服务器中分析日志对性能消耗较大；</li>
+<li>将日志放到本地分析，有更多的优秀日志分析工具替代jhat。</li>
+</ul>
+<h3 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h3><p>用于生成java虚拟机当前时刻的线程快照。<br>命令格式：<code>jstack [option] vmid</code></p>
+<ol>
+<li><code>-l</code>：打印关于锁的附加信息，例如java.util.concurrent的ownable synchronizer列表打印的是运行中的栈信息；</li>
+<li><code>-F -l</code>：和jstack -l相对应，打印的是挂起的栈信息（如死锁）；</li>
+<li><code>-m</code>：打印java和native c/C++框架的所有栈信息。</li>
+</ol>
+<h3 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h3><p>JVM Configuration info 这个命令作用是实时查看和调整虚拟机运行参数。<br>命令格式：<code>jinfo [option] &lt;name&gt; vmid</code></p>
+<ol>
+<li><code>[pid]</code>：输出全部的参数和系统属性；</li>
+<li><code>-flag name</code>：输出对应名称的参数；</li>
+<li><code>-flag [+|-]name</code>：开启或者关闭对应名称的参数；</li>
+<li><code>-flag name=value</code>：设定对应名称的参数；</li>
+<li><code>-flags</code>：输出全部的参数；</li>
+<li><code>-sysprops</code>：输出系统属性，和System.getProperties()方法获取的相同。</li>
+</ol>
+<h2 id="常用的调优工具有哪些"><a href="#常用的调优工具有哪些" class="headerlink" title="常用的调优工具有哪些"></a>常用的调优工具有哪些</h2><p>常用调优工具分为两类,jdk自带监控工具：jconsole和jvisualvm，第三方有：MAT(MemoryAnalyzer Tool)、GChisto。</p>
+<ol>
+<li>jconsole，Java Monitoring and Management Console是从java5开始，在JDK中自带的java监控和管理控制台，用于对JVM中内存，线程和类等的监控；</li>
+<li>VisualVM，jdk自带全能工具，可以分析内存快照、线程快照；监控内存变化、GC变化等；</li>
+<li>MAT，Memory Analyzer Tool，一个基于Eclipse的内存分析工具，是一个快速、功能丰富的Java heap分析工具，它可以帮助我们查找内存泄漏和减少内存消耗；</li>
+<li>GChisto，一款专业分析gc日志的工具。</li>
+</ol>
+<h2 id="JVM常用的性能调优的参数有哪些"><a href="#JVM常用的性能调优的参数有哪些" class="headerlink" title="JVM常用的性能调优的参数有哪些"></a>JVM常用的性能调优的参数有哪些</h2><h3 id="设定堆内存大小"><a href="#设定堆内存大小" class="headerlink" title="设定堆内存大小"></a>设定堆内存大小</h3><ul>
+<li><code>-Xmx</code>：堆内存最大限制；</li>
+<li><code>-Xms</code>：堆内存的初始大小</li>
+</ul>
+<h3 id="设定新生代大小"><a href="#设定新生代大小" class="headerlink" title="设定新生代大小"></a>设定新生代大小</h3><p>新生代不宜太小，否则会出现频繁的Minor GC，不断刷新对象进入老年代，一般新生代占堆内存的2/8为宜，也是官方推荐的比率。</p>
+<ul>
+<li><code>-XX:NewSize</code>：新生代大小；</li>
+<li><code>-XX:NewRatio</code> ：新生代和老生代占比；</li>
+<li><code>-XX:SurvivorRatio</code>：伊甸园空间和幸存者空间的占比（一般不设置，采用默认的8:1即可）</li>
+</ul>
+<h3 id="设定垃圾回收器"><a href="#设定垃圾回收器" class="headerlink" title="设定垃圾回收器"></a>设定垃圾回收器</h3><ul>
+<li>年轻代用<code>-XX:+UseParNewGC</code>（ParNew GC是以低延迟为核心，注重的是应用系统，提高用户的使用体验，Parallel Scavenge是注重吞吐量，主要是计算型的服务使用）</li>
+<li>年老代用<code>-XX:+UseConcMarkSweepGC</code></li>
+</ul>
+<h2 id="对象一定分配在堆内吗，为什么？"><a href="#对象一定分配在堆内吗，为什么？" class="headerlink" title="对象一定分配在堆内吗，为什么？"></a>对象一定分配在堆内吗，为什么？</h2><p>对象不是一定分配在堆内的，Java通过<strong>逃逸分析</strong>，那些逃不出方法的对象会在栈上分配。</p>
+<h3 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h3><p>逃逸分析(Escape Analysis)，是一种可以有效减少Java 程序中同步负载和内存堆分配压力的跨函数全局数据流分析算法。通过逃逸分析，Java Hotspot编译器能够分析出一个新的对象的引用的使用范围，从而决定是否要将这个对象分配到堆上。</p>
+<h3 id="逃逸分析的好处"><a href="#逃逸分析的好处" class="headerlink" title="逃逸分析的好处"></a>逃逸分析的好处</h3><ul>
+<li><strong>栈上分配：</strong>可以降低垃圾收集器运行的频率；</li>
+<li><strong>同步消除：</strong>如果发现某个对象只能从一个线程可访问，那么在这个对象上的操作可以不需要同步；</li>
+<li><strong>标量替换：</strong>把对象分解成一个个基本类型，并且内存分配不再是分配在堆上，而是分配在栈上。这样的好处有，第一减少内存使用，因为不用生成对象头。第二程序内存回收效率高，并且GC频率也会减少。</li>
+</ul>
+<h3 id="详细内容文章"><a href="#详细内容文章" class="headerlink" title="详细内容文章"></a>详细内容文章</h3><p><a href="/2022/09/java-jvm-just-in-time/">Java的即时编译（Just In Time, JIT）及其优化</a></p>
+<p><a href="/2022/09/java-jvm-jit-escape-analysis/">Java中JIT优化中最重要的逃逸分析</a></p>
+<h2 id="什么是Stop-The-world？什么是OopMap？什么是安全点？"><a href="#什么是Stop-The-world？什么是OopMap？什么是安全点？" class="headerlink" title="什么是Stop The world？什么是OopMap？什么是安全点？"></a>什么是Stop The world？什么是OopMap？什么是安全点？</h2><p>进行垃圾回收的过程中，会涉及对象的移动。为了保证对象引用更新的正确性，必须暂停所有的用户线程，像这样的停顿，虚拟机设计者形象描述为Stop The World。也简称为STW。<br>在HotSpot中，有个数据结构（映射表）称为OopMap。一旦类加载动作完成的时候，HotSpot就会把对象内什么偏移量上是什么类型的数据计算出来，记录到OopMap。在即时编译过程中，也会在<strong>特定的位置</strong>生成 OopMap，记录下栈上和寄存器里哪些位置是引用。</p>
+<p>这些特定的位置主要在：</p>
+<ul>
+<li>循环的末尾（非 counted 循环）</li>
+<li>方法临返回前 / 调用方法的call指令后</li>
+<li>可能抛异常的位置</li>
+</ul>
+<p>这些位置就叫作安全点(safepoint)。用户程序执行时并非在代码指令流的任意位置都能够在停顿下来开始垃圾收集，而是必须是执行到安全点才能够暂停。</p>
+<h2 id="安全点、安全区域和中断方式"><a href="#安全点、安全区域和中断方式" class="headerlink" title="安全点、安全区域和中断方式"></a>安全点、安全区域和中断方式</h2><p>在Stop The World的时候，会涉及安全点、安全区域以及中断方式的概念。</p>
+<h3 id="安全点（safe-point）"><a href="#安全点（safe-point）" class="headerlink" title="安全点（safe point）"></a>安全点（safe point）</h3><ul>
+<li>HotSpot通过OoMap来记录安全点，安全点是定在指令上，但不是每一条指令都可以作为安全点；</li>
+<li>当指令让程序运行时间较长，此指令不会被定为安全点。</li>
+</ul>
+<h3 id="安全区域（safe-region）"><a href="#安全区域（safe-region）" class="headerlink" title="安全区域（safe region）"></a>安全区域（safe region）</h3><ul>
+<li>存在sleep或者blocked状态的线程无法响应JVM中断请求；</li>
+<li>在此区域中引用关系不会发生变化，可以安全进行GC。</li>
+</ul>
+<h3 id="中断方式"><a href="#中断方式" class="headerlink" title="中断方式"></a>中断方式</h3><ul>
+<li><strong>抢先式中断：</strong>不需要线程执行代码主动配合，直接中断全部线程，如果线程执行在非安全点位置，等待其执行到安全点后中断；</li>
+<li><strong>主动式中断：</strong>需要线程执行代码主动配合，GC开始时设置一个标志，每个线程主动轮询标志，发现标志为true，主动中断，轮询的动作是在线程执行到每个安全点时触发。</li>
+</ul>
+<h2 id="指针碰撞和空闲列表"><a href="#指针碰撞和空闲列表" class="headerlink" title="指针碰撞和空闲列表"></a>指针碰撞和空闲列表</h2><h3 id="指针碰撞"><a href="#指针碰撞" class="headerlink" title="指针碰撞"></a>指针碰撞</h3><p>一般情况下，JVM的对象都放在堆内存中（发生逃逸分析除外）。当类加载检查通过后，Java虚拟机开始为新生对象分配内存。如果Java堆中内存是绝对规整的，所有被使用过的的内存都被放到一边，空闲的内存放到另外一边，中间放着一个指针作为分界点的指示器，所分配内存仅仅是把那个指针向空闲空间方向挪动一段与对象大小相等的实例，这种分配方式就是指针碰撞。</p>
+<h3 id="空闲列表"><a href="#空闲列表" class="headerlink" title="空闲列表"></a>空闲列表</h3><p>如果Java堆内存中的内存并不是规整的，已被使用的内存和空闲的内存相互交错在一起，不可以进行指针碰撞了，虚拟机必须维护一个列表，记录哪些内存是可用的，在分配的时候从列表找到一块大小匹配的空间分配给对象实例，并更新列表上的记录，这种分配方式就是空闲列表。</p>
+<h2 id="如何判断一个对象是否存活？"><a href="#如何判断一个对象是否存活？" class="headerlink" title="如何判断一个对象是否存活？"></a>如何判断一个对象是否存活？</h2><p>判断一个对象是否存活，分为两种算法1：引用计数法；2：可达性分析算法；</p>
+<p><strong>引用计数法</strong></p>
+<p>给每一个对象设置一个引用计数器，当有一个地方引用该对象的时候，引用计数器就+1，引用失效时，引用计数器就-1；当引用计数器为0的时候，就说明这个对象没有被引用，也就是垃圾对象，等待回收；<br>缺点：无法解决循环引用的问题，当A引用B，B也引用A的时候，此时AB对象的引用都不为0，此时也就无法垃圾回收，所以一般主流虚拟机都不采用这个方法。（容易导致内存泄漏问题）</p>
+<p><strong>可达性分析法</strong></p>
+<p>从一个被称为GC Roots的对象向下搜索，如果一个对象到GC Roots没有任何引用链相连接时，说明此对象不可用，在java中可以作为GC Roots的对象有以下几种：</p>
+<ul>
+<li>虚拟机栈中引用的对象</li>
+<li>方法区类静态属性引用的变量</li>
+<li>方法区常量池引用的对象</li>
+<li>本地方法栈JNI引用的对象</li>
+</ul>
+<p>但一个对象满足上述条件的时候，不会马上被回收，还需要进行两次标记；第一次标记：判断当前对象是否有finalize()方法并且该方法没有被执行过，若不存在则标记为垃圾对象，等待回收；若有的话，则进行第二次标记；第二次标记将当前对象放入F-Queue队列，并生成一个finalize线程去执行该方法，虚拟机不保证该方法一定会被执行，这是因为如果线程执行缓慢或进入了死锁，会导致回收系统的崩溃；如果执行了finalize方法之后仍然没有与GC Roots有直接或者间接的引用，则该对象会被回收。</p>
+<h2 id="JVM有哪些垃圾收集器"><a href="#JVM有哪些垃圾收集器" class="headerlink" title="JVM有哪些垃圾收集器"></a>JVM有哪些垃圾收集器</h2><h3 id="年轻代的垃圾收集器"><a href="#年轻代的垃圾收集器" class="headerlink" title="年轻代的垃圾收集器"></a>年轻代的垃圾收集器</h3><p>年轻代的垃圾收集器有Serial收集器、ParNew收集器、Parallel Scanvenge收集器，针对不同场景下，使用不同的垃圾收集器。</p>
+<h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><ul>
+<li>是JVM最基本的、历史发展最悠久的收集器</li>
+<li>单线程收集器，在进行GC时，必须暂停其他所有工作线程，直到GC结束</li>
+<li>对于单CPU的服务器表现很优秀，无线程交互的开销，专心做垃圾回收</li>
+</ul>
+<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><ul>
+<li>Serial收集器的多线程版本</li>
+<li>响应速度优先，适用于一些应用项目，追求用户体验</li>
+<li>默认开启的回收线程数量和CPU数量相同</li>
+</ul>
+<h4 id="Parallel-Scanvenge收集器"><a href="#Parallel-Scanvenge收集器" class="headerlink" title="Parallel Scanvenge收集器"></a>Parallel Scanvenge收集器</h4><ul>
+<li>多线程垃圾回收</li>
+<li>吞吐量优先，适用于一些计算型项目，用户交互少，吞吐量=运行用户代码时间/(运行用户代码时间+GC时间)</li>
+</ul>
+<h3 id="老年代的垃圾收集器"><a href="#老年代的垃圾收集器" class="headerlink" title="老年代的垃圾收集器"></a>老年代的垃圾收集器</h3><p>老年代的垃圾收集器有Serial Old收集器、Parallel Old收集器、CMS收集器。</p>
+<h4 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h4><ul>
+<li>Serial收集器老年代版本</li>
+<li>使用标记整理算法</li>
+<li>单线程收集器，在进行GC时，必须暂停其他所有工作线程，直到GC结束</li>
+<li>对于单CPU的服务器表现很优秀，无线程交互的开销，专心做垃圾回收</li>
+</ul>
+<h4 id="Parallel-Old收集器"><a href="#Parallel-Old收集器" class="headerlink" title="Parallel Old收集器"></a>Parallel Old收集器</h4><ul>
+<li>Parallel Scanvenge老年代版本</li>
+<li>使用标记整理算法</li>
+<li>多线程回收机制，适合计算类型项目，强调吞吐量</li>
+</ul>
+<h4 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h4><ul>
+<li>以获取最短回收停顿时间为目标</li>
+<li>并发收集，低停顿，但是在并发的过程中可能会形成新的垃圾，也就是浮动垃圾</li>
+<li>使用的是标记清理算法，会产生内存碎片</li>
+<li>对CPU资源敏感，默认启动的回收线程是(CPU+3)/4，但在CPU数量4以上时，回收线程数量不小于CPU数量的25%</li>
+</ul>
+<h3 id="G1、ZGC回收器"><a href="#G1、ZGC回收器" class="headerlink" title="G1、ZGC回收器"></a>G1、ZGC回收器</h3><h4 id="G1-Garbage-First-收集器-标记-整理算法"><a href="#G1-Garbage-First-收集器-标记-整理算法" class="headerlink" title="G1(Garbage First)收集器 (标记-整理算法)"></a>G1(Garbage First)收集器 (标记-整理算法)</h4><p>Java堆并行收集器，G1收集器是JDK1.7提供的一个新收集器，G1收集器基于“标记-整理”算法实现，也就是说不会产生内存碎片。此外，G1收集器不同于之前的收集器的一个重要特点是：G1回收的范围是整个Java堆(包括新生代，老年代)，而前六种收集器回收的范围仅限于新生代或老年代。</p>
+<h4 id="ZGC-（Z-Garbage-Collector）收集器"><a href="#ZGC-（Z-Garbage-Collector）收集器" class="headerlink" title="ZGC （Z Garbage Collector）收集器"></a>ZGC （Z Garbage Collector）收集器</h4><p>是一款由Oracle公司研发的，以低延迟为首要目标的一款垃圾收集器。它是基于动态Region内存布局，（暂时）不设年龄分代，使用了读屏障、染色指针和内存多重映射等技术来实现可并发的标记-整理算法的收集器。在 JDK 11 新加入，还在实验阶段，主要特点是：回收TB级内存（最大4T），停顿时间不超过10ms。<br><strong>优点：</strong> 低停顿，高吞吐量， ZGC 收集过程中额外耗费的内存小。<br><strong>缺点：</strong> 浮动垃圾。</p>
+<h3 id="垃圾回收器间的配合使用图"><a href="#垃圾回收器间的配合使用图" class="headerlink" title="垃圾回收器间的配合使用图"></a>垃圾回收器间的配合使用图</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211101145.png"></p>
+<h3 id="各个垃圾回收器对比"><a href="#各个垃圾回收器对比" class="headerlink" title="各个垃圾回收器对比"></a>各个垃圾回收器对比</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211101146.png"></p>
+<h2 id="CMS收集器执行过程"><a href="#CMS收集器执行过程" class="headerlink" title="CMS收集器执行过程"></a>CMS收集器执行过程</h2><p>CMS(Concurrent Mark Sweep，并发标记清除) 收集器是以获取最短回收停顿时间为目标的收集器（追求低停顿），它在垃圾收集时使得用户线程和 GC 线程并发执行，因此在垃圾收集过程中用户也不会感到明显的卡顿。</p>
+<p>从名字就可以知道，CMS是基于“标记-清除”算法实现的。CMS 回收过程分为以下四步：</p>
+<ol>
+<li><p>初始标记 （CMS initial mark)：主要是标记 GC Root 开始的下级（注：仅下一级）对象，这个过程会 STW，但是跟 GC Root 直接关联的下级对象不会很多，因此这个过程其实很快。</p>
+</li>
+<li><p>并发标记 (CMS concurrent mark)：根据上一步的结果，继续向下标识所有关联的对象，直到这条链上的最尽头。这个过程是多线程的，虽然耗时理论上会比较长，但是其它工作线程并不会阻塞，没有 STW。</p>
+</li>
+<li><p>重新标记（CMS remark）：顾名思义，就是要再标记一次。为啥还要再标记一次？因为第 2 步并没有阻塞其它工作线程，其它线程在标识过程中，很有可能会产生新的垃圾。</p>
+</li>
+<li><p>并发清除（CMS concurrent sweep）：清除阶段是清理删除掉标记阶段判断的已经死亡的对象，由于不需要移动存活对象，所以这个阶段也是可以与用户线程同时并发进行的。</p>
+</li>
+</ol>
+<p><strong>CMS 的问题</strong></p>
+<ol>
+<li><strong>并发回收导致CPU资源紧张</strong></li>
+</ol>
+<p>在并发阶段，它虽然不会导致用户线程停顿，但却会因为占用了一部分线程而导致应用程序变慢，降低程序总吞吐量。CMS默认启动的回收线程数是：（CPU核数 + 3）/ 4，当CPU核数不足四个时，CMS对用户程序的影响就可能变得很大。</p>
+<ol start="2">
+<li><strong>无法清理浮动垃圾</strong></li>
+</ol>
+<p>在CMS的并发标记和并发清理阶段，用户线程还在继续运行，就还会伴随有新的垃圾对象不断产生，但这一部分垃圾对象是出现在标记过程结束以后，CMS无法在当次收集中处理掉它们，只好留到下一次垃圾收集时再清理掉。这一部分垃圾称为“浮动垃圾”。</p>
+<ol start="3">
+<li><strong>并发失败（Concurrent Mode Failure）</strong></li>
+</ol>
+<p>由于在垃圾回收阶段用户线程还在并发运行，那就还需要预留足够的内存空间提供给用户线程使用，因此CMS不能像其他回收器那样等到老年代几乎完全被填满了再进行回收，必须预留一部分空间供并发回收时的程序运行使用。默认情况下，当老年代使用了 92% 的空间后就会触发 CMS 垃圾回收，这个值可以通过 -XX: CMSInitiatingOccupancyFraction 参数来设置。</p>
+<p>这里会有一个风险：要是CMS运行期间预留的内存无法满足程序分配新对象的需要，就会出现一次“并发失败”（Concurrent Mode Failure），这时候虚拟机将不得不启动后备预案：Stop The World，临时启用 Serial Old 来重新进行老年代的垃圾回收，这样一来停顿时间就很长了。</p>
+<ol start="4">
+<li><strong>内存碎片问题</strong></li>
+</ol>
+<p>CMS是一款基于“标记-清除”算法实现的回收器，这意味着回收结束时会有内存碎片产生。内存碎片过多时，将会给大对象分配带来麻烦，往往会出现老年代还有很多剩余空间，但就是无法找到足够大的连续空间来分配当前对象，而不得不提前触发一次 Full GC 的情况。</p>
+<p>为了解决这个问题，CMS收集器提供了一个 -XX:+UseCMSCompactAtFullCollection 开关参数（默认开启），用于在 Full GC 时开启内存碎片的合并整理过程，由于这个内存整理必须移动存活对象，是无法并发的，这样停顿时间就会变长。还有另外一个参数 -XX:CMSFullGCsBeforeCompaction，这个参数的作用是要求CMS在执行过若干次不整理空间的 Full GC 之后，下一次进入 Full GC 前会先进行碎片整理（默认值为0，表示每次进入 Full GC 时都进行碎片整理）。</p>
+<h2 id="CMS收集器出现Concurrent-Mode-Failure的场景"><a href="#CMS收集器出现Concurrent-Mode-Failure的场景" class="headerlink" title="CMS收集器出现Concurrent Mode Failure的场景"></a>CMS收集器出现Concurrent Mode Failure的场景</h2><p>CMS在进行并发清理的时候，是与用户线程同步进行，如果这个时候从年轻代晋升到老年代或者创建的大对象直接进入老年代，导致老年代的内存不足，抛出Concurrent Mode  Failure异常，就会触发Serial Old，stop the world单线程进行垃圾收集，Serial Old采用的是标记整理的算法，在垃圾收集的同时，也会整理老年代的内存空间。从这些内容中总结触发Concurrent Mode  Failure的可能如下：</p>
+<ul>
+<li>在并发清理的时候，年轻代晋升到老年代或者大对象进入老年代的时候，内存担保机制失败，触发Concurrent Mode  Failure；</li>
+<li>CMS在设置垃圾清理的上限值过高，导致CMS垃圾收集触发太晚，设置参数是<code>-XX:CMSInitiatingOccupancyFraction</code>，在JDK5的时候默认值是68%，JDK7及以后默认值是92%，一般保持默认值即可；</li>
+<li>空间碎片太多，因为CMS采用的是标记清理算法，不会对内存进行整理，导致在年轻代晋升到老年代或者大对象进入老年代的时候无足够的连续内存空间，内存担保机制失败，触发Concurrent Mode Failure；</li>
+<li>垃圾产生的速度较快，年轻代的大多对象都是朝生夕死的，如果此时年轻代的空间较小，频繁的向老年代晋升对象，且晋升的对象会很快死亡，导致老年代回收压力大，产生的空间碎片也会增多，另一点就是年轻代空间小，大对象也会直接进入老年代，加剧了老年代的压力，容易触发Concurrent Mode Failure。</li>
+</ul>
+<p>触发Concurrent Mode Failure，老年代垃圾收集器切换为Serial Old，让停顿时间边长。</p>
+<h2 id="引用类型的分类"><a href="#引用类型的分类" class="headerlink" title="引用类型的分类"></a>引用类型的分类</h2><ul>
+<li><strong>强引用：</strong> 只要存在强引用，GC永远不会回收掉被引用的对象，类似Object obj = new Object()这类的引用。</li>
+<li><strong>软引用：</strong> 用来描述有用但非必需的对象，发生内存溢出异常之前，会把软引用进行第二次回收，如果回收以后还没有足够的内存，才会抛出内存溢出异常。</li>
+<li><strong>弱引用：</strong> 用来描述有用但非必需的对象，只能生存到下一次GC之前，当GC工作时，无论当前内存是否足够，都会回收只被弱引用关联的对象，WeekReference类可实现弱引用。</li>
+<li><strong>虚引用：</strong> 一个对象是否有虚引用存在，都对其生存时间没有影响，也无法通过一个虚引用来获取一个对象的实例，设置虚引用的目的是在这个对象被GC回收时收到一个系统通知，PhantomReference类可实现虚引用。</li>
+</ul>
+<h2 id="方法区回收目标"><a href="#方法区回收目标" class="headerlink" title="方法区回收目标"></a>方法区回收目标</h2><p>只有发生full GC的时候才会对方法区进行回收操作，回收的目标如下：</p>
+<ol>
+<li>废弃的常量</li>
+<li>无用的类，同时满足以下四个条件即被定义为无用的类<ul>
+<li>Java堆中无该类的任何实例；</li>
+<li>加载该类的ClassLoader已被回收；</li>
+<li>该类的java.lang.Class对象没有被任何地方应用，无法通过反射访问该类的方法；</li>
+<li>满足以上三个条件后，还需要看-Xnoclassgc参数，如果是true，表示不进行类卸载，也不会对类进行回收，默认是false。</li>
+</ul>
+</li>
+</ol>
+<h2 id="详细说一下G1的回收过程"><a href="#详细说一下G1的回收过程" class="headerlink" title="详细说一下G1的回收过程"></a>详细说一下G1的回收过程</h2><p>G1（Garbage First）回收器采用面向局部收集的设计思路和基于Region的内存布局形式，是一款主要面向服务端应用的垃圾回收器。G1设计初衷就是替换 CMS，成为一种全功能收集器。G1 在JDK9 之后成为服务端模式下的默认垃圾回收器，取代了 Parallel Scavenge 加 Parallel Old 的默认组合，而 CMS 被声明为不推荐使用的垃圾回收器。G1从整体来看是基于 标记-整理 算法实现的回收器，但从局部（两个Region之间）上看又是基于 标记-复制 算法实现的。</p>
+<p>G1 回收过程，G1 回收器的运作过程大致可分为四个步骤：</p>
+<ol>
+<li><p>初始标记（会STW）：仅仅只是标记一下 GC Roots 能直接关联到的对象，并且修改TAMS指针的值，让下一阶段用户线程并发运行时，能正确地在可用的Region中分配新对象。这个阶段需要停顿线程，但耗时很短，而且是借用进行Minor GC的时候同步完成的，所以G1收集器在这个阶段实际并没有额外的停顿。</p>
+</li>
+<li><p>并发标记：从 GC Roots 开始对堆中对象进行可达性分析，递归扫描整个堆里的对象图，找出要回收的对象，这阶段耗时较长，但可与用户程序并发执行。当对象图扫描完成以后，还要重新处理在并发时有引用变动的对象。</p>
+</li>
+<li><p>最终标记（会STW）：对用户线程做短暂的暂停，处理并发阶段结束后仍有引用变动的对象。</p>
+</li>
+<li><p>清理阶段（会STW）：更新Region的统计数据，对各个Region的回收价值和成本进行排序，根据用户所期望的停顿时间来制定回收计划，可以自由选择任意多个Region构成回收集，然后把决定回收的那一部分Region的存活对象复制到空的Region中，再清理掉整个旧Region的全部空间。这里的操作涉及存活对象的移动，必须暂停用户线程，由多条回收器线程并行完成的。</p>
+</li>
+</ol>
+<h2 id="JVM中一次完整的GC是什么样子的"><a href="#JVM中一次完整的GC是什么样子的" class="headerlink" title="JVM中一次完整的GC是什么样子的"></a>JVM中一次完整的GC是什么样子的</h2><p>先描述一下Java堆内存划分。</p>
+<p>在 Java 中，堆被划分成两个不同的区域：新生代 ( Young )、老年代 ( Old )，新生代默认占总空间的 1/3，老年代默认占 2/3。 新生代有 3 个分区：Eden、To Survivor、From Survivor，它们的默认占比是 8:1:1。</p>
+<p>新生代的垃圾回收（又称Minor GC）后只有少量对象存活，所以选用复制算法，只需要少量的复制成本就可以完成回收。</p>
+<p>老年代的垃圾回收（又称Major GC）通常使用“标记-清理”或“标记-整理”算法。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211101259.png"></p>
+<p>再描述它们之间转化流程：</p>
+<ul>
+<li><p>对象优先在Eden分配。当 eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC。</p>
+<ul>
+<li>在 Eden 区执行了第一次 GC 之后，存活的对象会被移动到其中一个 Survivor 分区；</li>
+<li>Eden 区再次 GC，这时会采用复制算法，将 Eden 和 from 区一起清理，存活的对象会被复制到 to 区；</li>
+<li>移动一次，对象年龄加 1，对象年龄大于一定阀值会直接移动到老年代。GC年龄的阀值可以通过参数 -XX:MaxTenuringThreshold 设置，默认为 15；</li>
+<li>动态对象年龄判定：Survivor 区相同年龄所有对象大小的总和 &gt; (Survivor 区内存大小 * 这个目标使用率)时，大于或等于该年龄的对象直接进入老年代。其中这个使 用率通过 -XX:TargetSurvivorRatio 指定，默认为 50%；</li>
+<li>Survivor 区内存不足会发生担保分配，超过指定大小的对象可以直接进入老年代。</li>
+</ul>
+</li>
+<li><p>大对象直接进入老年代，大对象就是需要大量连续内存空间的对象（比如：字符串、数组），为了避免为大对象分配内存时由于分配担保机制带来的复制而降低效率。</p>
+</li>
+<li><p>老年代满了而无法容纳更多的对象，Minor GC 之后通常就会进行Full GC，Full GC 清理整个内存堆 – 包括年轻代、老年代和永久代。</p>
+</li>
+</ul>
+<h2 id="Minor-GC-和-Full-GC-有什么不同"><a href="#Minor-GC-和-Full-GC-有什么不同" class="headerlink" title="Minor GC 和 Full GC 有什么不同"></a>Minor GC 和 Full GC 有什么不同</h2><p><strong>Minor GC：</strong> 只收集新生代的GC。</p>
+<p><strong>Full GC：</strong> 收集整个堆，包括 新生代，老年代，永久代(在 JDK 1.8及以后，永久代被移除，换为metaspace 元空间)等所有部分的模式。</p>
+<p><strong>Minor GC触发条件：</strong> 当Eden区满时，触发Minor GC。</p>
+<p><strong>Full GC触发条件：</strong></p>
+<ul>
+<li><p>通过Minor GC后进入老年代的平均大小大于老年代的可用内存。如果发现统计数据说之前Minor GC的平均晋升大小比目前old gen剩余的空间大，则不会触发Minor GC而是转为触发full GC。</p>
+</li>
+<li><p>老年代空间不够分配新的内存（或永久代空间不足，但只是JDK1.7有的，这也是用元空间来取代永久代的原因，可以减少Full GC的频率，减少GC负担，提升其效率）。</p>
+</li>
+<li><p>由Eden区、From Space区向To Space区复制时，对象大小大于To Space可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小。</p>
+</li>
+<li><p>调用System.gc时，系统建议执行Full GC，但是不必然执行。</p>
+</li>
+</ul>
+<h2 id="介绍下空间分配担保原则"><a href="#介绍下空间分配担保原则" class="headerlink" title="介绍下空间分配担保原则"></a>介绍下空间分配担保原则</h2><p>如果YougGC时新生代有大量对象存活下来，而 survivor 区放不下了，这时必须转移到老年代中，但这时发现老年代也放不下这些对象了，那怎么处理呢？其实JVM有一个老年代空间分配担保机制来保证对象能够进入老年代。</p>
+<p>在执行每次 YoungGC 之前，JVM会先检查老年代最大可用连续空间是否大于新生代所有对象的总大小。因为在极端情况下，可能新生代 YoungGC 后，所有对象都存活下来了，而 survivor 区又放不下，那可能所有对象都要进入老年代了。这个时候如果老年代的可用连续空间是大于新生代所有对象的总大小的，那就可以放心进行 YoungGC。但如果老年代的内存大小是小于新生代对象总大小的，那就有可能老年代空间不够放入新生代所有存活对象，这个时候JVM就会先检查 -XX:HandlePromotionFailure 参数是否允许担保失败，如果允许，就会判断老年代最大可用连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试进行一次YoungGC，尽快这次YoungGC是有风险的。如果小于，或者 -XX:HandlePromotionFailure 参数不允许担保失败，这时就会进行一次 Full GC。</p>
+<p>在允许担保失败并尝试进行YoungGC后，可能会出现三种情况：</p>
+<ul>
+<li>YoungGC后，存活对象小于survivor大小，此时存活对象进入survivor区中</li>
+<li>YoungGC后，存活对象大于survivor大小，但是小于老年大可用空间大小，此时直接进入老年代。</li>
+<li>YoungGC后，存活对象大于survivor大小，也大于老年大可用空间大小，老年代也放不下这些对象了，此时就会发生“Handle Promotion Failure”，就触发了 Full GC。如果 Full GC后，老年代还是没有足够的空间，此时就会发生OOM内存溢出了。</li>
+</ul>
+<p>通过下图来了解空间分配担保原则：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211101437.png"></p>
+<h2 id="什么是类加载？类加载的过程？"><a href="#什么是类加载？类加载的过程？" class="headerlink" title="什么是类加载？类加载的过程？"></a>什么是类加载？类加载的过程？</h2><p>虚拟机把描述类的数据加载到内存里面，并对数据进行校验、解析和初始化，最终变成可以被虚拟机直接使用的class对象；</p>
+<p>类的整个生命周期包括：加载（Loading）、验证（Verification）、准备(Preparation)、解析(Resolution)、初始化(Initialization)、使用(Using)和卸载(Unloading)7个阶段。其中准备、验证、解析3个部分统称为连接（Linking）。如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211111648.png"></p>
+<p>加载、验证、准备、初始化和卸载这5个阶段的顺序是确定的，类的加载过程必须按照这种顺序按部就班地开始，而解析阶段则不一定：它在某些情况下可以在初始化阶段之后再开始，这是为了支持Java语言的运行时绑定（也称为动态绑定或晚期绑定）</p>
+<p>类加载过程如下：</p>
+<ul>
+<li><p>加载，加载分为三步：</p>
+<ol>
+<li>通过类的全限定性类名获取该类的二进制流；</li>
+<li>将该二进制流的静态存储结构转为方法区的运行时数据结构；</li>
+<li>在堆中为该类生成一个class对象；</li>
+</ol>
+</li>
+<li><p>验证：验证该class文件中的字节流信息复合虚拟机的要求，不会威胁到jvm的安全；</p>
+</li>
+<li><p>准备：为class对象的静态变量分配内存，初始化其初始值；</p>
+</li>
+<li><p>解析：该阶段主要完成符号引用转化成直接引用；</p>
+</li>
+<li><p>初始化：到了初始化阶段，才开始执行类中定义的java代码；初始化阶段是调用类构造器的过程。</p>
+</li>
+</ul>
+<h2 id="什么是类加载器，常见的类加载器有哪些？"><a href="#什么是类加载器，常见的类加载器有哪些？" class="headerlink" title="什么是类加载器，常见的类加载器有哪些？"></a>什么是类加载器，常见的类加载器有哪些？</h2><p>类加载器是指：通过一个类的全限定性类名获取该类的二进制字节流叫做类加载器；类加载器分为以下四种：</p>
+<ul>
+<li><p>启动类加载器（BootStrapClassLoader）：用来加载java核心类库，无法被java程序直接引用；</p>
+</li>
+<li><p>扩展类加载器（Extension ClassLoader）：用来加载java的扩展库，java的虚拟机实现会提供一个扩展库目录，该类加载器在扩展库目录里面查找并加载java类；</p>
+</li>
+<li><p>系统类加载器（AppClassLoader）：它根据java的类路径来加载类，一般来说，java应用的类都是通过它来加载的；</p>
+</li>
+<li><p>自定义类加载器：由java语言实现，继承自ClassLoader。</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211111649.png"></p>
+<h2 id="什么是双亲委派模型？为什么需要双亲委派模型？"><a href="#什么是双亲委派模型？为什么需要双亲委派模型？" class="headerlink" title="什么是双亲委派模型？为什么需要双亲委派模型？"></a>什么是双亲委派模型？为什么需要双亲委派模型？</h2><p>当一个类加载器收到一个类加载的请求，他首先不会尝试自己去加载，而是将这个请求委派给父类加载器去加载，只有父类加载器在自己的搜索范围类查找不到给类时，子加载器才会尝试自己去加载该类；</p>
+<p>为了防止内存中出现多个相同的字节码；因为如果没有双亲委派的话，用户就可以自己定义一个java.lang.String类，那么就无法保证类的唯一性。</p>
+<p>补充：<strong>那怎么打破双亲委派模型</strong>？</p>
+<p>自定义类加载器，继承ClassLoader类，重写loadClass方法和findClass方法。</p>
+<h2 id="列举一些你知道的打破双亲委派机制的例子，为什么要打破？"><a href="#列举一些你知道的打破双亲委派机制的例子，为什么要打破？" class="headerlink" title="列举一些你知道的打破双亲委派机制的例子，为什么要打破？"></a>列举一些你知道的打破双亲委派机制的例子，为什么要打破？</h2><ul>
+<li><p>JNDI：通过引入线程上下文类加载器，可以在 Thread.setContextClassLoader 方法设置，默认是应用程序类加载器，来加载 SPI 的代码。有了线程上下文类加载器，就可以完成父类加载器请求子类加载器完成类加载的行为。打破的原因，是为了 JNDI 服务的类加载器是启动器类加载，为了完成高级类加载器请求子类加载器（即上文中的线程上下文加载器）加载类。</p>
+</li>
+<li><p>Tomcat：应用的类加载器优先自行加载应用目录下的 class，并不是先委派给父加载器，加载不了才委派给父加载器。</p>
+<p>tomcat之所以造了一堆自己的classloader，大致是出于下面三类目的：</p>
+<ul>
+<li>对于各个 <code>webapp</code>中的 <code>class</code>和 <code>lib</code>，需要相互隔离，不能出现一个应用中加载的类库会影响另一个应用的情况，而对于许多应用，需要有共享的lib以便不浪费资源。</li>
+<li>与 <code>jvm</code>一样的安全性问题。使用单独的 <code>classloader</code>去装载 <code>tomcat</code>自身的类库，以免其他恶意或无意的破坏；</li>
+<li>热部署。</li>
+</ul>
+</li>
+</ul>
+<p>tomcat类加载器如下图：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211111650.png"></p>
+<ul>
+<li><p>OSGi：实现模块化热部署，为每个模块都自定义了类加载器，需要更换模块时，模块与类加载器一起更换。其类加载的过程中，有平级的类加载器加载行为。打破的原因是为了实现模块热替换。</p>
+</li>
+<li><p>JDK 9：Extension ClassLoader 被 Platform ClassLoader 取代，当平台及应用程序类加载器收到类加载请求，在委派给父加载器加载前，要先判断该类是否能够归属到某一个系统模块中，如果可以找到这样的归属关系，就要优先委派给负责那个模块的加载器完成加载。打破的原因，是为了添加模块化的特性。</p>
+</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">程序猿洞晓</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://itcrud.github.io/2022/09/interview-java-core-jvm/">https://itcrud.github.io/2022/09/interview-java-core-jvm/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">程序猿洞晓</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'd5b070018a0674352910',
+        clientSecret: 'ee7de87a788f3687fbd8365e86cb2ba43f20c0a9',
+        repo: 'issue',
+        owner: 'itcrud',
+        admin: ["itcrud"],
+        id: '2022-09-21T16-56-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/09/interview-java-core-threads/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="Java问答知识总结篇-多线程&amp;并发编程">
+                        
+                        <span class="card-title">Java问答知识总结篇-多线程&amp;并发编程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">多线程</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/interview-java-core-base/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="Java问答知识总结篇-基础知识">
+                        
+                        <span class="card-title">Java问答知识总结篇-基础知识</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">Java基础</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2015-2023</span>
+            
+            <a href="/about" target="_blank">程序猿洞晓</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">676k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2015";
+                        var startMonth = "09";
+                        var startDate = "1";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/itcrud" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:itcrud@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

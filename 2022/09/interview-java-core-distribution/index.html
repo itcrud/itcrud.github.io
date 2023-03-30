@@ -1,0 +1,1429 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Java问答知识总结篇-分布式, 程序猿洞晓">
+    <meta name="description" content="以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud &amp;&amp; Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Java问答知识总结篇-分布式 | 程序猿洞晓</title>
+    <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/matery.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/reward.css">
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">程序猿洞晓</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/top" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/toolbox" class="waves-effect waves-light">
+      
+      <i class="fas fa-toolbox" style="zoom: 0.6;"></i>
+      
+      <span>工具箱</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-link" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">程序猿洞晓</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/top" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/toolbox" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-toolbox"></i>
+			
+			工具箱
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-link"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/3.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Java问答知识总结篇-分布式</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
+                                <span class="chip bg-color">分布式</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                最佳实践
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
+                    2022-09-21
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    8.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    28 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p><a href="/2022/09/interview-java-core-base/">Java问答知识总结篇-基础知识</a><br><a href="/2022/09/interview-java-core-jvm/">Java问答知识总结篇-JVM</a><br><a href="/2022/09/interview-java-core-threads/">Java问答知识总结篇-多线程&amp;并发编程</a><br><a href="/2022/09/interview-java-core-network/">Java问答知识总结篇-网络基础</a><br><a href="/2022/09/interview-java-core-spring/">Java问答知识总结篇-Spring</a><br><a href="/2022/09/interview-java-core-springboot/">Java问答知识总结篇-Spring Boot</a><br><a href="/2022/09/interview-java-core-mybatis/">Java问答知识总结篇-Mybatis</a><br><a href="/2022/09/interview-java-core-mysql/">Java问答知识总结篇-MySQL</a><br><a href="/2022/09/interview-java-core-redis/">Java问答知识总结篇-Redis</a><br><a href="/2022/09/interview-java-core-mq/">Java问答知识总结篇-MQ</a><br><a href="/2022/09/interview-java-core-nginx/">Java问答知识总结篇-Nginx</a><br><a href="/2022/09/interview-java-core-distribution/">Java问答知识总结篇-分布式</a><br><a href="/2022/09/interview-java-core-springcloud/">Java问答知识总结篇-Spring Cloud</a><br><a href="/2022/09/interview-java-core-dubbo/">Java问答知识总结篇-Dubbo</a><br><a href="/2022/09/interview-java-core-zookeeper/">Java问答知识总结篇-Zookeeper</a><br><a href="/2022/09/interview-java-core-elasticsearch/">Java问答知识总结篇-ElasticSearch</a><br><a href="/2022/09/interview-java-core-netty/">Java问答知识总结篇-Netty</a><br><a href="/2022/09/interview-java-core-application/">Java问答知识总结篇-场景分析题</a></p>
+</blockquote>
+<h2 id="分布式幂等性如何设计"><a href="#分布式幂等性如何设计" class="headerlink" title="分布式幂等性如何设计"></a>分布式幂等性如何设计</h2><p>在高并发场景的架构里，幂等性是必须得保证的。比如说支付功能，用户发起支付，如果后台没有做幂等校验，刚好用户手抖多点了几下，于是后台就可能多次收到同一个订单请求，不做幂等很容易就让用户重复支付了，这样用户是肯定不能忍的。</p>
+<p><strong>解决方案：</strong></p>
+<ol>
+<li>查询和删除不在幂等讨论范围，查询肯定没有幂等的说，删除：第一次删除成功后，后面来删除直接返回0，也是返回成功。</li>
+<li>建唯一索引：唯一索引或唯一组合索引来防止新增数据存在脏数据 （当表存在唯一索引，并发时新增异常时，再查询一次就可以了，数据应该已经存在了，返回结果即可）。</li>
+<li>token机制：由于重复点击或者网络重发，或者nginx重发等情况会导致数据被重复提交。前端在数据提交前要向后端服务的申请token，token放到 Redis 或 JVM 内存，token有效时间。提交后后台校验token，同时删除token，生成新的token返回。redis要用删除操作来判断token，删除成功代表token校验通过，如果用select+delete来校验token，存在并发问题，不建议使用。</li>
+<li>悲观锁：如<code>select id ,name from table_# where id='##' for update;</code>，悲观锁使用时一般伴随事务一起使用，数据锁定时间可能会很长，根据实际情况选用（另外还要考虑id是否为主键，如果id不是主键或者不是 InnoDB 存储引擎，那么就会出现锁全表）。</li>
+<li>乐观锁：给数据库表增加一个version字段，可以通过这个字段来判断是否已经被修改了。</li>
+<li>分布式锁，比如 Redis 、 Zookeeper 的分布式锁。单号为key，然后给Key设置有效期（防止支付失败后，锁一直不释放），来一个请求使用订单号生成一把锁，业务代码执行完成后再释放锁。</li>
+<li>保底方案，先查询是否存在此单，不存在进行支付，存在就直接返回支付结果。</li>
+</ol>
+<h2 id="什么是分布式事务？"><a href="#什么是分布式事务？" class="headerlink" title="什么是分布式事务？"></a>什么是分布式事务？</h2><p>分布式事务服务（Distributed Transaction Service，DTS）是一个分布式事务框架，用来保障在大规模分布式环境下事务的最终一致性。</p>
+<p>CAP理论告诉我们在分布式存储系统中，最多只能实现上面的两点。而由于当前的网络硬件肯定会出现延迟丢包等问题，所以分区容忍性是我们必须需要实现的，所以我们只能在一致性和可用性之间进行权衡。</p>
+<p>为了保障系统的可用性，互联网系统大多将强一致性需求转换成最终一致性的需求，并通过系统执行幂等性的保证，保证数据的最终一致性。</p>
+<h2 id="说说你对分布式事务的了解"><a href="#说说你对分布式事务的了解" class="headerlink" title="说说你对分布式事务的了解"></a>说说你对分布式事务的了解</h2><p>分布式事务是企业集成中的一个技术难点，也是每一个分布式系统架构中都会涉及到的一个东西，特别是在微服务架构中，几乎可以说是无法避免。</p>
+<p>首先要搞清楚：ACID、CAP、BASE理论。</p>
+<h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3><p>指数据库事务正确执行的四个基本要素：</p>
+<ul>
+<li>原子性（Atomicity）</li>
+<li>一致性（Consistency）</li>
+<li>隔离性（Isolation）</li>
+<li>持久性（Durability）</li>
+</ul>
+<h3 id="CAP"><a href="#CAP" class="headerlink" title="CAP"></a>CAP</h3><p>CAP原则又称CAP定理，指的是在一个分布式系统中，一致性（Consistency）、可用性（Availability）、分区容忍性（Partition tolerance）。CAP 原则指的是，这三个要素最多只能同时实现两点，不可能三者兼顾。</p>
+<ul>
+<li><strong>一致性（Consistency）：</strong>在分布式系统中的所有数据备份，在同一时刻是否同样的值。</li>
+<li><strong>可用性（Availability）：</strong>在集群中一部分节点故障后，集群整体是否还能响应客户端的读写请求。</li>
+<li><strong>分区容忍性（Partition Tolerance）：</strong>以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
+</ul>
+<p>具体地讲在分布式系统中，在任何数据库设计中，一个Web应用最多只能同时支持上面的两个属性。显然，任何横向扩展策略都要依赖于数据分区。因此，设计人员必须在一致性与可用性之间做出选择。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/801753-20151107213219867-1667011131.png"></p>
+<p><strong>AP（高可用&amp;&amp;分区容错）:</strong></p>
+<p>允许至少一个节点更新状态会导致数据不一致，即丧失了C性质（一致性）。会导致全局的数据不一致。</p>
+<p><strong>CP（一致&amp;&amp;分区容错）:</strong></p>
+<p>为了保证数据一致性，将分区一侧的节点设置为不可用，那么又丧失了A性质（可用性）。分区同步会导致同步时间无限延长（也就是等数据同步完成之后才能正常访问）</p>
+<p><strong>CA（一致&amp;&amp;高可用）:</strong></p>
+<p>两个节点可以互相通信，才能既保证C（一致性）又保证A（可用性），这又会导致丧失P性质（分区容错性）。这样的话就分布式节点受阻，无法部署子节点，放弃了分布式系统的可扩展性。因为分布式系统与单机系统不同，它涉及到多节点间的通讯和交互，节点间的分区故障是必然发生的，所以在分布式系统中分区容错性是必须要考虑的。</p>
+<h3 id="BASE理论"><a href="#BASE理论" class="headerlink" title="BASE理论"></a>BASE理论</h3><p>BASE理论是对CAP中的一致性和可用性进行一个权衡的结果，是对互联网大规模分布式系统的实践总结，强调可用性。</p>
+<p>理论的核心思想就是：基本可用（Basically Available）和最终一致性（Eventually consistent）。虽然无法做到强一致，但每个应用都可以根据自身的业务特点，采用适当的方式来使系统达到最终一致性（Eventual consistency）。</p>
+<ul>
+<li>Basically Available（基本可用）</li>
+<li>Soft state（软状态）</li>
+<li>Eventually consistent（最终一致性）</li>
+</ul>
+<h2 id="你知道哪些分布式事务解决方案"><a href="#你知道哪些分布式事务解决方案" class="headerlink" title="你知道哪些分布式事务解决方案"></a>你知道哪些分布式事务解决方案</h2><h3 id="方案分类"><a href="#方案分类" class="headerlink" title="方案分类"></a>方案分类</h3><ul>
+<li>两阶段提交(2PC)</li>
+<li>三阶段提交(3PC)</li>
+<li>补偿事务(TCC=Try-Confirm-Cancel)</li>
+<li>本地消息队列表(MQ)</li>
+<li>Sagas事务模型(最终一致性)</li>
+</ul>
+<h3 id="二阶段提交"><a href="#二阶段提交" class="headerlink" title="二阶段提交"></a>二阶段提交</h3><p>两阶段提交2PC是分布式事务中最强大的事务类型之一，两段提交就是分两个阶段提交：</p>
+<ul>
+<li>第一阶段询问各个事务数据源是否准备好。</li>
+<li>第二阶段才真正将数据提交给事务数据源。</li>
+</ul>
+<p>为了保证该事务可以满足ACID，就要引入一个协调者（Cooradinator）。其他的节点被称为参与者（Participant）。协调者负责调度参与者的行为，并最终决定这些参与者是否要把事务进行提交。</p>
+<h4 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h4><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/6746167319879497.png"></p>
+<h4 id="阶段一"><a href="#阶段一" class="headerlink" title="阶段一"></a>阶段一</h4><ol>
+<li>协调者向所有参与者发送事务内容，询问是否可以提交事务，并等待答复；</li>
+<li>各参与者执行事务操作，将 undo 和 redo 信息记入事务日志中（但不提交事务）；</li>
+<li>如参与者执行成功，给协调者反馈 yes，否则反馈 no。</li>
+</ol>
+<h4 id="阶段二"><a href="#阶段二" class="headerlink" title="阶段二"></a>阶段二</h4><p>如果协调者收到了参与者的失败消息或者超时，直接给每个参与者发送回滚(rollback)消息；否则，发送提交(commit)消息。两种情况处理如下：</p>
+<p><strong>情况1：</strong> 当所有参与者均反馈 yes，提交事务</p>
+<ul>
+<li>协调者向所有参与者发出正式提交事务的请求（即 commit 请求）；</li>
+<li>参与者执行 commit 请求，并释放整个事务期间占用的资源；</li>
+<li>各参与者向协调者反馈 ack(应答)完成的消息；</li>
+<li>协调者收到所有参与者反馈的 ack 消息后，即完成事务提交。</li>
+</ul>
+<p><strong>情况2：</strong> 当有一个参与者反馈 no，回滚事务</p>
+<ul>
+<li>协调者向所有参与者发出回滚请求（即 rollback 请求）；</li>
+<li>参与者使用阶段 1 中的 undo 信息执行回滚操作，并释放整个事务期间占用的资源；</li>
+<li>各参与者向协调者反馈 ack 完成的消息；</li>
+<li>协调者收到所有参与者反馈的 ack 消息后，即完成事务。</li>
+</ul>
+<p><strong>问题</strong></p>
+<ol>
+<li><strong>性能问题：</strong> 所有参与者在事务提交阶段处于同步阻塞状态，占用系统资源，容易导致性能瓶颈。</li>
+<li><strong>可靠性问题：</strong> 如果协调者存在单点故障问题，或出现故障，参与者将一直处于锁定状态。</li>
+<li><strong>数据一致性问题：</strong> 在阶段 2 中，如果出现协调者和参与者都挂了的情况，有可能导致数据不一致。</li>
+</ol>
+<p><strong>优点：</strong> 尽量保证了数据的强一致，适合对数据强一致要求很高的关键领域。（其实也不能100%保证强一致）。</p>
+<p><strong>缺点：</strong> 实现复杂，牺牲了可用性，对性能影响较大，不适合高并发高性能场景。</p>
+<h3 id="三阶段提交"><a href="#三阶段提交" class="headerlink" title="三阶段提交"></a>三阶段提交</h3><p>三阶段提交是在二阶段提交上的改进版本，3PC最关键要解决的就是协调者和参与者同时挂掉的问题，所以3PC把2PC的准备阶段再次一分为二，这样三阶段提交。</p>
+<h4 id="处理流程-1"><a href="#处理流程-1" class="headerlink" title="处理流程"></a>处理流程</h4><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/9787946512122317941.png"></p>
+<h4 id="阶段一-1"><a href="#阶段一-1" class="headerlink" title="阶段一"></a>阶段一</h4><ul>
+<li>协调者向所有参与者发出包含事务内容的 canCommit 请求，询问是否可以提交事务，并等待所有参与者答复；</li>
+<li>参与者收到 canCommit 请求后，如果认为可以执行事务操作，则反馈 yes 并进入预备状态，否则反馈 no。</li>
+</ul>
+<h4 id="阶段二-1"><a href="#阶段二-1" class="headerlink" title="阶段二"></a>阶段二</h4><p>协调者根据参与者响应情况，有以下两种可能。</p>
+<p><strong>情况1：</strong> 所有参与者均反馈 yes，协调者预执行事务</p>
+<ul>
+<li>协调者向所有参与者发出 preCommit 请求，进入准备阶段；</li>
+<li>参与者收到 preCommit 请求后，执行事务操作，将 undo 和 redo 信息记入事务日志中（但不提交事务）；</li>
+<li>各参与者向协调者反馈 ack 响应或 no 响应，并等待最终指令。</li>
+</ul>
+<p><strong>情况2：</strong> 只要有一个参与者反馈 no，或者等待超时后协调者尚无法收到所有提供者的反馈，即中断事务</p>
+<ul>
+<li>协调者向所有参与者发出 abort 请求；</li>
+<li>无论收到协调者发出的 abort 请求，或者在等待协调者请求过程中出现超时，参与者均会中断事务。</li>
+</ul>
+<h4 id="阶段三"><a href="#阶段三" class="headerlink" title="阶段三"></a>阶段三</h4><p>该阶段进行真正的事务提交，也可以分为以下两种情况。</p>
+<p><strong>情况1：</strong> 所有参与者均反馈 ack 响应，执行真正的事务提交</p>
+<ul>
+<li>如果协调者处于工作状态，则向所有参与者发出 do Commit 请求；</li>
+<li>参与者收到 do Commit 请求后，会正式执行事务提交，并释放整个事务期间占用的资源；</li>
+<li>各参与者向协调者反馈 ack 完成的消息；</li>
+<li>协调者收到所有参与者反馈的 ack 消息后，即完成事务提交。</li>
+</ul>
+<p><strong>情况2：</strong> 只要有一个参与者反馈 no，或者等待超时后协调组尚无法收到所有提供者的反馈，即回滚事务。</p>
+<ul>
+<li>如果协调者处于工作状态，向所有参与者发出 rollback 请求；</li>
+<li>参与者使用阶段 1 中的 undo 信息执行回滚操作，并释放整个事务期间占用的资源；</li>
+<li>各参与者向协调组反馈 ack 完成的消息；</li>
+<li>协调组收到所有参与者反馈的 ack 消息后，即完成事务回滚。</li>
+</ul>
+<p><strong>优点：</strong> 相比二阶段提交，三阶段提交降低了阻塞范围，在等待超时后协调者或参与者会中断事务。避免了协调者单点问题。阶段 3 中协调者出现问题时，参与者会继续提交事务。</p>
+<p><strong>缺点：</strong> 数据不一致问题依然存在，当在参与者收到 preCommit 请求后等待 do commite 指令时，此时如果协调者请求中断事务，而协调者无法与参与者正常通信，会导致参与者继续提交事务，造成数据不一致。</p>
+<h2 id="什么是补偿事务"><a href="#什么是补偿事务" class="headerlink" title="什么是补偿事务"></a>什么是补偿事务</h2><p>TCC （Try Confirm Cancel）是服务化的二阶段编程模型，采用的补偿机制：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/20221102162301.png"> </p>
+<p>TCC 其实就是采用的补偿机制，其核心思想是：针对每个操作，都要注册一个与其对应的确认和补偿（撤销）操作。</p>
+<p>它分为三个步骤：</p>
+<ul>
+<li>Try 阶段主要是对业务系统做检测及资源预留；</li>
+<li>Confirm 阶段主要是对业务系统做确认提交，Try阶段执行成功并开始执行 Confirm阶段时，默认 Confirm阶段是不会出错的。即：只要Try成功，Confirm一定成功；</li>
+<li>Cancel 阶段主要是在业务执行错误，需要回滚的状态下执行的业务取消，预留资源释放。</li>
+</ul>
+<p>举个例子，假入你要向老田转账，思路大概是：我们有一个本地方法，里面依次调用步骤：</p>
+<ol>
+<li>首先在 Try 阶段，要先调用远程接口把你和老田的钱给冻结起来。 </li>
+<li>在 Confirm 阶段，执行远程调用的转账的操作，转账成功进行解冻。 </li>
+<li>如果第2步执行成功，那么转账成功，如果第二步执行失败，则调用远程冻结接口对应的解冻方法 (Cancel)。</li>
+</ol>
+<p><strong>优点：</strong></p>
+<p><strong>性能提升：</strong> 具体业务来实现控制资源锁的粒度变小，不会锁定整个资源。</p>
+<p><strong>数据最终一致性：</strong> 基于 Confirm 和 Cancel 的幂等性，保证事务最终完成确认或者取消，保证数据的一致性。</p>
+<p><strong>可靠性：</strong> 解决了 XA 协议的协调者单点故障问题，由主业务方发起并控制整个业务活动，业务活动管理器也变成多点，引入集群。</p>
+<p><strong>缺点：</strong>TCC 的 Try、Confirm 和 Cancel 操作功能要按具体业务来实现，业务耦合度较高，提高了开发成本。</p>
+<h2 id="消息队列是怎么实现的"><a href="#消息队列是怎么实现的" class="headerlink" title="消息队列是怎么实现的"></a>消息队列是怎么实现的</h2><h3 id="本地消息表（异步确保）"><a href="#本地消息表（异步确保）" class="headerlink" title="本地消息表（异步确保）"></a>本地消息表（异步确保）</h3><p>本地消息表这种实现方式应该是业界使用最多的，其核心思想是将分布式事务拆分成本地事务进行处理，这种思路是来源于ebay。我们可以从下面的流程图中看出其中的一些细节：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211021630.png"></p>
+<p><strong>基本思路</strong></p>
+<p>消息生产方，需要额外建一个消息表，并记录消息发送状态。消息表和业务数据要在一个事务里提交，也就是说他们要在一个数据库里面。然后消息会经过MQ发送到消息的消费方。如果消息发送失败，会进行重试发送。<br>消息消费方，需要处理这个消息，并完成自己的业务逻辑。此时如果本地事务处理成功，表明已经处理成功了，如果处理失败，那么就会重试执行。如果是业务上面的失败，可以给生产方发送一个业务补偿消息，通知生产方进行回滚等操作。<br>生产方和消费方定时扫描本地消息表，把还没处理完成的消息或者失败的消息再发送一遍。如果有靠谱的自动对账补账逻辑，这种方案还是非常实用的。<br>这种方案遵循BASE理论，采用的是最终一致性，笔者认为是这几种方案里面比较适合实际业务场景的，即不会出现像2PC那样复杂的实现(当调用链很长的时候，2PC的可用性是非常低的)，也不会像TCC那样可能出现确认或者回滚不了的情况。</p>
+<p><strong>优点：</strong></p>
+<p>一种非常经典的实现，避免了分布式事务，实现了最终一致性。在 .NET中 有现成的解决方案。</p>
+<p><strong>缺点：</strong></p>
+<p>消息表会耦合到业务系统中，如果没有封装好的解决方案，会有很多杂活需要处理。</p>
+<h3 id="MQ事务消息"><a href="#MQ事务消息" class="headerlink" title="MQ事务消息"></a>MQ事务消息</h3><p>有一些第三方的MQ是支持事务消息的，比如RocketMQ，他们支持事务消息的方式也是类似于采用的二阶段提交，但是市面上一些主流的MQ都是不支持事务消息的，比如 RabbitMQ 和 Kafka 都不支持。</p>
+<p>以阿里的 RocketMQ 中间件为例，其思路大致为：</p>
+<p>第一阶段Prepared消息，会拿到消息的地址。 第二阶段执行本地事务，第三阶段通过第一阶段拿到的地址去访问消息，并修改状态。</p>
+<p>也就是说在业务方法内要想消息队列提交两次请求，一次发送消息和一次确认消息。如果确认消息发送失败了RocketMQ会定期扫描消息集群中的事务消息，这时候发现了Prepared消息，它会向消息发送者确认，所以生产方需要实现一个check接口，RocketMQ会根据发送端设置的策略来决定是回滚还是继续发送确认消息。这样就保证了消息发送与本地事务同时成功或同时失败。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211021634.png"></p>
+<p><strong>优点：</strong> 实现了最终一致性，不需要依赖本地数据库事务。<br><strong>缺点：</strong> 实现难度大，主流MQ不支持，没有.NET客户端，RocketMQ事务消息部分代码也未开源。</p>
+<h2 id="那你说说Sagas事务模型"><a href="#那你说说Sagas事务模型" class="headerlink" title="那你说说Sagas事务模型"></a>那你说说Sagas事务模型</h2><p>Saga模式是一种分布式异步事务，一种最终一致性事务，是一种柔性事务，有两种不同的方式来实现saga事务，最流行的两种方式是：事件/编排Choreography和命令/协调orchestrator。</p>
+<h3 id="事件-编排Choreography"><a href="#事件-编排Choreography" class="headerlink" title="事件/编排Choreography"></a>事件/编排Choreography</h3><p>没有中央协调器（没有单点风险）时，每个服务产生并聆听其他服务的事件，并决定是否应采取行动。</p>
+<p>该实现第一个服务执行一个事务，然后发布一个事件。该事件被一个或多个服务进行监听，这些服务再执行本地事务并发布（或不发布）新的事件，当最后一个服务执行本地事务并且不发布任何事件时，意味着分布式事务结束，或者它发布的事件没有被任何Saga参与者听到都意味着事务结束。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211021641.png"></p>
+<p><strong>处理流程说明</strong></p>
+<p>订单服务保存新订单，将状态设置为pengding挂起状态，并发布名为ORDER_CREATED_EVENT的事件。</p>
+<p>支付服务监听ORDER_CREATED_EVENT，并公布事件BILLED_ORDER_EVENT。</p>
+<p>库存服务监听BILLED_ORDER_EVENT，更新库存，并发布ORDER_PREPARED_EVENT。</p>
+<p>货运服务监听ORDER_PREPARED_EVENT，然后交付产品。最后，它发布ORDER_DELIVERED_EVENT。</p>
+<p>最后，订单服务侦听ORDER_DELIVERED_EVENT并设置订单的状态为concluded完成。</p>
+<p>假设库存服务在事务过程中失败了。进行回滚：库存服务产生PRODUCT_OUT_OF_STOCK_EVENT</p>
+<p>订购服务和支付服务会监听到上面库存服务的这一事件：</p>
+<ol>
+<li>支付服务会退款给客户</li>
+<li>订单服务将订单状态设置为失败</li>
+</ol>
+<p>优点：事件/编排是实现Saga模式的自然方式; 它很简单，容易理解，不需要太多的努力来构建，所有参与者都是松散耦合的，因为他们彼此之间没有直接的耦合。如果您的事务涉及2至4个步骤，则可能是非常合适的。</p>
+<h3 id="命令-协调orchestrator"><a href="#命令-协调orchestrator" class="headerlink" title="命令/协调orchestrator"></a>命令/协调orchestrator</h3><p>中央协调器负责集中处理事件的决策和业务逻辑排序。</p>
+<p>saga协调器orchestrator以命令/回复的方式与每项服务进行通信，告诉他们应该执行哪些操作。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211021638.png"></p>
+<p>订单服务保存pending状态，并要求订单Saga协调器（简称OSO）开始启动订单事务。</p>
+<p>OSO向收款服务发送执行收款命令，收款服务回复Payment Executed消息。</p>
+<p>OSO向库存服务发送准备订单命令，库存服务将回复OrderPrepared消息。</p>
+<p>OSO向货运服务发送订单发货命令，货运服务将回复Order Delivered消息。</p>
+<p>OSO订单Saga协调器必须事先知道执行“创建订单”事务所需的流程(通过读取BPM业务流程XML配置获得)。如果有任何失败，它还负责通过向每个参与者发送命令来撤销之前的操作来协调分布式的回滚。当你有一个中央协调器协调一切时，回滚要容易得多，因为协调器默认是执行正向流程，回滚时只要执行反向流程即可。</p>
+<p><strong>优点：</strong></p>
+<p>避免服务之间的循环依赖关系，因为saga协调器会调用saga参与者，但参与者不会调用协调器。集中分布式事务的编排。</p>
+<p>只需要执行命令/回复(其实回复消息也是一种事件消息)，降低参与者的复杂性。</p>
+<p>在添加新步骤时，事务复杂性保持线性，回滚更容易管理。</p>
+<p>如果在第一笔交易还没有执行完，想改变有第二笔事务的目标对象，则可以轻松地将其暂停在协调器上，直到第一笔交易结束。</p>
+<h2 id="分布式ID生成有几种方案"><a href="#分布式ID生成有几种方案" class="headerlink" title="分布式ID生成有几种方案"></a>分布式ID生成有几种方案</h2><h3 id="分布式ID的特性"><a href="#分布式ID的特性" class="headerlink" title="分布式ID的特性"></a>分布式ID的特性</h3><ul>
+<li><strong>唯一性：</strong> 确保生成的ID是全网唯一的。</li>
+<li><strong>有序递增性：</strong> 确保生成的ID是对于某个用户或者业务是按一定的数字有序递增的。</li>
+<li><strong>高可用性：</strong> 确保任何时候都能正确的生成ID。</li>
+<li><strong>带时间：</strong> ID里面包含时间，一眼扫过去就知道哪天的交易。</li>
+</ul>
+<h3 id="分布式ID生成方案"><a href="#分布式ID生成方案" class="headerlink" title="分布式ID生成方案"></a>分布式ID生成方案</h3><p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211021646.png"></p>
+<h4 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h4><p>算法的核心思想是结合机器的网卡、当地时间、一个随记数来生成UUID。</p>
+<ul>
+<li>优点：本地生成，生成简单，性能好，没有高可用风险。</li>
+<li>缺点：长度过长，存储冗余，且无序不可读，查询效率低。</li>
+</ul>
+<h4 id="数据库自增ID"><a href="#数据库自增ID" class="headerlink" title="数据库自增ID"></a>数据库自增ID</h4><p>使用数据库的id自增策略，如 MySQL 的 auto_increment。并且可以使用两台数据库分别设置不同步长，生成不重复ID的策略来实现高可用。</p>
+<ul>
+<li>优点：数据库生成的ID绝对有序，高可用实现方式简单。</li>
+<li>缺点：需要独立部署数据库实例，成本高，有性能瓶颈。</li>
+</ul>
+<h4 id="批量生成ID"><a href="#批量生成ID" class="headerlink" title="批量生成ID"></a>批量生成ID</h4><p>一次按需批量生成多个ID，每次生成都需要访问数据库，将数据库修改为最大的ID值，并在内存中记录当前值及最大值。</p>
+<ul>
+<li>优点：避免了每次生成ID都要访问数据库并带来压力，提高性能。</li>
+<li>缺点：属于本地生成策略，存在单点故障，服务重启造成ID不连续。</li>
+</ul>
+<h4 id="Redis生成ID"><a href="#Redis生成ID" class="headerlink" title="Redis生成ID"></a>Redis生成ID</h4><p>Redis的所有命令操作都是单线程的，本身提供像 incr 和 increby 这样的自增原子命令，所以能保证生成的 ID 肯定是唯一有序的。</p>
+<ul>
+<li>优点：不依赖于数据库，灵活方便，且性能优于数据库；数字ID天然排序，对分页或者需要排序的结果很有帮助。</li>
+<li>缺点：如果系统中没有Redis，还需要引入新的组件，增加系统复杂度；需要编码和配置的工作量比较大。</li>
+</ul>
+<p>考虑到单节点的性能瓶颈，可以使用 Redis 集群来获取更高的吞吐量。假如一个集群中有5台Redis。可以初始化每台 Redis 的值分别是1, 2, 3, 4, 5，然后步长都是 5。</p>
+<h4 id="Twitter的snowflake算法（重点）"><a href="#Twitter的snowflake算法（重点）" class="headerlink" title="Twitter的snowflake算法（重点）"></a>Twitter的snowflake算法（重点）</h4><p>Twitter 利用 zookeeper 实现了一个全局ID生成的服务 Snowflake。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211021650.png"></p>
+<p>如上图的所示，Twitter 的 Snowflake 算法由下面几部分组成：</p>
+<ul>
+<li>1位符号位</li>
+</ul>
+<p>由于 long 类型在 java 中带符号的，最高位为符号位，正数为 0，负数为 1，且实际系统中所使用的ID一般都是正数，所以最高位为 0。</p>
+<ul>
+<li>41位时间戳（毫秒级）</li>
+</ul>
+<p>需要注意的是此处的 41 位时间戳并非存储当前时间的时间戳，而是存储时间戳的差值（当前时间戳 - 起始时间戳），这里的起始时间戳一般是ID生成器开始使用的时间戳，由程序来指定，所以41位毫秒时间戳最多可以使用 (<code>1 &lt;&lt; 41) / (1000x60x60x24x365) = 69</code>年 。</p>
+<ul>
+<li>10位数据机器位</li>
+</ul>
+<p>包括5位数据标识位和5位机器标识位，这10位决定了分布式系统中最多可以部署 <code>1 &lt;&lt; 10 = 1024</code>个节点。超过这个数量，生成的ID就有可能会冲突。</p>
+<ul>
+<li>12位毫秒内的序列</li>
+</ul>
+<p>这 12 位计数支持每个节点每毫秒（同一台机器，同一时刻）最多生成 1 &lt;&lt; 12 = 4096个ID加起来刚好64位，为一个Long型。</p>
+<p><strong>优点：</strong> 高性能，低延迟，按时间有序，一般不会造成ID碰撞。<br><strong>优点：</strong> 高性能，低延迟，按时间有序，一般不会造成ID碰撞。</p>
+<h4 id="百度UidGenerator"><a href="#百度UidGenerator" class="headerlink" title="百度UidGenerator"></a>百度UidGenerator</h4><p>UidGenerator是百度开源的分布式ID生成器，基于于snowflake算法的实现，看起来感觉还行。不过，国内开源的项目维护性真是担忧。</p>
+<h4 id="美团Leaf"><a href="#美团Leaf" class="headerlink" title="美团Leaf"></a>美团Leaf</h4><p>Leaf 是美团开源的分布式ID生成器，能保证全局唯一性、趋势递增、单调递增、信息安全，里面也提到了几种分布式方案的对比，但也需要依赖关系数据库、Zookeeper等中间件。</p>
+<h2 id="幂等解决方法有哪些"><a href="#幂等解决方法有哪些" class="headerlink" title="幂等解决方法有哪些"></a>幂等解决方法有哪些</h2><h3 id="什么是幂等"><a href="#什么是幂等" class="headerlink" title="什么是幂等"></a>什么是幂等</h3><ul>
+<li>常见描述：对于相同的请求应该返回相同的结果，所以查询类接口是天然的幂等性接口。</li>
+<li>真正的回答方式：幂等指的是相同请求（identical request）执行一次或者多次所带来的副作用（side-effects）是一样的。</li>
+</ul>
+<h3 id="14-8-2-常见出现幂等问题场景"><a href="#14-8-2-常见出现幂等问题场景" class="headerlink" title="14.8.2 常见出现幂等问题场景"></a>14.8.2 常见出现幂等问题场景</h3><ul>
+<li>前端调后端接口发起支付超时，然后再次发起重试。可能会导致多次支付。</li>
+<li>Dubbo中也有重试机制。</li>
+<li>页面上多次点击。</li>
+</ul>
+<p>我们想要的是：接口的幂等性实际上就是接口可重复调用，在调用方多次调用的情况下，接口最终得到的结果是一致的。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在插入数据的时候，插入去重表，利用数据库的唯一索引特性，保证唯一的逻辑。</p>
+<p>悲观锁，select for update，整个执行过程中锁定该订单对应的记录。注意：这种在DB读大于写的情况下尽量少用。</p>
+<p>先查询后修改数据，并发不高的后台系统，或者一些任务JOB，为了支持幂等，支持重复执行，简单的处理方法是，先查询下一些关键数据，判断是否已经执行过，在进行业务处理，就可以了。注意：核心高并发流程不要用这种方法。</p>
+<p>状态机幂等，在设计单据相关的业务，或者是任务相关的业务，肯定会涉及到状态机，就是业务单据上面有个状态，状态在不同的情况下会发生变更，一般情况下存在有限状态机，这时候，如果状态机已经处于下一个状态，这时候来了一个上一个状态的变更，理论上是不能够变更的，这样的话，保证了有限状态机的幂等。</p>
+<p>token机制，防止页面重复提交：</p>
+<ul>
+<li>集群环境：采用token加redis（redis单线程的，处理需要排队）或者</li>
+<li>单JVM环境：采用token加redis或token加jvm内存</li>
+</ul>
+<p>数据提交前要向服务的申请token，token放到redis或jvm内存，设置token有效时间，提交后后台校验token，同时删除token，生成新的token返回。token特点：要申请，一次有效性，可以限流。</p>
+<p>全局唯一ID，如果使用全局唯一ID，就是根据业务的操作和内容生成一个全局ID，在执行操作前先根据这个全局唯一ID是否存在，来判断这个操作是否已经执行。如果不存在则把全局ID，存储到存储系统中，比如数据库、redis等。如果存在则表示该方法已经执行。</p>
+<h2 id="你知道哪些限流算法"><a href="#你知道哪些限流算法" class="headerlink" title="你知道哪些限流算法"></a>你知道哪些限流算法</h2><p>限流算法有四种常见算法：</p>
+<ul>
+<li>计数器算法（固定窗口）</li>
+<li>滑动窗口</li>
+<li>漏桶算法</li>
+<li>令牌桶算法</li>
+</ul>
+<h2 id="说说什么是计数器（固定窗口）算法"><a href="#说说什么是计数器（固定窗口）算法" class="headerlink" title="说说什么是计数器（固定窗口）算法"></a>说说什么是计数器（固定窗口）算法</h2><p>计数器算法是使用计数器在周期内累加访问次数，当达到设定的限流值时，触发限流策略。下一个周期开始时，进行清零，重新计数。</p>
+<p>此算法在单机还是分布式环境下实现都非常简单，使用redis的incr原子自增性和线程安全即可轻松实现。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211031827.png"></p>
+<p>这个算法通常用于QPS限流和统计总访问量，对于秒级以上的时间周期来说，会存在一个非常严重的问题，那就是临界问题，如下图：</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211061828.png"></p>
+<p>假设1min内服务器的负载能力为100，因此一个周期的访问量限制在100，然而在第一个周期的最后5秒和下一个周期的开始5秒时间段内，分别涌入100的访问量，虽然没有超过每个周期的限制量，但是整体上10秒内已达到200的访问量，已远远超过服务器的负载能力，由此可见，计数器算法方式限流对于周期比较长的限流，存在很大的弊端。</p>
+<h2 id="说说什么是滑动窗口算法"><a href="#说说什么是滑动窗口算法" class="headerlink" title="说说什么是滑动窗口算法"></a>说说什么是滑动窗口算法</h2><p>滑动窗口算法是将时间周期分为N个小周期，分别记录每个小周期内访问次数，并且根据时间滑动删除过期的小周期。</p>
+<p>如下图，假设时间周期为1min，将1min再分为2个小周期，统计每个小周期的访问数量，则可以看到，第一个时间周期内，访问数量为75，第二个时间周期内，访问数量为100，超过100的访问则被限流掉了。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211031829.png"></p>
+<p>由此可见，当滑动窗口的格子划分的越多，那么滑动窗口的滚动就越平滑，限流的统计就会越精确。</p>
+<p>此算法可以很好的解决固定窗口算法的临界问题。</p>
+<h2 id="说说什么是漏桶算法"><a href="#说说什么是漏桶算法" class="headerlink" title="说说什么是漏桶算法"></a>说说什么是漏桶算法</h2><p>漏桶算法是访问请求到达时直接放入漏桶，如当前容量已达到上限（限流值），则进行丢弃（触发限流策略）。漏桶以固定的速率进行释放访问请求（即请求通过），直到漏桶为空。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211031831.png"></p>
+<h2 id="说说什么是令牌桶算法"><a href="#说说什么是令牌桶算法" class="headerlink" title="说说什么是令牌桶算法"></a>说说什么是令牌桶算法</h2><p>令牌桶算法是程序以r（r=时间周期/限流值）的速度向令牌桶中增加令牌，直到令牌桶满，请求到达时向令牌桶请求令牌，如获取到令牌则通过请求，否则触发限流策略。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images2/202211031832.png"></p>
+<h2 id="数据库如何处理海量数据"><a href="#数据库如何处理海量数据" class="headerlink" title="数据库如何处理海量数据"></a>数据库如何处理海量数据</h2><p>对数据库进行：分库分表，主从架构，读写分离。</p>
+<p>水平分库/分表，垂直分库/分表。</p>
+<ul>
+<li>水平分库/表，各个库和表的结构一模一样。</li>
+<li>垂直分库/表，各个库和表的结构不一样。</li>
+</ul>
+<p>读写分离：主机负责写，从机负责读。</p>
+<h2 id="如何将长链接转换成短链接，并发送短信"><a href="#如何将长链接转换成短链接，并发送短信" class="headerlink" title="如何将长链接转换成短链接，并发送短信"></a>如何将长链接转换成短链接，并发送短信</h2><p>短 URL 从生成到使用分为以下几步</p>
+<ul>
+<li>有一个服务,将要发送给你的长 URL 对应到一个短 URL 上.例如 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> -&gt; <a target="_blank" rel="noopener" href="http://www.t.cn/1%E3%80%82">www.t.cn/1。</a></li>
+<li>把短 url 拼接到短信等的内容上发送。</li>
+<li>用户点击短 URL ,浏览器用 301 / 302 进行重定向,访问到对应的长 URL。</li>
+<li>展示对应的内容。</li>
+</ul>
+<h2 id="如何提高系统的并发能力"><a href="#如何提高系统的并发能力" class="headerlink" title="如何提高系统的并发能力"></a>如何提高系统的并发能力</h2><ul>
+<li>使用分布式系统。</li>
+<li>部署多台服务器，并做负载均衡。</li>
+<li>使用缓存（Redis）集群。</li>
+<li>数据库分库分表 + 读写分离。</li>
+<li>引入消息中间件集群。</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">程序猿洞晓</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://itcrud.github.io/2022/09/interview-java-core-distribution/">https://itcrud.github.io/2022/09/interview-java-core-distribution/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">程序猿洞晓</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
+                                    <span class="chip bg-color">分布式</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'd5b070018a0674352910',
+        clientSecret: 'ee7de87a788f3687fbd8365e86cb2ba43f20c0a9',
+        repo: 'issue',
+        owner: 'itcrud',
+        admin: ["itcrud"],
+        id: '2022-09-21T15-05-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/09/interview-java-core-network/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Java问答知识总结篇-网络基础">
+                        
+                        <span class="card-title">Java问答知识总结篇-网络基础</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">网络基础</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/interview-java-core-redis/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Java问答知识总结篇-Redis">
+                        
+                        <span class="card-title">Java问答知识总结篇-Redis</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以问答的方式构建Java知识体系，另外在问答中提供技术博客的支撑，更具体的解析和剖析内部深度知识点，做一个有深度的问答总结集。内容包括Java基础知识、JVM、Spring、Spring Cloud && Spring Cloud Alibaba、Mybatis、Spring Boot、Mybatis、Redis、MySQL等等。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2015-2023</span>
+            
+            <a href="/about" target="_blank">程序猿洞晓</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">676k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2015";
+                        var startMonth = "09";
+                        var startDate = "1";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/itcrud" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:itcrud@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
