@@ -336,14 +336,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    16.7k
+                    15.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    71 分
+                    68 分
                 </div>
                 
 
@@ -2056,7 +2056,7 @@ app<span class="token punctuation">.</span><span class="token function">use</spa
   <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;div&gt;{{name}}&lt;/div&gt;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>总结点：在使用<code>ref</code>关键字后，在 Vue 底层就相当于<code>proxy({value='dell'})</code>，对<code>name</code>进行了数据封装，此时就可以实现响应式引用，在<code>setTimeout</code>内修改<code>name</code>值的时候，使用<code>name.value</code>也是这层封装的原因，但是在<code>template</code>中使用的时候不需要用<code>name.value</code>，因为 Vue 底层会自动将其转为<code>name.value</code></strong></p>
+<p><strong>总结点：在使用<code>ref</code>关键字后，在 Vue 底层就相当于<code>proxy({value='dell'})</code>，对<code>name</code>进行了数据封装，此时就可以实现响应式引用，在<code>setTimeout</code>内修改<code>name</code>值的时候，使用<code>name.value</code>也是这层封装的原因，但是在<code>template</code>中使用的时候不需要用<code>name.value</code>,直接使用<code>name</code>即可，因为 Vue 底层会自动将其转为<code>name.value</code></strong></p>
 <h3 id="响应式引用-reactive"><a href="#响应式引用-reactive" class="headerlink" title="响应式引用-reactive"></a>响应式引用-reactive</h3><p><code>ref</code>只能对基础类型数据做响应式引用，如果需要对<strong>对象、数组</strong>这些数据做响应式引用，就需要使用<code>reactive</code>。如下代码：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> app <span class="token operator">=</span> Vue<span class="token punctuation">.</span><span class="token function">createApp</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
     <span class="token function">setup</span><span class="token punctuation">(</span><span class="token parameter">props<span class="token punctuation">,</span>context</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -2642,62 +2642,6 @@ app<span class="token punctuation">.</span><span class="token function">componen
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="axios-服务调用"><a href="#axios-服务调用" class="headerlink" title="axios 服务调用"></a>axios 服务调用</h2><p><strong>使用步骤：</strong></p>
-<ol>
-<li>在使用前，需要通过<code>npm</code>命令安装<code>axios</code>工具。(<code>npm install axios --sava</code>)</li>
-<li>在实际使用中，需要在<code>script</code>标签内引用。(<code>import axios from 'axios'</code>)</li>
-</ol>
-<p><strong>示例代码：</strong></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
-    <span class="token keyword">import</span> axios <span class="token keyword">from</span> <span class="token string">'axios'</span><span class="token punctuation">;</span>
-    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
-        <span class="token comment">// 各种复杂的时候，可以参考axios官网</span>
-        axios<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"http://www.baidu.com/xxx/xxx"</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">response</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="实战内容"><a href="#实战内容" class="headerlink" title="实战内容"></a>实战内容</h1><h2 id="normalize-css-文件的安装"><a href="#normalize-css-文件的安装" class="headerlink" title="normalize.css 文件的安装"></a>normalize.css 文件的安装</h2><p>normalize.css 的作用是在项目编译打包的时候磨平各浏览器对 css 的不同展示带来的差异。<br>安装命令<code>npm install mormalize.css --save</code>。</p>
-<h2 id="代码统一规范"><a href="#代码统一规范" class="headerlink" title="代码统一规范"></a>代码统一规范</h2><p>在管理前端代码过程中，或者在开发过程中，总是会有不符合规范的编码，如双引号和单引号的混合使用，没有格式化代码，没有层次感等等。这个时候 vue 中的一些插件给我们很好的解决了，目前了解的最好的方案就是<code>eslint+prettier</code>实现。接下来说一下配置。</p>
-<ol>
-<li>首先需要在 vscode 上安装<code>prettier</code>插件，直接在<code>vscode</code>插件市场里面找到安装即可。</li>
-<li>项目本身需要使用<code>eslint</code>，如果在搭建脚手架的时候忘记安装<code>eslint</code>，可以通过<code>npm</code>安装，不做赘述。</li>
-<li>在项目目录下，也就是<code>vue.config.js</code>文件所在的目录下，创建一个<code>.prettierrc</code>文件。</li>
-<li>在<code>.prettierrc</code>文件中内容如下：</li>
-</ol>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token punctuation">{</span>
-  <span class="token string-property property">"semi"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-  <span class="token string-property property">"trailingComma"</span><span class="token operator">:</span> <span class="token string">"none"</span><span class="token punctuation">,</span>
-  <span class="token string-property property">"singleQuote"</span><span class="token operator">:</span> <span class="token boolean">true</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre><code>- `semi：` 表示声明代码结尾使用分号，在JAVA语言中，都是要用分号结尾，表示一行或者代码块结束，在js中，可以不用分号，这是使用`false`，也可以用，看个人习惯，确定是否添加；
-- `singleQuote：` 指定单引号，在js中字符串使用单引号和双引号都是可以的，但是一般都是使用单引号，因此这里设置此属性为`true`；
-- `trailingComma：` 多行使用拖尾逗号，也就是说在定义多个属性或者方法的时候，最终结束需要使用逗号，最后一个方法或者属性不加逗号，这里使用none，表示不加
-</code></pre>
-<p><code>.prettierrc</code>文件还有很多其他的配置，可以自行添加，不做赘述。</p>
-<ol start="5">
-<li>配置 vscode，实现保存文件的时候，自动按照配置的规则，对代码不符合要求的部分进行校验的修改。<ul>
-<li>点击 vscode 的左下角设置，进入设置页面；</li>
-<li>在设置页面搜索<code>save</code>;</li>
-<li>找到<code>Editor:Fromat On Save</code>，将其选中。</li>
-</ul>
-</li>
-</ol>
-<p>通过以上配置即可使用啦！</p>
-<p><strong>注意问题：</strong></p>
-<ol>
-<li><code>Prettier</code>和<code>eslint</code>存在冲突，Prettier 认为方法名和后面的括号应该放在一起，中间没有空格，但是 eslint 觉得方法和括号之间需要有空格，此时会报错，这个可以在<code>.eslintrc.js</code>文件中增加以下配置。（但是在高版本里面这个冲突问题好像已经不存在了）</li>
-</ol>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token string-property property">'Space-before-function-paren'</span><span class="token operator">:</span> <span class="token string">'off'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<ol start="2">
-<li>制表符在<code>prettier</code>中是 2 个字符，而在 Vscode 默认是 4 个，需要在设置里面，将制表符修改成 2 个字符。找到<code>Edit:Tab size</code>选项，将其值改为 2。</li>
-<li>如果存在多个代码格式化工具，要么卸载，要么通过右击文件内容区域，选择格式化文档将<code>Prettier</code>设置为默认即可。</li>
-</ol>
-
                 
             </div>
             <hr/>
@@ -2868,48 +2812,46 @@ app<span class="token punctuation">.</span><span class="token function">componen
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/vue-study-node/">
+                <a href="/2023/03/mac-homebrew-install/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="Vue3知识学习笔记">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="Mac电脑上安装Homebrew工具">
                         
-                        <span class="card-title">Vue3知识学习笔记</span>
+                        <span class="card-title">Mac电脑上安装Homebrew工具</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            不会前端开发的后端研发人员不是个好爸爸，所以当了爸爸的我要多学习，给未来的程序猿小朋友做个榜样。
+                            你有没有遇到在mac中安装各种软件很费劲，比如安装nginx，就会因为依赖包的问题各种折磨你，但是使用Homebrew一键安装即可。随之而来的就是Homebrew安装问题，下面来一起讨论讨论……
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-30
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Vue/" class="post-category">
-                                    Vue
+                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
+                                    最佳实践
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/vue3/">
-                        <span class="chip bg-color">vue3</span>
+                    <a href="/tags/Homebrew/">
+                        <span class="chip bg-color">Homebrew</span>
                     </a>
                     
                 </div>
@@ -3153,7 +3095,7 @@ app<span class="token punctuation">.</span><span class="token function">componen
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">676k</span>
+                        class="white-color">677.5k</span>
             
             
             
