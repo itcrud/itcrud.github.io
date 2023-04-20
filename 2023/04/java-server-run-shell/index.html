@@ -371,7 +371,26 @@ xxx.jar <span class="token operator">&gt;</span> /data/log.txt <span class="toke
 
 <p>为什么要用 <code>nohup</code> 来启动命令。<br>首先看正常启动 java 应用的方式，是通过<code>java -jar xxx.jar</code>命令，但是存在一个问题就是退出到命令行后，应用就会被关闭，最为临时调试使用可以，不能保证一直运行。<br>那通过<code>java -ajr xxx.jar &amp;</code>呢，这个也不行，虽然退出到命令行后，应用不会退出，但是当关闭终端连接后，应用还是被关闭。<br>最终版还是需要用到 <code>nohup</code> 命令，可以保证在关闭终端连接后，应用依然能够正常运行。</p>
 <h2 id="命令解析"><a href="#命令解析" class="headerlink" title="命令解析"></a>命令解析</h2><p><strong>针对 log 日志文件前的<code>&gt;</code>说明：</strong></p>
-<p>|取值|含义|<br>|0|stdin 标准输入（一般是键盘）|<br>|1|stdout 标准输出（一般是显示屏，是用户终端控制台）|<br>|2|stderr 标准错误（错误信息输出）|</p>
+<table>
+<thead>
+<tr>
+<th align="center">取值</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">stdin 标准输入（一般是键盘）</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">stdout 标准输出（一般是显示屏，是用户终端控制台）</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">stderr 标准错误（错误信息输出）</td>
+</tr>
+</tbody></table>
 <p><strong>针对<code>&gt; /data/log.txt</code>说明：</strong><code>/data/log.txt</code> 表示将标准输出输出到指定的文件中，也就相当于 <code>/data/log.txt</code>。</p>
 <p>如果在项目中有将错误日志和标准输出日志分离的需求，可以加上<code>2&gt; error.log</code>。<br>但是很多时候都会只用一个标准输出文件，可以将标准错误的日志信息重定向到标准输出文件，也就是将两个文件的内容合并在一个文件中输出，此时可以用<code>2&gt;&amp;1</code>。<br>最终形成组合命令就是<code>&gt; /data/log.txt 2&gt;&amp;1</code>。</p>
 <p><strong>其他配置参数：</strong></p>

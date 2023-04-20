@@ -497,7 +497,26 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="属性选择器"><a href="#属性选择器" class="headerlink" title="属性选择器"></a>属性选择器</h2><p>CSS2 中就有属性选择器，是针对确定的属性名，在 CSS3 中对其进行了拓展，增加了三种通配符模糊匹配。如下：</p>
-<p>| 属性选择器 | 功能描述 |<br>| E[attr^=’val’] | 选择匹配元素 E（标签名），且 E 元素定义了属性 attr，其属性值是以 val 开头的任何字符串 |<br>| E[attr$=’val’] | 选择匹配元素 E（标签名），且 E 元素定义了属性 attr，其属性值是以 val 结尾的任何字符串 |<br>| E[attr*=’val’] | 选择匹配元素 E（标签名），且 E 元素定义了属性 attr，其属性值是包含 val 的任何字符串 |</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性选择器</th>
+<th align="center">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">E[attr^=’val’]</td>
+<td align="center">选择匹配元素 E（标签名），且 E 元素定义了属性 attr，其属性值是以 val 开头的任何字符串</td>
+</tr>
+<tr>
+<td align="center">E[attr$=’val’]</td>
+<td align="center">选择匹配元素 E（标签名），且 E 元素定义了属性 attr，其属性值是以 val 结尾的任何字符串</td>
+</tr>
+<tr>
+<td align="center">E[attr*=’val’]</td>
+<td align="center">选择匹配元素 E（标签名），且 E 元素定义了属性 attr，其属性值是包含 val 的任何字符串</td>
+</tr>
+</tbody></table>
 <p><strong>示例代码：</strong></p>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">div[class^="demo"]</span> <span class="token punctuation">{</span>
   <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
@@ -552,7 +571,73 @@
 <h2 id="伪类选择器：nth-child-n"><a href="#伪类选择器：nth-child-n" class="headerlink" title="伪类选择器：nth-child(n)"></a>伪类选择器：nth-child(n)</h2><p><code>:nth-child(n)</code>选择器用来定位某个父元素的一个或多个特定的子元素。其中“n”是其参数，而且可以是整数值(1,2,3,4)，也可以是表达式(2n+1、-n+5)和关键词(odd-奇数、even-偶数)，但参数 n 的起始值始终是 1，而不是 0。也就是说，参数 n 的值为 0 时，选择器将选择不到任何匹配的元素。</p>
 <p><strong>书写格式：</strong><code>F &gt; E:nth-child(n)</code>，F 表示父元素。</p>
 <p><strong>经验与技巧：</strong>当<code>:nth-child(n)</code>选择器中的 n 为一个表达式时，其中 n 是从 0 开始计算，当表达式的值为 0 或小于 0 的时候，不选择任何匹配的元素。如下表所示：</p>
-<p>|n|2n(偶数:even)|2n+1(奇数：odd)|4n+1|4n|5n-2|-n+3|<br>|0|0|1|1|0|-|3|<br>|1|2|3|5|4|3|2|<br>|2|4|5|9|8|8|1|<br>|3|6|7|13|12|13|0|<br>|4|8|9|17|16|18|-1|<br>|5|10|11|21|20|23|-2|</p>
+<table>
+<thead>
+<tr>
+<th align="center">n</th>
+<th align="center">2n(偶数:even)</th>
+<th align="center">2n+1(奇数：odd)</th>
+<th align="center">4n+1</th>
+<th align="center">4n</th>
+<th align="center">5n-2</th>
+<th align="center">-n+3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">-</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">9</td>
+<td align="center">8</td>
+<td align="center">8</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">6</td>
+<td align="center">7</td>
+<td align="center">13</td>
+<td align="center">12</td>
+<td align="center">13</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">8</td>
+<td align="center">9</td>
+<td align="center">17</td>
+<td align="center">16</td>
+<td align="center">18</td>
+<td align="center">-1</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">10</td>
+<td align="center">11</td>
+<td align="center">21</td>
+<td align="center">20</td>
+<td align="center">23</td>
+<td align="center">-2</td>
+</tr>
+</tbody></table>
 <p><strong>示例代码：</strong></p>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token comment">/**可以用于多行或者多列元素，间隔颜色设置 */</span>
 <span class="token selector">ul &gt; li:nth-child(2n)</span> <span class="token punctuation">{</span>
@@ -738,7 +823,7 @@
   <span class="token property">background</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>过渡函数 transition-timing-function：</strong><br>|函数名称|功能描述|<br>|ease|<strong>默认值</strong>，从初始状态到终止状态，速度之间变慢，逐渐变慢|<br>|linear|从初始状态到终止状态，采用恒定的速度|<br>|ease-in|从初始状态到终止状态，速度越来越快，是一种加速状态，称为渐显效果|<br>|ease-out|从初始状态到终止状态，速度越来越慢，是一种减速状态，称为渐隐效果|<br>|ease-in-out|从初始状态到终止状态，先加速再减速，称为渐显渐隐效果|</p>
+<p><strong>过渡函数 transition-timing-function：</strong><br>|函数名称|功能描述|<br>| :–: | :–: |<br>|ease|<strong>默认值</strong>，从初始状态到终止状态，速度之间变慢，逐渐变慢|<br>|linear|从初始状态到终止状态，采用恒定的速度|<br>|ease-in|从初始状态到终止状态，速度越来越快，是一种加速状态，称为渐显效果|<br>|ease-out|从初始状态到终止状态，速度越来越慢，是一种减速状态，称为渐隐效果|<br>|ease-in-out|从初始状态到终止状态，先加速再减速，称为渐显渐隐效果|</p>
 <h2 id="动画效果：-keyframes"><a href="#动画效果：-keyframes" class="headerlink" title="动画效果：@keyframes"></a>动画效果：@keyframes</h2><p><code>@keyframes</code>用于定义动画的关键帧。</p>
 <p><strong>书写格式：</strong></p>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token comment">/**frameName表示定义的动画关键帧名称 */</span>
@@ -773,7 +858,7 @@
   <span class="token property">animation-duration</span><span class="token punctuation">:</span> 1s<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="动画效果：animation-timing-function"><a href="#动画效果：animation-timing-function" class="headerlink" title="动画效果：animation-timing-function"></a>动画效果：animation-timing-function</h2><p><code>animation-timing-function</code>表示动画的播放方式，采用的取值和<code>transition-timing-function</code>形同。<br>|函数名称|功能描述|<br>|ease|<strong>默认值</strong>，从初始状态到终止状态，速度之间变慢，逐渐变慢|<br>|linear|从初始状态到终止状态，采用恒定的速度|<br>|ease-in|从初始状态到终止状态，速度越来越快，是一种加速状态，称为渐显效果|<br>|ease-out|从初始状态到终止状态，速度越来越慢，是一种减速状态，称为渐隐效果|<br>|ease-in-out|从初始状态到终止状态，先加速再减速，称为渐显渐隐效果|</p>
+<h2 id="动画效果：animation-timing-function"><a href="#动画效果：animation-timing-function" class="headerlink" title="动画效果：animation-timing-function"></a>动画效果：animation-timing-function</h2><p><code>animation-timing-function</code>表示动画的播放方式，采用的取值和<code>transition-timing-function</code>形同。<br>|函数名称|功能描述|<br>| :–: | :–: |<br>|ease|<strong>默认值</strong>，从初始状态到终止状态，速度之间变慢，逐渐变慢|<br>|linear|从初始状态到终止状态，采用恒定的速度|<br>|ease-in|从初始状态到终止状态，速度越来越快，是一种加速状态，称为渐显效果|<br>|ease-out|从初始状态到终止状态，速度越来越慢，是一种减速状态，称为渐隐效果|<br>|ease-in-out|从初始状态到终止状态，先加速再减速，称为渐显渐隐效果|</p>
 <p><strong>书写格式：</strong><code>animation-timing-function: ease;</code>。</p>
 <p><strong>示例代码：</strong></p>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.demo</span> <span class="token punctuation">{</span>
@@ -801,7 +886,30 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="动画效果：animation-fill-mode"><a href="#动画效果：animation-fill-mode" class="headerlink" title="动画效果：animation-fill-mode"></a>动画效果：animation-fill-mode</h2><p>animation-fill-mode 属性定义在动画开始之前和结束之后发生的操作。主要具有四个属性值：none、forwards、backwords 和 both。其四个属性值对应效果如下：</p>
-<p>|属性值|效果|<br>|none|默认值，表示动画将按预期进行和结束，在动画完成其最后一帧时，动画会反转到初始帧处|<br>|forwards|表示动画在结束后继续应用最后的关键帧的位置|<br>|backwards|会在向元素应用动画样式时迅速应用动画的初始帧|<br>|both|元素动画同时具有 forwards 和 backwards 效果|</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性值</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">none</td>
+<td align="center">默认值，表示动画将按预期进行和结束，在动画完成其最后一帧时，动画会反转到初始帧处</td>
+</tr>
+<tr>
+<td align="center">forwards</td>
+<td align="center">表示动画在结束后继续应用最后的关键帧的位置</td>
+</tr>
+<tr>
+<td align="center">backwards</td>
+<td align="center">会在向元素应用动画样式时迅速应用动画的初始帧</td>
+</tr>
+<tr>
+<td align="center">both</td>
+<td align="center">元素动画同时具有 forwards 和 backwards 效果</td>
+</tr>
+</tbody></table>
 <p>书写格式：<code>animation-fill-mode: none | forwards | backwards | both</code>。</p>
 <p>示例代码：</p>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.demo</span> <span class="token punctuation">{</span>
@@ -838,7 +946,35 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="CSS3-兼容性问题"><a href="#CSS3-兼容性问题" class="headerlink" title="CSS3 兼容性问题"></a>CSS3 兼容性问题</h2><p>在很多浏览器中，对 CSS3 兼容不是很友好，在直接使用 CSS3 的样式时，会出现不生效的情况，因此需要在这些属性前加上对应的前缀。如何加如下表：</p>
-<p>|前缀|浏览器|示例代码|<br>|-webkit|chrome 和 safari|<code>-webkit-transition</code>|<br>|-moz|firefox|<code>-moz-animation</code>|<br>|-ms|IE|<code>-ms-animation</code>|<br>|-o|opera|<code>-o-animation</code>|</p>
+<table>
+<thead>
+<tr>
+<th align="center">前缀</th>
+<th align="center">浏览器</th>
+<th align="center">示例代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-webkit</td>
+<td align="center">chrome 和 safari</td>
+<td align="center"><code>-webkit-transition</code></td>
+</tr>
+<tr>
+<td align="center">-moz</td>
+<td align="center">firefox</td>
+<td align="center"><code>-moz-animation</code></td>
+</tr>
+<tr>
+<td align="center">-ms</td>
+<td align="center">IE</td>
+<td align="center"><code>-ms-animation</code></td>
+</tr>
+<tr>
+<td align="center">-o</td>
+<td align="center">opera</td>
+<td align="center"><code>-o-animation</code></td>
+</tr>
+</tbody></table>
 <p>也就是意味着，在实际开发中，使用到这些 CSS3 新特性，就要重复写五遍，以达到兼容效果。如下示例：</p>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.demo</span> <span class="token punctuation">{</span>
   <span class="token property">transition</span><span class="token punctuation">:</span> all 1s ease-in<span class="token punctuation">;</span>
