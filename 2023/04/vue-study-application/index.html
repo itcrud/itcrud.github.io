@@ -336,14 +336,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5k
+                    6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    20 分
+                    24 分
                 </div>
                 
 
@@ -361,7 +361,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="normalize-css-文件的安装"><a href="#normalize-css-文件的安装" class="headerlink" title="normalize.css 文件的安装"></a>normalize.css 文件的安装</h2><p>normalize.css 的作用是在项目编译打包的时候磨平各浏览器对 css 的不同展示带来的差异。<br>安装命令<code>npm install mormalize.css --save</code>。</p>
+                <h2 id="normalize-css-文件的安装"><a href="#normalize-css-文件的安装" class="headerlink" title="normalize.css 文件的安装"></a>normalize.css 文件的安装</h2><p>normalize.css 的作用是在项目编译打包的时候磨平各浏览器对 css 的不同展示带来的差异。<br>安装命令<code>npm install mormalize.css --save</code>。<br>安装完成后，在<code>main.js</code>文件中导入。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token string">"normalize.css"</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h2 id="eslint-和-Prettier-实现代码统一规范"><a href="#eslint-和-Prettier-实现代码统一规范" class="headerlink" title="eslint 和 Prettier 实现代码统一规范"></a>eslint 和 Prettier 实现代码统一规范</h2><p>在管理前端代码过程中，或者在开发过程中，总是会有不符合规范的编码，如双引号和单引号的混合使用，没有格式化代码，没有层次感等等。这个时候 vue 中的一些插件给我们很好的解决了，目前了解的最好的方案就是<code>eslint + Prettier</code>实现。</p>
 <p><strong>配置过程：</strong></p>
 <ol>
@@ -938,6 +940,168 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>说明：这种搜索一般都是配合 select 选择器使用，效果很好。</strong></p>
+<h2 id="全局日期处理工具-day-js"><a href="#全局日期处理工具-day-js" class="headerlink" title="全局日期处理工具 day.js"></a>全局日期处理工具 day.js</h2><p>在定义 svgIcon 的时候就是使用全局定义，日期处理插件可能在整个项目都会使用到，和 svgIcon 一样，定义一个全局日期处理工具，是个不错的选择。</p>
+<ol>
+<li><p>安装<code>day.js</code>插件，执行<code>npm i dayjs</code>；</p>
+</li>
+<li><p>定义个 filters 工具类，编写对应的处理代码；</p>
+</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> dayjs <span class="token keyword">from</span> <span class="token string">"dayjs"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> dateFilter <span class="token operator">=</span> <span class="token punctuation">(</span>val<span class="token punctuation">,</span> format <span class="token operator">=</span> <span class="token string">"YYYY-MM-DD"</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 判断是不是数值类型，不是则进行转换</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isNaN</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    val <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token function">dayjs</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>format<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token parameter">app</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  app<span class="token punctuation">.</span>config<span class="token punctuation">.</span>globalProperties<span class="token punctuation">.</span>$filters <span class="token operator">=</span> <span class="token punctuation">{</span> dateFilter <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>在<code>main.js</code>中导入封装后的日期全局工具；</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 导入工具</span>
+<span class="token keyword">import</span> installFilters <span class="token keyword">from</span> <span class="token string">"./filters"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">createApp</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 安装到全局</span>
+<span class="token function">installFilters</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="4">
+<li>工具的使用</li>
+</ol>
+<p>在 template 中使用工具</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 伪代码，dateTime是需要转换的日期 --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>{{ $filters.dateFilter(dateTime) }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">/**在js中调用 */</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> getCurrentInstance <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vue'</span><span class="token punctuation">;</span>
+<span class="token comment">// 获取当前对象，就相当于vue2中的this</span>
+<span class="token comment">// 在vue3中没有this，通过这种方式获取</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span>instance<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">getCurrentInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 调用方法</span>
+<span class="token keyword">const</span> dateTime <span class="token operator">=</span> instance<span class="token punctuation">.</span>$filters<span class="token punctuation">.</span><span class="token function">dateFilter</span><span class="token punctuation">(</span>timestamp<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过这种方式，其实还可以自己定义日期工具类，使用<code>new Date()</code>的相关 API 实现。</p>
+<h2 id="打包发布"><a href="#打包发布" class="headerlink" title="打包发布"></a>打包发布</h2><p>打包发布关键问题就是 nginx 的配置，nginx 配置分为两种情况，一种是直接<code>location / {}</code>，一种是<code>location /xxx {}</code>。分别配置如下：</p>
+<ul>
+<li>以根目录配置 location</li>
+</ul>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">server {
+  listen 8080;
+  server_name localhost;
+  # 目录浏览
+  autoindex on;
+  # 缓存处理
+  add_header Cache-Control 'no-cache, must-revalidate';
+  location / {
+    root /usr/local/nginx/dist/;
+    # 跨域
+    add_header Access-Control-Allow-Origin *;
+    # 返回index.html
+    try_files $uri $uri/ /index.html;
+  }
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>以非根目录配置 location</li>
+</ul>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">location /xxx {
+  alias /usr/local/nginx/xxx;
+  # 跨域
+  add_header Access-Control-Allow-Origin *;
+  try_files $uri $uri/ /xxx/index.html;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>注意：在打包之前，需要配置一下项目的访问路径，正常不配置路径时，对应的根目录配置。</strong></p>
+<h2 id="数字展示动态效果-countup-js"><a href="#数字展示动态效果-countup-js" class="headerlink" title="数字展示动态效果 countup.js"></a>数字展示动态效果 countup.js</h2><p>数字展示动态效果表示在页面加载的时候，数字不是直接展示，而是从 0 开始快速递增到实际值的过程。</p>
+<ol>
+<li>安装<code>countup.js</code>，通过<code>npm i countup.js --save</code>命令安装；</li>
+<li>在使用的地方导入，使用<code>import { CountUp } from 'countup.js'</code>导入；</li>
+<li>创建<code>CountUp</code>并使用。</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// CountUp的使用需要三个参数，分别是当前的dom对象，实际值，操作项</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> CountUp <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'countup.js'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ref<span class="token punctuation">,</span>onMounted <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vue'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> targetDom <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">onMounted</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+  <span class="token comment">// 配置操作项</span>
+  <span class="token keyword">const</span> options <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 小数点位，这里表示数值的小数位数</span>
+    <span class="token literal-property property">decimalPlaces</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span>
+    <span class="token comment">// 动态效果时间，单位秒</span>
+    <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token number">1.3</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token comment">// 创建完成后，通过start方法启动</span>
+  <span class="token keyword">new</span> <span class="token class-name">CountUp</span><span class="token punctuation">(</span>targetDom<span class="token punctuation">,</span> <span class="token number">2345.12</span><span class="token punctuation">,</span>options<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Echart-js-使用步骤"><a href="#Echart-js-使用步骤" class="headerlink" title="Echart.js 使用步骤"></a>Echart.js 使用步骤</h2><p>Echart.js 使用步骤基本都是相同的，唯一不同的 Echart 内容是不同的。实现步骤如下：</p>
+<ol>
+<li>安装 Echart.js，执行<code>npm i echart.js --save</code>命令；</li>
+<li>代码体现如下</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token comment">&lt;!-- 2. 创建一个标签，用来放echart图表 --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>echartContainer<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 1. 导入echart</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> echarts <span class="token keyword">from</span> <span class="token string">"echart.js"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ref<span class="token punctuation">,</span> onMounted <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"vue"</span><span class="token punctuation">;</span>
+<span class="token comment">// 2. 创建一个标签，用来放echart图表</span>
+<span class="token keyword">const</span> echartContainer <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 3. 页面加载的时候构建图表，通过echarts.init方法</span>
+<span class="token keyword">let</span> myEchart<span class="token punctuation">;</span>
+<span class="token function">onMounted</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  myEchart <span class="token operator">=</span> echarts<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>echartContainer<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">renderChart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">renderChart</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 4. 构建options 配置对象（echart 渲染的核心）</span>
+  <span class="token comment">// 这里可以参考官方的文档：https://echarts.apache.org/zh/option.html#title</span>
+  <span class="token keyword">const</span> options <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 标题</span>
+    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token string">"标题"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 图例</span>
+    <span class="token literal-property property">legend</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 是个数组，表示可以添加多个图例，并设置对应的样式、icon等</span>
+      <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"图例1"</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">icon</span><span class="token operator">:</span> <span class="token string">"图例图标"</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">textStyle</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">"red"</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 表示X轴的值</span>
+    <span class="token literal-property property">xAxis</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">,</span> <span class="token string">"D"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 表示Y轴的配置</span>
+    <span class="token literal-property property">yAxis</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 图表类型，比如柱状图，折线图等，可以设置多个</span>
+    <span class="token literal-property property">series</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"销量"</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"bar"</span><span class="token punctuation">,</span> <span class="token comment">//图表的类型</span>
+        <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">120</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// 图表的数据</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token comment">// 5. 将options加入到当前图表中</span>
+  myEchart<span class="token punctuation">.</span><span class="token function">setOption</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -1392,7 +1556,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">689.1k</span>
+                        class="white-color">692.8k</span>
             
             
             

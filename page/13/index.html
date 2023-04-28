@@ -328,6 +328,55 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2018/07/java-deadlock/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="死锁的两种体现形式分析和解决方案">
+                            
+                            <span class="card-title">死锁的两种体现形式分析和解决方案</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                死锁在多线程开发过程中比较经常遇到，并且这个问题很隐性，很难排查到问题的所在，即使是查看项目的日志都找不到，很让人头疼。死锁的体现形式主要有两种，分别是简单的死锁，在写代码的时候很容易避免，动态死锁就很麻烦。因为出现死锁的主要原因是两个锁的加锁顺序不同，动态死锁看似是加载顺序都相同，但是实际不同，所以一旦发生，就很难排查。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-07-08
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    并发编程
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E6%AD%BB%E9%94%81/">
+                            <span class="chip bg-color">死锁</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2018/07/dlm-redis-lock/">
                         <div class="card-image">
                             
@@ -572,16 +621,16 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/spring%E6%B3%A8%E8%A7%A3/">
-                            <span class="chip bg-color">spring注解</span>
-                        </a>
-                        
                         <a href="/tags/lazy/">
                             <span class="chip bg-color">lazy</span>
                         </a>
                         
                         <a href="/tags/scope/">
                             <span class="chip bg-color">scope</span>
+                        </a>
+                        
+                        <a href="/tags/spring%E6%B3%A8%E8%A7%A3/">
+                            <span class="chip bg-color">spring注解</span>
                         </a>
                         
                     </div>
@@ -912,63 +961,6 @@
             </div>
               <!-- 隐藏某个文章 -->
             
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/06/java-thread-reentrantlock/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/7.jpg" class="responsive-img" alt="死磕Java并发：J.U.C之重入锁ReentrantLock">
-                            
-                            <span class="card-title">死磕Java并发：J.U.C之重入锁ReentrantLock</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                ReentrantLock还提供了公平锁也非公平锁的选择，构造方法接受一个可选的公平参数（默认非公平锁），当设置为true时，表示公平锁，否则为非公平锁。公平锁与非公平锁的区别在于公平锁的锁获取是有顺序的。但是公平锁的效率往往没有非公平锁的效率高，在许多线程访问的情况下，公平锁表现出较低的吞吐量……
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-06-11
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    并发编程
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/ReentrantLock/">
-                            <span class="chip bg-color">ReentrantLock</span>
-                        </a>
-                        
-                        <a href="/tags/%E6%98%BE%E7%A4%BA%E9%94%81/">
-                            <span class="chip bg-color">显示锁</span>
-                        </a>
-                        
-                        <a href="/tags/%E9%87%8D%E5%85%A5%E9%94%81/">
-                            <span class="chip bg-color">重入锁</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
         </div>
     </article>
 
@@ -1072,7 +1064,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">689.1k</span>
+                        class="white-color">692.8k</span>
             
             
             
