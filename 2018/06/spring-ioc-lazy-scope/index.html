@@ -302,16 +302,16 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/spring%E6%B3%A8%E8%A7%A3/">
+                                <span class="chip bg-color">spring注解</span>
+                            </a>
+                        
                             <a href="/tags/lazy/">
                                 <span class="chip bg-color">lazy</span>
                             </a>
                         
                             <a href="/tags/scope/">
                                 <span class="chip bg-color">scope</span>
-                            </a>
-                        
-                            <a href="/tags/spring%E6%B3%A8%E8%A7%A3/">
-                                <span class="chip bg-color">spring注解</span>
                             </a>
                         
                     </div>
@@ -344,7 +344,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.6k
                 </div>
                 
 
@@ -369,10 +369,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>面试的时候总是会遇到各种Spring主要功能点的问题，因为Spring对于java来说太重要。如Spring的IOC容器、动态代理、事务、切面编程等等。后期再更新文章的时候我们会慢慢讨论这些东西，这里现在我们先看其中一个功能点IOC容器，其实也不算是说IOC容器，主要的重点是放在Spring注解对IOC容器初始化的影响。也是在面试中最常说漏的。</p>
-<h2 id="1-面试模拟"><a href="#1-面试模拟" class="headerlink" title="1. 面试模拟"></a>1. 面试模拟</h2><p>面试官：小明，看你的简历中说对Spring有熟练的理解，那问你一个关于Spring IOC容器的问题。<br>小明：嗯！<br>面试官：我们在Spring中都会使用到IOC容器，那就说一下IOC初始化的基本实现原理吧。<br>小明：在项目启动的时候，Spring会去创建并加载对象到IOC容器中，在加载的过程可以通过以下几种方式，xml、Configuration……<br>面试官：嗯，说的挺好的，但是如果我在创建bean的时候，使用Scope和Lazy注解，你能解释以下这两个注解对初始化bean有什么影响。<br>小明：……不太清楚。<br>小明很明显对IOC容器的初始化理解还是很不错的，但是理解的都是普通模式下情景，却没有理解到外界会对这个过程的影响，也就是太片面。关于Scope和Lazy注解到底对Spring的IOC容器的初始化有什么影响呢。</p>
-<h2 id="2-Scope注解的使用"><a href="#2-Scope注解的使用" class="headerlink" title="2. Scope注解的使用"></a>2. Scope注解的使用</h2><p><code>@Scope</code>注解在项目中很少用到，但是实际上底层是用到的，不过是给了默认的值。</p>
-<h3 id="2-1-Scope注解属性"><a href="#2-1-Scope注解属性" class="headerlink" title="2.1 Scope注解属性"></a>2.1 Scope注解属性</h3><p>先瞅瞅源码：</p>
+                <p>面试的时候总是会遇到各种 Spring 主要功能点的问题，因为 Spring 对于 java 来说太重要。如 Spring 的 IOC 容器、动态代理、事务、切面编程等等。后期再更新文章的时候我们会慢慢讨论这些东西，这里现在我们先看其中一个功能点 IOC 容器，其实也不算是说 IOC 容器，主要的重点是放在 Spring 注解对 IOC 容器初始化的影响。也是在面试中最常说漏的。</p>
+<h2 id="1-面试模拟"><a href="#1-面试模拟" class="headerlink" title="1. 面试模拟"></a>1. 面试模拟</h2><p>面试官：小明，看你的简历中说对 Spring 有熟练的理解，那问你一个关于 Spring IOC 容器的问题。<br>小明：嗯！<br>面试官：我们在 Spring 中都会使用到 IOC 容器，那就说一下 IOC 初始化的基本实现原理吧。<br>小明：在项目启动的时候，Spring 会去创建并加载对象到 IOC 容器中，在加载的过程可以通过以下几种方式，xml、Configuration……<br>面试官：嗯，说的挺好的，但是如果我在创建 bean 的时候，使用 Scope 和 Lazy 注解，你能解释以下这两个注解对初始化 bean 有什么影响。<br>小明：……不太清楚。<br>小明很明显对 IOC 容器的初始化理解还是很不错的，但是理解的都是普通模式下情景，却没有理解到外界会对这个过程的影响，也就是太片面。关于 Scope 和 Lazy 注解到底对 Spring 的 IOC 容器的初始化有什么影响呢。</p>
+<h2 id="2-Scope-注解的使用"><a href="#2-Scope-注解的使用" class="headerlink" title="2. Scope 注解的使用"></a>2. Scope 注解的使用</h2><p><code>@Scope</code>注解在项目中很少用到，但是实际上底层是用到的，不过是给了默认的值。</p>
+<h3 id="2-1-Scope-注解属性"><a href="#2-1-Scope-注解属性" class="headerlink" title="2.1 Scope 注解属性"></a>2.1 Scope 注解属性</h3><p>先瞅瞅源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Alias for {@link #scopeName}.
  * @see #scopeName
@@ -393,17 +393,18 @@
  */</span>
 <span class="token annotation punctuation">@AliasFor</span><span class="token punctuation">(</span><span class="token string">"value"</span><span class="token punctuation">)</span>
 <span class="token class-name">String</span> <span class="token function">scopeName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>scopeName对应的值有四个分别是：</p>
+
+<p><code>scopeName</code> 对应的值有四个分别是：</p>
 <ul>
-<li>singleton，单例模式，这个也是默认的模式</li>
-<li>prototype，多例模式，表示每次使用这个对象都是新创建的</li>
-<li>request，每次请求对应一个实例，针对web应用</li>
-<li>session，每个会话对应一个实例，针对web应用</li>
+<li><code>singleton</code>，单例模式，这个也是默认的模式</li>
+<li><code>prototype</code>，多例模式，表示每次使用这个对象都是新创建的</li>
+<li><code>request</code>，每次请求对应一个实例，针对 web 应用</li>
+<li><code>session</code>，每个会话对应一个实例，针对 web 应用</li>
 </ul>
-<p>这里对session、request模式不做太多说明，博友们有兴趣可以自己研究一下。</p>
+<p>这里对 <code>session</code>、<code>request</code> 模式不做太多说明，博友们有兴趣可以自己研究一下。</p>
 <h3 id="2-2-案例说明-Scope"><a href="#2-2-案例说明-Scope" class="headerlink" title="2.2 案例说明@Scope"></a>2.2 案例说明@Scope</h3><p>直接上代码，一切都不是问题。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Project: lazy-scope
  * @Desc: 实体类
  */</span>
@@ -445,7 +446,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Project: lazy-scope
  * @Desc: 配置类
  */</span>
@@ -459,7 +460,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Project: lazy-scope
  * @Desc: 测试类
  */</span>
@@ -478,23 +479,26 @@
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"===&gt;"</span><span class="token operator">+</span><span class="token punctuation">(</span>person1<span class="token operator">==</span>person2<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>运行测试类的结果如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>初始化bean
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>配置类加载结束
 <span class="token class-name">Person</span><span class="token punctuation">{</span>name<span class="token operator">=</span>'zdydoit'<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">22</span><span class="token punctuation">}</span>
 <span class="token class-name">Person</span><span class="token punctuation">{</span>name<span class="token operator">=</span>'zdydoit'<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">22</span><span class="token punctuation">}</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>从运行的结果可以看出来，在IOC容器初始化结束之前，初始化bean就已经完成，并且在判断两次获取到的person实例是否相等时，得到的返回值是true，这个就说明当<code>@Scope</code>为<code>singleton</code>的时候，在容器加载的时候就会将bean创建好并放到IOC容器中，等待被获取使用，bean对象是单例的。<br>现在将配置类上注释掉的<code>@Scope</code>放开，此时再运行一下测试类的代码得到的结果如下：</p>
+
+<p>从运行的结果可以看出来，在 IOC 容器初始化结束之前，初始化 bean 就已经完成，并且在判断两次获取到的 person 实例是否相等时，得到的返回值是 true，这个就说明当<code>@Scope</code>为<code>singleton</code>的时候，在容器加载的时候就会将 bean 创建好并放到 IOC 容器中，等待被获取使用，bean 对象是单例的。<br>现在将配置类上注释掉的<code>@Scope("prototype")</code>放开，此时再运行一下测试类的代码得到的结果如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>配置类加载结束
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>初始化bean
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>初始化bean
 <span class="token class-name">Person</span><span class="token punctuation">{</span>name<span class="token operator">=</span>'zdydoit'<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">22</span><span class="token punctuation">}</span>
 <span class="token class-name">Person</span><span class="token punctuation">{</span>name<span class="token operator">=</span>'zdydoit'<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">22</span><span class="token punctuation">}</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>和上面结果不同的是，有两次初始化bean，并且初始化bean都是在IOC初始化结束后才执行的，判断两次获取到的bean对象是否相等，返回的是false，可以很明确的知道，两个对象不是同一个。结论就是在IOC容器初始化的时候对于<code>@Scope</code>为<code>prototype</code>时，不会立即创建对象，而是每次使用的时候创建，并且每次都是创建新的对象，之前创建的不复用。</p>
+
+<p>和上面结果不同的是，有两次初始化 bean，并且初始化 bean 都是在 IOC 初始化结束后才执行的，判断两次获取到的 bean 对象是否相等，返回的是 false，可以很明确的知道，两个对象不是同一个。结论就是在 IOC 容器初始化的时候对于<code>@Scope</code>为<code>prototype</code>时，不会立即创建对象，而是每次使用的时候创建，并且每次都是创建新的对象，之前创建的不复用。</p>
 <h2 id="3-案例说明-Lazy"><a href="#3-案例说明-Lazy" class="headerlink" title="3. 案例说明@Lazy"></a>3. 案例说明@Lazy</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 实体类还是使用之前的Person</span>
 <span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Project: lazy-scope
  * @Desc: 配置类
  */</span>
@@ -509,7 +513,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Project: lazy-scope
  * @Desc: 测试类
  */</span>
@@ -526,14 +530,16 @@
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"===&gt;"</span> <span class="token operator">+</span> <span class="token punctuation">(</span>person1 <span class="token operator">==</span> person2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>运行测试类得到的结果如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>配置类初始化结束
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>bean对象初始化
 <span class="token class-name">Person</span><span class="token punctuation">{</span>name<span class="token operator">=</span>'zdydoit'<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">18</span><span class="token punctuation">}</span>
 <span class="token class-name">Person</span><span class="token punctuation">{</span>name<span class="token operator">=</span>'zdydoit'<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">18</span><span class="token punctuation">}</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>bean的初始化是在IOC容器初始化结束以后执行的，也就是在<code>getBean()</code>执行的时候才去做bean的初始化，当第二次<code>getBean()</code>的时候就不会再去初始化，而是采用的第一次bean初始化的对象，最终两个bean的等于判断也是相等的，由此可以看来<code>@Lazy</code>就相当于懒汉模式，第一次请求创建bean，然后bean会被放入到IOC容器中，后续请求直接使用。</p>
-<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>从上面分析看的出来，在Spring容器初始化的时候，并不会把所有的对象都初始化并放到容器中，对于<code>@Scope("prototype")</code>和<code>@Lazy</code>，都是使用的时候去创建，两个不同之处在于一个创建多个（多例），一个创建单个（单例）。<br>从上面的分析，如果在面试的时候问到Spring的IOC容器初始化，是不是又多了一些可以说(zhuang)的机会了。</p>
+
+<p>bean 的初始化是在 IOC 容器初始化结束以后执行的，也就是在<code>getBean()</code>执行的时候才去做 bean 的初始化，当第二次<code>getBean()</code>的时候就不会再去初始化，而是采用的第一次 bean 初始化的对象，最终两个 bean 的等于判断也是相等的，由此可以看来<code>@Lazy</code>就相当于懒汉模式，第一次请求创建 bean，然后 bean 会被放入到 IOC 容器中，后续请求直接使用。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>从上面分析看的出来，在 Spring 容器初始化的时候，并不会把所有的对象都初始化并放到容器中，对于<code>@Scope("prototype")</code>和<code>@Lazy</code>，都是使用的时候去创建，两个不同之处在于一个创建多个（多例），一个创建单个（单例）。<br>从上面的分析，如果在面试的时候问到 Spring 的 IOC 容器初始化，是不是又多了一些可以说(zhuang)的机会了。</p>
 
                 
             </div>
@@ -598,16 +604,16 @@
                     
                         <div class="article-tag">
                             
+                                <a href="/tags/spring%E6%B3%A8%E8%A7%A3/">
+                                    <span class="chip bg-color">spring注解</span>
+                                </a>
+                            
                                 <a href="/tags/lazy/">
                                     <span class="chip bg-color">lazy</span>
                                 </a>
                             
                                 <a href="/tags/scope/">
                                     <span class="chip bg-color">scope</span>
-                                </a>
-                            
-                                <a href="/tags/spring%E6%B3%A8%E8%A7%A3/">
-                                    <span class="chip bg-color">spring注解</span>
                                 </a>
                             
                         </div>
@@ -1000,7 +1006,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             

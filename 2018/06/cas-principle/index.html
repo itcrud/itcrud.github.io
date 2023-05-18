@@ -340,7 +340,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.7k
+                    3.8k
                 </div>
                 
 
@@ -365,8 +365,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>众所周知锁有两种：乐观锁与悲观锁。独占锁是一种悲观锁，而 synchronized  就是一种独占锁，synchronized&nbsp;会导致其它所有未持有锁的线程阻塞，等待持有锁的线程释放锁。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。而乐观锁用到的机制就是CAS。</p>
-<h2 id="1-CAS（Compare-And-Set）"><a href="#1-CAS（Compare-And-Set）" class="headerlink" title="1. CAS（Compare And Set）"></a>1. CAS（Compare And Set）</h2><p>Compare And Set（或Compare And Swap），CAS是解决多线程并行情况下使用锁造成性能损耗的一种机制，CAS操作包含三个操作数——内存位置（V）、预期原值（A）、新值(B)。如果内存位置的值与预期原值相匹配，那么处理器会自动将该位置值更新为新值。否则，处理器不做任何操作。无论哪种情况，它都会在CAS指令之前返回该位置的值。CAS有效地说明了“我认为位置V应该包含值A；如果包含该值，则将B放到这个位置；否则，不要更改该位置，只告诉我这个位置现在的值即可。<br>在java中可以通过锁和循环CAS的方式来实现原子操作。Java中 java.util.concurrent.atomic包相关类就是 CAS的实现，atomic包里包括以下类：</p>
+                <p>众所周知锁有两种：乐观锁与悲观锁。独占锁是一种悲观锁，而 <code>synchronized</code> 就是一种独占锁，<code>synchronized</code> 会导致其它所有未持有锁的线程阻塞，等待持有锁的线程释放锁。所谓乐观锁就是每次不加锁，而是假设没有冲突去完成某项操作，如果因为冲突失败就重试，直到成功为止。而<strong>乐观锁用到的机制就是 CAS</strong>。</p>
+<h2 id="1-CAS（Compare-And-Set）"><a href="#1-CAS（Compare-And-Set）" class="headerlink" title="1. CAS（Compare And Set）"></a>1. CAS（Compare And Set）</h2><p>Compare And Set（或 Compare And Swap），CAS 是解决多线程并行情况下使用锁造成性能损耗的一种机制，CAS 操作包含三个操作数——内存位置（V）、预期原值（A）、新值(B)。如果内存位置的值与预期原值相匹配，那么处理器会自动将该位置值更新为新值。否则，处理器不做任何操作。无论哪种情况，它都会在 CAS 指令之前返回该位置的值。CAS 有效地说明了“我认为位置 V 应该包含值 A；如果包含该值，则将 B 放到这个位置；否则，不要更改该位置，只告诉我这个位置现在的值即可。<br>在 Java 中可以通过锁和循环 CAS 的方式来实现原子操作。Java 中 <code>java.util.concurrent.atomic</code> 包相关类就是 CAS 的实现，<code>atomic</code> 包里包括以下类：</p>
 <table>
 <thead>
 <tr>
@@ -422,112 +422,125 @@
 <td><strong><code>AtomicStampedReference&lt;V&gt;</code></strong></td>
 <td><code>AtomicStampedReference</code> 维护带有整数“标志”的对象引用，可以用原子方式对其进行更新。</td>
 </tr>
-<tr>
-<td>atomic包中的类可将 volatile 值、字段和数组元素的概念扩展到那些也提供原子条件更新操作的类，其形式如下：</td>
-<td></td>
-</tr>
 </tbody></table>
+<p><code>atomic</code> 包中的类可将 <code>volatile</code> 值、字段和数组元素的概念扩展到那些也提供原子条件更新操作的类，其形式如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">boolean</span> <span class="token function">compareAndSet</span><span class="token punctuation">(</span>expectedValue<span class="token punctuation">,</span> updateValue<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>如果此方法（在不同的类间参数类型也不同）当前保持 expectedValue，则以原子方式将变量设置为 updateValue，并在成功时报告 true。此包中的类还包含获取并无条件设置值的方法，以及以下描述的较弱条件的原子更新操作 weakCompareAndSet。<br>这些方法的规范使实现能够使用当代处理器上提供的高效机器级别原子指令。但是在某些平台上，该支持可能需要某种形式的内部锁。因而，该方法不能严格保证不被阻塞 - 执行操作之前可能暂时阻塞线程。</p>
-<h2 id="2-AtomicInteger"><a href="#2-AtomicInteger" class="headerlink" title="2. AtomicInteger"></a>2. AtomicInteger</h2><p>AtomicInteger可以用原子方式更新的 int 值。AtomicInteger 可用在应用程序中（如以原子方式增加的计数器），并且不能用于替换 Integer。但是，此类确实扩展了 Number，允许那些处理基于数字类的工具和实用工具进行统一访问。 我们拿 AtomicInteger为例来学习下 CAS操作是如何实现的。<br>通常情况下，在 Java中，i++等类似操作并不是线程安全的，因为 i++可分为三个独立的操作：获取变量当前值，为该值+1，然后写回新的值。在没有额外资源可以利用的情况下，只能使用加锁才能保证读-改-写这三个操作时“原子性”的。但是利用加锁的方式来实现该功能的话，代码将非常复杂及难以维护，如：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">synchronized</span> <span class="token punctuation">(</span>lock<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-    i<span class="token operator">++</span><span class="token punctuation">;</span>  
+
+<p>如果此方法（在不同的类间参数类型也不同）当前保持 <code>expectedValue</code>，则以原子方式将变量设置为 <code>updateValue</code>，并在成功时报告 <code>true</code>。此包中的类还包含获取并无条件设置值的方法，以及以下描述的较弱条件的原子更新操作 <code>weakCompareAndSet</code>。<br>这些方法的规范使实现能够使用当代处理器上提供的高效机器级别原子指令。但是在某些平台上，该支持可能需要某种形式的内部锁。因而，该方法不能严格保证不被阻塞 - 执行操作之前可能暂时阻塞线程。</p>
+<h2 id="2-AtomicInteger"><a href="#2-AtomicInteger" class="headerlink" title="2. AtomicInteger"></a>2. AtomicInteger</h2><p><code>AtomicInteger</code> 可以用原子方式更新的 <code>int</code> 值。<code>AtomicInteger</code> 可用在应用程序中（如以原子方式增加的计数器），并且不能用于替换 <code>Integer</code>。但是，此类确实扩展了 <code>Number</code>，允许那些处理基于数字类的工具和实用工具进行统一访问。 我们拿 <code>AtomicInteger</code> 为例来学习下 CAS 操作是如何实现的。<br>通常情况下，在 Java 中，<code>i++</code>等类似操作并不是线程安全的，因为 <code>i++</code>可分为三个独立的操作：获取变量当前值，为该值+1，然后写回新的值。在没有额外资源可以利用的情况下，只能使用加锁才能保证读-改-写这三个操作时“原子性”的。但是利用加锁的方式来实现该功能的话，代码将非常复杂及难以维护，如：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">synchronized</span> <span class="token punctuation">(</span>lock<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    i<span class="token operator">++</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>相关类中还需要增加 Object lock等额外标志，这样就带来了很多麻烦，增加了很多业务无关代码，给开发与维护带来了不便。<br>然而利用 atomic包中相关类型就可以很简单实现此操作，以下是一个计数程序实例：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">ArrayList</span></span><span class="token punctuation">;</span>  
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span></span><span class="token punctuation">;</span>  
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>atomic<span class="token punctuation">.</span></span><span class="token class-name">AtomicInteger</span></span><span class="token punctuation">;</span>  
-  
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Counter</span> <span class="token punctuation">{</span>  
-    <span class="token keyword">private</span> <span class="token class-name">AtomicInteger</span> ai <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-    <span class="token keyword">private</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  
-  
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-        <span class="token keyword">final</span> <span class="token class-name">Counter</span> cas <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Thread</span><span class="token punctuation">&gt;</span></span> ts <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Thread</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        <span class="token comment">// 添加100个线程  </span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-            ts<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                    <span class="token comment">// 执行100次计算，预期结果应该是10000  </span>
-                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                        cas<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-                        cas<span class="token punctuation">.</span><span class="token function">safeCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-                    <span class="token punctuation">}</span>  
-                <span class="token punctuation">}</span>  
-            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        <span class="token punctuation">}</span>  
-        <span class="token comment">//开始执行  </span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Thread</span> t <span class="token operator">:</span> ts<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-            t<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        <span class="token punctuation">}</span>  
-        <span class="token comment">// 等待所有线程执行完成  </span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Thread</span> t <span class="token operator">:</span> ts<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-            <span class="token keyword">try</span> <span class="token punctuation">{</span>  
-                t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            <span class="token punctuation">}</span>  
-        <span class="token punctuation">}</span>  
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"非线程安全计数结果："</span><span class="token operator">+</span>cas<span class="token punctuation">.</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程安全计数结果："</span><span class="token operator">+</span>cas<span class="token punctuation">.</span>ai<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-    <span class="token punctuation">}</span>  
-  
-    <span class="token comment">/** 使用CAS实现线程安全计数器 */</span>  
-    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">safeCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-            <span class="token keyword">int</span> i <span class="token operator">=</span> ai<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            <span class="token comment">// 如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值  </span>
-            <span class="token keyword">boolean</span> suc <span class="token operator">=</span> ai<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>suc<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                <span class="token keyword">break</span><span class="token punctuation">;</span>  
-            <span class="token punctuation">}</span>  
-        <span class="token punctuation">}</span>  
-    <span class="token punctuation">}</span>  
-  
-    <span class="token comment">/** 非线程安全计数器 */</span>  
-    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-        i<span class="token operator">++</span><span class="token punctuation">;</span>  
-    <span class="token punctuation">}</span>  
-<span class="token punctuation">}</span>  
+
+<p>相关类中还需要增加 <code>Object lock</code> 等额外标志，这样就带来了很多麻烦，增加了很多业务无关代码，给开发与维护带来了不便。<br>然而利用 <code>atomic</code> 包中相关类型就可以很简单实现此操作，以下是一个计数程序实例：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">ArrayList</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>atomic<span class="token punctuation">.</span></span><span class="token class-name">AtomicInteger</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Counter</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token class-name">AtomicInteger</span> ai <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">final</span> <span class="token class-name">Counter</span> cas <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Thread</span><span class="token punctuation">&gt;</span></span> ts <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Thread</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 添加100个线程</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            ts<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token comment">// 执行100次计算，预期结果应该是10000</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        cas<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        cas<span class="token punctuation">.</span><span class="token function">safeCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">//开始执行</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Thread</span> t <span class="token operator">:</span> ts<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            t<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 等待所有线程执行完成</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Thread</span> t <span class="token operator">:</span> ts<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"非线程安全计数结果："</span><span class="token operator">+</span>cas<span class="token punctuation">.</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程安全计数结果："</span><span class="token operator">+</span>cas<span class="token punctuation">.</span>ai<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/** 使用CAS实现线程安全计数器 */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">safeCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> i <span class="token operator">=</span> ai<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值</span>
+            <span class="token keyword">boolean</span> suc <span class="token operator">=</span> ai<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>suc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/** 非线程安全计数器 */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        i<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 <span class="token comment">/*
-结果：  
-非线程安全计数结果：9867  
+结果：
+非线程安全计数结果：9867
 线程安全计数结果：10000
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其中非线程安全计数器所计算的结果每次都不相同且不正确，而线程安全计数器计算的结果每次都是正确的。可以看到代码中并不含有任何有关 synchronized 关键字的地方，所以 safeCount可以当做一个普通的方法来使用。<br>示例中使用了 compareAndSet方法，那么我们就从此方法开始深入了解 <code>AtomicInteger</code>的用法。</p>
-<h3 id="2-1-compareAndSet方法"><a href="#2-1-compareAndSet方法" class="headerlink" title="2.1 compareAndSet方法"></a>2.1 compareAndSet方法</h3><p>如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">compareAndSet</span><span class="token punctuation">(</span><span class="token keyword">int</span> expect<span class="token punctuation">,</span> <span class="token keyword">int</span> update<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-    <span class="token keyword">return</span> unsafe<span class="token punctuation">.</span><span class="token function">compareAndSwapInt</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> valueOffset<span class="token punctuation">,</span> expect<span class="token punctuation">,</span> update<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-<span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>compareAndSet 调用的是 unsafe.compareAndSwapInt方法。<br>Unsafe类是用于执行低级别、不安全操作的方法集合。尽管这个类和所有的方法都是公开的（public），但是这个类的使用仍然受限，你无法在自己的 java程序中直接使用该类，因为只有授信的代码才能获得该类的实例。该类是用来执行较低级别的操作的，比如获取某个属性在内存中的位置，不过一般人很少会有这样的需求。个人不建议直接使用 Unsafe，它远比原生的 Java开发所需要的测试要多。基于这个原因建议还是使用经过测试的库。如果你只是想自己用 Unsafe，建议你最好在一个独立的类库中进行全面的测试。这限制了Unsafe在你的应用程序中的使用方式，但会给你一个更安全的Unsafe。<br>其中绝大部分方法都调用的是 compareAndSet方法，比如 getAndIncrement：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">getAndIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-        <span class="token keyword">int</span> current <span class="token operator">=</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        <span class="token keyword">int</span> next <span class="token operator">=</span> current <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>  
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>current<span class="token punctuation">,</span> next<span class="token punctuation">)</span><span class="token punctuation">)</span>  
-            <span class="token keyword">return</span> current<span class="token punctuation">;</span>  
-    <span class="token punctuation">}</span>  
+
+<p>其中非线程安全计数器所计算的结果每次都不相同且不正确，而线程安全计数器计算的结果每次都是正确的。可以看到代码中并不含有任何有关 <code>synchronized</code> 关键字的地方，所以 <code>safeCount</code> 可以当做一个普通的方法来使用。<br>示例中使用了 <code>compareAndSet</code> 方法，那么我们就从此方法开始深入了解 <code>AtomicInteger</code>的用法。</p>
+<h3 id="2-1-compareAndSet-方法"><a href="#2-1-compareAndSet-方法" class="headerlink" title="2.1 compareAndSet 方法"></a>2.1 compareAndSet 方法</h3><p>如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">compareAndSet</span><span class="token punctuation">(</span><span class="token keyword">int</span> expect<span class="token punctuation">,</span> <span class="token keyword">int</span> update<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> unsafe<span class="token punctuation">.</span><span class="token function">compareAndSwapInt</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> valueOffset<span class="token punctuation">,</span> expect<span class="token punctuation">,</span> update<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><code>compareAndSet</code> 调用的是 <code>unsafe.compareAndSwapInt</code> 方法。<br>Unsafe 类是用于执行低级别、不安全操作的方法集合。尽管这个类和所有的方法都是公开的（public），但是这个类的使用仍然受限，你无法在自己的 Java 程序中直接使用该类，因为只有授信的代码才能获得该类的实例。该类是用来执行较低级别的操作的，比如获取某个属性在内存中的位置，不过一般人很少会有这样的需求。个人不建议直接使用 Unsafe，它远比原生的 Java 开发所需要的测试要多。基于这个原因建议还是使用经过测试的库。如果你只是想自己用 Unsafe，建议你最好在一个独立的类库中进行全面的测试。这限制了 Unsafe 在你的应用程序中的使用方式，但会给你一个更安全的 Unsafe。<br>其中绝大部分方法都调用的是 <code>compareAndSet</code> 方法，比如 <code>getAndIncrement</code>：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">getAndIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> current <span class="token operator">=</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> next <span class="token operator">=</span> current <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>current<span class="token punctuation">,</span> next<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> current<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其他相关方法都类似，这里就不细说了。<br>CAS虽然很高效的解决原子操作，但是CAS仍然存在三大问题：ABA问题、循环时间长开销大、只能保证一个共享变量的原子操作。<br><strong>ABA问题</strong>：因为CAS需要在操作值的时候检查下值有没有发生变化，如果没有发生变化则更新，但是如果一个值原来是A，变成了B，又变成了A，那么使用CAS进行检查时会发现它的值没有发生变化，但是实际上却变化了。ABA问题的解决思路就是使用版本号。在变量前面追加上版本号，每次变量更新的时候把版本号加一，那么A－B－A 就会变成1A-2B－3A。 从Java1.5开始JDK的 atomic包里提供了一个类AtomicStampedReference 来解决ABA问题。这个类的 compareAndSet方法作用是首先检查当前引用是否等于预期引用，并且当前标志是否等于预期标志，如果全部相等，则以原子方式将该引用和该标志的值设置为给定的更新值。</p>
+
+<p>其他相关方法都类似，这里就不细说了。<br>CAS 虽然很高效的解决原子操作，但是 CAS 仍然存在<strong>三大问题：ABA 问题、循环时间长开销大、只能保证一个共享变量的原子操作</strong>。<br><strong>ABA 问题</strong>：因为 CAS 需要在操作值的时候检查下值有没有发生变化，如果没有发生变化则更新，但是如果一个值原来是 A，变成了 B，又变成了 A，那么使用 CAS 进行检查时会发现它的值没有发生变化，但是实际上却变化了。<strong>ABA 问题的解决思路就是使用版本号</strong>。在变量前面追加上版本号，每次变量更新的时候把版本号加一，那么 A－B－A 就会变成 1A-2B－3A。 从 Java1.5 开始 JDK 的 atomic 包里提供了一个类 <code>AtomicStampedReference</code> 来解决 ABA 问题。这个类的 <code>compareAndSet</code> 方法作用是首先检查当前引用是否等于预期引用，并且当前标志是否等于预期标志，如果全部相等，则以原子方式将该引用和该标志的值设置为给定的更新值。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token function">compareAndSet</span><span class="token punctuation">(</span><span class="token class-name">V</span> expectedReference<span class="token punctuation">,</span> <span class="token class-name">V</span> newReference<span class="token punctuation">,</span> <span class="token keyword">int</span> expectedStamp<span class="token punctuation">,</span> <span class="token keyword">int</span> newStamp<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>如果当前引用 == 预期引用，并且当前标志等于预期标志，则以原子方式将该引用和该标志的值设置为给定的更新值。其中参数代表：expectedReference - 该引用的预期值；newReference - 该引用的新值；expectedStamp - 该标志的预期值；newStamp - 该标志的新值。<br><strong>循环时间长开销大</strong>：自旋CAS如果长时间不成功，会给CPU带来非常大的执行开销。如果JVM能支持处理器提供的pause指令那么效率会有一定的提升，pause指令有两个作用，第一它可以延迟流水线执行指令（de-pipeline）,使CPU不会消耗过多的执行资源，延迟的时间取决于具体实现的版本，在一些处理器上延迟时间是零。第二它可以避免在退出循环的时候因内存顺序冲突（memory  order violation）而引起CPU流水线被清空（CPU pipeline flush），从而提高CPU的执行效率。　<br><strong>只能保证一个共享变量的原子操作</strong>：当对一个共享变量执行操作时，我们可以使用循环CAS的方式来保证原子操作，但是对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁，或者有一个取巧的办法，就是把多个共享变量合并成一个共享变量来操作。比如有两个共享变量i＝2,j=a，合并一下ij=2a，然后用CAS来操作ij。从Java1.5开始JDK提供了AtomicReference类来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行CAS操作。<br>原子类不是 java.lang.Integer 和相关类的通用替换方法。它们不 定义诸如 hashCode 和  compareTo  之类的方法。（因为原子变量是可变的，所以对于哈希表键来说，它们不是好的选择。）另外，仅为那些通常在预期应用程序中使用的类型提供类。例如，没有表示  byte 的原子类。这种情况不常见，如果要这样做，可以使用 AtomicInteger 来保持 byte 值，并进行适当的强制转换。也可以使用  Float.floatToIntBits 和 Float.intBitstoFloat 转换来保持 float 值，使用  Double.doubleToLongBits 和 Double.longBitsToDouble 转换来保持 double 值。<br>类  AtomicBoolean、AtomicInteger、AtomicLong 和 AtomicReference  的实例各自提供对相应类型单个变量的访问和更新。每个类也为该类型提供适当的实用工具方法。例如，类 AtomicLong 和  AtomicInteger 提供了原子增量方法。一个应用程序将按以下方式生成序列号： </p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Sequencer</span> <span class="token punctuation">{</span>  
-  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">AtomicLong</span> sequenceNumber  
-    <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicLong</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-  <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-    <span class="token keyword">return</span> sequenceNumber<span class="token punctuation">.</span><span class="token function">getAndIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-  <span class="token punctuation">}</span>  
+
+<p>如果当前引用 <code>==</code> 预期引用，并且当前标志等于预期标志，则以原子方式将该引用和该标志的值设置为给定的更新值。其中参数代表：</p>
+<ul>
+<li><code>expectedReference</code> ：该引用的预期值；</li>
+<li><code>newReference</code> ：该引用的新值；</li>
+<li><code>expectedStamp</code> ：该标志的预期值；</li>
+<li><code>newStamp</code> ：该标志的新值。</li>
+</ul>
+<p><strong>循环时间长开销大</strong>：自旋 CAS 如果长时间不成功，会给 CPU 带来非常大的执行开销。如果 JVM 能支持处理器提供的 <code>pause</code> 指令那么效率会有一定的提升，<code>pause</code> 指令有两个作用，第一它可以延迟流水线执行指令<code>de-pipeline</code>,使 CPU 不会消耗过多的执行资源，延迟的时间取决于具体实现的版本，在一些处理器上延迟时间是零。第二它可以避免在退出循环的时候因内存顺序冲突（memory order violation）而引起 CPU 流水线被清空（CPU pipeline flush），从而提高 CPU 的执行效率。</p>
+<p><strong>只能保证一个共享变量的原子操作</strong>：当对一个共享变量执行操作时，我们可以使用循环 CAS 的方式来保证原子操作，但是对多个共享变量操作时，循环 CAS 就无法保证操作的原子性，这个时候就可以用锁，或者有一个取巧的办法，就是把多个共享变量合并成一个共享变量来操作。比如有两个共享变量 i ＝ 2,j=a，合并一下 ij=2a，然后用 CAS 来操作 ij。从 Java1.5 开始 JDK 提供了 <code>AtomicReference</code> 类来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行 CAS 操作。</p>
+<p>原子类不是 <code>java.lang.Integer</code> 和相关类的通用替换方法。它们不定义诸如 <code>hashCode</code> 和 <code>compareTo</code> 之类的方法。（因为原子变量是可变的，所以对于哈希表键来说，它们不是好的选择。）另外，仅为那些通常在预期应用程序中使用的类型提供类。例如，没有表示 <code>byte</code> 的原子类。这种情况不常见，如果要这样做，可以使用 <code>AtomicInteger</code> 来保持 <code>byte</code> 值，并进行适当的强制转换。也可以使用 <code>Float.floatToIntBits</code> 和 <code>Float.intBitstoFloat</code> 转换来保持 <code>float</code> 值，使用 <code>Double.doubleToLongBits</code> 和 <code>Double.longBitsToDouble</code> 转换来保持 <code>double</code> 值。<br>类 <code>AtomicBoolean</code>、<code>AtomicInteger</code>、<code>AtomicLong</code> 和 <code>AtomicReference</code> 的实例各自提供对相应类型单个变量的访问和更新。每个类也为该类型提供适当的实用工具方法。例如，类 <code>AtomicLong</code> 和 <code>AtomicInteger</code> 提供了原子增量方法。一个应用程序将按以下方式生成序列号：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Sequencer</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">AtomicLong</span> sequenceNumber
+    <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicLong</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> sequenceNumber<span class="token punctuation">.</span><span class="token function">getAndIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>原子访问和更新的内存效果一般遵循以下可变规则：</p>
 <ul>
-<li>get 具有读取 volatile 变量的内存效果。 </li>
-<li>set 具有写入（分配）volatile 变量的内存效果。 </li>
-<li>除了允许使用后续（但不是以前的）内存操作，其自身不施加带有普通的非 volatile 写入的重新排序约束，lazySet 具有写入（分配）volatile 变量的内存效果。在其他使用上下文中，当为 null 时（为了垃圾回收），lazySet 可以应用不会再次访问的引用。 </li>
-<li>weakCompareAndSet 以原子方式读取和有条件地写入变量但不 创建任何 happen-before 排序，因此不提供与除 weakCompareAndSet 目标外任何变量以前或后续读取或写入操作有关的任何保证。 </li>
-<li>compareAndSet 和所有其他的读取和更新操作（如 getAndIncrement）都有读取和写入 volatile 变量的内存效果。</li>
+<li><code>get</code> 具有读取 <code>volatile</code> 变量的内存效果。</li>
+<li><code>set</code> 具有写入（分配）<code>volatile</code> 变量的内存效果。</li>
+<li>除了允许使用后续（但不是以前的）内存操作，其自身不施加带有普通的非 <code>volatile</code> 写入的重新排序约束，<code>lazySet</code> 具有写入（分配）<code>volatile</code> 变量的内存效果。在其他使用上下文中，当为 <code>null</code> 时（为了垃圾回收），<code>lazySet</code> 可以应用不会再次访问的引用。</li>
+<li><code>weakCompareAndSet</code> 以原子方式读取和有条件地写入变量但不创建任何 happen-before 排序，因此不提供与除 <code>weakCompareAndSet</code> 目标外任何变量以前或后续读取或写入操作有关的任何保证。</li>
+<li><code>compareAndSet</code> 和所有其他的读取和更新操作（如 <code>getAndIncrement</code>）都有读取和写入 <code>volatile</code> 变量的内存效果。</li>
 </ul>
-<p>除了包含表示单个值的类之外，atomic包还包含 Updater 类，Updater 类可用于获取任意选定类的任意选定 volatile 字段上的 compareAndSet 操作。AtomicReferenceFieldUpdater、AtomicIntegerFieldUpdater 和 AtomicLongFieldUpdater 是基于反射的实用工具，可以提供对关联字段类型的访问。它们主要用于原子数据结构中，该结构中同一节点（例如，树节点的链接）的几个 volatile 字段都独立受原子更新控制。这些类在如何以及何时使用原子更新方面具有更大的灵活性，但相应的弊端是基于映射的设置较为拙笨、使用不太方便，而且在保证方面也较差。<br>AtomicIntegerArray、AtomicLongArray 和 AtomicReferenceArray 类进一步扩展了原子操作，对这些类型的数组提供了支持。这些类在为其数组元素提供 volatile 访问语义方面也引人注目，这对于普通数组来说是不受支持的。<br>原子类也支持 weakCompareAndSet 方法，该方法具有受限制的适用性。在某些平台上，弱版本在正常情况下可能比 compareAndSet 更有效，但不同的是 weakCompareAndSet 方法的任何给定调用可能意外 返回 false（即没有明确的原因）。返回 false 仅意味着可以在需要时重新尝试操作，具体取决于重复执行调用的保证，当该变量保持 expectedValue 并且没有其他线程也在尝试设置该变量时，最终将获得成功。（例如，这样的虚假失败可能是由于内存争用的结果，该争用与期望值和当前值是否相等无关）。 此外，weakCompareAndSet 不提供通常需要同步控制的排序保证。但是，在这样的更新与程序的其他 happen-before 排序不相关时，该方法可用于更新计数器和统计数据。当一个线程看到对 weakCompareAndSet 导致的原子变量的更新时，它不一定能看到在 weakCompareAndSet 之前发生的对任何其他 变量的更新。例如，在更新性能统计数据时，这也许可以接受，但其他情况几乎不可以。<br>AtomicMarkableReference 类将单个布尔值与引用关联起来。例如，可以在数据结构内部使用此位，这意味着引用的对象在逻辑上已被删除。AtomicStampedReference 类将整数值与引用关联起来。例如，这可用于表示与更新系列对应的版本号。<br>设计原子类主要用作各种构造块，用于实现非阻塞数据结构和相关的基础结构类。compareAndSet 方法不是锁的常规替换方法。仅当对象的重要更新限定于单个 变量时才应用它。</p>
+<p>除了包含表示单个值的类之外，<code>atomic</code> 包还包含 <code>Updater</code> 类，<code>Updater</code> 类可用于获取任意选定类的任意选定 <code>volatile</code> 字段上的 <code>compareAndSet</code> 操作。<code>AtomicReferenceFieldUpdater</code>、<code>AtomicIntegerFieldUpdater</code> 和 <code>AtomicLongFieldUpdater</code> 是基于反射的实用工具，可以提供对关联字段类型的访问。它们主要用于原子数据结构中，该结构中同一节点（例如，树节点的链接）的几个 <code>volatile</code> 字段都独立受原子更新控制。这些类在如何以及何时使用原子更新方面具有更大的灵活性，但相应的弊端是基于映射的设置较为拙笨、使用不太方便，而且在保证方面也较差。<br><code>AtomicIntegerArray</code>、<code>AtomicLongArray</code> 和 <code>AtomicReferenceArray</code> 类进一步扩展了原子操作，对这些类型的数组提供了支持。这些类在为其数组元素提供 <code>volatile</code> 访问语义方面也引人注目，这对于普通数组来说是不受支持的。<br>原子类也支持 <code>weakCompareAndSet</code> 方法，该方法具有受限制的适用性。在某些平台上，弱版本在正常情况下可能比 <code>compareAndSet</code> 更有效，但不同的是 <code>weakCompareAndSet</code> 方法的任何给定调用可能意外 返回 <code>false</code>（即没有明确的原因）。返回 <code>false</code> 仅意味着可以在需要时重新尝试操作，具体取决于重复执行调用的保证，当该变量保持 <code>expectedValue</code> 并且没有其他线程也在尝试设置该变量时，最终将获得成功。（例如，这样的虚假失败可能是由于内存争用的结果，该争用与期望值和当前值是否相等无关）。 此外，<code>weakCompareAndSet</code> 不提供通常需要同步控制的排序保证。但是，在这样的更新与程序的其他 happen-before 排序不相关时，该方法可用于更新计数器和统计数据。当一个线程看到对 <code>weakCompareAndSet</code> 导致的原子变量的更新时，它不一定能看到在 <code>weakCompareAndSet</code> 之前发生的对任何其他 变量的更新。例如，在更新性能统计数据时，这也许可以接受，但其他情况几乎不可以。<br><code>AtomicMarkableReference</code> 类将单个布尔值与引用关联起来。例如，可以在数据结构内部使用此位，这意味着引用的对象在逻辑上已被删除。<code>AtomicStampedReference</code> 类将整数值与引用关联起来。例如，这可用于表示与更新系列对应的版本号。<br>设计原子类主要用作各种构造块，用于实现非阻塞数据结构和相关的基础结构类。<code>compareAndSet</code> 方法不是锁的常规替换方法。仅当对象的重要更新限定于单个 变量时才应用它。</p>
 
                 
             </div>
@@ -986,7 +999,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             

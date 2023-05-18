@@ -340,7 +340,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.5k
+                    4.6k
                 </div>
                 
 
@@ -365,32 +365,32 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-Spring-IOC基础"><a href="#1-Spring-IOC基础" class="headerlink" title="1. Spring IOC基础"></a>1. Spring IOC基础</h2><p>此部分内容是借鉴于凯涛的博客：<a target="_blank" rel="noopener" href="http://jinnianshilongnian.iteye.com/blog/1413846">IoC 之 2.1 IoC基础 ——跟我学Spring3</a></p>
-<h3 id="1-1-IoC是什么"><a href="#1-1-IoC是什么" class="headerlink" title="1.1  IoC是什么"></a>1.1  IoC是什么</h3><p>Ioc—Inversion of Control，即“控制反转”，不是什么技术，而是一种设计思想。在Java开发中，Ioc意味着将你设计好的对象交给容器控制，而不是传统的在你的对象内部直接控制。如何理解好Ioc呢？理解好Ioc的关键是要明确“谁控制谁，控制什么，为何是反转（有反转就应该有正转了），哪些方面反转了”，那我们来深入分析一下：</p>
+                <h2 id="1-Spring-IOC-基础"><a href="#1-Spring-IOC-基础" class="headerlink" title="1. Spring IOC 基础"></a>1. Spring IOC 基础</h2><p>此部分内容是借鉴于凯涛的博客：<a target="_blank" rel="noopener" href="http://jinnianshilongnian.iteye.com/blog/1413846">IoC 之 2.1 IoC 基础 ——跟我学 Spring3</a></p>
+<h3 id="1-1-IoC-是什么"><a href="#1-1-IoC-是什么" class="headerlink" title="1.1 IoC 是什么"></a>1.1 IoC 是什么</h3><p>Ioc—Inversion of Control，即“控制反转”，不是什么技术，而是一种设计思想。在 Java 开发中，Ioc 意味着将你设计好的对象交给容器控制，而不是传统的在你的对象内部直接控制。如何理解好 Ioc 呢？理解好 Ioc 的关键是要明确“谁控制谁，控制什么，为何是反转（有反转就应该有正转了），哪些方面反转了”，那我们来深入分析一下：</p>
 <ul>
-<li>谁控制谁，控制什么：传统Java SE程序设计，我们直接在对象内部通过new进行创建对象，是程序主动去创建依赖对象；而IoC是有专门一个容器来创建这些对象，即由Ioc容器来控制对象的创建；谁控制谁？当然是IoC 容器控制了对象；控制什么？那就是主要控制了外部资源获取（不只是对象包括比如文件等）。</li>
+<li>谁控制谁，控制什么：传统 Java SE 程序设计，我们直接在对象内部通过 new 进行创建对象，是程序主动去创建依赖对象；而 IoC 是有专门一个容器来创建这些对象，即由 Ioc 容器来控制对象的创建；谁控制谁？当然是 IoC 容器控制了对象；控制什么？那就是主要控制了外部资源获取（不只是对象包括比如文件等）。</li>
 <li>为何是反转，哪些方面反转了：有反转就有正转，传统应用程序是由我们自己在对象中主动控制去直接获取依赖对象，也就是正转；而反转则是由容器来帮忙创建及注入依赖对象；为何是反转？因为由容器帮我们查找及注入依赖对象，对象只是被动的接受依赖对象，所以是反转；哪些方面反转了？依赖对象的获取被反转了。</li>
 </ul>
-<p>用图例说明一下，传统程序设计如图，都是主动去创建相关对象然后再组合起来：<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/C8487A37C984441BBB61F4559D8B1CF0.jpg"><br>当有了IoC/DI的容器后，在客户端类中不再主动去创建这些对象了，如图所示:<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/0CBD7D2E450E4BB39EC77B1C70493C20.jpg"></p>
-<h3 id="1-2-IoC能做什么"><a href="#1-2-IoC能做什么" class="headerlink" title="1.2 IoC能做什么"></a>1.2 IoC能做什么</h3><p>IoC不是一种技术，只是一种思想，一个重要的面向对象编程的法则，它能指导我们如何设计出松耦合、更优良的程序。传统应用程序都是由我们在类内部主动创建依赖对象，从而导致类与类之间高耦合，难于测试；有了IoC容器后，把创建和查找依赖对象的控制权交给了容器，由容器进行注入组合对象，所以对象与对象之间是松散耦合，这样也方便测试，利于功能复用，更重要的是使得程序的整个体系结构变得非常灵活。<br>其实IoC对编程带来的最大改变不是从代码上，而是从思想上，发生了“主从换位”的变化。应用程序原本是老大，要获取什么资源都是主动出击，但是在IoC/DI思想中，应用程序就变成被动的了，被动的等待IoC容器来创建并注入它所需要的资源了。<br>IoC很好的体现了面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你”；即由IoC容器帮对象找相应的依赖对象并注入，而不是由对象主动去找。</p>
-<h3 id="1-3-IoC和DI"><a href="#1-3-IoC和DI" class="headerlink" title="1.3 IoC和DI"></a>1.3 IoC和DI</h3><p>DI—Dependency Injection，即“依赖注入”：是组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。<br>理解DI的关键是：“谁依赖谁，为什么需要依赖，谁注入谁，注入了什么”，那我们来深入分析一下：</p>
+<p>用图例说明一下，传统程序设计如图，都是主动去创建相关对象然后再组合起来：<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/C8487A37C984441BBB61F4559D8B1CF0.jpg"><br>当有了 IoC/DI 的容器后，在客户端类中不再主动去创建这些对象了，如图所示:<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/0CBD7D2E450E4BB39EC77B1C70493C20.jpg"></p>
+<h3 id="1-2-IoC-能做什么"><a href="#1-2-IoC-能做什么" class="headerlink" title="1.2 IoC 能做什么"></a>1.2 IoC 能做什么</h3><p>IoC 不是一种技术，只是一种思想，一个重要的面向对象编程的法则，它能指导我们如何设计出松耦合、更优良的程序。传统应用程序都是由我们在类内部主动创建依赖对象，从而导致类与类之间高耦合，难于测试；有了 IoC 容器后，把创建和查找依赖对象的控制权交给了容器，由容器进行注入组合对象，所以对象与对象之间是松散耦合，这样也方便测试，利于功能复用，更重要的是使得程序的整个体系结构变得非常灵活。<br>其实 IoC 对编程带来的最大改变不是从代码上，而是从思想上，发生了“主从换位”的变化。应用程序原本是老大，要获取什么资源都是主动出击，但是在 IoC/DI 思想中，应用程序就变成被动的了，被动的等待 IoC 容器来创建并注入它所需要的资源了。<br>IoC 很好的体现了面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你”；即由 IoC 容器帮对象找相应的依赖对象并注入，而不是由对象主动去找。</p>
+<h3 id="1-3-IoC-和-DI"><a href="#1-3-IoC-和-DI" class="headerlink" title="1.3 IoC 和 DI"></a>1.3 IoC 和 DI</h3><p>DI—Dependency Injection，即“依赖注入”：是组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。<br>理解 DI 的关键是：“谁依赖谁，为什么需要依赖，谁注入谁，注入了什么”，那我们来深入分析一下：</p>
 <ul>
-<li>谁依赖于谁：当然是应用程序依赖于IoC容器；</li>
-<li>为什么需要依赖：应用程序需要IoC容器来提供对象需要的外部资源；</li>
-<li>谁注入谁：很明显是IoC容器注入应用程序某个对象，应用程序依赖的对象；</li>
+<li>谁依赖于谁：当然是应用程序依赖于 IoC 容器；</li>
+<li>为什么需要依赖：应用程序需要 IoC 容器来提供对象需要的外部资源；</li>
+<li>谁注入谁：很明显是 IoC 容器注入应用程序某个对象，应用程序依赖的对象；</li>
 <li>注入了什么：就是注入某个对象所需要的外部资源（包括对象、资源、常量数据）。</li>
 </ul>
-<p>IoC和DI由什么关系呢？其实它们是同一个概念的不同角度描述，由于控制反转概念比较含糊（可能只是理解为容器控制对象这一个层面，很难让人想到谁来维护对象关系），所以2004年大师级人物Martin Fowler又给出了一个新的名字：“依赖注入”，相对IoC 而言，“依赖注入”明确描述了“被注入对象依赖IoC容器配置依赖对象”。</p>
-<h3 id="1-4-IOC初始化bean创建方式"><a href="#1-4-IOC初始化bean创建方式" class="headerlink" title="1.4 IOC初始化bean创建方式"></a>1.4 IOC初始化bean创建方式</h3><p>在IOC容器在初始化的时候会将bean对象注入到容器中，提供给客户端类使用。IOC容器的演变也给出了很多种bean对象的注入方式，主要的几种方式博主在这总结了一下，也许你在不知不觉中用过却没有察觉。</p>
+<p>IoC 和 DI 由什么关系呢？其实它们是同一个概念的不同角度描述，由于控制反转概念比较含糊（可能只是理解为容器控制对象这一个层面，很难让人想到谁来维护对象关系），所以 2004 年大师级人物 Martin Fowler 又给出了一个新的名字：“依赖注入”，相对 IoC 而言，“依赖注入”明确描述了“被注入对象依赖 IoC 容器配置依赖对象”。</p>
+<h3 id="1-4-IOC-初始化-bean-创建方式"><a href="#1-4-IOC-初始化-bean-创建方式" class="headerlink" title="1.4 IOC 初始化 bean 创建方式"></a>1.4 IOC 初始化 bean 创建方式</h3><p>在 IOC 容器在初始化的时候会将 bean 对象注入到容器中，提供给客户端类使用。IOC 容器的演变也给出了很多种 bean 对象的注入方式，主要的几种方式博主在这总结了一下，也许你在不知不觉中用过却没有察觉。</p>
 <ul>
-<li>XMl方式，在xml文件中，使用<code>&lt;bean&gt;&lt;/bean&gt;</code>标签来实现定义类，然后通过对xml文件的加载，把指定的bean注入到容器中，这种方式在之前用的很多，但是随着技术的革新，慢慢的这种配置使用的也越来越少。</li>
+<li>XMl 方式，在 xml 文件中，使用<code>&lt;bean&gt;&lt;/bean&gt;</code>标签来实现定义类，然后通过对 xml 文件的加载，把指定的 bean 注入到容器中，这种方式在之前 Spring MVC 中用的很多，但是随着技术的革新，Spring Boot 逐渐替代 spring MVC，慢慢的这种配置使用的也越来越少。</li>
 <li>注解方式，这种方式是当前使用最广泛的，最常用是<code>@Component</code>系列注解。</li>
-<li><code>@Bean</code>注解方式，这个注解并不陌生，在之前Spring MVC占据主导的时候，使用的少，但是随着Spring Boot的兴起，这个注解用的越来越多。Spring MVC的时候，我们创建Redis连接池、数据库连接池都是使用xml方式，但是在Spring Boot中，xml很少见，而更多的是配置类(Configuration)和<code>@Bean</code>注解配合，创建各种连接池的bean实例。</li>
-<li><code>@Conditional</code>注解方式，这个比较生僻，使用的场景不多，从字面上理解就是根据何种条件来创建对应的bean。</li>
+<li><code>@Bean</code>注解方式，这个注解并不陌生，在之前 Spring MVC 占据主导的时候，使用的少，但是随着 Spring Boot 的兴起，这个注解用的越来越多。Spring MVC 的时候，我们创建 Redis 连接池、数据库连接池都是使用 xml 方式，但是在 Spring Boot 中，xml 很少见，而更多的是配置类(Configuration)和<code>@Bean</code>注解配合，创建各种连接池的 bean 实例。</li>
+<li><code>@Conditional</code>注解方式，这个比较生僻，使用的场景不多，从字面上理解就是根据何种条件来创建对应的 bean。</li>
 <li><code>@Import</code>注解方式，这种方式下有很多实现的小点，也是值得学习的，虽然项目中基本用不上，但是可以作为下午茶时间的谈资。</li>
-<li>FactoryBean创建方式，这里是通过实现FactoryBean相关类来完成的，当然这里也是要配置<code>@Bean</code>使用的。</li>
+<li><code>FactoryBean</code>创建方式，这里是通过实现 <code>FactoryBean</code> 相关类来完成的，当然这里也是要配置<code>@Bean</code>使用的。</li>
 </ul>
-<h2 id="2-IOC初始化bean的N中方式分析"><a href="#2-IOC初始化bean的N中方式分析" class="headerlink" title="2. IOC初始化bean的N中方式分析"></a>2. IOC初始化bean的N中方式分析</h2><h3 id="2-1-XML"><a href="#2-1-XML" class="headerlink" title="2.1 XML"></a>2.1 XML</h3><p>配置文件的编写：</p>
+<h2 id="2-IOC-初始化-bean-的-N-中方式分析"><a href="#2-IOC-初始化-bean-的-N-中方式分析" class="headerlink" title="2. IOC 初始化 bean 的 N 中方式分析"></a>2. IOC 初始化 bean 的 N 中方式分析</h2><h3 id="2-1-XML"><a href="#2-1-XML" class="headerlink" title="2.1 XML"></a>2.1 XML</h3><p>配置文件的编写：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans<span class="token punctuation">"</span></span>
        <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
@@ -404,9 +404,10 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>Person实体类：</p>
+
+<p>Person 实体类：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/7 17:21
  */</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">{</span>
@@ -440,9 +441,10 @@
                 <span class="token char">'}'</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>单元测试类：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/8
  * @Project: lazy-scope
  * @Desc: xml方式向IOC容器中注入bean
@@ -460,10 +462,11 @@
 输出结果：
 ===&gt;Person{name='zdydoit', age=18}
  */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>看输出的结果，输出的<code>Person</code>实体类对象就是在xml中注入的。</p>
-<h3 id="2-2-Bean"><a href="#2-2-Bean" class="headerlink" title="2.2 @Bean"></a>2.2 @Bean</h3><p>单独的@Bean是不能完成初始化的过程，需要通过和<code>@Configuration</code>注解配合完成。</p>
+
+<p>看输出的结果，输出的<code>Person</code>实体类对象就是在 xml 中注入的。</p>
+<h3 id="2-2-Bean"><a href="#2-2-Bean" class="headerlink" title="2.2 @Bean"></a>2.2 @Bean</h3><p>单独的<code>@Bean</code> 是不能完成初始化的过程，需要通过和<code>@Configuration</code>注解配合完成。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/8
  * @Project: lazy-scope
  * @Desc: 配置类
@@ -473,11 +476,11 @@
 
     <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span><span class="token string">"zdydoit"</span><span class="token punctuation">)</span>
     <span class="token keyword">public</span> <span class="token class-name">Person</span> <span class="token function">person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"战斗猿DOIT"</span><span class="token punctuation">,</span> <span class="token number">29</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"程序猿洞晓"</span><span class="token punctuation">,</span> <span class="token number">29</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/8
  * @Project: lazy-scope
  * @Desc: 测试类
@@ -492,9 +495,10 @@
 <span class="token punctuation">}</span>
 <span class="token comment">/*
 输出结果：
-===&gt;Person{name='战斗猿DOIT', age=29}
+===&gt;Person{name='程序猿洞晓', age=29}
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>通过<code>@Bean</code>向容器中加入实例，可以通过注解的value属性指定实例的名称，也可以直接采用方法名作为实例名称(直接加注解，不设置属性值，默认方法名作为实例名称)。另外在Spring中，加入到容器中的实例，不在特殊指定的情况下，都是单例的。</p>
+
+<p>通过<code>@Bean</code>向容器中加入实例，可以通过注解的 <code>value</code> 属性指定实例的名称，也可以直接采用方法名作为实例名称(直接加注解，不设置属性值，默认方法名作为实例名称)。另外在 Spring 中，加入到容器中的实例，不在特殊指定的情况下，都是单例的。</p>
 <h3 id="2-3-Conditional"><a href="#2-3-Conditional" class="headerlink" title="2.3 @Conditional"></a>2.3 @Conditional</h3><p>在<code>AnnotationInit</code>类中添加两个方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 根据条件创建mac计算机实例</span>
 <span class="token annotation punctuation">@Conditional</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token class-name">MacCondition</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -509,9 +513,10 @@
 <span class="token keyword">public</span> <span class="token class-name">Computer</span> <span class="token function">winComputer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Computer</span><span class="token punctuation">(</span><span class="token string">"WIN"</span><span class="token punctuation">,</span> <span class="token string">"9999"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>创建条件类<code>MacCondition</code>和<code>WinCondition</code>，实现Condition接口，重写<code>matchs</code>方法。</p>
+
+<p>创建条件类<code>MacCondition</code>和<code>WinCondition</code>，实现 <code>Condition</code> 接口，重写<code>matchs</code>方法。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/8
  * @Project: lazy-scope
  * @Desc: mac本创建的条件
@@ -526,7 +531,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/8
  * @Project: lazy-scope
  * @Desc: win电脑创建条件
@@ -540,6 +545,7 @@
         <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>单元测试类中添加<code>test2</code>方法：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -548,26 +554,30 @@
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"===&gt;"</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>输出的结果如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">……
 ……
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>zdydoit  <span class="token comment">// Person实例</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>macComputer   <span class="token comment">//Mac Computer实例</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>从结果可以看到，这里<code>Person</code>实例和<code>Computer</code>实例都生成了，但是<code>WinComputer</code>没有生成。由此可见对于条件的判断是成功的。</p>
 <h3 id="2-4-Import"><a href="#2-4-Import" class="headerlink" title="2.4 @Import"></a>2.4 @Import</h3><p>这个使用也不是很多，这种导入方式也有几种不同的体现形式。下面来一一的介绍一下。</p>
-<h4 id="2-4-1-Import直接引入目标类"><a href="#2-4-1-Import直接引入目标类" class="headerlink" title="2.4.1 @Import直接引入目标类"></a>2.4.1 @Import直接引入目标类</h4><p>这种方式最简单，只要在配置类上加上@Import注解，然后指定需要导入的目标类即可。代码如下：</p>
+<h4 id="2-4-1-Import-直接引入目标类"><a href="#2-4-1-Import-直接引入目标类" class="headerlink" title="2.4.1 @Import 直接引入目标类"></a>2.4.1 @Import 直接引入目标类</h4><p>这种方式最简单，只要在配置类上加上<code>@Import</code> 注解，然后指定需要导入的目标类即可。代码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 直接加在AnnotationInit类上</span>
 <span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token punctuation">{</span><span class="token class-name">Computer</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>依然是运行上一步的测试代码<code>test2</code>，得到的结果如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">……
 ……
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>zdydoit<span class="token punctuation">.</span>core<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>Computer</span> <span class="token comment">//import导入的类</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>zdydoit  <span class="token comment">// Person实例</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>macComputer   <span class="token comment">//Mac Computer实例</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这里通过<code>@Import</code>加入到容器后的实例名是一个全类名，这个存在不方便，至少是在<code>getBean</code>的时候比较麻烦。</p>
-<h4 id="2-4-2-实现ImportSelector接口"><a href="#2-4-2-实现ImportSelector接口" class="headerlink" title="2.4.2 实现ImportSelector接口"></a>2.4.2 实现ImportSelector接口</h4><p>实现接口代码：</p>
+<h4 id="2-4-2-实现-ImportSelector-接口"><a href="#2-4-2-实现-ImportSelector-接口" class="headerlink" title="2.4.2 实现 ImportSelector 接口"></a>2.4.2 实现 ImportSelector 接口</h4><p>实现接口代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/8
  * @Project: lazy-scope
  * @Desc: importSelector实现类
@@ -579,6 +589,7 @@
 <span class="token punctuation">}</span>
 <span class="token comment">// AnnotationInit类上@Import注解添加ZdydoitSelector.class</span>
 <span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token punctuation">{</span><span class="token class-name">Computer</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token class-name">ZdydoitSelector</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>同样运行<code>test2</code>的测试代码结果如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">……
 ……
@@ -586,10 +597,11 @@
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>zdydoit  <span class="token comment">// Person实例</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>macComputer   <span class="token comment">//Mac Computer实例</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>zdydoit<span class="token punctuation">.</span>core<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>Person</span> <span class="token comment">//import导入的类</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这种方式加入的实例名依然是全类名。</p>
-<h4 id="2-4-3-实现ImportBeanDefinitionRegistrar接口"><a href="#2-4-3-实现ImportBeanDefinitionRegistrar接口" class="headerlink" title="2.4.3 实现ImportBeanDefinitionRegistrar接口"></a>2.4.3 实现ImportBeanDefinitionRegistrar接口</h4><p>实现接口代码：</p>
+<h4 id="2-4-3-实现-ImportBeanDefinitionRegistrar-接口"><a href="#2-4-3-实现-ImportBeanDefinitionRegistrar-接口" class="headerlink" title="2.4.3 实现 ImportBeanDefinitionRegistrar 接口"></a>2.4.3 实现 ImportBeanDefinitionRegistrar 接口</h4><p>实现接口代码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/8
  * @Project: lazy-scope
  * @Desc: ImportBeanDefinitionRegistrar实现类
@@ -603,6 +615,7 @@
 <span class="token punctuation">}</span>
 <span class="token comment">// AnnotationInit类上@Import注解添加ZdydoitSelector.class</span>
 <span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token punctuation">{</span><span class="token class-name">Computer</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token class-name">ZdydoitSelector</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token class-name">ZdyDoitBeanDefinitionRegistrar</span><span class="token punctuation">.</span>clas<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>运行<code>test2</code>的测试代码结果如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">……
 ……
@@ -611,8 +624,9 @@
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>macComputer   <span class="token comment">//Mac Computer实例</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>zdydoit<span class="token punctuation">.</span>core<span class="token punctuation">.</span>model<span class="token punctuation">.</span></span>Person</span> <span class="token comment">//import导入的类</span>
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span>singleDog <span class="token comment">//import导入的类</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这种方法和之前的有所不同，在容器中存储的名字并不再是全类名，而是可以自定义的，这个就更为的人性化。<br>如果在这三种方式给我选择的话，更为倾向的是第三种，但是不一定前两种就不使用，存在既有道理。</p>
-<h3 id="2-5-Component系列"><a href="#2-5-Component系列" class="headerlink" title="2.5 @Component系列"></a>2.5 @Component系列</h3><p><code>@Component</code>系列，看其名就不止一个，继承了<code>@Component</code>的注解都在这个系列之中，其中有<code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>，当然也包括<code>@Component</code>本身。源码体现：</p>
+<h3 id="2-5-Component-系列"><a href="#2-5-Component-系列" class="headerlink" title="2.5 @Component 系列"></a>2.5 @Component 系列</h3><p><code>@Component</code>系列，看其名就不止一个，继承了<code>@Component</code>的注解都在这个系列之中，其中有<code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>，当然也包括<code>@Component</code>本身。源码体现：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Indicates that an annotated class is a "component".
  * Such classes are considered as candidates for auto-detection
@@ -634,7 +648,7 @@
 <span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Documented</span>
 <span class="token comment">//没有明确到dao、service、controller分层的模块实体类，采用Component</span>
-<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span> 
+<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
 
 	<span class="token comment">/**
 	 * The value may indicate a suggestion for a logical component name,
@@ -643,10 +657,11 @@
 	 */</span>
 	<span class="token class-name">String</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其实关于这个实现，并不陌生，每时每刻都在使用，这里就大概描述一下，在配置类上添加一个<code>@ComponentScan(value = {"com.zdydoit.core.model"})</code>注解，<code>value</code>值可以有多个,大括号里面可以接着写，逗号分隔即可。<br>这样就大功告成了，容器启动初始化的时候，会去扫描<code>com.zdydoit.core.model</code>包，以及其子包，将加了<code>@Component</code>系列注解的类都会创建bean并添加到容器中。</p>
-<h3 id="2-6-FactoryBean"><a href="#2-6-FactoryBean" class="headerlink" title="2.6 FactoryBean"></a>2.6 FactoryBean</h3><p><code>FactoryBean</code>是一个能生产或者修饰对象生成的工厂Bean,它的实现与设计模式中的工厂模式和修饰器模式类似，在这里也可以通过FactoryBean来实现bean的初始化和加入容器中。<br>代码实现：</p>
+
+<p>其实关于这个实现，并不陌生，每时每刻都在使用，这里就大概描述一下，在配置类上添加一个<code>@ComponentScan(value = {"com.zdydoit.core.model"})</code>注解，<code>value</code>值可以有多个,大括号里面可以接着写，逗号分隔即可。<br>这样就大功告成了，容器启动初始化的时候，会去扫描<code>com.zdydoit.core.model</code>包，以及其子包，将加了<code>@Component</code>系列注解的类都会创建 bean 并添加到容器中。</p>
+<h3 id="2-6-FactoryBean"><a href="#2-6-FactoryBean" class="headerlink" title="2.6 FactoryBean"></a>2.6 FactoryBean</h3><p><code>FactoryBean</code>是一个能生产或者修饰对象生成的工厂 Bean,它的实现与设计模式中的工厂模式和修饰器模式类似，在这里也可以通过 <code>FactoryBean</code> 来实现 bean 的初始化和加入容器中。<br>代码实现：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * @Author: 战斗猿DOIT
+ * @Author: 程序猿洞晓
  * @Date: 2018/6/8
  * @Project: lazy-scope
  * @Desc: FactoryBean实现
@@ -675,20 +690,22 @@
 <span class="token comment">// FactoryBean实现方式</span>
 <span class="token class-name">Dog</span> dog <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">Dog</span><span class="token punctuation">)</span>app<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"factoryBean"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"===&gt;"</span><span class="token operator">+</span>dog<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>运行后输出的结果是：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">……
 <span class="token operator">==</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token class-name">Dog</span><span class="token punctuation">{</span>dogName<span class="token operator">=</span>'singleDog'<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>在<code>AnnotationInit</code>类中，返回的是<code>ZdydoitFactoryBean</code>对象，但是这里在加入IOC容器后，会被再次封装和修饰，最后返回的是<code>ZdydoitFactoryBean</code>对象，实际是其内部创建的<code>Dog</code>对象的引用。在源码中有具体的代码体现，在最后的返回会去调用<code>getObject()</code>方法。</p>
-<p>如果这里确实需要得到FactoryBean实例的话，就使用这种方式：<code>getBean("&amp;factoryBean")</code>。（源码有体现）</p>
+
+<p>在<code>AnnotationInit</code>类中，返回的是<code>ZdydoitFactoryBean</code>对象，但是这里在加入 IOC 容器后，会被再次封装和修饰，最后返回的是<code>ZdydoitFactoryBean</code>对象，实际是其内部创建的<code>Dog</code>对象的引用。在源码中有具体的代码体现，在最后的返回会去调用<code>getObject()</code>方法。</p>
+<p>如果这里确实需要得到 <code>FactoryBean</code> 实例的话，就使用这种方式：<code>getBean("&amp;factoryBean")</code>。（源码有体现）</p>
 <p>这里先埋个坑，源码上的分析以后有时间再开博客具体解释一下。</p>
 <h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>每种实现方式都给出了对应是示例，可见各有优缺点，在实现项目中，我们并不会都用到，可能只会取其一两种实现方式，基本用到的就下面两种：</p>
 <ul>
-<li><code>@Bean</code>配合<code>@Configuration</code>注解实现bean的注入，常用在Spring boot下的Redis连接池、线程池等bean的初始化。</li>
-<li><code>@Component</code>系列注解，用于Controller层、Service层等的bean注入。</li>
+<li><code>@Bean</code>配合<code>@Configuration</code>注解实现 bean 的注入，常用在 Spring boot 下的 Redis 连接池、线程池等 bean 的初始化。</li>
+<li><code>@Component</code>系列注解，用于 Controller 层、Service 层等的 bean 注入。</li>
 </ul>
 <p>为什么常用的就这两种，其他的也介绍呢。第一在别人和你聊这些的时候，你不至于一脸懵逼，第二偶尔自己也可以装装，增强自信心。最最重要的是面试造火箭是能用上的，虽然上班后的你只是拧螺丝。</p>
-<h2 id="4-补充"><a href="#4-补充" class="headerlink" title="4. 补充"></a>4. 补充</h2><p>最近在接触其他的项目，看到项目中用到其他一些创建Bean对象的方式，感觉挺有意思。也许用到的少，不过可以作为一个不错谈资。这两个注解都是和配置文件相结合使用的，可以通过配置文件来指定，确定对象是否创建，这让对象的创建过程更灵活。下面来看看这两个注解具体怎么使用。</p>
-<h3 id="4-1-ConditionalOnProperty"><a href="#4-1-ConditionalOnProperty" class="headerlink" title="4.1 @ConditionalOnProperty"></a>4.1 @ConditionalOnProperty</h3><p>根据属性是否符合来确定是否要创建这个Bean对象，看一下这个注解的源码：</p>
+<h2 id="4-补充-ConditionalOnProperty-和-ConditionalOnExpression"><a href="#4-补充-ConditionalOnProperty-和-ConditionalOnExpression" class="headerlink" title="4. 补充@ConditionalOnProperty 和@ConditionalOnExpression"></a>4. 补充@ConditionalOnProperty 和@ConditionalOnExpression</h2><p>最近在接触其他的项目，看到项目中用到其他一些创建 Bean 对象的方式，感觉挺有意思。也许用到的少，不过可以作为一个不错谈资。这两个注解都是和配置文件相结合使用的，可以通过配置文件来指定，确定对象是否创建，这让对象的创建过程更灵活。下面来看看这两个注解具体怎么使用。</p>
+<h3 id="4-1-ConditionalOnProperty"><a href="#4-1-ConditionalOnProperty" class="headerlink" title="4.1 @ConditionalOnProperty"></a>4.1 @ConditionalOnProperty</h3><p>根据属性是否符合来确定是否要创建这个 Bean 对象，看一下这个注解的源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">TYPE</span><span class="token punctuation">,</span> <span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">METHOD</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Documented</span>
@@ -729,26 +746,26 @@
 
 <p>使用实例：</p>
 <ul>
-<li><p>application.properties配置文件中配置了用户的手机号</p>
+<li><p><code>application.properties</code> 配置文件中配置了用户的手机号</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">user.phone</span><span class="token punctuation">=</span><span class="token value attr-value">13511223344</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p>代码类中使用注解<code>@ConditionalOnProperty</code></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//场景1：这个使用会到配置文件中找user.phone对应的属性值，显然这个属性值是和注解中havingValue定义的值相同，条件最终结果是true，ConditionalOnPropertyUser对象会被创建并注入到IOC容器中</span>
 <span class="token annotation punctuation">@ConditionalOnProperty</span><span class="token punctuation">(</span>prefix<span class="token operator">=</span><span class="token string">"user"</span><span class="token punctuation">,</span>value<span class="token operator">=</span><span class="token string">"phone"</span><span class="token punctuation">,</span>havingValue<span class="token operator">=</span><span class="token string">"13511223344"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConditionalOnPropertyUser</span><span class="token punctuation">{</span>
-  
+
 <span class="token punctuation">}</span>
 <span class="token comment">//场景2：此时在配置文件中并没有找到user.address属性值，此时就会匹配matchIfMissing，matchIfMissing没有指定，默认值是false，条件最终结果是false，对象不会被创建</span>
 <span class="token annotation punctuation">@ConditionalOnProperty</span><span class="token punctuation">(</span>prefix<span class="token operator">=</span><span class="token string">"user"</span><span class="token punctuation">,</span>value<span class="token operator">=</span><span class="token string">"address"</span><span class="token punctuation">,</span>havingValue<span class="token operator">=</span><span class="token string">"上海"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConditionalOnPropertyUser</span><span class="token punctuation">{</span>
-  
+
 <span class="token punctuation">}</span>
 <span class="token comment">//场景2：此时在配置文件中并没有找到user.address属性值，但是定义了matchIfMissing为true，表示没有找到返回最终条件结果为true，此时还是被创建</span>
 <span class="token annotation punctuation">@ConditionalOnProperty</span><span class="token punctuation">(</span>prefix<span class="token operator">=</span><span class="token string">"user"</span><span class="token punctuation">,</span>value<span class="token operator">=</span><span class="token string">"address"</span><span class="token punctuation">,</span>havingValue<span class="token operator">=</span><span class="token string">"上海"</span><span class="token punctuation">,</span>matchIfMissing<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConditionalOnPropertyUser</span><span class="token punctuation">{</span>
-  
+
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h3 id="4-2-ConditionalOnExpression"><a href="#4-2-ConditionalOnExpression" class="headerlink" title="4.2 @ConditionalOnExpression"></a>4.2 @ConditionalOnExpression</h3><p>其实这个和上面差不多，同样是从配置文件中获取对应的属性值，完成表达式的编写，根据表达式最终返回的结果来确定是否做对象的创建，使用的是SpEL表达式。这个注解的属性值只有一个<code>value</code>。看源码如下：</p>
+<h3 id="4-2-ConditionalOnExpression"><a href="#4-2-ConditionalOnExpression" class="headerlink" title="4.2 @ConditionalOnExpression"></a>4.2 @ConditionalOnExpression</h3><p>其实这个和上面差不多，同样是从配置文件中获取对应的属性值，完成表达式的编写，根据表达式最终返回的结果来确定是否做对象的创建，使用的是 <code>SpEL</code> 表达式。这个注解的属性值只有一个<code>value</code>。看源码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">TYPE</span><span class="token punctuation">,</span> <span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">METHOD</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Documented</span>
@@ -767,7 +784,7 @@
 
 <p>使用实例：</p>
 <ul>
-<li><p>application.properties配置文件中有以下属性</p>
+<li><p><code>application.properties</code> 配置文件中有以下属性</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">user.phone</span><span class="token punctuation">=</span><span class="token value attr-value">13512121212</span>
 <span class="token key attr-name">user.address</span><span class="token punctuation">=</span><span class="token value attr-value">上海</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 <li><p>代码中使用<code>@ConditionalOnExpression</code>注解</p>
@@ -775,7 +792,7 @@
 <span class="token comment">//根据SpEL表达式得到最终判断结果，如果是true则创建对象，如果是false则不创建。</span>
 <span class="token annotation punctuation">@ConditionalOnExpression</span><span class="token punctuation">(</span><span class="token string">"'${user.age:null}'=='null' &amp;&amp; '${user.phone:null}'=='13512121212' &amp;&amp; '${user.address:null}'=='上海'"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConditionalOnExpressionUser</span><span class="token punctuation">{</span>
-  
+
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 
@@ -1240,7 +1257,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             

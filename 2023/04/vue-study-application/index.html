@@ -336,14 +336,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6k
+                    8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    24 分
+                    32 分
                 </div>
                 
 
@@ -1103,6 +1103,315 @@ module<span class="token punctuation">.</span>exports <span class="token operato
   myEchart<span class="token punctuation">.</span><span class="token function">setOption</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="组件间的通信-mitt-js"><a href="#组件间的通信-mitt-js" class="headerlink" title="组件间的通信 mitt.js"></a>组件间的通信 mitt.js</h2><p>在 vue 中，组件间通信方式不止于一种，各有不同，总结下来主要是以下几种：</p>
+<h3 id="父子组件间的通信"><a href="#父子组件间的通信" class="headerlink" title="父子组件间的通信"></a>父子组件间的通信</h3><p>这个交互方式相对于比较简单，最最常用的就是<code>props</code>和<code>emits</code>来完成。</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 父组件伪代码 --&gt;</span>
+<span class="token comment">&lt;!-- 传递id到子组件，定义一个事件，可由子组件触发，调用父组件方法，对数据进行操作 --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>childVue</span> <span class="token attr-name">:id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">@updateUserId</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>updateUser<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>childVue</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">setup</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+  <span class="token keyword">const</span> id <span class="token operator">=</span> <span class="token string">"1234"</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">updateUser</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"user ID update success"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>changeId<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>{{ id }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>teplate</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">setup</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">import</span> <span class="token punctuation">{</span> defineProps<span class="token punctuation">,</span>defineEmits <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vue'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 接收父组件的数据</span>
+<span class="token function">defineProps</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">required</span><span class="token operator">:</span><span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">type</span><span class="token operator">:</span> String
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 接收父组件的事件</span>
+<span class="token keyword">const</span> emits <span class="token operator">=</span> defineEmits<span class="token operator">:</span><span class="token punctuation">[</span><span class="token string">'updateUserId'</span><span class="token punctuation">]</span>
+<span class="token keyword">const</span> <span class="token function-variable function">changeId</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">emits</span><span class="token punctuation">(</span><span class="token string">'updateUserId'</span><span class="token punctuation">,</span><span class="token string">'4321'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="非父子组件间的通信"><a href="#非父子组件间的通信" class="headerlink" title="非父子组件间的通信"></a>非父子组件间的通信</h3><p>这种情况相对于父子组件间通信较为复杂，主要有以下三种方式。</p>
+<ol>
+<li><strong>找到双方的共同父组件：</strong> 通过子向父，父向子通讯的方式，将父组件作为通信的中转来实现。</li>
+</ol>
+<p>优点：以现有的技术即可实现<br>缺点：大量的跨组件处理事件，会导致逻辑变得非常的复杂，各组件之间的耦合性变强</p>
+<ol start="2">
+<li>借助 vuex：因为 vuex 是可以与所有组件都进行交互的，所以可以借助它承担沟通者的角色</li>
+</ol>
+<p>优点：以现有的技术即可实现<br>缺点：数据必须由 vuex 处理，如果数据之前没有存放在 vuex 中，则需要进行较大的改动</p>
+<ol start="3">
+<li>事件中心<code>EventHb</code>：所谓的事件中心其实就是一个<strong>公开的单例</strong>，一般会提供**<code>emits</code>发送事件<strong>和</strong><code>on</code>监听事件<strong>两个方法。在 Vue2 中<code>vm</code>实例因为直接具备这两个方法，所以可以直接作为事件中心实例。但是在 Vue3 中，取消了<code>on</code>方法， 所以如果想要实现这种机制，则需要通过</strong><code>mitt</code>**来实现。</li>
+</ol>
+<p>优点：有利于组件之间的解耦合，增加可维护性<br>缺点：当事件足够多时，会导致事件中心极其复杂</p>
+<p>总结：从上面的分析，如果是父子组件间的通信，直接使用<code>props</code>和<code>emits</code>是最优的选择，但在非父子组件间的通信情况下，考虑到代码的可维护性、组件间的耦合性、代码的复杂度，综合下来采用事件中心<code>EventHub</code>是最优的选择，特别是在 Vue3 中。</p>
+<h3 id="mitt-js-的使用"><a href="#mitt-js-的使用" class="headerlink" title="mitt.js 的使用"></a>mitt.js 的使用</h3><ol>
+<li>安装 mitt.js(<a target="_blank" rel="noopener" href="https://github.com/developit/mitt">git 上的 mitt，具体可以参考 mitt 文档</a>)。</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">npm i mitt@<span class="token number">3.0</span><span class="token number">.0</span> <span class="token operator">--</span>save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="2">
+<li>使用 mitt.js，在<code>src/utils</code>目录下创建一个<code>eventHub.js</code>文件。</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> mitt <span class="token keyword">from</span> <span class="token string">"mitt"</span><span class="token punctuation">;</span>
+
+<span class="token comment">//const emitter = mitt();</span>
+<span class="token comment">//export default mitter;</span>
+
+<span class="token comment">// 这一句代替上面两句</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token function">mitt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li><p>在需要使用事件中心的组件中导入<code>src/utils/eventHub.js</code>。</p>
+</li>
+<li><p>假设 A 组件中的某个属性发生改变，触发事件中心进行修改。</p>
+</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> watch <span class="token keyword">from</span> <span class="token string">"vue"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> emitter <span class="token keyword">from</span> <span class="token string">"@/utils/eventHub.js"</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 监听日期的变化，并将日期作为事件触发</span>
+<span class="token function">watch</span><span class="token punctuation">(</span>currentDate<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"currentDateChange emit"</span><span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  emitter<span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">"currentDateChange"</span><span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="5">
+<li>假设 B 组件需要 A 实时获取 A 组件中的此属性变化，并做相应的操作。</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> emitter <span class="token keyword">from</span> <span class="token string">"@/utils/eventHub.js"</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 监听时间的变化，并做数据处理操作</span>
+emitter<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"currentDateChange"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"currentDateChange on"</span><span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 一系列数据操作</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="文档云-wordcloud-js"><a href="#文档云-wordcloud-js" class="headerlink" title="文档云 wordcloud.js"></a>文档云 wordcloud.js</h2><p>文档云图主要的特性：根据给定的轮廓绘制、云图内容颜色各有不同。<br>颜色的不同可以通过随机生成颜色的方式来实现。轮廓的绘制，可以提前准备一个<code>png</code>图片，wordcloud 会自动在非透明区域绘制云图内容。</p>
+<ol>
+<li>安装 wordcloud.js（<a target="_blank" rel="noopener" href="https://github.com/ecomfe/echarts-wordcloud">github 上的 wordcloud，具体操作可参考</a>）。</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">npm install echarts<span class="token operator">-</span>wordcloud@<span class="token number">2.1</span><span class="token number">.0</span> <span class="token operator">--</span>save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="2">
+<li>使用 wordcloud 实现文档云</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>wordcloudRef<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">setup</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+  <span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> echarts <span class="token keyword">from</span> <span class="token string">"echarts"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token string">"echarts-wordcloud"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token punctuation">{</span> onMounted <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"vue"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> wordCloudBg <span class="token keyword">from</span> <span class="token string">"@/assets/wordcloud.png"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token punctuation">{</span> randomRGB <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@/utils/color'</span>
+
+  <span class="token keyword">const</span> wordCloudData <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 通过请求接口获取文档云数据</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">getWordCloudData</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">getWordCloudData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    wordCloudData<span class="token punctuation">.</span>value <span class="token operator">=</span> res<span class="token punctuation">;</span>
+    <span class="token comment">// 构建option和加载文档云</span>
+    <span class="token function">renderChart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 调用方法</span>
+  <span class="token function">getWordCloudData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> wordcloudRef <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> mChart<span class="token punctuation">;</span>
+  <span class="token function">onMounted</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    mChart <span class="token operator">=</span> echarts<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>wordcloudRef<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 图像轮廓</span>
+  <span class="token keyword">var</span> maskImage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  maskImage<span class="token punctuation">.</span>src <span class="token operator">=</span> wordCloudBg<span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> <span class="token function-variable function">renderChart</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> option <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token string">"文档云案例"</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">series</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          <span class="token comment">// 类型</span>
+          <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"wordcloud"</span><span class="token punctuation">,</span>
+          <span class="token comment">// 可以通过left、top、right、bottom、width、height来指定x轴偏移量，y轴偏移量，canvas宽度，canvas高度</span>
+          <span class="token comment">// 文字大小的范围</span>
+          <span class="token literal-property property">sizeRange</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">80</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token comment">// 角度范围</span>
+          <span class="token literal-property property">rotationRange</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token comment">// 单词间距</span>
+          <span class="token literal-property property">gridSize</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+          <span class="token comment">// drawOutBound: false，是否允许词太大的时候，超出画布范围</span>
+          <span class="token comment">// 展示过渡效果</span>
+          <span class="token literal-property property">layoutAnimation</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          <span class="token comment">// 指定轮廓图像，也可以通过shape属性指定绘制形状，如：circle</span>
+          <span class="token literal-property property">maskImage</span><span class="token operator">:</span> maskImage<span class="token punctuation">;</span>
+          <span class="token literal-property property">textStyle</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 可以完全随机颜色，也可以根据指定的几种颜色随机，根据实际逻辑封装</span>
+            <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token function">randomRGB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token comment">// 高亮效果，当鼠标悬停时的效果</span>
+          <span class="token literal-property property">emphasis</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token literal-property property">focus</span><span class="token operator">:</span> <span class="token string">'self'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">textStyle</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token literal-property property">fontWeight</span><span class="token operator">:</span> <span class="token string">"blod"</span><span class="token punctuation">,</span>
+              <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">"#000"</span><span class="token punctuation">,</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token comment">// 指定文档云数据</span>
+          <span class="token literal-property property">data</span><span class="token operator">:</span> wordCloudData<span class="token punctuation">.</span>value<span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 需要等待图像加载结束，再加载文档云数据</span>
+    maskImage<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      mChart<span class="token punctuation">.</span><span class="token function">setOption</span><span class="token punctuation">(</span>option<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      mChart<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span><span class="token parameter">params</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token comment">// 对应当前文字的数据，可以实现跳转等动作</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>params<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>注意：这里的文档云的数据格式要求。</strong></p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"item name"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>必须要有<code>name</code>和<code>value</code>两个值。<code>name</code>表示在文档云中展示的名称，名称显示的大小需要根据<code>value</code>值进行计算。</p>
+<ol start="3">
+<li>随机生成颜色工具类，在<code>src/utils</code>目录下创建<code>color.js</code>文件。</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">randomRGB</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> r <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> g <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> b <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">rgb(</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>r<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">,</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>g<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">,</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>b<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="百度地图"><a href="#百度地图" class="headerlink" title="百度地图"></a>百度地图</h2><p>地图可视化，可以通过百度地图申请 API 和<code>ECharts</code>的<code>bmap.js</code>模块结合完成。</p>
+<ol>
+<li>在<code>public/index.html</code>中，导入百度地图 API（需要到百度地图 API 官网申请权限，申请地址<a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/">百度地图 API</a>，有账号直接登陆，无账号先申请账号，操作结束登录后，进入控制台，提示注册开发者，根据要求一步一步完成申请即可。申请开发者完成后，再次进入控制台，进入应用下的我的应用，创建应用，就能获取一个访问应用的 AK，然后完成百度地图 API 在项目中的导入，具体教程可看官方文档：<a target="_blank" rel="noopener" href="https://lbsyun.baidu.com/index.php?title=jspopularGL/guide/getkey">账号和获取密钥</a>）</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://api.map.baidu.com/api?v=3.0&amp;ak=${djOGmYOoPif123445D8kWvtUIFFNKGU0}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="2">
+<li>引入 bmap 的拓展模块，实现地图加载。</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>bmapRef<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">setup</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+  <span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> echarts <span class="token keyword">from</span> <span class="token string">"echarts"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token string">"echarts/extension/bmap/bmap.js"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token punctuation">{</span> ref<span class="token punctuation">,</span> onMounted <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"vue"</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> bmapRef <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> mChart <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token function">onMounted</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    mChart <span class="token operator">=</span> echarts<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>bmapRef<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> mapData <span class="token operator">=</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">[</span><span class="token number">109.114129</span><span class="token punctuation">,</span> <span class="token number">36.550339</span><span class="token punctuation">,</span> <span class="token number">120</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token number">103.114129</span><span class="token punctuation">,</span> <span class="token number">35.550339</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">renderMap</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> options <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">tooltip</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">trigger</span><span class="token operator">:</span> <span class="token string">"item"</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment">// 地图配置</span>
+      <span class="token literal-property property">bmap</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 地图的中心点</span>
+        <span class="token literal-property property">center</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">109.114129</span><span class="token punctuation">,</span> <span class="token number">36.550339</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token comment">// 缩放级别(初始值)</span>
+        <span class="token literal-property property">zoom</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+        <span class="token comment">// 是否可拖动</span>
+        <span class="token literal-property property">roam</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">series</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"百度地图案例"</span><span class="token punctuation">,</span>
+          <span class="token comment">// 撒点类型：散点图</span>
+          <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"scatter"</span><span class="token punctuation">,</span>
+          <span class="token comment">// 使用的表坐标</span>
+          <span class="token literal-property property">coordinateSystem</span><span class="token operator">:</span> <span class="token string">"bmap"</span><span class="token punctuation">,</span>
+          <span class="token comment">// 数据源</span>
+          <span class="token literal-property property">data</span><span class="token operator">:</span> mapData<span class="token punctuation">,</span>
+          <span class="token comment">// 散点大小，val表示当前点的数据</span>
+          <span class="token function-variable function">symbolSize</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> val<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">/</span> <span class="token number">10</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token comment">// 数据使用下标为2的值，下标为0,1的值是经纬度</span>
+          <span class="token literal-property property">encode</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token number">2</span>
+          <span class="token punctuation">}</span>
+          <span class="token comment">// 鼠标移入点时高亮样式</span>
+          <span class="token literal-property property">emphasis</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token literal-property property">label</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token literal-property property">show</span><span class="token operator">:</span> <span class="token boolean">true</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token comment">// 散点色值</span>
+          <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">'#15803D'</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'百度地图案例，数值top5动态效果'</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'effectScatter'</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">coordinateSystem</span><span class="token operator">:</span> <span class="token string">'bmap'</span><span class="token punctuation">,</span>
+          <span class="token comment">// 先排序，再取前五条数据</span>
+          <span class="token literal-property property">data</span><span class="token operator">:</span> mapData<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> b<span class="token punctuation">.</span>value <span class="token operator">-</span> a<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token function-variable function">symbolSize</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> val<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">/</span><span class="token number">10</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">encode</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token number">2</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token comment">// 涟漪特效</span>
+          <span class="token literal-property property">rippleEffect</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token literal-property property">brushType</span><span class="token operator">:</span> <span class="token string">'stroke'</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">label</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token literal-property property">formatter</span><span class="token operator">:</span><span class="token string">'{b}'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">position</span><span class="token operator">:</span> <span class="token string">'right'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">show</span><span class="token operator">:</span> <span class="token boolean">true</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token comment">// 散点层级</span>
+          <span class="token literal-property property">zlevel</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+          <span class="token comment">// 散点色值</span>
+          <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">'#166534'</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    mChart<span class="token punctuation">.</span><span class="token function">setOption</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>注意：bmap 对数据的格式有一定的要求：</strong></p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> bmapData <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">[</span><span class="token number">109.114129</span><span class="token punctuation">,</span> <span class="token number">36.550339</span><span class="token punctuation">,</span> <span class="token number">120</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token number">109.114129</span><span class="token punctuation">,</span> <span class="token number">36.550339</span><span class="token punctuation">,</span> <span class="token number">120</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token number">109.114129</span><span class="token punctuation">,</span> <span class="token number">36.550339</span><span class="token punctuation">,</span> <span class="token number">120</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>其中前两个参数分别表示经度和纬度，第三个参数才是对应的数据。</strong></p>
+
                 
             </div>
             <hr/>
@@ -1556,7 +1865,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             

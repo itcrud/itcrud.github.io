@@ -336,7 +336,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    639
+                    564
                 </div>
                 
 
@@ -361,15 +361,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>去年年初，也可以说是前年年底，又回归玩起了游戏，也不知道是第多少次回归了，断断续续玩了十年，曾今很火的游戏，现在已经很少有小鲜肉入坑啦。回忆起开始玩这款游戏，已经是10年前的一个假期……</p>
-<p>开发过程中，一边写代码一边调试，如果项目没有设置热部署功能，则每次需要对项目重启，这样过于麻烦和浪费时间，在各编辑器上都是带有自动编译的功能，下面看一下常用的开发工具IDEA是如何设置的，Eclipse也会说到，相对于两种编辑器，Eclipse配置会简单很多。</p>
-<h2 id="1-引入SpringBoot热部署组件"><a href="#1-引入SpringBoot热部署组件" class="headerlink" title="1. 引入SpringBoot热部署组件"></a>1. 引入SpringBoot热部署组件</h2><p>引入依赖<code>spring-boot-devtools</code>，版本继承spring-boot的版本。</p>
+                <p>开发过程中，一边写代码一边调试，如果项目没有设置热部署功能，则每次需要对项目重启，这样过于麻烦和浪费时间，在各编辑器上都是带有自动编译的功能，下面看一下常用的开发工具 IDEA 是如何设置的，Eclipse 也会说到，相对于两种编辑器，Eclipse 配置会简单很多。</p>
+<h2 id="1-引入-SpringBoot-热部署组件"><a href="#1-引入-SpringBoot-热部署组件" class="headerlink" title="1. 引入 SpringBoot 热部署组件"></a>1. 引入 SpringBoot 热部署组件</h2><p>引入依赖<code>spring-boot-devtools</code>，版本继承 spring-boot 的版本。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-devtools<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>组件引入后，需要在pom.xml文件中配置相关插件。</p>
+<p>组件引入后，需要在 pom.xml 文件中配置相关插件。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-maven-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
@@ -378,15 +377,15 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>如果在项目中使用到thymeleaf模板，那么就需要在application.properties文件中配置thymeleaf模板缓存机制为false。</p>
+<p>如果在项目中使用到 thymeleaf 模板，那么就需要在 application.properties 文件中配置 thymeleaf 模板缓存机制为 false。</p>
 <pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.thymeleaf.cache</span><span class="token punctuation">=</span><span class="token value attr-value">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="2-IDEA相关设置"><a href="#2-IDEA相关设置" class="headerlink" title="2. IDEA相关设置"></a>2. IDEA相关设置</h2><p>第一步：找到IDEA的settings，找到Build,Execution,Deployment下的Compiler，然后将Build project automatically选项选中。</p>
+<h2 id="2-IDEA-相关设置"><a href="#2-IDEA-相关设置" class="headerlink" title="2. IDEA 相关设置"></a>2. IDEA 相关设置</h2><p>第一步：找到 IDEA 的 Settings，找到 Build,Execution,Deployment 下的 Compiler，然后将 Build project automatically 选项选中。</p>
 <p>第一步完成后如果不需要每次保存自动编译，就使用手动的方式编译，快捷键是：<code>ctrl+shift+f9</code>，反之则需要以下步骤配置。</p>
 <p>使用快捷键<code>ctrl+shift+alt+/</code>会弹出一个窗口，点击<code>registry</code>，在里面找到<code>compiler.automake.allow.when.app.running</code>，勾线这个选项即可。</p>
 <p>这是实际是采用了两种方式，一种是<strong>手动模式</strong>，一种是<strong>自动模式</strong>。在使用自动模式时，需要保存后才会编译(注意点)，反之是不会。</p>
 <p>综合两种方式，一般采用手动的比较多。为什么呢？因为在写代码的时候，不可能写一行编译一次，这样编译太频繁，而且没有意义（在实际开发过程中肯定是写完一段逻辑后才会去调试一次）。所以需要重新编译调试的时候再去编译是比较好的选择，也是比较合理的做法。</p>
-<h2 id="3-Eclipse的操作"><a href="#3-Eclipse的操作" class="headerlink" title="3. Eclipse的操作"></a>3. Eclipse的操作</h2><p>如果使用的是Eclipse那就没有IDEA相关设置的过程，引入依赖，做好配置文件修改即可。</p>
+<h2 id="3-Eclipse-的操作"><a href="#3-Eclipse-的操作" class="headerlink" title="3. Eclipse 的操作"></a>3. Eclipse 的操作</h2><p>如果使用的是 Eclipse 那就没有 IDEA 相关设置的过程，引入依赖，做好配置文件修改即可。</p>
 
                 
             </div>
@@ -845,7 +844,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             

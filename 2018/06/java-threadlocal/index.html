@@ -340,7 +340,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.7k
                 </div>
                 
 
@@ -365,22 +365,22 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-ThreadLoacal是什么？"><a href="#1-ThreadLoacal是什么？" class="headerlink" title="1. ThreadLoacal是什么？"></a>1. ThreadLoacal是什么？</h2><p>ThreadLocal是啥？以前面试别人时就喜欢问这个，有些伙伴喜欢把它和线程同步机制混为一谈，事实上ThreadLocal与线程同步无关。ThreadLocal虽然提供了一种解决多线程环境下成员变量的问题，但是它并不是解决多线程共享变量的问题。那么ThreadLocal到底是什么呢？<br>API是这样介绍它的：<br>This class provides thread-local variables. These variables differ from their normal counterparts in that each thread that accesses one (via its {@code get} or {@code set} method) has its own, independently initialized copy of the variable. {@code ThreadLocal} instances are typically private static fields in classes that wish to associate state with a thread (e.g.,a user ID or Transaction ID).(该类提供了线程局部 (thread-local) 变量。这些变量不同于它们的普通对应物，因为访问某个变量（通过其<code>get</code> 或 <code>set</code> 方法）的每个线程都有自己的局部变量，它独立于变量的初始化副本。<code>ThreadLocal</code>实例通常是类中的 private static 字段，它们希望将状态与某一个线程（例如，用户 ID 或事务 ID）相关联。)<br>所以ThreadLocal与线程同步机制不同，线程同步机制是多个线程共享同一个变量，而ThreadLocal是为每一个线程创建一个单独的变量副本，故而每个线程都可以独立地改变自己所拥有的变量副本，而不会影响其他线程所对应的副本。可以说ThreadLocal为多线程环境下变量问题提供了另外一种解决思路。<br>ThreadLocal定义了四个方法：</p>
+                <h2 id="1-ThreadLoacal-是什么？"><a href="#1-ThreadLoacal-是什么？" class="headerlink" title="1. ThreadLoacal 是什么？"></a>1. ThreadLoacal 是什么？</h2><p>ThreadLocal 是啥？以前面试别人时就喜欢问这个，有些伙伴喜欢把它和线程同步机制混为一谈，事实上 ThreadLocal 与线程同步无关。ThreadLocal 虽然提供了一种解决多线程环境下成员变量的问题，但是它并不是解决多线程共享变量的问题。那么 ThreadLocal 到底是什么呢？<br>API 是这样介绍它的：<br>This class provides thread-local variables. These variables differ from their normal counterparts in that each thread that accesses one (via its {@code get} or {@code set} method) has its own, independently initialized copy of the variable. {@code ThreadLocal} instances are typically private static fields in classes that wish to associate state with a thread (e.g.,a user ID or Transaction ID).(该类提供了线程局部 (thread-local) 变量。这些变量不同于它们的普通对应物，因为访问某个变量（通过其<code>get</code> 或 <code>set</code> 方法）的每个线程都有自己的局部变量，它独立于变量的初始化副本。<code>ThreadLocal</code>实例通常是类中的 private static 字段，它们希望将状态与某一个线程（例如，用户 ID 或事务 ID）相关联。)<br>所以 ThreadLocal 与线程同步机制不同，线程同步机制是多个线程共享同一个变量，而 ThreadLocal 是为每一个线程创建一个单独的变量副本，故而每个线程都可以独立地改变自己所拥有的变量副本，而不会影响其他线程所对应的副本。可以说 ThreadLocal 为多线程环境下变量问题提供了另外一种解决思路。<br>ThreadLocal 定义了四个方法：</p>
 <ul>
 <li>get()：返回此线程局部变量的当前线程副本中的值。</li>
 <li>initialValue()：返回此线程局部变量的当前线程的“初始值”。</li>
 <li>remove()：移除此线程局部变量当前线程的值。</li>
 <li>set(T value)：将此线程局部变量的当前线程副本中的值设置为指定值。</li>
 </ul>
-<p>除了这四个方法，ThreadLocal内部还有一个静态内部类ThreadLocalMap，该内部类才是实现线程隔离机制的关键，get()、set()、remove()都是基于该内部类操作。ThreadLocalMap提供了一种用键值对方式存储每一个线程的变量副本的方法，key为当前ThreadLocal对象，value则是对应线程的变量副本。</p>
-<p>对于ThreadLocal需要注意的有两点：</p>
+<p>除了这四个方法，ThreadLocal 内部还有一个静态内部类 ThreadLocalMap，该内部类才是实现线程隔离机制的关键，get()、set()、remove()都是基于该内部类操作。ThreadLocalMap 提供了一种用键值对方式存储每一个线程的变量副本的方法，key 为当前 ThreadLocal 对象，value 则是对应线程的变量副本。</p>
+<p>对于 ThreadLocal 需要注意的有两点：</p>
 <ol>
-<li>ThreadLocal实例本身是不存储值，它只是提供了一个在当前线程中找到副本值得key。</li>
-<li>是ThreadLocal包含在Thread中，而不是Thread包含在ThreadLocal中，有些小伙伴会弄错他们的关系。</li>
+<li>ThreadLocal 实例本身是不存储值，它只是提供了一个在当前线程中找到副本值得 key。</li>
+<li>是 ThreadLocal 包含在 Thread 中，而不是 Thread 包含在 ThreadLocal 中，有些小伙伴会弄错他们的关系。</li>
 </ol>
-<p>下图是Thread、ThreadLocal、ThreadLocalMap的关系<a target="_blank" rel="noopener" href="http://blog.xiaohansong.com/2016/08/06/ThreadLocal-memory-leak/">http://blog.xiaohansong.com/2016/08/06/ThreadLocal-memory-leak/</a></p>
+<p>下图是 Thread、ThreadLocal、ThreadLocalMap 的关系<a target="_blank" rel="noopener" href="http://blog.xiaohansong.com/2016/08/06/ThreadLocal-memory-leak/">http://blog.xiaohansong.com/2016/08/06/ThreadLocal-memory-leak/</a></p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/8407E81926F44620AF5DC0F1B663D1A0.jpg"></p>
-<h2 id="2-ThreadLocal使用示例"><a href="#2-ThreadLocal使用示例" class="headerlink" title="2. ThreadLocal使用示例"></a>2. ThreadLocal使用示例</h2><p>示例如下：</p>
+<h2 id="2-ThreadLocal-使用示例"><a href="#2-ThreadLocal-使用示例" class="headerlink" title="2. ThreadLocal 使用示例"></a>2. ThreadLocal 使用示例</h2><p>示例如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SeqCount</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> seqCount <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -424,8 +424,9 @@
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>运行结果：<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/EBA977DE636548E49875EA2B4CD37BFA.jpg"></p>
-<p>从运行结果可以看出，ThreadLocal确实是可以达到线程隔离机制，确保变量的安全性。这里我们想一个问题，在上面的代码中ThreadLocal的initialValue()方法返回的是0，加入该方法返回得是一个对象呢，会产生什么后果呢？例如：</p>
+<p>从运行结果可以看出，ThreadLocal 确实是可以达到线程隔离机制，确保变量的安全性。这里我们想一个问题，在上面的代码中 ThreadLocal 的 initialValue()方法返回的是 0，加入该方法返回得是一个对象呢，会产生什么后果呢？例如：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">A</span> a <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span> seqCount <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 	<span class="token comment">// 实现initialValue()</span>
@@ -437,9 +438,10 @@
 <span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">{</span>
 	<span class="token comment">// ....</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>具体过程请参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ee8c9dccc953">对ThreadLocal实现原理的一点思考</a></p>
-<h2 id="3-ThreadLocal源码解析"><a href="#3-ThreadLocal源码解析" class="headerlink" title="3. ThreadLocal源码解析"></a>3. ThreadLocal源码解析</h2><p>ThreadLocal虽然解决了这个多线程变量的复杂问题，但是它的源码实现却是比较简单的。ThreadLocalMap是实现ThreadLocal的关键，我们先从它入手。</p>
-<h2 id="3-1-ThreadLocalMap"><a href="#3-1-ThreadLocalMap" class="headerlink" title="3.1 ThreadLocalMap"></a>3.1 ThreadLocalMap</h2><p>ThreadLocalMap其内部利用Entry来实现key-value的存储，如下：</p>
+
+<p>具体过程请参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ee8c9dccc953">对 ThreadLocal 实现原理的一点思考</a></p>
+<h2 id="3-ThreadLocal-源码解析"><a href="#3-ThreadLocal-源码解析" class="headerlink" title="3. ThreadLocal 源码解析"></a>3. ThreadLocal 源码解析</h2><p>ThreadLocal 虽然解决了这个多线程变量的复杂问题，但是它的源码实现却是比较简单的。ThreadLocalMap 是实现 ThreadLocal 的关键，我们先从它入手。</p>
+<h2 id="3-1-ThreadLocalMap"><a href="#3-1-ThreadLocalMap" class="headerlink" title="3.1 ThreadLocalMap"></a>3.1 ThreadLocalMap</h2><p>ThreadLocalMap 其内部利用 Entry 来实现 key-value 的存储，如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Entry</span> <span class="token keyword">extends</span> <span class="token class-name">WeakReference</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ThreadLocal</span><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
 	<span class="token comment">/** The value associated with this ThreadLocal. */</span>
 	<span class="token class-name">Object</span> value<span class="token punctuation">;</span>
@@ -449,7 +451,8 @@
 		value <span class="token operator">=</span> v<span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>从上面代码中可以看出Entry的key就是ThreadLocal，而value就是值。同时，Entry也继承WeakReference，所以说Entry所对应key（ThreadLocal实例）的引用为一个弱引用（关于弱引用这里就不多说了，感兴趣的可以关注这篇博客：<br><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/java/j-jtp11225/">Java 理论与实践: 用弱引用堵住内存泄漏</a>）<br>ThreadLocalMap的源码稍微多了点，我们就看两个最核心的方法<code>getEntry()</code>,<code>set()</code>。</p>
+
+<p>从上面代码中可以看出 Entry 的 key 就是 ThreadLocal，而 value 就是值。同时，Entry 也继承 WeakReference，所以说 Entry 所对应 key（ThreadLocal 实例）的引用为一个弱引用（关于弱引用这里就不多说了，感兴趣的可以关注这篇博客：<br><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/java/j-jtp11225/">Java 理论与实践: 用弱引用堵住内存泄漏</a>）<br>ThreadLocalMap 的源码稍微多了点，我们就看两个最核心的方法<code>getEntry()</code>,<code>set()</code>。</p>
 <h3 id="3-2-set"><a href="#3-2-set" class="headerlink" title="3.2 set()"></a>3.2 set()</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> key<span class="token punctuation">,</span> <span class="token class-name">Object</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
     <span class="token class-name">ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap<span class="token punctuation">.</span>Entry</span><span class="token punctuation">[</span><span class="token punctuation">]</span> tab <span class="token operator">=</span> table<span class="token punctuation">;</span>
@@ -489,9 +492,11 @@
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">cleanSomeSlots</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> sz<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> sz <span class="token operator">&gt;=</span> threshold<span class="token punctuation">)</span>
         <span class="token function">rehash</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这个set()操作和我们在集合了解的put()方式有点儿不一样，虽然他们都是key-value结构，不同在于他们解决散列冲突的方式不同。集合Map的put()采用的是拉链法，而ThreadLocalMap的set()则是采用开放定址法（具体请参考<a target="_blank" rel="noopener" href="http://www.nowamagic.net/academy/detail/3008015">散列冲突处理系列博客</a>）。掌握了开放地址法该方法就一目了然了。<br>set()操作除了存储元素外，还有一个很重要的作用，就是replaceStaleEntry()和cleanSomeSlots()，这两个方法可以清除掉key == null 的实例，防止内存泄漏。在set()方法中还有一个变量很重要：threadLocalHashCode，定义如下：</p>
+
+<p>这个 set()操作和我们在集合了解的 put()方式有点儿不一样，虽然他们都是 key-value 结构，不同在于他们解决散列冲突的方式不同。集合 Map 的 put()采用的是拉链法，而 ThreadLocalMap 的 set()则是采用开放定址法（具体请参考<a target="_blank" rel="noopener" href="http://www.nowamagic.net/academy/detail/3008015">散列冲突处理系列博客</a>）。掌握了开放地址法该方法就一目了然了。<br>set()操作除了存储元素外，还有一个很重要的作用，就是 replaceStaleEntry()和 cleanSomeSlots()，这两个方法可以清除掉 key == null 的实例，防止内存泄漏。在 set()方法中还有一个变量很重要：threadLocalHashCode，定义如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> threadLocalHashCode <span class="token operator">=</span> <span class="token function">nextHashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>从名字上面我们可以看出threadLocalHashCode应该是ThreadLocal的散列值，定义为final，表示ThreadLocal一旦创建其散列值就已经确定了，生成过程则是调用nextHashCode()：</p>
+
+<p>从名字上面我们可以看出 threadLocalHashCode 应该是 ThreadLocal 的散列值，定义为 final，表示 ThreadLocal 一旦创建其散列值就已经确定了，生成过程则是调用 nextHashCode()：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">AtomicInteger</span> nextHashCode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">HASH_INCREMENT</span> <span class="token operator">=</span> <span class="token number">0x61c88647</span><span class="token punctuation">;</span>
@@ -499,8 +504,9 @@
 <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">nextHashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> nextHashCode<span class="token punctuation">.</span><span class="token function">getAndAdd</span><span class="token punctuation">(</span><span class="token constant">HASH_INCREMENT</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>nextHashCode表示分配下一个ThreadLocal实例的threadLocalHashCode的值，HASH_INCREMENT则表示分配两个ThradLocal实例的threadLocalHashCode的增量，从nextHashCode就可以看出他们的定义。</p>
-<h3 id="3-3-getEntry"><a href="#3-3-getEntry" class="headerlink" title="3.3 getEntry()"></a>3.3 getEntry()</h3><p>由于采用了开放定址法，所以当前key的散列值和元素在数组的索引并不是完全对应的，首先取一个探测数（key的散列值），如果所对应的key就是我们所要找的元素，则返回，否则调用getEntryAfterMiss()，如下：</p>
+
+<p>nextHashCode 表示分配下一个 ThreadLocal 实例的 threadLocalHashCode 的值，HASH_INCREMENT 则表示分配两个 ThradLocal 实例的 threadLocalHashCode 的增量，从 nextHashCode 就可以看出他们的定义。</p>
+<h3 id="3-3-getEntry"><a href="#3-3-getEntry" class="headerlink" title="3.3 getEntry()"></a>3.3 getEntry()</h3><p>由于采用了开放定址法，所以当前 key 的散列值和元素在数组的索引并不是完全对应的，首先取一个探测数（key 的散列值），如果所对应的 key 就是我们所要找的元素，则返回，否则调用 getEntryAfterMiss()，如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Entry</span> <span class="token function">getEntryAfterMiss</span><span class="token punctuation">(</span><span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> key<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token class-name">Entry</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token class-name">Entry</span><span class="token punctuation">[</span><span class="token punctuation">]</span> tab <span class="token operator">=</span> table<span class="token punctuation">;</span>
     <span class="token keyword">int</span> len <span class="token operator">=</span> tab<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
@@ -517,7 +523,8 @@
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里有一个重要的地方，当key == null时，调用了expungeStaleEntry()方法，该方法用于处理key == null，有利于GC回收，能够有效地避免内存泄漏。</p>
+
+<p>这里有一个重要的地方，当 key == null 时，调用了 expungeStaleEntry()方法，该方法用于处理 key == null，有利于 GC 回收，能够有效地避免内存泄漏。</p>
 <h3 id="3-4-get"><a href="#3-4-get" class="headerlink" title="3.4 get()"></a>3.4 get()</h3><p>返回当前线程所对应的线程变量。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">T</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// 获取当前线程</span>
@@ -531,17 +538,19 @@
         <span class="token keyword">if</span> <span class="token punctuation">(</span>e <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
 
-            <span class="token comment">// 获取目标值        </span>
+            <span class="token comment">// 获取目标值</span>
             <span class="token class-name">T</span> result <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span>e<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
             <span class="token keyword">return</span> result<span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span> <span class="token function">setInitialValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>首先通过当前线程获取所对应的成员变量ThreadLocalMap，然后通过ThreadLocalMap获取当前ThreadLocal的Entry，最后通过所获取的Entry获取目标值result。<br>getMap()方法可以获取当前线程所对应的ThreadLocalMap，如下：</p>
+
+<p>首先通过当前线程获取所对应的成员变量 ThreadLocalMap，然后通过 ThreadLocalMap 获取当前 ThreadLocal 的 Entry，最后通过所获取的 Entry 获取目标值 result。<br>getMap()方法可以获取当前线程所对应的 ThreadLocalMap，如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ThreadLocalMap</span> <span class="token function">getMap</span><span class="token punctuation">(</span><span class="token class-name">Thread</span> t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> t<span class="token punctuation">.</span>threadLocals<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="3-5-set-T-value"><a href="#3-5-set-T-value" class="headerlink" title="3.5 set(T value)"></a>3.5 set(T value)</h3><p>设置当前线程的线程局部变量的值。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">T</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token class-name">Thread</span> t <span class="token operator">=</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -551,28 +560,32 @@
     <span class="token keyword">else</span>
         <span class="token function">createMap</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>获取当前线程所对应的ThreadLocalMap，如果不为空，则调用ThreadLocalMap的set()方法，key就是当前ThreadLocal，如果不存在，则调用createMap()方法新建一个，如下：</p>
+
+<p>获取当前线程所对应的 ThreadLocalMap，如果不为空，则调用 ThreadLocalMap 的 set()方法，key 就是当前 ThreadLocal，如果不存在，则调用 createMap()方法新建一个，如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">createMap</span><span class="token punctuation">(</span><span class="token class-name">Thread</span> t<span class="token punctuation">,</span> <span class="token class-name">T</span> firstValue<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	t<span class="token punctuation">.</span>threadLocals <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadLocalMap</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> firstValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="3-6-initialValue"><a href="#3-6-initialValue" class="headerlink" title="3.6 initialValue()"></a>3.6 initialValue()</h3><p>返回该线程局部变量的初始值。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">T</span> <span class="token function">initialValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
    <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>该方法定义为protected级别且返回为null，很明显是要子类实现它的，所以我们在使用ThreadLocal的时候一般都应该覆盖该方法。该方法不能显示调用，只有在第一次调用get()或者set()方法时才会被执行，并且仅执行1次。</p>
+
+<p>该方法定义为 protected 级别且返回为 null，很明显是要子类实现它的，所以我们在使用 ThreadLocal 的时候一般都应该覆盖该方法。该方法不能显示调用，只有在第一次调用 get()或者 set()方法时才会被执行，并且仅执行 1 次。</p>
 <h3 id="3-7-remove"><a href="#3-7-remove" class="headerlink" title="3.7 remove()"></a>3.7 remove()</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token class-name">ThreadLocalMap</span> m <span class="token operator">=</span> <span class="token function">getMap</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>m <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
         m<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>该方法的目的是减少内存的占用。当然，我们不需要显示调用该方法，因为一个线程结束后，它所对应的局部变量就会被垃圾回收。</p>
-<h2 id="4-ThreadLocal为什么会内存泄漏"><a href="#4-ThreadLocal为什么会内存泄漏" class="headerlink" title="4. ThreadLocal为什么会内存泄漏"></a>4. ThreadLocal为什么会内存泄漏</h2><p>前面提到每个Thread都有一个ThreadLocal.ThreadLocalMap的map，该map的key为ThreadLocal实例，它为一个弱引用，我们知道弱引用有利于GC回收。当ThreadLocal的key == null时，GC就会回收这部分空间，但是value却不一定能够被回收，因为他还与Current Thread存在一个强引用关系，如下（图片来自<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/ee8c9dccc953">http://www.jianshu.com/p/ee8c9dccc953</a> ）:</p>
+<h2 id="4-ThreadLocal-为什么会内存泄漏"><a href="#4-ThreadLocal-为什么会内存泄漏" class="headerlink" title="4. ThreadLocal 为什么会内存泄漏"></a>4. ThreadLocal 为什么会内存泄漏</h2><p>前面提到每个 Thread 都有一个 ThreadLocal.ThreadLocalMap 的 map，该 map 的 key 为 ThreadLocal 实例，它为一个弱引用，我们知道弱引用有利于 GC 回收。当 ThreadLocal 的 key == null 时，GC 就会回收这部分空间，但是 value 却不一定能够被回收，因为他还与 Current Thread 存在一个强引用关系，如下（图片来自<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/ee8c9dccc953">http://www.jianshu.com/p/ee8c9dccc953</a> ）:</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/327A374A678A4FC0B99A31561926B9E2.jpg"></p>
-<p>由于存在这个强引用关系，会导致value无法回收。如果这个线程对象不会销毁那么这个强引用关系则会一直存在，就会出现内存泄漏情况。所以说只要这个线程对象能够及时被GC回收，就不会出现内存泄漏。如果碰到线程池，那就更坑了。<br>那么要怎么避免这个问题呢？<br>在前面提过，在ThreadLocalMap中的setEntry()、getEntry()，如果遇到key == null的情况，会对value设置为null。当然我们也可以显示调用ThreadLocal的remove()方法进行处理。<br>下面再对ThreadLocal进行简单的总结：</p>
+<p>由于存在这个强引用关系，会导致 value 无法回收。如果这个线程对象不会销毁那么这个强引用关系则会一直存在，就会出现内存泄漏情况。所以说只要这个线程对象能够及时被 GC 回收，就不会出现内存泄漏。如果碰到线程池，那就更坑了。<br>那么要怎么避免这个问题呢？<br>在前面提过，在 ThreadLocalMap 中的 setEntry()、getEntry()，如果遇到 key == null 的情况，会对 value 设置为 null。当然我们也可以显示调用 ThreadLocal 的 remove()方法进行处理。<br>下面再对 ThreadLocal 进行简单的总结：</p>
 <ul>
 <li>ThreadLocal 不是用于解决共享变量的问题的，也不是为了协调线程同步而存在，而是为了方便每个线程处理自己的状态而引入的一个机制。这点至关重要。</li>
-<li>每个Thread内部都有一个ThreadLocal.ThreadLocalMap类型的成员变量，该成员变量用来存储实际的ThreadLocal变量副本。</li>
-<li>ThreadLocal并不是为线程保存对象的副本，它仅仅只起到一个索引的作用。它的主要木得视为每一个线程隔离一个类的实例，这个实例的作用范围仅限于线程内部。</li>
+<li>每个 Thread 内部都有一个 ThreadLocal.ThreadLocalMap 类型的成员变量，该成员变量用来存储实际的 ThreadLocal 变量副本。</li>
+<li>ThreadLocal 并不是为线程保存对象的副本，它仅仅只起到一个索引的作用。它的主要木得视为每一个线程隔离一个类的实例，这个实例的作用范围仅限于线程内部。</li>
 </ul>
 
                 
@@ -787,16 +800,16 @@
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/spring%E6%B3%A8%E8%A7%A3/">
+                        <span class="chip bg-color">spring注解</span>
+                    </a>
+                    
                     <a href="/tags/lazy/">
                         <span class="chip bg-color">lazy</span>
                     </a>
                     
                     <a href="/tags/scope/">
                         <span class="chip bg-color">scope</span>
-                    </a>
-                    
-                    <a href="/tags/spring%E6%B3%A8%E8%A7%A3/">
-                        <span class="chip bg-color">spring注解</span>
                     </a>
                     
                 </div>
@@ -1048,7 +1061,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             

@@ -361,15 +361,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Spring IOC初始化有很多种方式，如xml方式、注解方式(也分很多不同的方式)、FactoryBean方式等等，这个在之前的博客中有写过(原文：<a target="_blank" rel="noopener" href="//2018/07/spring-ioc-init">Spring IOC初始化bean对象创建的N种实现方式理解</a>)。这里就其中的一种方式来理解一下整个创建bean的基本过程。</p>
+                <p>Spring IOC 初始化有很多种方式，如 xml 方式、注解方式(也分很多不同的方式)、FactoryBean 方式等等，这个在之前的博客中有写过(原文：<a target="_blank" rel="noopener" href="//2018/07/spring-ioc-init">Spring IOC 初始化 bean 对象创建的 N 种实现方式理解</a>)。这里就其中的一种方式来理解一下整个创建 bean 的基本过程。</p>
 <h2 id="1-前提说明"><a href="#1-前提说明" class="headerlink" title="1. 前提说明"></a>1. 前提说明</h2><p>在写之前，先说明一下场景。</p>
 <ul>
 <li>这里是从<code>AnnotationConfigApplicationContext</code>的构造方法进入。当然进入的还有很多其他方式，如<code>ClassPathXmlApplicationContext</code>等。他们的共同点都是继承与<code>ApplicationContext</code>。</li>
 <li>这里只做基本的说明，至于代理对象生成考虑、后置处理器的工作机制，多例的情况下如何运作，以后的博客会慢慢的来分析，这里解释的是<strong>单例非懒加载实例的初始化过程</strong>。</li>
 <li>另外在贴出的源代码中，使用省略号将部分代码替代，否则代码过多反而影响对源代码的理解。</li>
 </ul>
-<h2 id="2-源码分析"><a href="#2-源码分析" class="headerlink" title="2. 源码分析"></a>2. 源码分析</h2><p>在做IOC容器初始化的时候，采用下面的方式：</p>
+<h2 id="2-源码分析"><a href="#2-源码分析" class="headerlink" title="2. 源码分析"></a>2. 源码分析</h2><p>在做 IOC 容器初始化的时候，采用下面的方式：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ApplicationContext</span> app <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token class-name">InitDemo</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>进入到上面<code>AnnotationConfigApplicationContext(clazz)</code>的构造方法中，源码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
  * Create a new AnnotationConfigApplicationContext, deriving bean definitions
@@ -382,6 +383,7 @@
 	<span class="token function">register</span><span class="token punctuation">(</span>annotatedClasses<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//注册Configuration配置类(可能有多个)</span>
 	<span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//刷新方法</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="2-1-refresh"><a href="#2-1-refresh" class="headerlink" title="2.1 refresh()"></a>2.1 refresh()</h3><p>进入到<code>AbstractApplicationContext</code>类中看<code>refresh()</code>方法。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">BeansException</span><span class="token punctuation">,</span> <span class="token class-name">IllegalStateException</span> <span class="token punctuation">{</span>
@@ -451,10 +453,11 @@
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这个方法包含很多东西，前面一系列的方法调用都是为后续的单例非懒加载bean的初始化做准备。</p>
+
+<p>这个方法包含很多东西，前面一系列的方法调用都是为后续的单例非懒加载 bean 的初始化做准备。</p>
 <ul>
-<li>bean工厂的beanFacotry的实例化以及其内部属性的初始化</li>
-<li>bean创建过程使用到处理器(processor)的前置处理和后置处理，所以这里需要在bean创建逻辑开始之前，将所有的处理器初始化完成</li>
+<li>bean 工厂的 beanFacotry 的实例化以及其内部属性的初始化</li>
+<li>bean 创建过程使用到处理器(processor)的前置处理和后置处理，所以这里需要在 bean 创建逻辑开始之前，将所有的处理器初始化完成</li>
 </ul>
 <h3 id="2-2-finishBeanFactoryInitialization"><a href="#2-2-finishBeanFactoryInitialization" class="headerlink" title="2.2 finishBeanFactoryInitialization()"></a>2.2 finishBeanFactoryInitialization()</h3><p>进入到<code>AbstractApplicationContext</code>类中<code>finishBeanFactoryInitialization()</code>方法里面。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
@@ -499,8 +502,9 @@
 	<span class="token comment">// 核心方法：初始化单例bean(非懒加载bean)</span>
 	beanFactory<span class="token punctuation">.</span><span class="token function">preInstantiateSingletons</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这个方法已经说明很清楚，是用来做bean工厂的初始化和单例非懒加载bean的初始化，以及加入到容器中。到这里说bean工厂的初始化可能会觉得在<code>refresh()</code>方法中不是已经完成了吗。但是那只是bean工厂的初期初始化，后期装配好的bean也是要丢入到bean工厂里面，也属于bean工厂初始化的一部分。</p>
-<h3 id="2-3-preInstantiateSingletons"><a href="#2-3-preInstantiateSingletons" class="headerlink" title="2.3 preInstantiateSingletons()"></a>2.3 preInstantiateSingletons()</h3><p>进入<code>DefaultListableBeanFactory</code>类中<code>preInstantiateSingletons()</code>方法看具体的bean实例化过程。</p>
+
+<p>这个方法已经说明很清楚，是用来做 bean 工厂的初始化和单例非懒加载 bean 的初始化，以及加入到容器中。到这里说 bean 工厂的初始化可能会觉得在<code>refresh()</code>方法中不是已经完成了吗。但是那只是 bean 工厂的初期初始化，后期装配好的 bean 也是要丢入到 bean 工厂里面，也属于 bean 工厂初始化的一部分。</p>
+<h3 id="2-3-preInstantiateSingletons"><a href="#2-3-preInstantiateSingletons" class="headerlink" title="2.3 preInstantiateSingletons()"></a>2.3 preInstantiateSingletons()</h3><p>进入<code>DefaultListableBeanFactory</code>类中<code>preInstantiateSingletons()</code>方法看具体的 bean 实例化过程。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">preInstantiateSingletons</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">BeansException</span> <span class="token punctuation">{</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>logger<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -549,9 +553,11 @@
 
 	<span class="token comment">// ……</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>获取当前所有要初始化的bean并遍历，进入到循环中后，首先是判断有没有实现<code>FactoryBean</code>接口，根据不同的时间执行不同的<code>getBean</code>逻辑，这里以没有实现<code>FactoryBean</code>接口的实例化过程为主线。</p>
+
+<p>获取当前所有要初始化的 bean 并遍历，进入到循环中后，首先是判断有没有实现<code>FactoryBean</code>接口，根据不同的时间执行不同的<code>getBean</code>逻辑，这里以没有实现<code>FactoryBean</code>接口的实例化过程为主线。</p>
 <h3 id="2-4-getBean-、doGetBean"><a href="#2-4-getBean-、doGetBean" class="headerlink" title="2.4 getBean()、doGetBean()"></a>2.4 getBean()、doGetBean()</h3><p>进入第二个<code>getBean()</code>方法。<code>getBean()</code>方法中就一行代码。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">return</span> <span class="token function">doGetBean</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>此处无书，进入<code>AbstractBeanFactory</code>类中<code>doGetBean()</code>方法。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">T</span> <span class="token function">doGetBean</span><span class="token punctuation">(</span>
 		<span class="token keyword">final</span> <span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> requiredType<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">,</span> <span class="token keyword">boolean</span> typeCheckOnly<span class="token punctuation">)</span>
@@ -626,7 +632,8 @@
 	<span class="token comment">// ……</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span> bean<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>主要的代码都加了注释，这个方法里面其实核心的就三步，第一是尝试从容器中获取bean，如果获取到直接返回，获取不到进入第二步，使用<code>RootBeanDefinition</code>来封装当前bean的信息。第三步创建bean实例，并将bean实例加入到bean工厂中。</p>
+
+<p>主要的代码都加了注释，这个方法里面其实核心的就三步，第一是尝试从容器中获取 bean，如果获取到直接返回，获取不到进入第二步，使用<code>RootBeanDefinition</code>来封装当前 bean 的信息。第三步创建 bean 实例，并将 bean 实例加入到 bean 工厂中。</p>
 <h3 id="2-5-getSingleton"><a href="#2-5-getSingleton" class="headerlink" title="2.5 getSingleton()"></a>2.5 getSingleton()</h3><p>进入<code>getSingleton()</code>方法。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">getSingleton</span><span class="token punctuation">(</span><span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token class-name">ObjectFactory</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> singletonFactory<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token class-name">Assert</span><span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span> <span class="token string">"'beanName' must not be null"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -690,13 +697,14 @@
 		<span class="token keyword">return</span> <span class="token punctuation">(</span>singletonObject <span class="token operator">!=</span> <span class="token constant">NULL_OBJECT</span> <span class="token operator">?</span> singletonObject <span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在<code>beforeSingletonCreation()</code>方法中，做了一下两个判断：</p>
 <ul>
-<li><code>!this.inCreationCheckExclusions.contains(beanName)</code>，当前需要创建的bean集合中是否存在当前的这个beanName，这个可以有效的保证当前创建为第一次创建；</li>
-<li><code>!this.singletonsCurrentlyInCreation.add(beanName)</code>，将当前的beanName加入到当前正在创建的bean集合中。</li>
+<li><code>!this.inCreationCheckExclusions.contains(beanName)</code>，当前需要创建的 bean 集合中是否存在当前的这个 beanName，这个可以有效的保证当前创建为第一次创建；</li>
+<li><code>!this.singletonsCurrentlyInCreation.add(beanName)</code>，将当前的 beanName 加入到当前正在创建的 bean 集合中。</li>
 </ul>
-<p>这两个条件就保证当前没有其他位置正在创建这个bean，并将bean设置到正在创建的bean集合中，保证其他位置来创建的时候，能够得到有效的判断结果。<br>有before就有after，这里的<code>afterSingletonCreation()</code>前半段判断和<code>beforeSingletonCreation()</code>相同，但是后半段是将当前的beanName从bean集合中移除。</p>
-<p>在<code>addSingleton()</code>方法中，就是将当前创建的对象放入到对象缓存中，并将当前bean的起初需要注册的信息和起初bean封装信息移除。这些信息是用来为bean创建而存在的，待bean创建成功键入缓存中后，这个信息自然就会被移除。</p>
+<p>这两个条件就保证当前没有其他位置正在创建这个 bean，并将 bean 设置到正在创建的 bean 集合中，保证其他位置来创建的时候，能够得到有效的判断结果。<br>有 before 就有 after，这里的<code>afterSingletonCreation()</code>前半段判断和<code>beforeSingletonCreation()</code>相同，但是后半段是将当前的 beanName 从 bean 集合中移除。</p>
+<p>在<code>addSingleton()</code>方法中，就是将当前创建的对象放入到对象缓存中，并将当前 bean 的起初需要注册的信息和起初 bean 封装信息移除。这些信息是用来为 bean 创建而存在的，待 bean 创建成功键入缓存中后，这个信息自然就会被移除。</p>
 <h3 id="2-6-createBean"><a href="#2-6-createBean" class="headerlink" title="2.6 createBean()"></a>2.6 createBean()</h3><p>上面的创建前、后方法以及加入到缓存中的方法都已经解释，接下来要看一下核心方法<code>createBean()</code>，在<code>AbstractAutowireCapableBeanFactory</code>类中。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Object</span> <span class="token function">createBean</span><span class="token punctuation">(</span><span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token class-name">RootBeanDefinition</span> mbd<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">BeanCreationException</span> <span class="token punctuation">{</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span>logger<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -726,6 +734,7 @@
 	<span class="token punctuation">}</span>
 	<span class="token keyword">return</span> beanInstance<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这个方法里面主要需要注意的是具有迷惑性的<code>resolveBeforeInstantiation()</code>，这里可以忽略。接下里进入到<code>doCreateBean()</code>方法，还是在<code>AbstractAutowireCapableBeanFactory</code>类中。</p>
 <h3 id="2-7-doCreateBean"><a href="#2-7-doCreateBean" class="headerlink" title="2.7 doCreateBean()"></a>2.7 doCreateBean()</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Object</span> <span class="token function">doCreateBean</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name">RootBeanDefinition</span> mbd<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
         <span class="token keyword">throws</span> <span class="token class-name">BeanCreationException</span> <span class="token punctuation">{</span>
@@ -741,7 +750,7 @@
         instanceWrapper <span class="token operator">=</span> <span class="token function">createBeanInstance</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span> mbd<span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
     <span class="token comment">//……</span>
-    
+
     <span class="token comment">// Initialize the bean instance.</span>
     <span class="token comment">// 初始化bean实例</span>
     <span class="token class-name">Object</span> exposedObject <span class="token operator">=</span> bean<span class="token punctuation">;</span>
@@ -767,7 +776,8 @@
 
     <span class="token keyword">return</span> exposedObject<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里分为两个部分，一个是使用<code>BeanWrapper</code>封装bean，然后通过<code>populateBean()</code>方法填充bean的数据信息。</p>
+
+<p>这里分为两个部分，一个是使用<code>BeanWrapper</code>封装 bean，然后通过<code>populateBean()</code>方法填充 bean 的数据信息。</p>
 <h3 id="2-8-initializeBean"><a href="#2-8-initializeBean" class="headerlink" title="2.8 initializeBean()"></a>2.8 initializeBean()</h3><p>进入到<code>initializeBean()</code>方法中。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Object</span> <span class="token function">initializeBean</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name">Object</span> bean<span class="token punctuation">,</span> <span class="token class-name">RootBeanDefinition</span> mbd<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">//……</span>
@@ -794,9 +804,10 @@
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span> wrappedBean<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里最主要的方法就是处理器的前置处理，处理器的后置处理，一般对于基本bean的创建来说，前置处理没有太多的逻辑，主要是在后置处理里面，这个时候整个bean完成了全部的初始化，可以通过后置来对bean对象进行增强，常见的有AOP切面增强，生成代理对象等。</p>
-<h2 id="3-图例分析"><a href="#3-图例分析" class="headerlink" title="3. 图例分析"></a>3. 图例分析</h2><p>上面说的内容很多，涉及到很多方法的跳转，可能会比较乱，通过下面的这个流程图，可以有更深入的了解。<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/79341486EBAD41BAB4C8A58D63E4C754.jpg"><br>通过这个流程图，加上对上面内容的理解，其实整个过程就是创建IOC容器，然后遍历初始化bean，然后将初始化后的bean丢入到容器中。相信通过上面的说明你对Spring IOC初始化过程有所了解。</p>
-<p>但是上面源码分析的过程还少一步，但是图里面已经体现出来了，那就是<code>getSingleton()</code>方法的最后，会将新创建的bean放到IOC容器中，调用的方法是<code>addSingleton()</code>。看一下源码：</p>
+
+<p>这里最主要的方法就是处理器的前置处理，处理器的后置处理，一般对于基本 bean 的创建来说，前置处理没有太多的逻辑，主要是在后置处理里面，这个时候整个 bean 完成了全部的初始化，可以通过后置来对 bean 对象进行增强，常见的有 AOP 切面增强，生成代理对象等。</p>
+<h2 id="3-图例分析"><a href="#3-图例分析" class="headerlink" title="3. 图例分析"></a>3. 图例分析</h2><p>上面说的内容很多，涉及到很多方法的跳转，可能会比较乱，通过下面的这个流程图，可以有更深入的了解。<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images/79341486EBAD41BAB4C8A58D63E4C754.jpg"><br>通过这个流程图，加上对上面内容的理解，其实整个过程就是创建 IOC 容器，然后遍历初始化 bean，然后将初始化后的 bean 丢入到容器中。相信通过上面的说明你对 Spring IOC 初始化过程有所了解。</p>
+<p>但是上面源码分析的过程还少一步，但是图里面已经体现出来了，那就是<code>getSingleton()</code>方法的最后，会将新创建的 bean 放到 IOC 容器中，调用的方法是<code>addSingleton()</code>。看一下源码：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">addSingleton</span><span class="token punctuation">(</span><span class="token class-name">String</span> beanName<span class="token punctuation">,</span> <span class="token class-name">Object</span> singletonObject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonObjects<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token comment">// 这里就是将创建完成的bean实例SingletonObject放入到容器中</span>
@@ -807,12 +818,12 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>从<code>this.singletonObjects.put()</code>方法中可以看出来，容器中存放bean是通过Map集合，但是需要注意的是这里的bean不是裸着的真正bean，而是通过封装后的封装bean。(后期更新bean实例的获取、以及FactoryBean和BeanFactory区别的时候，理解起来就可以更清晰)。</p>
+<p>从<code>this.singletonObjects.put()</code>方法中可以看出来，容器中存放 bean 是通过 Map 集合，但是需要注意的是这里的 bean 不是裸着的真正 bean，而是通过封装后的封装 bean。(后期更新 bean 实例的获取、以及 FactoryBean 和 BeanFactory 区别的时候，理解起来就可以更清晰)。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//singletonObjects存储bean的Map集合</span>
 <span class="token comment">/** Cache of singleton objects: bean name --&gt; bean instance */</span>
 <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> singletonObjects <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>到这里真个IOC的加载过程主流程基本都说完了，但是还存在很多细枝末节的东西(比如多例是怎么实现的，懒加载又是怎么做的，增强的代理对象生成的过程等等),后续的文章还慢慢道来。</p>
+<p>到这里真个 IOC 的加载过程主流程基本都说完了，但是还存在很多细枝末节的东西(比如多例是怎么实现的，懒加载又是怎么做的，增强的代理对象生成的过程等等),后续的文章还慢慢道来。</p>
 
                 
             </div>
@@ -1267,7 +1278,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             

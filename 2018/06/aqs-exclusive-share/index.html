@@ -369,8 +369,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>AQS是<code>AbstractQueuedSynchronizer</code>类的简写，这个是锁的一个设计模式，在Java中很多锁都会用到AQS，如常用的显示锁<code>ReentrantLock</code>、<code>ReentrantReadWriteLock</code>等内部的锁都是继承AQS。AQS的基本的设计模式是模板方法模式，具体锁的获取和释放实现逻辑由类自身来实现，这些方法的组合，以及线程队列获取锁的机制是由AQS自身来完成。</p>
-<h2 id="1-AQS介绍"><a href="#1-AQS介绍" class="headerlink" title="1. AQS介绍"></a>1. AQS介绍</h2><h3 id="1-1-AQS设计模式"><a href="#1-1-AQS设计模式" class="headerlink" title="1.1 AQS设计模式"></a>1.1 AQS设计模式</h3><p>AQS的基本设计模式是模板方法模式，听起来有点抽象，这里就不直接看源码，先根据这个模式写个Demo，让我们理解一下。然后根据对模式的理解再去看源码，一切都很清晰。<br><strong>抽象父类</strong></p>
+                <p>AQS 是<code>AbstractQueuedSynchronizer</code>类的简写，这个是锁的一个设计模式，在 Java 中很多锁都会用到 AQS，如常用的显示锁<code>ReentrantLock</code>、<code>ReentrantReadWriteLock</code>等内部的锁都是继承 AQS。AQS 的基本的设计模式是模板方法模式，具体锁的获取和释放实现逻辑由类自身来实现，这些方法的组合，以及线程队列获取锁的机制是由 AQS 自身来完成。</p>
+<h2 id="1-AQS-介绍"><a href="#1-AQS-介绍" class="headerlink" title="1. AQS 介绍"></a>1. AQS 介绍</h2><h3 id="1-1-AQS-设计模式"><a href="#1-1-AQS-设计模式" class="headerlink" title="1.1 AQS 设计模式"></a>1.1 AQS 设计模式</h3><p>AQS 的基本设计模式是模板方法模式，听起来有点抽象，这里就不直接看源码，先根据这个模式写个 Demo，让我们理解一下。然后根据对模式的理解再去看源码，一切都很清晰。<br><strong>抽象父类</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractSendMsgActor</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">setReceiver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -391,6 +391,7 @@
         <span class="token function">sendSms</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>继承子类</strong></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SendSmsActor</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractSendMsgActor</span> <span class="token punctuation">{</span>
     <span class="token annotation punctuation">@Override</span>
@@ -420,8 +421,9 @@
 ==&gt;设置发送人！
 ==&gt;发送信息！
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里就很明显了，在抽象父类中定义需要子类实现的接口，然后提供一个模板方法，模板方法将执行的过程需要调用的方法串起来。具体模板方法内执行链方法在子类中如何实现，父类模板方法是不关心的。到这里就可以理解AQS模板方法设计模式。但是具体AQS内是怎么设计的呢。后续的篇幅可以看源码来理解。</p>
-<h2 id="2-独占锁和共享锁"><a href="#2-独占锁和共享锁" class="headerlink" title="2. 独占锁和共享锁"></a>2. 独占锁和共享锁</h2><p><strong>独占锁</strong>：当前如果有一个线程在竞争中获取到了锁，那么共用这把锁的其他所有线程会进入等待队列，必须等锁释放后并获取到锁才能执行。<br><strong>共享锁</strong>：多个线程共享一把锁，如常用的读锁，就是一个共享锁，一个线程获取锁后，共用这把共享锁的线程可以获取并执行逻辑。<br>在AQS下，共享锁和独占锁都要重写那些方法。看下面表格：</p>
+
+<p>这里就很明显了，在抽象父类中定义需要子类实现的接口，然后提供一个模板方法，模板方法将执行的过程需要调用的方法串起来。具体模板方法内执行链方法在子类中如何实现，父类模板方法是不关心的。到这里就可以理解 AQS 模板方法设计模式。但是具体 AQS 内是怎么设计的呢。后续的篇幅可以看源码来理解。</p>
+<h2 id="2-独占锁和共享锁"><a href="#2-独占锁和共享锁" class="headerlink" title="2. 独占锁和共享锁"></a>2. 独占锁和共享锁</h2><p><strong>独占锁</strong>：当前如果有一个线程在竞争中获取到了锁，那么共用这把锁的其他所有线程会进入等待队列，必须等锁释放后并获取到锁才能执行。<br><strong>共享锁</strong>：多个线程共享一把锁，如常用的读锁，就是一个共享锁，一个线程获取锁后，共用这把共享锁的线程可以获取并执行逻辑。<br>在 AQS 下，共享锁和独占锁都要重写那些方法。看下面表格：</p>
 <table>
 <thead>
 <tr>
@@ -431,21 +433,21 @@
 </thead>
 <tbody><tr>
 <td>独占锁</td>
-<td>acquire、tryAcquire：锁的获取<br>tryAcquireNanos：锁的获取，可以设置超时时间<br>release、tryRelease：锁的释放<br>isHeldExclusively：判断同步器是否处于独占模式</td>
+<td><code>acquire</code>、<code>tryAcquire</code>：锁的获取<br><code>tryAcquireNanos</code>：锁的获取，可以设置超时时间<br><code>release</code>、<code>tryRelease</code>：锁的释放<br><code>isHeldExclusively</code>：判断同步器是否处于独占模式</td>
 </tr>
 <tr>
 <td>共享锁</td>
-<td>acquireShared、tryAcquireShared：锁的获取<br>tryAcquireSharedNanos：锁的获取，可以设置超时时间<br>releaseShared、tryReleaseShared：锁的释放</td>
+<td><code>acquireShared</code>、<code>tryAcquireShared</code>：锁的获取<br><code>tryAcquireSharedNanos</code>：锁的获取，可以设置超时时间<br><code>releaseShared</code>、<code>tryReleaseShared</code>：锁的释放</td>
 </tr>
 </tbody></table>
-<p>通过上面AQS模板方法设计模式的理解，然后再看这个需要重写的方法就很简单了。</p>
-<h3 id="2-1-独占锁源码"><a href="#2-1-独占锁源码" class="headerlink" title="2.1 独占锁源码"></a>2.1 独占锁源码</h3><p>独占锁这里从acquire开始看，这个是模板方法的入口。</p>
+<p>通过上面 AQS 模板方法设计模式的理解，然后再看这个需要重写的方法就很简单了。</p>
+<h3 id="2-1-独占锁源码"><a href="#2-1-独占锁源码" class="headerlink" title="2.1 独占锁源码"></a>2.1 独占锁源码</h3><p>独占锁这里从 <code>acquire</code> 开始看，这个是模板方法的入口。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">tryAcquire</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">acquireQueued</span><span class="token punctuation">(</span><span class="token function">addWaiter</span><span class="token punctuation">(</span><span class="token class-name">AbstractQueuedSynchronizer<span class="token punctuation">.</span>Node</span><span class="token punctuation">.</span><span class="token constant">EXCLUSIVE</span><span class="token punctuation">)</span><span class="token punctuation">,</span> arg<span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token function">selfInterrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在if判断中有三个方法<code>tryAcquire()</code>、<code>addWaiter()</code>、<code>acquireQueued()</code>。首先<code>tryAcquire()</code>尝试获取锁，如果获取到了，下面的逻辑都不会走了，因为这里if里面的连接符是“&amp;&amp;”，如果尝试连接没有成功会往下走。进入<code>addWaiter()</code>方法。</p>
+<p>在 if 判断中有三个方法<code>tryAcquire()</code>、<code>addWaiter()</code>、<code>acquireQueued()</code>。首先<code>tryAcquire()</code>尝试获取锁，如果获取到了，下面的逻辑都不会走了，因为这里 <code>if</code> 里面的连接符是<code>&amp;&amp;</code>，如果尝试连接没有成功会往下走。进入<code>addWaiter()</code>方法。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Node</span> <span class="token function">addWaiter</span><span class="token punctuation">(</span><span class="token class-name">Node</span> mode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token class-name">Node</span> node <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> mode<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">// Try the fast path of enq; backup to full enq on failure</span>
@@ -461,22 +463,24 @@
     <span class="token keyword">return</span> node<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>将当前线程封装到一个Node节点对象中，然后根据不同的情况将node节点加入到等待队列中，加入后会返回当前线程对应的node节点对象。这里面的代码其实并不难。主要是要知道AQS里面有一个队列，这个队列就是排队等待获取锁的队列。这个方法里面还涉及到一个<code>enq()</code>方法，源码如下：</p>
+<p>将当前线程封装到一个 Node 节点对象中，然后根据不同的情况将 Node 节点加入到等待队列中，加入后会返回当前线程对应的 Node 节点对象。这里面的代码其实并不难。主要是要知道 AQS 里面有一个队列，这个队列就是排队等待获取锁的队列。这个方法里面还涉及到一个<code>enq()</code>方法，源码如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Node</span> <span class="token function">enq</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token class-name">Node</span> node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token class-name">Node</span> t <span class="token operator">=</span> tail<span class="token punctuation">;</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>t <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// Must initialize</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareAndSetHead</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//原子方式尝试将节点加入到头部</span>
+            <span class="token comment">//原子方式尝试将节点加入到头部</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareAndSetHead</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
                 tail <span class="token operator">=</span> head<span class="token punctuation">;</span>
         <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
             node<span class="token punctuation">.</span>prev <span class="token operator">=</span> t<span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareAndSetTail</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> node<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 原子方式尝试将节点加入到队列的尾部</span>
+            <span class="token comment">// 原子方式尝试将节点加入到队列的尾部</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareAndSetTail</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> node<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
                 t<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
                 <span class="token keyword">return</span> t<span class="token punctuation">;</span>
             <span class="token punctuation">}</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这段源码和上一段源码都加上了中文的注释，这个原子方式其实就是线程安全才做，这里为什么这样，可以看一下原子操作相关的解释。上面的逻辑执行结束后，节点加入成功，需要执行<code>acquireQueued()</code>。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">acquireQueued</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token class-name">Node</span> node<span class="token punctuation">,</span> <span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -501,10 +505,10 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>上面的“代码块一”中可以看出来，p是当前节点的前一个节点，判断中会看p节点是否为头结点，同时也会尝试去获取锁，如果判断不成立，就会一直自旋，直到成立为止，跳出自旋。成立就代表着当前节点变成了头节点，并且获取了锁，执行自己的逻辑。</p>
+<p>上面的“代码块一”中可以看出来，p 是当前节点的前一个节点，判断中会看 p 节点是否为头结点，同时也会尝试去获取锁，如果判断不成立，就会一直自旋，直到成立为止，跳出自旋。成立就代表着当前节点变成了头节点，并且获取了锁，执行自己的逻辑。</p>
 <p>整体的看下来总结一下如图：</p>
 <p><img src="https://raw.githubusercontent.com/itcrud/images/main/images/5C79E1718B1F4BFFA2C67975185666B5.jpg"></p>
-<p>在独占锁中，线程过来先尝试获取锁，如果获取到就直接执行业务逻辑，如果没有获取到，就会进入添加节点逻辑，将当前线程打包成Node对象，放在线程尾部，然后自旋，直到成为头节点并获取锁后跳出自旋，开始执行自身逻辑。</p>
+<p>在独占锁中，线程过来先尝试获取锁，如果获取到就直接执行业务逻辑，如果没有获取到，就会进入添加节点逻辑，将当前线程打包成 Node 对象，放在线程尾部，然后自旋，直到成为头节点并获取锁后跳出自旋，开始执行自身逻辑。</p>
 <h3 id="2-2-共享锁密码"><a href="#2-2-共享锁密码" class="headerlink" title="2.2 共享锁密码"></a>2.2 共享锁密码</h3><p>进入<code>acquireShared()</code>方法，一起探索。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">acquireShared</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">tryAcquireShared</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
@@ -541,7 +545,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里和独享锁的实现很相似，但是在判断当前节点的前一个节点是不是头节点的时候，少了一个获取锁的必要条件。也就意味着只要当前节点的前一个节点是头节点，就能执行。</p>
-<p>到这里AQS实现、独占锁和共享都看完了，直接看这些专有名词可能感觉很难，但是要是深入进去其实并不难。</p>
+<p>到这里 AQS 实现、独占锁和共享锁都看完了，直接看这些专有名词可能感觉很难，但是要是深入进去其实并不难。</p>
 
                 
             </div>
@@ -1012,7 +1016,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             

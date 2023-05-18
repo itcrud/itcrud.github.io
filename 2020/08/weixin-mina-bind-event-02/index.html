@@ -336,7 +336,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    512
+                    515
                 </div>
                 
 
@@ -362,55 +362,54 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>微信小程序事件绑定其实很简单，但是这里需要单独的拿出来说，主要里面涉及到如何获取数据，以及了解小程序中事件绑定的当前对象里面两个主要属性数据。</p>
-<h2 id="1-数据的双向绑定"><a href="#1-数据的双向绑定" class="headerlink" title="1. 数据的双向绑定"></a>1. 数据的双向绑定</h2><p>借用vue里面的一个说法，实现输入框输入的值，在另一个组件里面动态显示的场景，称为双向绑定，在vue中使用<code>v-model</code>，在微信小程序里面又如何使用呢，看下面两个场景。</p>
+<h2 id="1-数据的双向绑定"><a href="#1-数据的双向绑定" class="headerlink" title="1. 数据的双向绑定"></a>1. 数据的双向绑定</h2><p>借用 vue 里面的一个说法，实现输入框输入的值，在另一个组件里面动态显示的场景，称为双向绑定，在 vue 中使用<code>v-model</code>，在微信小程序里面又如何使用呢，看下面两个场景。</p>
 <h3 id="1-1-场景一"><a href="#1-1-场景一" class="headerlink" title="1.1 场景一"></a>1.1 场景一</h3><p>首先需要创建输入框，为输入框绑定数据输入事件，当输入框中输入值的时候，在<code>view</code>组件中，实时显示输入框中输入的值。</p>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">bindinput</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>handleInput<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>{{content}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">bindinput</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>handleInput<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>{{content}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">Page</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-    <span class="token literal-property property">data</span><span class="token operator">:</span><span class="token punctuation">{</span>
-        <span class="token literal-property property">content</span><span class="token operator">:</span><span class="token string">""</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token comment">// 绑定的事件，e为当前的事件对象</span>
-    <span class="token function">handleInput</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-            <span class="token literal-property property">content</span><span class="token operator">:</span>e<span class="token punctuation">.</span>detail<span class="token punctuation">.</span>value
-        <span class="token punctuation">}</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">content</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token comment">// 绑定的事件，e为当前的事件对象</span>
+  <span class="token function">handleInput</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token literal-property property">content</span><span class="token operator">:</span> e<span class="token punctuation">.</span>detail<span class="token punctuation">.</span>value<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>上面的代码就实现了预期的功能，这里主要时对<code>e</code>进行一个说明，它的主要结构如下：</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
-    <span class="token property">"detail"</span><span class="token operator">:</span><span class="token punctuation">{</span>
-        <span class="token property">"value"</span><span class="token operator">:</span><span class="token string">""</span><span class="token punctuation">,</span>
-        <span class="token property">"id"</span><span class="token operator">:</span><span class="token string">""</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token property">"currentTarget"</span><span class="token operator">:</span><span class="token punctuation">{</span>
-        <span class="token property">"dataset"</span><span class="token operator">:</span><span class="token punctuation">{</span>
-            <span class="token property">"cname"</span><span class="token operator">:</span><span class="token string">""</span><span class="token punctuation">,</span>
-            <span class="token property">"age"</span><span class="token operator">:</span><span class="token string">""</span>            
-        <span class="token punctuation">}</span>
+  <span class="token property">"detail"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">""</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"currentTarget"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"dataset"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"cname"</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+      <span class="token property">"age"</span><span class="token operator">:</span> <span class="token string">""</span>
     <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在这个结构中有两个很重要的属性，分别是<code>detail</code>和<code>currentTarget.dataset</code>，其中<code>detail</code>里面是标签value属性，而在<code>currentTarget.dataset</code>中则是自定义属性，可以是任意的名称。这个示例是获取<code>input</code>标签本身value属性的值，因此直接从<code>detail</code>中取即可。</p>
+<p>在这个结构中有两个很重要的属性，分别是<code>detail</code>和<code>currentTarget.dataset</code>，其中<code>detail</code>里面是标签 value 属性，而在<code>currentTarget.dataset</code>中则是自定义属性，可以是任意的名称。这个示例是获取<code>input</code>标签本身 value 属性的值，因此直接从<code>detail</code>中取即可。</p>
 <h3 id="1-2-场景二"><a href="#1-2-场景二" class="headerlink" title="1.2 场景二"></a>1.2 场景二</h3><p>通过点击事件对输入框里的值做加一或者减一的操作。</p>
-<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{result}}<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{result}}<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">bindtap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>handleTap<span class="token punctuation">"</span></span> <span class="token attr-name">data-num</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{1}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span>  <span class="token attr-name">bindtap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>handleTap<span class="token punctuation">"</span></span> <span class="token attr-name">data-num</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{-1}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">bindtap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>handleTap<span class="token punctuation">"</span></span> <span class="token attr-name">data-num</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{{-1}}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">Pages</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-    <span class="token literal-property property">data</span><span class="token operator">:</span><span class="token punctuation">{</span>
-        <span class="token literal-property property">result</span><span class="token operator">:</span><span class="token number">0</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token function">handleTap</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token comment">// 从currentTarget.dataset中获取num值</span>
-        <span class="token keyword">const</span> num <span class="token operator">=</span> e<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>dataset<span class="token punctuation">.</span>num<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-            <span class="token literal-property property">result</span><span class="token operator">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">.</span>result<span class="token operator">+</span>num
-        <span class="token punctuation">}</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">result</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function">handleTap</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 从currentTarget.dataset中获取num值</span>
+    <span class="token keyword">const</span> num <span class="token operator">=</span> e<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>dataset<span class="token punctuation">.</span>num<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token literal-property property">result</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">.</span>result <span class="token operator">+</span> num<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>从上面对<code>currentTarget.dataset</code>的解释，再加上这个示例，就可以更好的理解<code>currentTarget.dataset</code>作用。但是这里好像比较麻烦，为啥不在定义绑定方法的时候传入值的，如<code>bindtap="handleTap(1)"</code>，<strong>这里需要注意，这种写法在小程序里面是错误的</strong>。</p>
 
@@ -871,7 +870,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">692.8k</span>
+                        class="white-color">694.2k</span>
             
             
             
