@@ -340,14 +340,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -372,12 +372,47 @@
 <li>Linux系统机器<code>wget</code>下载：<code>wget https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-17.12.1.ce-1.el7.centos.x86_64.rpm</code>（注意使用这种方式需要Linux系统本身可以连外网）</li>
 </ul>
 <h2 id="2-在线安装（推荐）"><a href="#2-在线安装（推荐）" class="headerlink" title="2. 在线安装（推荐）"></a>2. 在线安装（推荐）</h2><ul>
-<li>把上一步获取的<code>rpm</code>放到Linux机器中，目录自定义。</li>
-<li>执行安装命令：</li>
+<li>首先看一下CentOS系统的内核版本，Docker需要CentOS版本在3.10以上。</li>
 </ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> *.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看Centos系统内核版本命令</span>
+<span class="token function">uname</span> <span class="token parameter variable">-r</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>上面命令执行结束docker即安装成功！</p>
+<ul>
+<li>使用root权限，更新yum，确保yum包更新到最新版本。</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> update<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>如果有安装过docker，先卸载旧版本</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">yum remove docker docker-common docker-selinux docker-engine<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>安装需要的依赖软件包，yum-util提供yum-config-manager功能，另外两个是devicemapper驱动依赖</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token parameter variable">-y</span> yum-utils device-mapper-persistent-data lvm2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>设置yum源</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>安装docker</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token parameter variable">-y</span> docker-ce<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>启动docker，并将docker加入到开机自动启动</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start <span class="token function">docker</span>
+systemctl <span class="token builtin class-name">enable</span> <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>验证是否安装启动成功</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h2 id="3-离线安装（被迫情况下）"><a href="#3-离线安装（被迫情况下）" class="headerlink" title="3. 离线安装（被迫情况下）"></a>3. 离线安装（被迫情况下）</h2><p>在完全没有外网的Liunx机器中安装docker，这个时候只能使用本地下载<code>rpm</code>包，上传到服务器中，然后按照以下步骤安装。离线安装和在线安装的区别主要是安装包的问题，在线安装如果有需要的依赖，会自动下载安装，但是在离线状态下，如果遇到需要的依赖，只能手动的安装，因此这个时候所需要准备的安装包就不止上面下载的那一个了。。</p>
 <h3 id="3-1-安装包准备"><a href="#3-1-安装包准备" class="headerlink" title="3.1 安装包准备"></a>3.1 安装包准备</h3><p>下面列举的安装包在下载docker-ce的时候进入的页面内都可以找到。</p>
 <ul>
@@ -912,7 +947,7 @@ systemctl stop <span class="token function">docker</span>
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">696.7k</span>
+                        class="white-color">699k</span>
             
             
             
