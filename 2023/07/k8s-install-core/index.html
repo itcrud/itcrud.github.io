@@ -327,7 +327,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
-                    2023-07-01
+                    2023-07-12
                 </div>
                 
 
@@ -361,9 +361,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-概述和环境介绍"><a href="#1-概述和环境介绍" class="headerlink" title="1. 概述和环境介绍"></a>1. 概述和环境介绍</h2><h3 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h3><p>k8s是一款开源容器集群系统，用于容器化应用程序部署、扩展和管理，目标是让容器简单高效。它主要可以实现一下几个主要高端操作。</p>
+                <h2 id="1-概述和环境介绍"><a href="#1-概述和环境介绍" class="headerlink" title="1. 概述和环境介绍"></a>1. 概述和环境介绍</h2><h3 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h3><p>k8s 是一款开源容器集群系统，用于容器化应用程序部署、扩展和管理，目标是让容器简单高效。它主要可以实现一下几个主要高端操作。</p>
 <ul>
-<li>自我修复：如果当前某个容器奔溃，k8s能够快速响应启动新的容器进行补充</li>
+<li>自我修复：如果当前某个容器奔溃，k8s 能够快速响应启动新的容器进行补充</li>
 <li>弹性伸缩：动态的对正在运行的集群中添加和介绍容器数量</li>
 <li>服务发现：服务可以通过自动发现的形式找到所依赖的服务</li>
 <li>负载均衡：如果一个服务启动了多个容器，能够自动实现请求负载均衡</li>
@@ -371,7 +371,7 @@
 <li>存储编排：可以根据容器自身的需求自动创建存储卷</li>
 </ul>
 <h3 id="1-2-环境介绍"><a href="#1-2-环境介绍" class="headerlink" title="1.2 环境介绍"></a>1.2 环境介绍</h3><blockquote>
-<p>Tips：虚拟机总共是三台，采用的是一个master，两个node的集群部署方式。</p>
+<p>Tips：虚拟机总共是三台，采用的是一个 master，两个 node 的集群部署方式。</p>
 </blockquote>
 <table>
 <thead>
@@ -385,8 +385,8 @@
 <td align="center">CentOS Linux release 7.9.2009 (Core)</td>
 </tr>
 </tbody></table>
-<h2 id="2-k8s集群部署"><a href="#2-k8s集群部署" class="headerlink" title="2. k8s集群部署"></a>2. k8s集群部署</h2><h3 id="2-1-初始化环境"><a href="#2-1-初始化环境" class="headerlink" title="2.1 初始化环境"></a>2.1 初始化环境</h3><ol>
-<li>检查操作系统的版本号，k8s要求CentOS系统版本在7.5及以上，通过以下命令查看。</li>
+<h2 id="2-k8s-集群部署"><a href="#2-k8s-集群部署" class="headerlink" title="2. k8s 集群部署"></a>2. k8s 集群部署</h2><h3 id="2-1-初始化环境"><a href="#2-1-初始化环境" class="headerlink" title="2.1 初始化环境"></a>2.1 初始化环境</h3><ol>
+<li>检查操作系统的版本号，k8s 要求 CentOS 系统版本在 7.5 及以上，通过以下命令查看。</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> /etc/redhat-release<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -415,14 +415,14 @@ systemctl start chronyd
 systemctl <span class="token builtin class-name">enable</span> chronyd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ol start="4">
-<li>禁用<code>iptables</code>和<code>firewalld</code>服务，因为k8s和Docker在运行中需要用到很多端口，为了省去麻烦，直接禁用</li>
+<li>禁用<code>iptables</code>和<code>firewalld</code>服务，因为 k8s 和 Docker 在运行中需要用到很多端口，为了省去麻烦，直接禁用</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 关闭firewalld</span>
 systemctl stop firewalld
 systemctl disable firewalld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ol start="5">
-<li>关闭<code>selinux</code>，这个是<code>linux</code>系统下的一个安全服务，如果不关闭，k8s安装会出现各种问题</li>
+<li>关闭<code>selinux</code>，这个是<code>linux</code>系统下的一个安全服务，如果不关闭，k8s 安装会出现各种问题</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 打开配置文件</span>
 <span class="token function">vim</span> /etc/selinux/config
@@ -461,7 +461,7 @@ lsmod <span class="token operator">|</span> <span class="token function">grep</s
 <li>配置<code>ipvs</code>功能</li>
 </ol>
 <blockquote>
-<p>Tips：在k8s中的<code>service</code>有两种代理模式，一种是基于<code>iptables</code>的，一种是基于<code>ipvs</code>的，两者比较的话，<code>ipvs</code>的性能明显要高一些，但是如果要使用它，需要手动载入<code>ipvs</code>模块</p>
+<p>Tips：在 k8s 中的<code>service</code>有两种代理模式，一种是基于<code>iptables</code>的，一种是基于<code>ipvs</code>的，两者比较的话，<code>ipvs</code>的性能明显要高一些，但是如果要使用它，需要手动载入<code>ipvs</code>模块</p>
 </blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装ipset和ipvsadm</span>
 yum <span class="token parameter variable">-y</span> <span class="token function">install</span> ipset ipvsadm
@@ -482,16 +482,16 @@ EOF</span>
 lsmod <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-e</span> ip_vs <span class="token parameter variable">-e</span> nf_conntrack_ipv4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ol start="9">
-<li>重启CentOS系统，使用<code>reboot</code>命令。</li>
+<li>重启 CentOS 系统，使用<code>reboot</code>命令。</li>
 </ol>
-<h3 id="2-2-安装Docker"><a href="#2-2-安装Docker" class="headerlink" title="2.2 安装Docker"></a>2.2 安装Docker</h3><ol>
-<li>切换镜像，Docker是国外服务器，速度很慢，需要切换到国内的服务器</li>
+<h3 id="2-2-安装-Docker"><a href="#2-2-安装-Docker" class="headerlink" title="2.2 安装 Docker"></a>2.2 安装 Docker</h3><ol>
+<li>切换镜像，Docker 是国外服务器，速度很慢，需要切换到国内的服务器</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 执行此命令的时候，如果出现wget找不到，使用yum -y install wget安装即可</span>
 <span class="token function">wget</span> https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo <span class="token parameter variable">-O</span> /etc/yum.repos.d/docker-ce.repo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <ol start="2">
-<li>查看当前镜像源中支持的Docker版本</li>
+<li>查看当前镜像源中支持的 Docker 版本</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum list docker-ce <span class="token parameter variable">--showduplicates</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -499,7 +499,7 @@ lsmod <span class="token operator">|</span> <span class="token function">grep</s
 <li>安装特定版本<code>docker-ce</code></li>
 </ol>
 <blockquote>
-<p>注意<code>docker-ce</code>版本号，防止k8s对不同版本的适配不相同，如果需要用其他版本，可以到网上找一下适配关系</p>
+<p>注意<code>docker-ce</code>版本号，防止 k8s 对不同版本的适配不相同，如果需要用其他版本，可以到网上找一下适配关系</p>
 </blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 指定 --setopt=obsoletes=0，否则yum会自动安装更高的版本</span>
 yum <span class="token parameter variable">-y</span> <span class="token function">install</span> <span class="token parameter variable">--setopt</span><span class="token operator">=</span>obsoletes<span class="token operator">=</span><span class="token number">0</span> docker-ce-18.06.3.ce-3.el7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -518,25 +518,25 @@ yum <span class="token parameter variable">-y</span> <span class="token function
 EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ol start="5">
-<li>启动Docker服务，并设置为开机启动启动</li>
+<li>启动 Docker 服务，并设置为开机启动启动</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl start <span class="token function">docker</span>
 systemctl <span class="token builtin class-name">enable</span> <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <ol start="6">
-<li>检查Docker是否启动成功及其版本号</li>
+<li>检查 Docker 是否启动成功及其版本号</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token parameter variable">--version</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="2-3-安装k8s组件"><a href="#2-3-安装k8s组件" class="headerlink" title="2.3 安装k8s组件"></a>2.3 安装k8s组件</h3><p>k8s集群搭建有三种方式：</p>
+<h3 id="2-3-安装-k8s-组件"><a href="#2-3-安装-k8s-组件" class="headerlink" title="2.3 安装 k8s 组件"></a>2.3 安装 k8s 组件</h3><p>k8s 集群搭建有三种方式：</p>
 <ul>
-<li>通过<code>kubeadm</code>工具安装，此工具提供<code>kubeadm init</code>和<code>kubeadm join</code>，可以快速搭建k8s集群。</li>
-<li>二进制安装包，手动从官网下载所有组件，手动部署每个组件，组成k8s</li>
-<li><code>minikube</code>一个用于快速搭建单点k8s的工具</li>
+<li>通过<code>kubeadm</code>工具安装，此工具提供<code>kubeadm init</code>和<code>kubeadm join</code>，可以快速搭建 k8s 集群。</li>
+<li>二进制安装包，手动从官网下载所有组件，手动部署每个组件，组成 k8s</li>
+<li><code>minikube</code>一个用于快速搭建单点 k8s 的工具</li>
 </ul>
-<p>最方便的就是第一种方式，第二种方式对于k8s非常了解的人，可以尝试，第三种在生产上不适用。</p>
+<p>最方便的就是第一种方式，第二种方式对于 k8s 非常了解的人，可以尝试，第三种在生产上不适用。</p>
 <ol>
-<li>配置k8s的镜像源，切换成国内的镜像源，方式在安装的过程中出现连不上或者下载太慢的问题</li>
+<li>配置 k8s 的镜像源，切换成国内的镜像源，方式在安装的过程中出现连不上或者下载太慢的问题</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 打开配置文件，不存在就是新建</span>
 <span class="token function">vim</span> /etc/yum.repos.d/kubernetes.repo
@@ -547,7 +547,7 @@ systemctl <span class="token builtin class-name">enable</span> <span class="toke
 <span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
 <span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
 <span class="token assign-left variable">repo_gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">gpgkey</span><span class="token operator">=</span>https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg 
+<span class="token assign-left variable">gpgkey</span><span class="token operator">=</span>https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
       https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ol start="2">
@@ -570,7 +570,7 @@ systemctl <span class="token builtin class-name">enable</span> <span class="toke
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> kubelet<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ol start="5">
-<li>由于k8s从国外拉取镜像慢，使用阿里云拉取后，将文件名称改成k8s要求的镜像名，这样在对k8s集群初始化的时候，就不会出现再次到k8s拉取的问题</li>
+<li>由于 k8s 从国外拉取镜像慢，使用阿里云拉取后，将文件名称改成 k8s 要求的镜像名，这样在对 k8s 集群初始化的时候，就不会出现再次到 k8s 拉取的问题</li>
 </ol>
 <ul>
 <li>先用<code>kubeadm config images list</code>命令查看需要拉取哪些镜像文件</li>
@@ -588,7 +588,7 @@ kube-controller-manager:v1.17.4
 kube-scheduler:v1.17.4
 kube-proxy:v1.17.4
 pause:3.1
-etcd:3.4.3-0 
+etcd:3.4.3-0
 coredns:1.6.5
 <span class="token punctuation">)</span>
 <span class="token comment">## 再执行</span>
@@ -602,9 +602,9 @@ coredns:1.6.5
 <li>集群初始化</li>
 </ol>
 <blockquote>
-<p>Tips：只需要在master节点创建即可</p>
+<p>Tips：只需要在 master 节点创建即可</p>
 </blockquote>
-<p><strong>注意：此命令执行完后，最后一行日志，会给出一个<code>join</code>命令的执行语句，保存需要先保存下来，后续node节点加入到集群需要执行</strong></p>
+<p><strong>注意：此命令执行完后，最后一行日志，会给出一个<code>join</code>命令的执行语句，保存需要先保存下来，后续 node 节点加入到集群需要执行</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm init <span class="token punctuation">\</span>
 --kubernetes-version<span class="token operator">=</span>v1.17.4 <span class="token punctuation">\</span>
 --pod-network-cidr<span class="token operator">=</span><span class="token number">10.244</span>.0.0/16 <span class="token punctuation">\</span>
@@ -613,7 +613,7 @@ coredns:1.6.5
 --apiserver-advertise-address<span class="token operator">=</span><span class="token number">192.168</span>.29.128<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <blockquote>
-<p>Tips：<br><strong>apiserver-advertise-address：</strong>集群通告地址(master 机器IP)<br><strong>image-repository：</strong>由于默认拉取镜像地址<code>k8s.gcr.io</code>国内无法访问，这里指定阿里云镜像仓库地址<br><strong>kubernetes-version：</strong>K8s版本，与上面<code>kubeadm</code>、<code>kubelet</code>和<code>kubectl</code>安装的版本一致<br><strong>service-cidr：</strong>集群内部虚拟网络，Pod统一访问入口<br><strong>pod-network-cidr：</strong>Pod网络，与下面部署的CNI网络组件<code>yaml</code>中保持一致</p>
+<p>Tips：<br><strong>apiserver-advertise-address：</strong>集群通告地址(master 机器 IP)<br><strong>image-repository：</strong>由于默认拉取镜像地址<code>k8s.gcr.io</code>国内无法访问，这里指定阿里云镜像仓库地址<br><strong>kubernetes-version：</strong>K8s 版本，与上面<code>kubeadm</code>、<code>kubelet</code>和<code>kubectl</code>安装的版本一致<br><strong>service-cidr：</strong>集群内部虚拟网络，Pod 统一访问入口<br><strong>pod-network-cidr：</strong>Pod 网络，与下面部署的 CNI 网络组件<code>yaml</code>中保持一致</p>
 </blockquote>
 <ol start="7">
 <li>创建必要文件</li>
@@ -626,20 +626,20 @@ coredns:1.6.5
 <span class="token function">chown</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">id</span> <span class="token parameter variable">-u</span><span class="token variable">)</span></span><span class="token builtin class-name">:</span><span class="token variable"><span class="token variable">$(</span><span class="token function">id</span> <span class="token parameter variable">-g</span><span class="token variable">)</span></span> <span class="token environment constant">$HOME</span>/.kube/config<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ol start="8">
-<li>使用第6步中保存的<code>join</code>命令，到node1、node2节点运行</li>
+<li>使用第 6 步中保存的<code>join</code>命令，到 node1、node2 节点运行</li>
 </ol>
 <blockquote>
-<p>Tips：在执行此命令之前，要保证node1、node2节点已经完成第6步之前的所有安装和配置操作</p>
+<p>Tips：在执行此命令之前，要保证 node1、node2 节点已经完成第 6 步之前的所有安装和配置操作</p>
 </blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm <span class="token function">join</span> <span class="token number">192.168</span>.73.101:6443 <span class="token parameter variable">--token</span> 4gtt23.kkcw9hg5083iwclc <span class="token punctuation">\</span>
 --discovery-token-ca-cert-hash sha256:34fbfcf18649a5841474c2dc4b9ff90c02fc05de0798ed690e1754437be35a05<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <ol start="9">
-<li>以上操作结束后，通过<code>kubectl get nodes</code>命令，<strong>在master机器上</strong>查看节点数量和状态，此时会发现所有节点的状态都是<code>NotReady</code>，如图所示。</li>
+<li>以上操作结束后，通过<code>kubectl get nodes</code>命令，<strong>在 master 机器上</strong>查看节点数量和状态，此时会发现所有节点的状态都是<code>NotReady</code>，如图所示。</li>
 </ol>
-<h2 id="2-4-网络插件安装"><a href="#2-4-网络插件安装" class="headerlink" title="2.4 网络插件安装"></a>2.4 网络插件安装</h2><p>在2.3中的最后，虽然在master机器上，通过<code>kubectl get nodes</code>命令能够查看到所有节点，但是状态都是<code>NotReady</code>，需要解决。</p>
+<h3 id="2-4-网络插件安装"><a href="#2-4-网络插件安装" class="headerlink" title="2.4 网络插件安装"></a>2.4 网络插件安装</h3><p>在 2.3 中的最后，虽然在 master 机器上，通过<code>kubectl get nodes</code>命令能够查看到所有节点，但是状态都是<code>NotReady</code>，需要解决。</p>
 <ol>
-<li>将<code>kube-flannel.yml</code>文件（这个文件内容如下，很长），上传到master节点机器上，可以是任意位置。然后修改文件中内容，将<code>quay.io</code>改成<code>quay-mirror.qiniu.com</code>。</li>
+<li>将<code>kube-flannel.yml</code>文件（这个文件内容如下，很长），上传到 master 节点机器上，可以是任意位置。然后修改文件中内容，将<code>quay.io</code>改成<code>quay-mirror.qiniu.com</code>。</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
@@ -1244,7 +1244,7 @@ spec:
             name: kube-flannel-cfg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ol start="2">
-<li>拉取flannel镜像文件</li>
+<li>拉取 flannel 镜像文件</li>
 </ol>
 <blockquote>
 <p>Tips：注意集群中的所有节点都需要拉一下这个镜像</p>
@@ -1255,7 +1255,7 @@ spec:
 <li>执行应用<code>kube-flannel.yml</code>配置信息</li>
 </ol>
 <blockquote>
-<p>Tips：注意这里只在master节点上执行</p>
+<p>Tips：注意这里只在 master 节点上执行</p>
 </blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl apply <span class="token parameter variable">-f</span> kube-flannel.yml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -1274,10 +1274,10 @@ systemctl restart kubelet<span aria-hidden="true" class="line-numbers-rows"><spa
 <ol start="6">
 <li>通过<code>kubectl get nodes</code>查看状态，所有状态都变成了<code>Ready</code>状态。</li>
 </ol>
-<p>到此全部结束，k8s集群安装部署成功，整个过程很复杂，涉及到的东西很多。不要急不要噪，慢慢来，祝你一次成功。</p>
-<h2 id="4-测试集群可用性"><a href="#4-测试集群可用性" class="headerlink" title="4. 测试集群可用性"></a>4. 测试集群可用性</h2><p>通过安装一个nginx来检查k8s环境是否安装成功。</p>
+<p>到此全部结束，k8s 集群安装部署成功，整个过程很复杂，涉及到的东西很多。不要急不要噪，慢慢来，祝你一次成功。</p>
+<h2 id="3-测试集群可用性"><a href="#3-测试集群可用性" class="headerlink" title="3. 测试集群可用性"></a>3. 测试集群可用性</h2><p>通过安装一个 nginx 来检查 k8s 环境是否安装成功。</p>
 <ol>
-<li>通过<code>kubectl</code>命令安装nginx</li>
+<li>通过<code>kubectl</code>命令安装 nginx</li>
 </ol>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl create deployment nginx <span class="token parameter variable">--image</span><span class="token operator">=</span>nginx:1.14-alpine<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -1301,13 +1301,13 @@ systemctl restart kubelet<span aria-hidden="true" class="line-numbers-rows"><spa
 <p>Tips：输出的结果中，会有一条类似<code>service/nginx NodePort 10.96.7.203 &lt;none&gt; 80:30133/TCP 6s</code>信息</p>
 </blockquote>
 <ol start="4">
-<li><p>通过<code>docker ps</code>命令，在工作节点上查看，nginx具体按照到那个节点中</p>
+<li><p>通过<code>docker ps</code>命令，在工作节点上查看，nginx 具体按照到那个节点中</p>
 </li>
-<li><p>使用第四步找到的节点ip和第三步的端口信息，使用浏览器访问，给出nginx主页即成功。</p>
+<li><p>使用第四步找到的节点 ip 和第三步的端口信息，使用浏览器访问，给出 nginx 主页即成功。</p>
 </li>
 </ol>
 <blockquote>
-<p>Tips：比如第四步找到的节点ip是192.168.29.130，结合第三步的结果信息，知道端口号是30133，那么此时在浏览器上访问192.168.29.130:30133即可正常访问nginx主页啦！</p>
+<p>Tips：比如第四步找到的节点 ip 是 192.168.29.130，结合第三步的结果信息，知道端口号是 30133，那么此时在浏览器上访问 192.168.29.130:30133 即可正常访问 nginx 主页啦！</p>
 </blockquote>
 
                 
@@ -1452,7 +1452,7 @@ systemctl restart kubelet<span aria-hidden="true" class="line-numbers-rows"><spa
         repo: 'issue',
         owner: 'itcrud',
         admin: ["itcrud"],
-        id: '2023-07-01T13-29-00',
+        id: '2023-07-12T21-50-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1480,29 +1480,80 @@ systemctl restart kubelet<span aria-hidden="true" class="line-numbers-rows"><spa
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/07/docker-base-info/">
+                <a href="/2023/07/k8s-install-core/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="Docker基础概念理解">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="k8s集群在centos环境中部署安装详细过程">
                         
-                        <span class="card-title">Docker基础概念理解</span>
+                        <span class="card-title">k8s集群在centos环境中部署安装详细过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            K8S的使用率越来越高，K8S又依赖于Docker，因此Docker变成了必须会内容。之前都是专业的运维来做，现在更多的小公司形成不了完整的队伍，只能将Docker、K8S这些卷到了Java后端研发身上。
+                            k8s是一款开源容器集群系统，用于容器化应用程序部署、扩展和管理，目标是让容器简单高效。能够实现自我修复、弹性伸缩、服务发现、负载均衡、版本回退、存储编排等高端操作。
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-07-01
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/k8s/" class="post-category">
+                                    k8s
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/k8s/">
+                        <span class="chip bg-color">k8s</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/07/docker-dashboard-portainer/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/5.jpg" class="responsive-img" alt="Docker的可视化工具portainer">
+                        
+                        <span class="card-title">Docker的可视化工具portainer</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Docker实际包含多少镜像，包含多少容器，通过命令行查看首先是不够直观，再次就是比较麻烦，此时可以使用Docker可视化工具portainer就可以解决这个问题。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1518,61 +1569,8 @@ systemctl restart kubelet<span aria-hidden="true" class="line-numbers-rows"><spa
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Docker/">
-                        <span class="chip bg-color">Docker</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2023/05/vue-mk-txt-editor/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="Vue中集成MarkDown和富文本编辑器">
-                        
-                        <span class="card-title">Vue中集成MarkDown和富文本编辑器</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            后台管理系统经常需要提供内容的数据功能，在MarkDown没有普及的时候，基本都是使用富文本编辑器，本文将记录这两种编辑器的使用。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-05
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-category">
-                                    最佳实践
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/tuiEditor/">
-                        <span class="chip bg-color">tuiEditor</span>
-                    </a>
-                    
-                    <a href="/tags/wangEditor/">
-                        <span class="chip bg-color">wangEditor</span>
+                    <a href="/tags/partainer/">
+                        <span class="chip bg-color">partainer</span>
                     </a>
                     
                 </div>
