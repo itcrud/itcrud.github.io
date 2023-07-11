@@ -362,7 +362,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>从项目编译打包成<code>jar</code>或者是<code>war</code>，到部署环境的依赖，如<code>jdk</code>,再到部署时文件存储的位置，进入容器默认进入的目录。都可以通过<code>Dockerfile</code>文件来实现，也就是在构建部署的时候，在<code>Dockerfile</code>文件中指定每一步的操作，最终形成镜像文件。</p>
-<h2 id="2-Dockerfile文件的常用指令"><a href="#2-Dockerfile文件的常用指令" class="headerlink" title="2. Dockerfile文件的常用指令"></a>2. Dockerfile文件的常用指令</h2><ul>
+<h2 id="2-Dockerfile-文件的常用指令"><a href="#2-Dockerfile-文件的常用指令" class="headerlink" title="2. Dockerfile 文件的常用指令"></a>2. Dockerfile 文件的常用指令</h2><ul>
 <li><strong>FROM：指定父镜像，局域哪个镜像来构建，这个镜像可以从远程仓库中拉取，也可以是本地镜像库中某个镜像</strong></li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 默认会从远程仓库中拉取centos镜像，并将此镜像存入本地镜像库</span>
@@ -392,7 +392,7 @@ RUN <span class="token function">wget</span> http://tool.iweek.com/file/xxx.txt<
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ADD xxx.tar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
-<li><strong>COPY：功能类似于ADD，但是此命令不会自动执行解压动作</strong></li>
+<li><strong>COPY：功能类似于 ADD，但是此命令不会自动执行解压动作</strong></li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 拷贝xxx.jar文件，并将其更名为yyy.jar</span>
 COPY xxx.jar yyy.jar<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -404,7 +404,7 @@ COPY xxx.jar yyy.jar<span aria-hidden="true" class="line-numbers-rows"><span></s
 CMD /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <ul>
-<li><strong>ENV：环境变量的配置，比如配置JDK的基础目录</strong></li>
+<li><strong>ENV：环境变量的配置，比如配置 JDK 的基础目录</strong></li>
 </ul>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建一个环境变量，变量名是：ENVNAME，对应的变量值是：/usr/local/</span>
 ENV ENVNAME /usr/local/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -423,10 +423,10 @@ WORKDIR <span class="token variable">$ENVNAME</span><span aria-hidden="true" cla
 <ul>
 <li><strong>VOLUME：数据卷的挂载，用来保存数据和持久化工作，实现宿主机和容器共享的目录</strong></li>
 </ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 宿主机和容器共享目录</span>
-VOLUME /usr/local/data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 宿主机和容器共享目录，将宿主机的/usr/local/data映射到容器的/usr/local/container/data</span>
+VOLUME /usr/local/data:/usr/local/container/data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h2 id="3-Dockerfile文件案例"><a href="#3-Dockerfile文件案例" class="headerlink" title="3. Dockerfile文件案例"></a>3. Dockerfile文件案例</h2><p>案例如下：</p>
+<h2 id="3-Dockerfile-文件案例"><a href="#3-Dockerfile-文件案例" class="headerlink" title="3. Dockerfile 文件案例"></a>3. Dockerfile 文件案例</h2><p>案例如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">FROM  centos:7
 MAINTAINER itcrud.github.io
 ENV  MYPATH /usr/local
@@ -434,9 +434,10 @@ WORKDIR <span class="token variable">$MYPATH</span>
 RUN yum <span class="token parameter variable">-y</span> <span class="token function">install</span> <span class="token function">vim</span>
 EXPOSE <span class="token number">8080</span>
 CMD /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这个案例主要是实现构建一个镜像文件，这个镜像文件拥有<code>vim</code>插件，进入容器后，默认进入的目录是<code>/usr/local</code>，对外暴露的端口是<code>8080</code>，容器构建结束，自动进入到容器中。</p>
 <h2 id="4-操作步骤"><a href="#4-操作步骤" class="headerlink" title="4. 操作步骤"></a>4. 操作步骤</h2><ol>
-<li>首先需要安装好Docker，这个在<a href="/2020/10/linux-docker-install/">Linux环境Docker在线和离线安装以及镜像的加载</a>中已经有相关的操作步骤；</li>
+<li>首先需要安装好 Docker，这个在<a href="/2020/10/linux-docker-install/">Linux 环境 Docker 在线和离线安装以及镜像的加载</a>中已经有相关的操作步骤；</li>
 <li>创建一个<code>Dockerfile</code>文件，并按照编写其内容；</li>
 <li>执行<code>docker build</code>命令执行即可。</li>
 </ol>
@@ -451,6 +452,7 @@ CMD /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ERROR：<span class="token string">"docker buildx build"</span> requires exactly <span class="token number">1</span> argument.
 See <span class="token string">'docker buildx build --help'</span><span class="token builtin class-name">.</span>
 usage: <span class="token function">docker</span> buildx build <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> <span class="token environment constant">PATH</span> <span class="token operator">|</span> URL <span class="token operator">|</span> -<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>这个错误有点低级，就是在执行<code>docker build</code>命令的时候，最后没有加上<code>.</code>导致的。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 会报错的命令</span>
 <span class="token function">docker</span> build <span class="token parameter variable">-f</span> Dockerfile <span class="token parameter variable">-t</span> itcrud-centos:1.0.0
@@ -460,8 +462,8 @@ usage: <span class="token function">docker</span> buildx build <span class="toke
 <ol start="2">
 <li>在执行<code>Dockerfile</code>里面指定的<code>yum -y install vim</code>时报错。</li>
 </ol>
-<p>是因为在<code>FROM centos</code>的时候没有加上版本号，默认拉取的是最新的<code>centos</code>，对应的版本是<code>centos 8 stream</code>，这个时候将<code>centos</code>加上版本号即可，改为<code>FROM centos:7</code>。(我这里Docker版本是24.0.4，实操的时间是2023年7月9日，如果你没有出现这个问题，可能是Docker版本问题，或者远程仓库<code>centos</code>非<code>centos 8 stream</code>，此错误随缘)</p>
-<h2 id="6-springBoot项目的Dockerfile模板"><a href="#6-springBoot项目的Dockerfile模板" class="headerlink" title="6. springBoot项目的Dockerfile模板"></a>6. springBoot项目的Dockerfile模板</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 集成java8这个镜像，这个镜像需要提前就构建好放在本地仓库</span>
+<p>是因为在<code>FROM centos</code>的时候没有加上版本号，默认拉取的是最新的<code>centos</code>，对应的版本是<code>centos 8 stream</code>，这个时候将<code>centos</code>加上版本号即可，改为<code>FROM centos:7</code>。(我这里 Docker 版本是 24.0.4，实操的时间是 2023 年 7 月 9 日，如果你没有出现这个问题，可能是 Docker 版本问题，或者远程仓库<code>centos</code>非<code>centos 8 stream</code>，此错误随缘)</p>
+<h2 id="6-springBoot-项目的-Dockerfile-模板"><a href="#6-springBoot-项目的-Dockerfile-模板" class="headerlink" title="6. springBoot 项目的 Dockerfile 模板"></a>6. springBoot 项目的 Dockerfile 模板</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 集成java8这个镜像，这个镜像需要提前就构建好放在本地仓库</span>
 FROM centos-jdk8
 <span class="token comment"># 作者</span>
 MAINTAINER itcrud
@@ -655,30 +657,29 @@ CMD /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/07/docker-dockerfile-super-star/">
+                <a href="/2023/07/docker-dashboard-portainer/">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="Dockerfile的核心指令和编写案例">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/5.jpg" class="responsive-img" alt="Docker的可视化工具portainer">
                         
-                        <span class="card-title">Dockerfile的核心指令和编写案例</span>
+                        <span class="card-title">Docker的可视化工具portainer</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Dockerfile是非常非常非常重要的文件，在镜像构建打包的时候，都是通过Dockerfile中的配置信息和相关执行来完成。
+                            Docker实际包含多少镜像，包含多少容器，通过命令行查看首先是不够直观，再次就是比较麻烦，此时可以使用Docker可视化工具portainer就可以解决这个问题。
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-08
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-07-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -691,12 +692,11 @@ CMD /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Dockerfile/">
-                        <span class="chip bg-color">Dockerfile</span>
+                    <a href="/tags/partainer/">
+                        <span class="chip bg-color">partainer</span>
                     </a>
                     
                 </div>
@@ -948,7 +948,7 @@ CMD /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">699k</span>
+                        class="white-color">703.5k</span>
             
             
             
