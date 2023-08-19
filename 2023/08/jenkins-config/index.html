@@ -1,0 +1,1246 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="jendkins打包部署配置详解（前端+后端）, 程序猿洞晓">
+    <meta name="description" content="测试环境频繁的部署发包，如果使用原始的上传运行方式太麻烦，引入jenkins可以提高这个过程的效率，搞起来……">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>jendkins打包部署配置详解（前端+后端） | 程序猿洞晓</title>
+    <link rel="icon" type="image/jpeg" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/favicon.jpg">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/matery.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/reward.css">
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">程序猿洞晓</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/top" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/toolbox" class="waves-effect waves-light">
+      
+      <i class="fas fa-toolbox" style="zoom: 0.6;"></i>
+      
+      <span>工具箱</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-link" style="zoom: 0.6;"></i>
+      
+      <span>友链</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/logo.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">程序猿洞晓</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/top" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/toolbox" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-toolbox"></i>
+			
+			工具箱
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-link"></i>
+			
+			友链
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">jendkins打包部署配置详解（前端+后端）</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/jenkins/">
+                                <span class="chip bg-color">jenkins</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/jenkins/" class="post-category">
+                                jenkins
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布时间:&nbsp;&nbsp;
+                    2023-08-12
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>jenkins 软件的安装部署，后续再出相关的文档。</p>
+<h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h1><h2 id="0-1-系统和软件版本"><a href="#0-1-系统和软件版本" class="headerlink" title="0.1 系统和软件版本"></a>0.1 系统和软件版本</h2><blockquote>
+<p>系统版本：Centos 7.9<br>jenkins 版本：jenkins-2.346.1<br>java 版本：jdk1.8.0_241<br>maven 版本：3.9.3<br>git 版本：1.8.3.1</p>
+</blockquote>
+<h2 id="0-2-配置-jenkins-配置文件"><a href="#0-2-配置-jenkins-配置文件" class="headerlink" title="0.2 配置 jenkins 配置文件"></a>0.2 配置 jenkins 配置文件</h2><p>在很多网上的都说 jenkins 配置文件是<code>/etc/sysconfig/jenkins</code>，但是随着 jenkins 的版本，这个配置文件已经被弃用，虽然这个文件还存在。在高版本配置文件是<code>/usr/lib/systemd/system/jenkins.service</code>。</p>
+<p>修改配置文件内容如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">User</span><span class="token operator">=</span>root
+<span class="token assign-left variable">Group</span><span class="token operator">=</span>root<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>Tips：在实际操作过程中发现，在 Java 打包的时候，在使用 maven 的时候，出现<code>Permission denied</code>权限问题，主要是因为 jenkins 在打包的时候默认使用的是 jenkins 用户，如果想解决有两种方式，一种是给 jenkins 用户赋权限，一种是直接用 root 用户。赋权限操作麻烦，直接将配置文件中的 User、Group 改成 root 用户，简单粗暴，问题解决。</p>
+</blockquote>
+<h1 id="1-后端部署"><a href="#1-后端部署" class="headerlink" title="1. 后端部署"></a>1. 后端部署</h1><h2 id="1-1-依赖安装"><a href="#1-1-依赖安装" class="headerlink" title="1.1 依赖安装"></a>1.1 依赖安装</h2><p>我是使用 Java 语言开发，这里就说说 Java 相关的。</p>
+<ol>
+<li>JDK 安装：<a href="/2020/10/linux-jdk-install/">Linux 环境 JDK 安装</a></li>
+<li>maven 安装：<a href="/2018/12/python-maven-install/">python3 和 maven 的安装教程</a></li>
+<li>git 安装，直接使用<code>yum -y install git</code>即可。</li>
+</ol>
+<blockquote>
+<p>Tips：jdk 安装是因为 Java 有对应的依赖，maven 安装主要是对后端 Java 代码打包使用，git 是用来拉取仓库的代码使用。（如果打包方式不是 maven，或者仓库不是 git，可以根据实际需求安装）</p>
+</blockquote>
+<h2 id="1-2-配置系统环境"><a href="#1-2-配置系统环境" class="headerlink" title="1.2 配置系统环境"></a>1.2 配置系统环境</h2><p>为何要配置系统环境，因为在你新建任务的时候会使用到，比如远程连接后端服务器发布应用，这个远程连接就需要配置，比如使用的 maven、git、jdk 都需要配置。</p>
+<ol>
+<li>git、maven、jdk 配置<br>进入 Dashboard =&gt; 系统管理 =&gt; 全局工具配置</li>
+</ol>
+<ul>
+<li>配置 jdk：指定别名，在指定<code>JAVA_HOME</code>，这个值就是在安装 jdk 时配置<code>JAVA_HOME</code>，保持一直即可。（我这里是<code>/usr/local/jdk1.8.0_241</code>）</li>
+<li>配置 git：指定名称，在执行 git 命令所在的目录，如果这里不知道 git 命令安装在什么位置，可以通过<code>whereis git</code>命令查询到。（我这里是<code>/usr/bin/git</code>）</li>
+<li>配置 maven：指定名称，指定<code>MAVEN_HOME</code>，这个值就是在安装 maven 时配置<code>MAVEN_HOME</code>，保持一直即可。（我这里是<code>/usr/local/maven</code>）</li>
+</ul>
+<ol start="2">
+<li>配置远程连接<br>进入 Dashboard =&gt; 系统管理 =&gt; 系统配置 =&gt; 找到 Publish over SSH（如果没有这个可以去插件管理里面下载，一般在安装 jenkins 的时候都会安装）</li>
+</ol>
+<p>新增 SSH Server，根据要求填写相关内容即可。（一般在填写到 Remote Directory 后，下面有个<strong>高级</strong>，点击进去，选择使用 Use password authentication, or use a different key，输入 Password 即可）填写完成后，记得点击一下下面的 Test Configuration，看是否能够正常连接，显示 success 即表示没有问题。(如果有多个服务器，可以通过新增即可)</p>
+<h2 id="1-3-配置发布任务"><a href="#1-3-配置发布任务" class="headerlink" title="1.3 配置发布任务"></a>1.3 配置发布任务</h2><p>进入 Dashboard =&gt; 新建任务 =&gt; 填写名称，选择”构建一个 maven 项目”，确认进入配置页面</p>
+<ol>
+<li>源码管理，选中 Git<br>配置仓库地址（Repository URL）、认证信息（Credentials）、指定代码分支</li>
+</ol>
+<blockquote>
+<p>Tips：如果还没有凭证，可以点击添加，进入添加页面，Domain 选择全局凭证，类型选择 Username with Password，范围选择全局，用户名填写 gitLab 仓库拉取代码的用户名，密码是对应用户名的密码。</p>
+</blockquote>
+<ol start="2">
+<li><p>构建环境<br>选择 Delete workspace before build starts。</p>
+</li>
+<li><p>Pre Steps<br>选择调用顶层 maven 目标，选择 maven 版本，这个 maven 版本就是在上面配置的 maven，目前是执行的语句，Java 一般会使用<code>clean package -Dmaven.test.skip=true</code>。</p>
+</li>
+<li><p>构建后操作</p>
+</li>
+</ol>
+<p>选择 Send build artifacts over SSH，填写 SSH Server Name，再在高级里面填写相关信息，需要将<code>Verbose output in console</code>选中，方便看日志。下面是高级里面信息说明：</p>
+<ul>
+<li>Transfer Source files：表示你需要发送到远程服务器的文件，比如你打完的 jar 包。需要注意的是这个路径是相对路径，不是绝对路径。比如你 git 上拉取的项目名称是 demo。打完包后会在 demo 里面生成一个 target 目录，jar 包就是放在其内，这个时候，这里的路径写的就是<code>demo/target/demo.jar</code>。</li>
+<li>Remove prefix：这个表示发送到运程仓库，是否要把 Transfer Source files 配置的部分路径给擦除。比如你要将<code>demo.jar</code>发送到远程服务器的<code>/usr/local/service</code>目录下，这个时候如果你不执行擦除，则会默认在<code>/usr/local/service</code>下创建<code>demo/target/</code>目录存储<code>demo.jar</code>，最终发送到远程服务器后的路径是<code>/usr/local/service/demo/target/demo.jar</code>。如果你的目的是想放在<code>/usr/local/service</code>，这个时候就需要执行擦除，Remove prefix 就配置<code>demo/target</code>。</li>
+<li>Remote directory：表示远程目录，也就是你放 jar 包的位置，但是这里有个坑，在之前配置远程连接的时候也涉及到一个 Remote Directory 信息，当 jenkins 通过 ssh 进入远程服务器后，会自动 cd 到其中配置 Remote Directory 中。如果这里的 Remote directory 也配置的话，可能会造成目录不准确的问题。比如你要将 demo.jar 放到<code>/usr/local/service</code>目录下，在远程连接里面的 Remote Directory 配置了<code>/usr/local/service</code>，在这里也做了同样配置，那么这个时候就出出现一个问题，在 demo.jar 发送到远程服务器时，demo.jar 并不是放在<code>/usr/local/service</code>下，而是<code>/usr/local/service/usr/local/service</code>下。如果你的目的是想放在<code>/usr/local/service</code>，这个时候就不需要配置 Remove directory 就配置，保持为空即可。（或者直接将远程连接中的 Remove directory 配置成<code>/</code>，这里的 Remove directory 该配啥就配啥，灵活性更高）</li>
+<li>Exec Command：表示要在远程服务器上执行的命令，比如 jar 包发送过去，肯定要运行起来，这个时候就需要执行脚本或者命令，就是写在这里。示例如下：</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
+<span class="token builtin class-name">cd</span> /usr/local/service/
+<span class="token function">sh</span> service.sh restart<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>Tips：到此配置结束，上面的配置内容比较绕，特别是 Remove prefix 和 Remote directory，多尝试几次就能理解。</p>
+</blockquote>
+<h2 id="1-4-构建验证"><a href="#1-4-构建验证" class="headerlink" title="1.4 构建验证"></a>1.4 构建验证</h2><p>保存后，点击页面左侧中的立即构建，在下面的 Build History 中就有对应的构建记录，点击进入，查看构建日志，根据日志看定位错误和调整配置，如果一次成功，那就恭喜你啦。</p>
+<blockquote>
+<p>Tips：在配置 jdk 环境变量的时候，一般都是配置在<code>/etc/profile</code>中。在执行启动 jar 的时候，会给出没有找到 jdk 的问题。<strong>解决方案：在<code>~/.bashrc</code>文件中进行同样的环境变量配置即可。（具体原因可以面向百度、必应、谷歌查询）</strong></p>
+</blockquote>
+<h1 id="2-前端部署"><a href="#2-前端部署" class="headerlink" title="2. 前端部署"></a>2. 前端部署</h1><h2 id="2-1-依赖安装"><a href="#2-1-依赖安装" class="headerlink" title="2.1 依赖安装"></a>2.1 依赖安装</h2><p>我们项目研发的前端使用 vue，所以这里主要的依赖就是 node 和 npm，这里安装 node 和 npm 有两种方式，一种是直接使用<code>yum</code>命令安装，一种是使用<code>nvm</code>安装。使用<code>yum</code>安装有个不好的地方就是版本比较固定，如果需要给多个项目多个版本的项目打包，就存在版本不兼容问题。这个时候使用<code>nvm</code>安装就会更为方便。</p>
+<ul>
+<li>方式一：<code>yum</code>安装</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">-y</span> <span class="token function">install</span> nodejs
+yum <span class="token parameter variable">-y</span> <span class="token function">install</span> <span class="token function">npm</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>Tips：<code>yum</code>中的 nodejs、npm 版本更新较慢，官方最新的版本可能在<code>yum</code>中不存在。</p>
+</blockquote>
+<ul>
+<li>方式二：<code>nvm</code>安装</li>
+</ul>
+<blockquote>
+<p>Tips：<code>nvm</code>在安装之前，如果本机里面已经安装了 nodejs 和 npm，需要先删除掉。如果你是用<code>yum</code>安装的 nodejs 和 npm，直接使用<code>yum -y remove nodejs</code>和<code>yum -y remove npm</code></p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="2-2-配置发布任务"><a href="#2-2-配置发布任务" class="headerlink" title="2.2 配置发布任务"></a>2.2 配置发布任务</h2><p>进入 Dashboard =&gt; 新建任务 =&gt; 填写名称，选择”构建一个自由风格的软件项目”，确认进入配置页面</p>
+<ol>
+<li>源码管理：和后端发布配置相同</li>
+<li>构建：在增加构建步骤中选择“执行 shell”，shell 脚本如下：</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装依赖</span>
+<span class="token function">npm</span> <span class="token function">install</span>
+<span class="token comment"># 执行构建</span>
+<span class="token function">npm</span> run build
+<span class="token comment"># 将打包完成的dist目录做成压缩文件，方便发送到服务</span>
+<span class="token function">tar</span> <span class="token parameter variable">-zcvf</span> xxx.tar.gz dist<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>Tips：这个脚本只是简单的打包工作，如果涉及 nodejs、npm 版本的切换，再添加对应命令即可。</p>
+</blockquote>
+<ol start="3">
+<li>构建后操作</li>
+</ol>
+<p>SSH Server Name：对应服务器，在前言 0.2 中已经做具体的配置说明，这里选择即可。<br>在“高级”里面配置 Transfers 操作</p>
+<ul>
+<li>Transfer Set Source files：配置需要发送到服务器的文件，上面已经将需要发送的文件打包成 xxx.tar.gz，那么这里直接填上即可。</li>
+<li>Remove prefix：这里没有前缀，保持为空。</li>
+<li>Remove directory：发送到远程服务器，文件存放的位置，这里关于路径写写法注意事项在后端部署中已经做了详细的说明，直接参考即可。比如要放到<code>/usr/local/app</code>目录下，就填写此值即可。</li>
+<li>Exec command：在远程服务器上需要执行的命令。示例如下：</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#！/bin/sh</span>
+<span class="token comment"># 进入到目录目录</span>
+<span class="token builtin class-name">cd</span> /usr/local/app
+<span class="token comment"># 执行对应的脚本文件，这个脚本文件就是将之前旧的项目目录删除，然后解压压缩包，对解压后的dist进行改名，改成项目名称即可。（可以不改名，看实际需求）</span>
+<span class="token function">sh</span> xxx.sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>Tips：到这里前端发布就完成了。</p>
+</blockquote>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">程序猿洞晓</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://itcrud.github.io/2023/08/jenkins-config/">https://itcrud.github.io/2023/08/jenkins-config/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">程序猿洞晓</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/jenkins/">
+                                    <span class="chip bg-color">jenkins</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'd5b070018a0674352910',
+        clientSecret: 'ee7de87a788f3687fbd8365e86cb2ba43f20c0a9',
+        repo: 'issue',
+        owner: 'itcrud',
+        admin: ["itcrud"],
+        id: '2023-08-12T12-02-13',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/08/centos-extend-capacity/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="Centos系统如何扩充磁盘容量及默认root目录50G解决方案">
+                        
+                        <span class="card-title">Centos系统如何扩充磁盘容量及默认root目录50G解决方案</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            使用VMware构建Centos虚拟机是常规操作，但是有时候会出现安装时候设定的磁盘容量，使用过程不够需要扩容，虽然本身VMware能够在设置中对磁盘进行扩容，但是存在一个问题即使这种扩容只是给虚拟机增加了对应的磁盘容量，但是没有实际挂载到虚拟机上的，也就是扩容了，但实际不能使用，还需要进入到Centos系统中另外进行一系列操作……
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-08-19
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Centos%E6%89%A9%E5%AE%B9/">
+                        <span class="chip bg-color">Centos扩容</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/07/svn-httpd-nginx-proxy/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="SVN+Apache httpd+Nginx实现svn的http请求和Nginx代理">
+                        
+                        <span class="card-title">SVN+Apache httpd+Nginx实现svn的http请求和Nginx代理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            通过SVN+Apache httpd实现通过http协议访问svn，通过nginx实现反向代理SVN服务。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SVN/" class="post-category">
+                                    SVN
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/httpd-nginx%E4%BB%A3%E7%90%86svn/">
+                        <span class="chip bg-color">httpd - nginx代理svn</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2015-2023</span>
+            
+            <a href="/about" target="_blank">程序猿洞晓</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">707.6k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2015";
+                        var startMonth = "09";
+                        var startDate = "1";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/itcrud" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:itcrud@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
