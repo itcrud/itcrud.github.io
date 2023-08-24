@@ -336,7 +336,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.2k
                 </div>
                 
 
@@ -363,11 +363,11 @@
             <div id="articleContent">
                 <p>使用 VMware 构建 Centos 虚拟机是常规操作，但是有时候会出现安装时候设定的磁盘容量，使用过程不够需要扩容，虽然本身 VMware 能够在设置中对磁盘进行扩容，但是存在一个问题即使这种扩容只是给虚拟机增加了对应的磁盘容量，但是没有实际挂载到虚拟机上的，也就是扩容了，但实际不能使用，还需要进入到 Centos 系统中另外进行一系列操作才能够完成具体的配置。<br>另外还有一种情况，你在构建 Centos 系统的时候，设置的磁盘空间大于 50G，此时 Centos 会自动将其分为主要的两个部分，分别是<code>centos-home</code>和<code>centos-root</code>，其中<code>centos-root</code>是默认为 50G，剩下的都放在了<code>centos-home</code>下，但是很多自己构建虚拟机操作基本都是在<code>centos-root</code>下，这样就会导致<code>centos-home</code>下实际是闲置空间，不能得到很好的利用。这个时候就需要将<code>centos-home</code>移除，把对应的空间分给<code>centos-root</code>。<br>就上面的两个问题，一个是扩容磁盘，一个是空间转移，下面说一下具体解决方案。</p>
 <h1 id="1-环境说明"><a href="#1-环境说明" class="headerlink" title="1. 环境说明"></a>1. 环境说明</h1><p>构建虚拟机工具：VMware<br>虚拟机系统：Centos 7</p>
-<h1 id="2-扩容磁盘"><a href="#2-扩容磁盘" class="headerlink" title="2. 扩容磁盘"></a>2. 扩容磁盘</h1><h2 id="2-1-指定扩容空间"><a href="#2-1-指定扩容空间" class="headerlink" title="2.1 指定扩容空间"></a>2.1 指定扩容空间</h2><p>在 VMware 中右键对应的虚拟机，找到硬盘，点击后，在磁盘实用工具下有个扩展，指定扩展后的容量即可。（在进行此操作前，需要选关闭虚拟机，否则扩展功能是是用不了的）</p>
+<h1 id="2-扩容磁盘"><a href="#2-扩容磁盘" class="headerlink" title="2. 扩容磁盘"></a>2. 扩容磁盘</h1><h2 id="2-1-指定扩容空间"><a href="#2-1-指定扩容空间" class="headerlink" title="2.1 指定扩容空间"></a>2.1 指定扩容空间</h2><p>在 VMware 中右键对应的虚拟机，找到硬盘，点击后，在磁盘实用工具下有个扩展，指定扩展后的容量即可。（在进行此操作前，需要选关闭虚拟机，否则扩展功能是是用不了的）<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images202308240935.png"></p>
 <h2 id="2-2-扩容设置"><a href="#2-2-扩容设置" class="headerlink" title="2.2 扩容设置"></a>2.2 扩容设置</h2><p>上一步扩展完成后，启动虚拟机，按照一下步骤执行。</p>
 <ol>
-<li>输入<code>df -h</code>命令，查看<code>centos-root</code>空间大小；</li>
-<li>输入<code>fdisk -l</code>命令，查看磁盘空间大小，看第一行<code>Disk /dev/sda: xxxxGB</code>，发现增加的磁盘空间已经增加到了<code>/dev/sda</code>下面了；</li>
+<li>输入<code>df -h</code>命令，查看<code>centos-root</code>空间大小；<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824094044.png"></li>
+<li>输入<code>fdisk -l</code>命令，查看磁盘空间大小，看第一行<code>Disk /dev/sda: xxxxGB</code>，发现增加的磁盘空间已经增加到了<code>/dev/sda</code>下面了；<br><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824094147.png"></li>
 <li>输入<code>fdisk /dev/sda</code>，格式化<code>/dev/sda</code>，新建<code>/dev/sda3</code>分区。执行输入信息如下：<ul>
 <li>Commond(m for help)：n（输入值 n，并回车）</li>
 <li>Select (default p)：p（可输入 p 或者直接回车）</li>
@@ -380,19 +380,45 @@
 <li>Commond(m for help)：w（输入 w，并回车）</li>
 </ul>
 </li>
-<li>第三步配置完成后，使用<code>reboot</code>命令重启虚拟机；</li>
-<li>输入<code>pcreate /dev/sda3</code>，新建物理卷<code>/dev/sda3</code>；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824102542.png"></p>
+<ol start="4">
+<li><p>第三步配置完成后，使用<code>reboot</code>命令重启虚拟机；</p>
+</li>
+<li><p>输入<code>pvcreate /dev/sda3</code>，新建物理卷<code>/dev/sda3</code>；</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824155039.png"></p>
+<ol start="6">
 <li>输入<code>pvdisplay</code>命令，查看物理卷信息，这个时候就能看打了<code>/dev/sda3</code>物理卷的存在了；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824163256.png"></p>
+<ol start="7">
 <li>使用<code>vgextend centos /dev/sda3</code>将新增加的分区<code>/dev/sda3</code>加入到根目录分区 centos 中；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824163345.png"></p>
+<ol start="8">
 <li>使用<code>vgdisplay</code>查看物理卷组信息，可以看到 Free 中多出了增加的容量空间；</li>
-<li>使用<code>lvresize -L 20G /dev/centos/root</code>命令扩展磁盘空间（假设这里是扩展 20G）；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824155235.png"></p>
+<ol start="9">
+<li>使用<code>lvresize -L +19.99G /dev/centos/root</code>命令扩展磁盘空间（<strong>假设这里是扩展 20G，这里直接使用+20G 可能会报错，原因是空间不够，因此这里使用+19.99G</strong>）；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824163639.png"></p>
+<ol start="10">
 <li>使用<code>xfs_growfs /dev/centos/root</code>重新识别磁盘空间；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824163843.png"></p>
+<ol start="11">
 <li>使用<code>df -h</code>查看扩容后的大小。</li>
 </ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824163918.png"></p>
 <blockquote>
 <p>Tips：按照上面的步骤依次操作即可完成磁盘空间的扩容，看着挺复杂的，操作起来几分钟搞定。</p>
 </blockquote>
-<h1 id="3-空间转移"><a href="#3-空间转移" class="headerlink" title="3. 空间转移"></a>3. 空间转移</h1><p>将<code>centos-home</code>下的空间转移到<code>centos-root</code>下，具体操作如下。</p>
+<h1 id="3-空间转移"><a href="#3-空间转移" class="headerlink" title="3. 空间转移"></a>3. 空间转移</h1><p>在创建虚拟机的时候，如果硬盘空间高于 50G 的时候，会将超过 50G 的部分分配到<code>centos-home</code>中。</p>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824164807.png"></p>
+<p>将<code>centos-home</code>下的空间转移到<code>centos-root</code>下，具体操作如下。</p>
 <ol>
 <li>如果<code>centos-home</code>中有重要数据，可以实现备份一下，使用<code>tar zcxf /usr/local/home.tar.gz /home</code>命令打包，放到<code>/usr/local/</code>目录下。如果没有重要数据，直接忽略此步；</li>
 <li>修改<code>/etc/fstab</code>文件，因为这个文件有配置开机扫描<code>/home</code>，如果不将此文件中扫描的命令注释，可能在下次启动机器的时候，就会出现启动不起来的问题；</li>
@@ -401,13 +427,24 @@
 <span class="token comment"># 注释下面这行</span>
 <span class="token comment"># /dev/mapper/centos-home /home</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824164941.png"></p>
 <ol start="3">
 <li>卸载<code>/home</code>，执行<code>umount /home</code>命令；</li>
-<li>删除<code>/home</code>所在的<code>lv</code>，执行命令<code>lvremove /dev/mapper/centos-home</code>；</li>
-<li>扩展<code>root</code>，使用命令<code>lvextend -L +19.1G /dev/mapper/centos-root</code>，在执行这个命令的时候，需要注意，比如在<code>df -h</code>命令显示<code>centos-home</code>是 20G，此时在拓展的时候，实际是没有 20G 的，基本在 19.1G 左右，如果报错，再继续减少即可；</li>
+<li>删除<code>/home</code>所在的<code>lv</code>，执行命令<code>lvremove /dev/mapper/centos-home</code>（执行时，需要输入 y 确认）；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824165119.png"></p>
+<ol start="5">
+<li>扩展<code>root</code>，使用命令<code>lvextend -L +21.1G /dev/mapper/centos-root</code>，在执行这个命令的时候，需要注意，比如在<code>df -h</code>命令显示<code>centos-home</code>是 22G，此时在拓展的时候，实际是没有 22G 的，基本在 21.1G 左右，如果报错，再继续减少即可；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824165355.png"></p>
+<ol start="6">
 <li>重新识别磁盘空间，执行命令<code>xfs_growfs /dev/centos/root</code>；</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824165455.png"></p>
+<ol start="7">
 <li>使用<code>df -h</code>查看扩容后的大小。</li>
 </ol>
+<p><img src="https://raw.githubusercontent.com/itcrud/images/main/images20230824165529.png"></p>
 
                 
             </div>
@@ -638,9 +675,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="jendkins打包部署配置详解（前端+后端）">
+                        <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/17.jpg" class="responsive-img" alt="jenkins打包部署配置详解（前端+后端）">
                         
-                        <span class="card-title">jendkins打包部署配置详解（前端+后端）</span>
+                        <span class="card-title">jenkins打包部署配置详解（前端+后端）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -864,7 +901,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">707.6k</span>
+                        class="white-color">707.7k</span>
             
             
             
