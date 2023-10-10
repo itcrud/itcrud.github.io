@@ -328,6 +328,55 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2019/08/redis-message-queue-original/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/8.jpg" class="responsive-img" alt="Redis学习笔记(六)：Redis之消息发布、订阅机制">
+                            
+                            <span class="card-title">Redis学习笔记(六)：Redis之消息发布、订阅机制</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                消息的发布和订阅，第一想到的是Kafka、RabbitMQ、ActiveMQ等，但是实际上Redis也是有这个功能，这个功能在Redis中实现很简单，也比较粗暴。没有存储，没有各种订阅模式。只要订阅同一个渠道的订阅者就都可以收到发布到该渠道的信息。如果没有订阅者，消息也不会缓存起来，而是直接丢弃。在简单的功能、能够接受这种模式并且有补偿机制的业务中是可以考虑使用的。下面看一下这个到底是怎么玩的。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-08-20
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Redis/" class="post-category">
+                                    Redis
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/redis/">
+                            <span class="chip bg-color">redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2019/08/redis-protocol-resp-original/">
                         <div class="card-image">
                             
@@ -888,59 +937,6 @@
             </div>
               <!-- 隐藏某个文章 -->
             
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2019/06/kafka-hello-world-original/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="https://cdn.jsdelivr.net/gh/itcrud/itcrud.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="Kafka学习笔记(三)：Kafka的第一个HelloWorld">
-                            
-                            <span class="card-title">Kafka学习笔记(三)：Kafka的第一个HelloWorld</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                引入依赖需要小心，如果没有做相关的了解很容易引入jar包不可用，导致一直有错误。在下载Kafka的时候，Kafka的压缩包的名称都类似这样`kafka_2.11-0.10.1.1`。其中`2.11`是代表Kafka的版本，`0.10.1.1`代表的是客户端的版本。所以在项目中引入Kafka的客户端jar的时候一定要和这个版本对应上，并不是越高越好。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-06-06
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Kafka/" class="post-category">
-                                    Kafka
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Kafka/">
-                            <span class="chip bg-color">Kafka</span>
-                        </a>
-                        
-                        <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
-                            <span class="chip bg-color">消息队列</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
         </div>
     </article>
 
@@ -1044,7 +1040,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">707.7k</span>
+                        class="white-color">709.3k</span>
             
             
             
