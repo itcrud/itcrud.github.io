@@ -361,23 +361,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-环境说明"><a href="#1-环境说明" class="headerlink" title="1. 环境说明"></a>1. 环境说明</h2><p>安装环境：CentOS7 64位</p>
-<p>MySQL数据库版本：MySQL8.0.28</p>
+                <h2 id="1-环境说明"><a href="#1-环境说明" class="headerlink" title="1. 环境说明"></a>1. 环境说明</h2><p>安装环境：CentOS7 64 位</p>
+<p>MySQL 数据库版本：MySQL8.0.28</p>
 <p>安装方式：离线安装（服务器环境没有外部网络）</p>
-<p>这里需要说明一下安装方式，很多人为了方便可能直接使用yum源，省去了很多步骤，但是对于公司内部的服务器是不能连接外网的，因此这里就只能自己上传安装包安装啦。（如果你们公司有专业的DBA，无需自己弄，恭喜你不需要看这个博客啦！）</p>
-<h2 id="2-数据库下载"><a href="#2-数据库下载" class="headerlink" title="2. 数据库下载"></a>2. 数据库下载</h2><p>MySQL 8.0.28 Linux安装包下载：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a></p>
+<p>这里需要说明一下安装方式，很多人为了方便可能直接使用 yum 源，省去了很多步骤，但是对于公司内部的服务器是不能连接外网的，因此这里就只能自己上传安装包安装啦。（如果你们公司有专业的 DBA，无需自己弄，恭喜你不需要看这个博客啦！）</p>
+<h2 id="2-数据库下载"><a href="#2-数据库下载" class="headerlink" title="2. 数据库下载"></a>2. 数据库下载</h2><p>MySQL 8.0.28 Linux 安装包下载：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a></p>
 <p>这个地址进入后就是最新的版本。</p>
-<p>另外需要注意的是下载的时候需要注册oracle账号，如果有账号直接登录，没有就自己注册。版本选择如下：</p>
+<p>另外需要注意的是下载的时候需要注册 oracle 账号，如果有账号直接登录，没有就自己注册。版本选择如下：</p>
 <ul>
-<li>使用Red Hat Enterprise Linux<br>Select Version:<strong>8.0.28</strong><br>Select Operating System:<strong>Red Hat Enterprise Linux / Oracle Linux</strong><br>Select OS Version:<strong>Red Hat Enterprise Linux 7 / Oracle Linux 7 (ARM, 64-bit)</strong><br>列表中下载：<br><strong>RPM Bundle</strong>：(mysql-5.7.35-el7-x86_64.tar.gz)</li>
-<li>使用Linux - Generic<br>Select Version:<strong>8.0.28</strong><br>Select Operating System:<strong>Linux - Generic</strong><br>Select OS Version:<strong>Linux - Generic (glibc 2.12) (x86, 64-bit)</strong><br>列表中下载：<br><strong>Compressed TAR Archive</strong>：(mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz)【本文中使用的是这个版本8.0.28】</li>
+<li>使用 Red Hat Enterprise Linux<br>Select Version:<strong>8.0.28</strong><br>Select Operating System:<strong>Red Hat Enterprise Linux / Oracle Linux</strong><br>Select OS Version:<strong>Red Hat Enterprise Linux 7 / Oracle Linux 7 (ARM, 64-bit)</strong><br>列表中下载：<br><strong>RPM Bundle</strong>：(mysql-5.7.35-el7-x86_64.tar.gz)</li>
+<li>使用 Linux - Generic<br>Select Version:<strong>8.0.28</strong><br>Select Operating System:<strong>Linux - Generic</strong><br>Select OS Version:<strong>Linux - Generic (glibc 2.12) (x86, 64-bit)</strong><br>列表中下载：<br><strong>Compressed TAR Archive</strong>：(mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz)【本文中使用的是这个版本 8.0.28】</li>
 </ul>
 <h2 id="3-安装"><a href="#3-安装" class="headerlink" title="3. 安装"></a>3. 安装</h2><h3 id="3-1-查询并卸载系统自带的数据库：Mariadb"><a href="#3-1-查询并卸载系统自带的数据库：Mariadb" class="headerlink" title="3.1 查询并卸载系统自带的数据库：Mariadb"></a>3.1 查询并卸载系统自带的数据库：Mariadb</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 找到数据库mariadb，如果有会给出一个结果，结果是mariadb名称</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> mariadb
 <span class="token comment"># 如果存在就卸载</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-e</span> <span class="token parameter variable">--nodeps</span> <span class="token punctuation">[</span>mariadb名称<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-2-创建用户和用户组"><a href="#3-2-创建用户和用户组" class="headerlink" title="3.2 创建用户和用户组"></a>3.2 创建用户和用户组</h3><p>为了方便数据库管理，对于安装的MySQL数据库，生产上我们都会建立一个mysql用户和mysql用户组。</p>
+<h3 id="3-2-创建用户和用户组"><a href="#3-2-创建用户和用户组" class="headerlink" title="3.2 创建用户和用户组"></a>3.2 创建用户和用户组</h3><p>为了方便数据库管理，对于安装的 MySQL 数据库，生产上我们都会建立一个 mysql 用户和 mysql 用户组。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 先检查mysql用户和用户组有没有被使用</span>
 <span class="token function">cat</span> /etc/group <span class="token operator">|</span> <span class="token function">grep</span> mysql
 <span class="token function">cat</span> /etc/passwd <span class="token operator">|</span> <span class="token function">grep</span> mysql
@@ -388,7 +388,7 @@
 <span class="token comment"># 修改mysql用户的登陆密码(这里根据需要设置，可以略过)</span>
 <span class="token function">passwd</span> mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-3-上传安装文件"><a href="#3-3-上传安装文件" class="headerlink" title="3.3 上传安装文件"></a>3.3 上传安装文件</h3><p>上传部分不难，可以采用三种方式，一种是通过sftp，一种是通过<code>rz</code>命令上传，最后是使用<code>scp</code>命令来安装。这里采用<code>scp</code>，第一种需要在本地机器上安装sftp，本身是收费的需要破解；第二种是<code>rz</code>命令，这个要看远程服务器上安装此命名的支持，通过yum源安装很简单，执行<code>yum -y install lrzsz</code>即可，如果服务所在环境无法连接外网，那就要自己去找相关的安装包，麻烦。最终我是选择<code>scp</code>命令，不要安装插件。</p>
+<h3 id="3-3-上传安装文件"><a href="#3-3-上传安装文件" class="headerlink" title="3.3 上传安装文件"></a>3.3 上传安装文件</h3><p>上传部分不难，可以采用三种方式，一种是通过 sftp，一种是通过<code>rz</code>命令上传，最后是使用<code>scp</code>命令来安装。这里采用<code>scp</code>，第一种需要在本地机器上安装 sftp，本身是收费的需要破解；第二种是<code>rz</code>命令，这个要看远程服务器上安装此命名的支持，通过 yum 源安装很简单，执行<code>yum -y install lrzsz</code>即可，如果服务所在环境无法连接外网，那就要自己去找相关的安装包，麻烦。最终我是选择<code>scp</code>命令，不要安装插件。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> D://softpackage/mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz root@192.168.75.128:/usr/local/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="3-4-获取安装包和修改名称"><a href="#3-4-获取安装包和修改名称" class="headerlink" title="3.4 获取安装包和修改名称"></a>3.4 获取安装包和修改名称</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 解压安装包,解压后即可直接使用</span>
@@ -448,7 +448,7 @@ pid-file<span class="token operator">=</span>/usr/local/mysql/data/mysql.pid
 <ul>
 <li>设置<code>my.cnf</code>文件的权限：</li>
 </ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chown</span> <span class="token number">777</span> /etc/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> <span class="token number">644</span> /etc/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
 <li>修改<code>/etc/profile</code>文件：</li>
@@ -464,22 +464,22 @@ pid-file<span class="token operator">=</span>/usr/local/mysql/data/mysql.pid
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 此命令执行成功后，打印的最后一行日志末尾会给出MySQL数据库访问的默认密码，需要注意记录一下</span>
 ./mysqld <span class="token parameter variable">--user</span><span class="token operator">=</span>mysql <span class="token parameter variable">--basedir</span><span class="token operator">=</span>/usr/local/mysql/ <span class="token parameter variable">--datadir</span><span class="token operator">=</span>/usr/local/mysql/data/ <span class="token parameter variable">--initialize</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><font color="red"><strong>注意事项：在执行此命令的时候一定要完成上面的所有步骤，在MySQL8的安装时lower_case_table_names参数必须在安装前配置完成，否则在启动MySQL的时候出现Different lower_case_table_names settings for server (‘1‘) and data dictionary (‘0‘) 错误。</strong></font></p>
+<p><font color="red"><strong>注意事项：在执行此命令的时候一定要完成上面的所有步骤，在 MySQL8 的安装时 lower_case_table_names 参数必须在安装前配置完成，否则在启动 MySQL 的时候出现 Different lower_case_table_names settings for server (‘1‘) and data dictionary (‘0‘) 错误。</strong></font></p>
 <p><font color="red"><strong>安装结束后，还会给出数据库的默认密码，在输出的日志里面，记得复制出来保存下来。（如果这里忘了保存，后面给出解决方案）</strong></font></p>
-<h3 id="3-8-复制mysql-server文件"><a href="#3-8-复制mysql-server文件" class="headerlink" title="3.8 复制mysql.server文件"></a>3.8 复制mysql.server文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 复制mysql.server文件到/etc/init.d/目录</span>
-<span class="token function">cp</span> <span class="token parameter variable">-a</span> ./support-files/mysql.server /etc/init.d/mysql 
+<h3 id="3-8-复制-mysql-server-文件"><a href="#3-8-复制-mysql-server-文件" class="headerlink" title="3.8 复制 mysql.server 文件"></a>3.8 复制 mysql.server 文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 复制mysql.server文件到/etc/init.d/目录</span>
+<span class="token function">cp</span> <span class="token parameter variable">-a</span> ./support-files/mysql.server /etc/init.d/mysql
 <span class="token function">cp</span> <span class="token parameter variable">-a</span> ./support-files/mysql.server /etc/init.d/mysqld
 <span class="token comment"># 目录授权</span>
 <span class="token function">chmod</span> +x /etc/init.d/mysql
 <span class="token function">chmod</span> +x /etc/init.d/mysqld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-9-检查socket文件目录是否创建"><a href="#3-9-检查socket文件目录是否创建" class="headerlink" title="3.9 检查socket文件目录是否创建"></a>3.9 检查socket文件目录是否创建</h3><p>进入到<code>/var/lib/</code>目录下，检查是否有<code>mysql</code>目录，如果没有则创建，并进行权限的修改，如果有需要检查权限，如不符合要求则进行修改，具体修改命令如下：</p>
+<h3 id="3-9-检查-socket-文件目录是否创建"><a href="#3-9-检查-socket-文件目录是否创建" class="headerlink" title="3.9 检查 socket 文件目录是否创建"></a>3.9 检查 socket 文件目录是否创建</h3><p>进入到<code>/var/lib/</code>目录下，检查是否有<code>mysql</code>目录，如果没有则创建，并进行权限的修改，如果有需要检查权限，如不符合要求则进行修改，具体修改命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建/var/lib/下的mysql目录</span>
 <span class="token function">mkdir</span> /var/lib/mysql/
 <span class="token comment"># 赋予权限</span>
 <span class="token function">chown</span> <span class="token parameter variable">-R</span> mysql:mysql /var/lib/mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-10-mysql服务操作命令"><a href="#3-10-mysql服务操作命令" class="headerlink" title="3.10 mysql服务操作命令"></a>3.10 mysql服务操作命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动</span>
+<h3 id="3-10-mysql-服务操作命令"><a href="#3-10-mysql-服务操作命令" class="headerlink" title="3.10 mysql 服务操作命令"></a>3.10 mysql 服务操作命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动</span>
 <span class="token function">service</span> mysql start
 <span class="token comment"># 重启</span>
 <span class="token function">service</span> mysql restart
@@ -533,7 +533,7 @@ flush <span class="token keyword">privileges</span><span class="token punctuatio
 flush <span class="token keyword">privileges</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <ol start="4">
-<li>修改<code>my.cnf</code>配置文件，将<code>skip-grant-tables</code>删除，再重启数据库，就OK啦！</li>
+<li>修改<code>my.cnf</code>配置文件，将<code>skip-grant-tables</code>删除，再重启数据库，就 OK 啦！</li>
 </ol>
 
                 

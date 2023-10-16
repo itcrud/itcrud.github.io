@@ -361,24 +361,24 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>近期在做一个项目，需要搭建一个开发环境，数据库技术选型是MySQL5.7，在网上直接搜了很多关于安装MySQL5.7的教程，踩坑踩雷是必然了，为了以后再次安装方便，记一下笔记，毕竟在茫茫的技术文章中筛选，还是比较麻烦的。</p>
-<h2 id="1-环境说明"><a href="#1-环境说明" class="headerlink" title="1. 环境说明"></a>1. 环境说明</h2><p>安装环境：CentOS7 64位</p>
-<p>MySQL数据库版本：MySQL5.7</p>
+                <p>近期在做一个项目，需要搭建一个开发环境，数据库技术选型是 MySQL5.7，在网上直接搜了很多关于安装 MySQL5.7 的教程，踩坑踩雷是必然了，为了以后再次安装方便，记一下笔记，毕竟在茫茫的技术文章中筛选，还是比较麻烦的。</p>
+<h2 id="1-环境说明"><a href="#1-环境说明" class="headerlink" title="1. 环境说明"></a>1. 环境说明</h2><p>安装环境：CentOS7 64 位</p>
+<p>MySQL 数据库版本：MySQL5.7</p>
 <p>安装方式：离线安装（服务器环境没有外部网络）</p>
-<p>这里需要说明一下安装方式，很多人为了方便可能直接使用yum源，省去了很多步骤，但是对于公司内部的服务器是不能连接外网的，因此这里就只能自己上传安装包安装啦。</p>
-<h2 id="2-数据库下载"><a href="#2-数据库下载" class="headerlink" title="2. 数据库下载"></a>2. 数据库下载</h2><p>MySQL 5.7 Linux安装包下载：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/5.7.html">https://dev.mysql.com/downloads/mysql/5.7.html</a></p>
-<p>这个地址进入后就是5.7.x版本，如果需要最新的版本，就要点击右侧的<code>Looking for the latest GA versions?</code>。</p>
-<p>另外需要注意的是下载的时候需要注册oracle账号，如果有直接登录，没有就自己注册。版本选择如下：</p>
+<p>这里需要说明一下安装方式，很多人为了方便可能直接使用 yum 源，省去了很多步骤，但是对于公司内部的服务器是不能连接外网的，因此这里就只能自己上传安装包安装啦。</p>
+<h2 id="2-数据库下载"><a href="#2-数据库下载" class="headerlink" title="2. 数据库下载"></a>2. 数据库下载</h2><p>MySQL 5.7 Linux 安装包下载：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/5.7.html">https://dev.mysql.com/downloads/mysql/5.7.html</a></p>
+<p>这个地址进入后就是 5.7.x 版本，如果需要最新的版本，就要点击右侧的<code>Looking for the latest GA versions?</code>。</p>
+<p>另外需要注意的是下载的时候需要注册 oracle 账号，如果有直接登录，没有就自己注册。版本选择如下：</p>
 <ul>
-<li>使用Red Hat Enterprise Linux<br>Select Version:<strong>5.7.35</strong><br>Select Operating <strong>System:Red Hat Enterprise Linux / Oracle Linux</strong><br>Select OS Version:<strong>Red Hat Enterprise Linux 7 / Oracle Linux 7 (x86, 64-bit)</strong><br>列表中下载：<br>Compressed TAR Archive：(mysql-5.7.35-el7-x86_64.tar.gz)</li>
-<li>使用Linux - Generic<br>Select Version:<strong>5.7.35</strong><br>Select Operating System:<strong>Linux - Generic</strong><br>Select OS Version:<strong>Linux - Generic (glibc 2.12) (x86, 64-bit)</strong><br>列表中下载：<br>Compressed TAR Archive：(mysql-5.7.35-linux-glibc2.12-x86_64.tar.gz)【本文中使用的是这个版本5.7.30】</li>
+<li>使用 Red Hat Enterprise Linux<br>Select Version:<strong>5.7.35</strong><br>Select Operating <strong>System:Red Hat Enterprise Linux / Oracle Linux</strong><br>Select OS Version:<strong>Red Hat Enterprise Linux 7 / Oracle Linux 7 (x86, 64-bit)</strong><br>列表中下载：<br>Compressed TAR Archive：(mysql-5.7.35-el7-x86_64.tar.gz)</li>
+<li>使用 Linux - Generic<br>Select Version:<strong>5.7.35</strong><br>Select Operating System:<strong>Linux - Generic</strong><br>Select OS Version:<strong>Linux - Generic (glibc 2.12) (x86, 64-bit)</strong><br>列表中下载：<br>Compressed TAR Archive：(mysql-5.7.35-linux-glibc2.12-x86_64.tar.gz)【本文中使用的是这个版本 5.7.30】</li>
 </ul>
 <h2 id="3-安装"><a href="#3-安装" class="headerlink" title="3. 安装"></a>3. 安装</h2><h3 id="3-1-查询并卸载系统自带的数据库：Mariadb"><a href="#3-1-查询并卸载系统自带的数据库：Mariadb" class="headerlink" title="3.1 查询并卸载系统自带的数据库：Mariadb"></a>3.1 查询并卸载系统自带的数据库：Mariadb</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 找到数据库mariadb，如果有会给出一个结果，结果是mariadb名称</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-qa</span> <span class="token operator">|</span> <span class="token function">grep</span> mariadb
 <span class="token comment"># 如果存在就卸载</span>
 <span class="token function">rpm</span> <span class="token parameter variable">-e</span> <span class="token parameter variable">--nodeps</span> <span class="token punctuation">[</span>mariadb名称<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-2-创建用户和用户组"><a href="#3-2-创建用户和用户组" class="headerlink" title="3.2 创建用户和用户组"></a>3.2 创建用户和用户组</h3><p>为了方便数据库管理，对于安装的MySQL数据库，生产上我们都会建立一个mysql用户和mysql用户组。</p>
+<h3 id="3-2-创建用户和用户组"><a href="#3-2-创建用户和用户组" class="headerlink" title="3.2 创建用户和用户组"></a>3.2 创建用户和用户组</h3><p>为了方便数据库管理，对于安装的 MySQL 数据库，生产上我们都会建立一个 mysql 用户和 mysql 用户组。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 先检查mysql用户和用户组有没有被使用</span>
 <span class="token function">cat</span> /etc/group <span class="token operator">|</span> <span class="token function">grep</span> mysql
 <span class="token function">cat</span> /etc/passwd <span class="token operator">|</span> <span class="token function">grep</span> mysql
@@ -389,7 +389,7 @@
 <span class="token comment"># 修改mysql用户的登陆密码(这里根据需要设置，可以略过)</span>
 <span class="token function">passwd</span> mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-3-上传安装文件"><a href="#3-3-上传安装文件" class="headerlink" title="3.3 上传安装文件"></a>3.3 上传安装文件</h3><p>上传部分不难，可以采用三种方式，一种是通过sftp，一种是通过<code>rz</code>命令上传，最后是使用<code>scp</code>命令来安装。这里采用<code>scp</code>，第一种需要在本地机器上安装sftp，本身是收费的需要破解；第二种是<code>rz</code>命令，这个要看远程服务器上安装此命名的支持，通过yum源安装很简单，执行<code>yum -y install lrzsz</code>即可，如果服务所在环境无法连接外网，那就要自己去找相关的安装包，麻烦。最终我是选择<code>scp</code>命令，不要安装插件。</p>
+<h3 id="3-3-上传安装文件"><a href="#3-3-上传安装文件" class="headerlink" title="3.3 上传安装文件"></a>3.3 上传安装文件</h3><p>上传部分不难，可以采用三种方式，一种是通过 sftp，一种是通过<code>rz</code>命令上传，最后是使用<code>scp</code>命令来安装。这里采用<code>scp</code>，第一种需要在本地机器上安装 sftp，本身是收费的需要破解；第二种是<code>rz</code>命令，这个要看远程服务器上安装此命名的支持，通过 yum 源安装很简单，执行<code>yum -y install lrzsz</code>即可，如果服务所在环境无法连接外网，那就要自己去找相关的安装包，麻烦。最终我是选择<code>scp</code>命令，不要安装插件。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> D://softpackage/mysql-5.7.30-linux-glibc2.12-x86_64.tar root@192.168.233.131:/usr/local/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="3-4-获取安装包和修改名称"><a href="#3-4-获取安装包和修改名称" class="headerlink" title="3.4 获取安装包和修改名称"></a>3.4 获取安装包和修改名称</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 解压安装包,解压后会有一个mysql-5.7.30-linux-glibc2.12-x86_64.tar.gz包</span>
@@ -447,10 +447,10 @@ bin/mysql_install_db <span class="token parameter variable">--user</span><span c
 <p>安装成功后设置文件及目录权限：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 此时还是在mysql目录下执行</span>
 <span class="token function">cp</span> ./support-files/mysql.server /etc/init.d/mysqld
-<span class="token function">chown</span> <span class="token number">777</span> my.cnf
+<span class="token function">chmod</span> <span class="token number">644</span> my.cnf
 <span class="token function">chmod</span> +x /etc/init.d/mysqld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-8-启动mysql及可能存在问题和解决方案"><a href="#3-8-启动mysql及可能存在问题和解决方案" class="headerlink" title="3.8 启动mysql及可能存在问题和解决方案"></a>3.8 启动mysql及可能存在问题和解决方案</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动脚本</span>
+<h3 id="3-8-启动-mysql-及可能存在问题和解决方案"><a href="#3-8-启动-mysql-及可能存在问题和解决方案" class="headerlink" title="3.8 启动 mysql 及可能存在问题和解决方案"></a>3.8 启动 mysql 及可能存在问题和解决方案</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动脚本</span>
 /etc/init.d/mysqld restart<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>可能出现的问题一：</p>
@@ -483,7 +483,7 @@ ERROR! The server quit without updating PID file (/usr/mysql/mysql-5.7.35/data/l
 <span class="token comment"># 立即生效</span>
 <span class="token builtin class-name">source</span> /etc/profile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-10-获取mysql安装后的初始密码"><a href="#3-10-获取mysql安装后的初始密码" class="headerlink" title="3.10 获取mysql安装后的初始密码"></a>3.10 获取mysql安装后的初始密码</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> /root/.mysql_secret
+<h3 id="3-10-获取-mysql-安装后的初始密码"><a href="#3-10-获取-mysql-安装后的初始密码" class="headerlink" title="3.10 获取 mysql 安装后的初始密码"></a>3.10 获取 mysql 安装后的初始密码</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> /root/.mysql_secret
 <span class="token comment"># 输出的结果如下</span>
 Password <span class="token builtin class-name">set</span> <span class="token keyword">for</span> user <span class="token string">'root@localhost'</span> at <span class="token number">2019</span>-03-08 <span class="token number">17</span>:40:42
 poc3u0mO_luv <span class="token comment"># 这个就是对应的初始密码，随机生成的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
@@ -499,7 +499,7 @@ socket <span class="token operator">=</span> /var/lib/mysql/mysql.sock
 <span class="token comment"># 然后对/tmp/mysql.sock和/var/lib/mysql/mysql.sock建立软连接</span>
 <span class="token function">ln</span> <span class="token parameter variable">-s</span> /var/lib/mysql/mysql.sock /tmp/mysql.sock<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>上面的问题解决后重新输入用户名密码即可进入到mysql，可以将密码修改成自己的。</p>
+<p>上面的问题解决后重新输入用户名密码即可进入到 mysql，可以将密码修改成自己的。</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 执行语句如下</span>
 <span class="token keyword">ALTER</span> <span class="token keyword">USER</span> <span class="token string">'root'</span><span class="token variable">@'localhost'</span> IDENTIFIED <span class="token keyword">WITH</span> mysql_native_password <span class="token keyword">BY</span> <span class="token string">'123456'</span><span class="token punctuation">;</span>
 flush <span class="token keyword">privileges</span><span class="token punctuation">;</span>
@@ -530,7 +530,7 @@ flush <span class="token keyword">privileges</span><span class="token punctuatio
 <span class="token comment"># 增加mysqld服务控制脚本执行权限</span>
 <span class="token function">chmod</span> +x /etc/init.d/mysqld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="3-13-开通-关闭防火墙"><a href="#3-13-开通-关闭防火墙" class="headerlink" title="3.13 开通/关闭防火墙"></a>3.13 开通/关闭防火墙</h3><p>这里有两种方式，一种是简单粗暴的关闭防火墙，第二种就是将数据库的3306端口放开。</p>
+<h3 id="3-13-开通-关闭防火墙"><a href="#3-13-开通-关闭防火墙" class="headerlink" title="3.13 开通/关闭防火墙"></a>3.13 开通/关闭防火墙</h3><p>这里有两种方式，一种是简单粗暴的关闭防火墙，第二种就是将数据库的 3306 端口放开。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 第一种:关闭防火墙(centos7关闭防火墙的方式和centos6是不同的)</span>
 systemctl stop firewalld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -542,7 +542,7 @@ firewalld-cmd <span class="token parameter variable">--zone</span><span class="t
 <p>错误信息：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">在安装过程中出现./mysqld: error <span class="token keyword">while</span> loading shared libraries: libaio.so.1: cannot <span class="token function">open</span> shared object file: No such <span class="token function">file</span> or directory错误。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>解决：切回root用户，执行以下命令即可。</p>
+<p>解决：切回 root 用户，执行以下命令即可。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> libaio<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>但是这个解决方案不适用于无法连接外网的服务器。可以通过网上找到<code>libaio</code>插件，下载后上传到服务器中安装，具体步骤就不写啦。</p>
